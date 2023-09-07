@@ -1,0 +1,4 @@
+name: Core
+version: '${project.version}'
+main: me.lagggpixel.core.Main
+api-version: '1.20'
