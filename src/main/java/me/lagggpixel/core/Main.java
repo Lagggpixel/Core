@@ -8,6 +8,7 @@ import me.lagggpixel.core.listeners.onPlayerJoin;
 import me.lagggpixel.core.modules.Module;
 import me.lagggpixel.core.modules.homes.HomeModule;
 import me.lagggpixel.core.modules.spawn.SpawnModule;
+import me.lagggpixel.core.modules.staff.StaffModule;
 import me.lagggpixel.core.utils.TeleportUtils;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.PluginManager;
@@ -33,6 +34,7 @@ public final class Main extends JavaPlugin {
     private final @NotNull HashMap<String, Module> modules = new HashMap<>();
     private final @NotNull Module homeModule = new HomeModule();
     private final @NotNull Module spawnModule = new SpawnModule();
+    private final @NotNull Module staffModule = new StaffModule();
 
     @Override
     public void onEnable() {
@@ -45,8 +47,11 @@ public final class Main extends JavaPlugin {
 
         registerListeners();
 
+        TeleportUtils teleportUtils = new TeleportUtils();
+
         modules.put(homeModule.getId(), homeModule);
         modules.put(spawnModule.getId(), spawnModule);
+        modules.put(staffModule.getId(), staffModule);
 
         modules.forEach((k, v) -> {
             v.initialize();

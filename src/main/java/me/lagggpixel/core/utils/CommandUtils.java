@@ -27,21 +27,19 @@ public class CommandUtils {
     }
 
     private static PluginCommand getCommand(String name) {
-        PluginCommand command = null;
+        PluginCommand command;
 
         try {
             Constructor<PluginCommand> c = PluginCommand.class.getDeclaredConstructor(String.class, Plugin.class);
             c.setAccessible(true);
 
             command = c.newInstance(name, Main.getInstance());
+            return command;
 
         } catch (SecurityException | InvocationTargetException | NoSuchMethodException | IllegalArgumentException |
                  IllegalAccessException | InstantiationException e) {
             e.printStackTrace();
+            return null;
         }
-
-        return command;
     }
-
-
 }

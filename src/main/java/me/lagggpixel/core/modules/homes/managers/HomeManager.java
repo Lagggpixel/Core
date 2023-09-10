@@ -23,7 +23,7 @@ public class HomeManager {
     private final Map<UUID, BukkitTask> teleportTasks = new HashMap<>();
 
     public void teleportToHome(Player player, Home home) {
-        TeleportUtils.teleportWithDelay(player, home.getLocation());
+        TeleportUtils.teleportWithDelay(player, home.location(),  home.name() + " home");
     }
 
     public void setHome(User player, String homeName, Home home) {

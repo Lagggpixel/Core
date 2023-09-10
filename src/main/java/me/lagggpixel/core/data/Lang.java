@@ -16,6 +16,7 @@ public enum Lang {
 
     TELEPORTATION_IN_TIME("teleportation.time", "&aTeleporting in %time% seconds..."),
     TELEPORTATION_CANCELED("teleportation.canceled", "&cTeleportation canceled due to %reason%."),
+    TELEPORTATION_SUCCESS("teleportation.success", "You have teleported to %name%."),
 
     HOME_ALREADY_EXIST("home.already_exist", "&cA home named '&e%home%&c' already exists."),
     HOME_DOES_NOT_EXIST("home.does_not_exist", "&cThe home '&e%home%&c' does not exist."),

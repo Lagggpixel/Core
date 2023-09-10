@@ -1,6 +1,8 @@
 package me.lagggpixel.core.utils;
 
+import lombok.Getter;
 import me.lagggpixel.core.Main;
+import me.lagggpixel.core.data.DelayTeleport;
 import me.lagggpixel.core.data.Lang;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -16,40 +18,52 @@ import java.util.Map;
 
 public class TeleportUtils {
 
-    private static int TELEPORT_DELAY = 5;
-
-    private static final Map<Player, BukkitRunnable> teleportTasks = new HashMap<>();
-
-    public static Map<Player, BukkitRunnable> getTeleportTasks() {
-        return teleportTasks;
-    }
-
-    public static void teleportWithDelay(Player player, Location location) {
-        BukkitRunnable teleportTask = new BukkitRunnable() {
+    public TeleportUtils() {
+        BukkitRunnable teleportRunnable = new BukkitRunnable() {
             @Override
             public void run() {
-                if (player.isOnline() && player.getLocation().equals(location)) {
-                    player.teleport(location);
+                if (!teleportTasks.isEmpty()) {
+                    teleportTasks.forEach((k, v) -> {
+                        if (k == null || !k.isOnline()) {
+                            teleportTasks.remove(k);
+                        } else {
+                            if (v.getCurrent_delay() == 0) {
+                                k.teleport(v.getLocation());
+                                k.sendMessage(Lang.TELEPORTATION_SUCCESS.toComponentWithPrefix(Map.of(
+                                        "%name%", v.getPlace_name()
+                                )));
+                            }
+                            else {
+                                v.minus_delay();
+                                k.sendMessage(Lang.TELEPORTATION_IN_TIME.toComponentWithPrefix(Map.of(
+                                        "%time%", String.valueOf(v.getCurrent_delay())
+                                )));
+                            }
+                        }
+                    });
                 }
-                teleportTasks.remove(player);
             }
         };
-
-        teleportTasks.put(player, teleportTask);
-
-        teleportTask.runTaskLater(Main.getInstance(), TELEPORT_DELAY * 20L);
+        teleportRunnable.runTaskTimerAsynchronously(Main.getInstance(), 0L, 20L);
     }
+
+    @Getter
+    private static final Map<Player, DelayTeleport> teleportTasks = new HashMap<>();
+
+    public static void teleportWithDelay(Player player, Location location, String place_name) {
+        if (!teleportTasks.containsKey(player)) teleportTasks.put(player, new DelayTeleport(player, location, place_name));
+        else teleportTasks.replace(player, new DelayTeleport(player, location, place_name));
+    }
+
 
     public static void cancelTeleport(Player player, String reason) {
         // Check if there is a teleport task for the player and cancel it
-        BukkitRunnable teleportTask = teleportTasks.get(player);
-        if (teleportTask != null) {
-            teleportTask.cancel();
-            player.sendMessage(Lang.TELEPORTATION_CANCELED.toComponentWithPrefix(Map.of(
-                    "%reason%", reason
-            )));
-            teleportTasks.remove(player);
-        }
+        DelayTeleport teleportTask = teleportTasks.get(player);
+        teleportTasks.remove(player, teleportTask);
+
+        player.sendMessage(Lang.TELEPORTATION_CANCELED.toComponentWithPrefix(Map.of(
+                "%reason%", reason
+        )));
     }
 
 
