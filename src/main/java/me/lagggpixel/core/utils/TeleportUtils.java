@@ -13,7 +13,9 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class TeleportUtils {
@@ -22,29 +24,36 @@ public class TeleportUtils {
         BukkitRunnable teleportRunnable = new BukkitRunnable() {
             @Override
             public void run() {
+                List<Player> playersToRemove = new ArrayList<>();
+
                 if (!teleportTasks.isEmpty()) {
                     teleportTasks.forEach((k, v) -> {
                         if (k == null || !k.isOnline()) {
-                            teleportTasks.remove(k);
+                            playersToRemove.add(k);
                         } else {
                             if (v.getCurrent_delay() == 0) {
                                 k.teleport(v.getLocation());
                                 k.sendMessage(Lang.TELEPORTATION_SUCCESS.toComponentWithPrefix(Map.of(
                                         "%name%", v.getPlace_name()
                                 )));
-                            }
-                            else {
-                                v.minus_delay();
+                                playersToRemove.add(k);
+                            } else if (v.getCurrent_delay() < 0) {
+                                playersToRemove.add(k);
+                            } else {
                                 k.sendMessage(Lang.TELEPORTATION_IN_TIME.toComponentWithPrefix(Map.of(
                                         "%time%", String.valueOf(v.getCurrent_delay())
                                 )));
+                                v.minus_delay();
                             }
                         }
                     });
+
+                    // Remove the players outside the loop to avoid ConcurrentModificationException
+                    playersToRemove.forEach(teleportTasks::remove);
                 }
             }
         };
-        teleportRunnable.runTaskTimerAsynchronously(Main.getInstance(), 0L, 20L);
+        teleportRunnable.runTaskTimer(Main.getInstance(), 0L, 20L);
     }
 
     @Getter
@@ -72,7 +81,11 @@ public class TeleportUtils {
         @EventHandler
         public void onPlayerMove(PlayerMoveEvent event) {
             if (teleportTasks.containsKey(event.getPlayer())) {
-                cancelTeleport(event.getPlayer(), "moving");
+                if (event.getFrom().getX() != event.getTo().getX() ||
+                event.getFrom().getY() != event.getTo().getY() ||
+                event.getFrom().getZ() != event.getTo().getZ()) {
+                    cancelTeleport(event.getPlayer(), "moving");
+                }
             }
         }
 

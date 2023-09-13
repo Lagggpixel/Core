@@ -7,6 +7,8 @@ import me.lagggpixel.core.data.UserUtils;
 import me.lagggpixel.core.listeners.onPlayerJoin;
 import me.lagggpixel.core.modules.Module;
 import me.lagggpixel.core.modules.homes.HomeModule;
+import me.lagggpixel.core.modules.inventory.InventoryModule;
+import me.lagggpixel.core.modules.rtp.RtpModule;
 import me.lagggpixel.core.modules.spawn.SpawnModule;
 import me.lagggpixel.core.modules.staff.StaffModule;
 import me.lagggpixel.core.utils.TeleportUtils;
@@ -35,6 +37,8 @@ public final class Main extends JavaPlugin {
     private final @NotNull Module homeModule = new HomeModule();
     private final @NotNull Module spawnModule = new SpawnModule();
     private final @NotNull Module staffModule = new StaffModule();
+    private final @NotNull Module inventoryModule = new InventoryModule();
+    private final @NotNull Module rtpModule = new RtpModule();
 
     @Override
     public void onEnable() {
@@ -52,6 +56,8 @@ public final class Main extends JavaPlugin {
         modules.put(homeModule.getId(), homeModule);
         modules.put(spawnModule.getId(), spawnModule);
         modules.put(staffModule.getId(), staffModule);
+        modules.put(inventoryModule.getId(), inventoryModule);
+        modules.put(rtpModule.getId(), rtpModule);
 
         modules.forEach((k, v) -> {
             v.initialize();
