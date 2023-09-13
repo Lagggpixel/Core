@@ -12,7 +12,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 public class InventoryCommands extends CommandClass {
@@ -29,8 +28,7 @@ public class InventoryCommands extends CommandClass {
 
     @Override
     public List<String> getCommandAliases() {
-        return List.of("inv",
-                "ci", "clearinv", "clearinventory", "inventoryclear");
+        return List.of("inv");
     }
 
     @Override
@@ -51,72 +49,41 @@ public class InventoryCommands extends CommandClass {
             return true;
         }
 
-        if (s.equalsIgnoreCase("inv") || s.equalsIgnoreCase("invenotry")) {
+        UUID playerUUID = sender.getUniqueId();
+        User user = Main.getUser(playerUUID);
 
-            UUID playerUUID = sender.getUniqueId();
-            User user = Main.getUser(playerUUID);
-
-            if (args.length == 0) {
-                // Invalid arguments exception
-                return true;
-            }
-
-            if (args[0].equalsIgnoreCase("clear")) {
-                if (args.length == 1) {
-
-
-
-                    // Send player message for inventory cleared
-
-                    return true;
-
-                }
-                if (args.length == 2) {
-                    String playerName = args[1];
-                    Player player = Bukkit.getPlayerExact(playerName);
-
-                    // Checks for another player's inventory and clears it
-
-                    return true;
-                }
-
-                // Invalid argument exception
-
-                return true;
-            }
-
+        if (args.length == 0) {
+            // Invalid arguments exception
             return true;
         }
 
-        if (s.equalsIgnoreCase("ci") || s.equalsIgnoreCase("clearinv") ||
-                s.equalsIgnoreCase("clearinventory") || s.equalsIgnoreCase("inventoryclear")) {
-
-            if (args.length == 0) {
-                clearInventory(sender);
-                sender.sendMessage(Lang.INVENTORY_CLEARED_SELF.toComponentWithPrefix(null));
-                return true;
-            }
-
+        if (args[0].equalsIgnoreCase("clear")) {
             if (args.length == 1) {
 
-                String targetName = args[0];
-                Player player = Bukkit.getPlayer(targetName);
+                sender.getInventory().clear();
+                sender.getInventory().setHelmet(null);
+                sender.getInventory().setChestplate(null);
+                sender.getInventory().setLeggings(null);
+                sender.getInventory().setBoots(null);
 
-                if (player == null) {
-                    sender.sendMessage(Lang.PLAYER_NOT_FOUND.toComponentWithPrefix(Map.of(
-                            "%player%", targetName
-                    )));
-                    return true;
-                }
+                // Send player message for inventory cleared
 
-                clearInventory(player);
-                sender.sendMessage(Lang.INVENTORY_CLEARED_OTHER.toComponentWithPrefix(Map.of(
-                        "%player%", targetName
-                )));
+                return true;
+
+            }
+            if (args.length == 2) {
+                String playerName = args[1];
+                Player player = Bukkit.getPlayerExact(playerName);
+
+                // Checks for another player's inventory and clears it
+
                 return true;
             }
-        }
 
+            // Invalid argument exception
+
+            return true;
+        }
 
 
 
@@ -126,13 +93,5 @@ public class InventoryCommands extends CommandClass {
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
         return null;
-    }
-
-    private void clearInventory(@NotNull Player player) {
-        player.getInventory().clear();
-        player.getInventory().setHelmet(null);
-        player.getInventory().setChestplate(null);
-        player.getInventory().setLeggings(null);
-        player.getInventory().setBoots(null);
     }
 }

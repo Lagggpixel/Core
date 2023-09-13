@@ -13,11 +13,10 @@ public enum Lang {
     PREFIX("prefix",  "&#fb0000I&#f4011bn&#ec0335f&#e50450i&#de056bn&#d60685i&#cf08a0t&#c709bae &#c00ad5M&#b90bf0i&#b216fbn&#ac2bf7e&#a63ff3c&#a054efr&#9a68eba&#947de6f&#8e91e2t&#88a6dee&#82badar&#7ccfd6s &r&7» &r"),
     PLAYER_ONLY("player_only", "&cThis command is for players only."),
     INVALID_USAGE("invalid_usage", "&cInvalid usage. Type /help for more information."),
-    PLAYER_NOT_FOUND("player_not_found", "&c%player% is not found."),
 
     TELEPORTATION_IN_TIME("teleportation.time", "&aTeleporting in %time% seconds..."),
     TELEPORTATION_CANCELED("teleportation.canceled", "&cTeleportation canceled due to %reason%."),
-    TELEPORTATION_SUCCESS("teleportation.success", "You have been teleported to %name%."),
+    TELEPORTATION_SUCCESS("teleportation.success", "You have teleported to %name%."),
 
     HOME_ALREADY_EXIST("home.already_exist", "&cA home named '&e%home%&c' already exists."),
     HOME_DOES_NOT_EXIST("home.does_not_exist", "&cThe home '&e%home%&c' does not exist."),
@@ -25,12 +24,9 @@ public enum Lang {
     HOME_LIMIT_REACHED("home.limit_reached", "&cYou cannot create more homes."),
     HOME_DELETED("home.deleted", "&aYou've deleted the home '&e%home%&a'."),
     HOME_NAME_INVALID("home.invalid_name", "&cPlease create a home with a different name. (Home names cannot start with numbers and cannot contain special characters)"),
+    HOME_TELEPORTED("home.teleported", "&aYou've teleported to your '&e%home%&a' home.");
 
-    INVENTORY_CLEARED_SELF("inventory.cleared.self", "&aYou have cleared your inventory."),
-    INVENTORY_CLEARED_OTHER("inventory.cleared.other", "&aYou have cleared %player%'s inventory."),
 
-    RTP_NO_SAFE_LOCATION("rtp.no_safe_location", "&aNo safe location was found, please try again."),
-    RTP_ATTEMPTING_TO_FIND_LOCATION("rtp.attempting_to_find_location", "&aAttempting to find a location. Attempt %num% out of %max%.");
 
     private final String path;
     private final String def;
