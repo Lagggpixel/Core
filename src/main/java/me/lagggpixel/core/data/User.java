@@ -34,6 +34,9 @@ public class User {
     @NotNull
     private Double playerBalance;
 
+    @NotNull
+    private Boolean afk;
+
     private Map<String, Home> homes;
 
     /**
@@ -47,6 +50,7 @@ public class User {
         this.playerDisplayName = player.displayName();
         this.playerBalance = 0.00;
         this.homes = new HashMap<>();
+        afk = false;
         isVanished = false;
     }
 
@@ -61,7 +65,7 @@ public class User {
      * @param homes             The homes that the player has.
      */
     public User(@NotNull UUID playerUUID, @NotNull String playerName, @Nullable Component playerDisplayName, @NotNull Double playerBalance,
-                @NotNull Boolean isVanished,
+                @NotNull Boolean afk, @NotNull Boolean isVanished,
                 @NotNull Map<String, Home> homes) {
         this.playerUUID = playerUUID;
         this.playerName = playerName;
@@ -69,6 +73,7 @@ public class User {
         this.playerBalance = playerBalance;
         this.homes = homes;
         this.isVanished = isVanished;
+        this.afk = afk;
     }
 
     public void setPlayerDisplayName(@Nullable Component playerDisplayName) {

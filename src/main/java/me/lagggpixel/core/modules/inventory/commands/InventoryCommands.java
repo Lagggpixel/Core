@@ -15,13 +15,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-// inventory
+// inventory {open's self inventory}
 // inventory [player]
-// inventory open [player]
+// inventory open [player] {offline support w/message saying if the player is offline when opening}
 // inventory clear
-// inventory clear [player] (-s)
+// inventory clear [player] (-s) {silent}
 // inventory clone [player]
-// inventory clone [player] [target] (-s)
+// inventory clone [player] [target] (-s) {silent}
 public class InventoryCommands extends CommandClass {
 
     @Override
@@ -58,7 +58,7 @@ public class InventoryCommands extends CommandClass {
             return true;
         }
 
-        if (s.equalsIgnoreCase("inv") || s.equalsIgnoreCase("invenotry")) {
+        if (s.equalsIgnoreCase("inv") || s.equalsIgnoreCase("inventory")) {
 
             UUID playerUUID = sender.getUniqueId();
             User user = Main.getUser(playerUUID);
