@@ -15,6 +15,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+// inventory
+// inventory [player]
+// inventory open [player]
+// inventory clear
+// inventory clear [player] (-s)
+// inventory clone [player]
+// inventory clone [player] [target] (-s)
 public class InventoryCommands extends CommandClass {
 
     @Override

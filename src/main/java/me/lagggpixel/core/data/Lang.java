@@ -1,5 +1,6 @@
 package me.lagggpixel.core.data;
 
+import lombok.Getter;
 import me.lagggpixel.core.utils.ChatUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
@@ -32,6 +33,11 @@ public enum Lang {
     RTP_NO_SAFE_LOCATION("rtp.no_safe_location", "&aNo safe location was found, please try again."),
     RTP_ATTEMPTING_TO_FIND_LOCATION("rtp.attempting_to_find_location", "&aAttempting to find a location. Attempt %num% out of %max%.");
 
+    /**
+     * -- GETTER --
+     *  Get the path to the string.
+     */
+    @Getter
     private final String path;
     private final String def;
     private static YamlConfiguration LANG;
@@ -78,14 +84,6 @@ public enum Lang {
      */
     public String getDefault() {
         return this.def;
-    }
-
-    /**
-     * Get the path to the string.
-     * @return The path to the string.
-     */
-    public String getPath() {
-        return this.path;
     }
 
 }
