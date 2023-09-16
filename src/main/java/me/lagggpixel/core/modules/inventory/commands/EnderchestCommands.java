@@ -8,11 +8,11 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -21,32 +21,37 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class EnderchestCommands extends CommandClass {
+public class EnderchestCommands extends CommandClass implements Listener {
 
     private final Map<Player, Inventory> enderChestContents = new HashMap<>();
 
     @Override
     public String getCommandName() {
+
         return "enderchest";
     }
 
     @Override
     public String getCommandDescription() {
+
         return "Open your or another player's ender chest.";
     }
 
     @Override
     public List<String> getCommandAliases() {
+
         return List.of("ec", "enderc", "echest");
     }
 
     @Override
     public String getCommandPermission() {
+
         return "core.enderchest";
     }
 
     @Override
     public String getUsage() {
+
         return null;
     }
 
@@ -81,7 +86,7 @@ public class EnderchestCommands extends CommandClass {
     private Inventory getOrCreateEnderChest(Player player) {
         return enderChestContents.computeIfAbsent(player, p -> {
 
-            Inventory enderChest = Bukkit.createInventory(p, 27, ChatUtils.convertStringToComponent(target);
+            Inventory enderChest = Bukkit.createInventory(p, 27, ChatUtils.convertStringToComponent(player.getName() + "'s Ender Chest"));
             enderChest.setContents(p.getEnderChest().getContents());
             return enderChest;
         });
@@ -115,7 +120,6 @@ public class EnderchestCommands extends CommandClass {
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, @NotNull String[] args) {
         if (args.length == 1) {
-            // Tab completion for player names
             return Bukkit.getOnlinePlayers().stream()
                     .map(Player::getName)
                     .filter(name -> name.toLowerCase().startsWith(args[0].toLowerCase()))
