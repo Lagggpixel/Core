@@ -1,9 +1,7 @@
 package me.lagggpixel.core;
 
-import me.lagggpixel.core.data.DelayTeleport;
 import me.lagggpixel.core.data.Lang;
 import me.lagggpixel.core.data.User;
-import me.lagggpixel.core.utils.UserUtils;
 import me.lagggpixel.core.listeners.onPlayerJoin;
 import me.lagggpixel.core.modules.Module;
 import me.lagggpixel.core.modules.chat.ChatModule;
@@ -16,6 +14,7 @@ import me.lagggpixel.core.modules.spawn.SpawnModule;
 import me.lagggpixel.core.modules.staff.StaffModule;
 import me.lagggpixel.core.modules.warp.WarpModule;
 import me.lagggpixel.core.utils.TeleportUtils;
+import me.lagggpixel.core.utils.UserUtils;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.plugin.PluginManager;
@@ -41,8 +40,6 @@ public final class Main extends JavaPlugin {
     private static Main INSTANCE;
     private static Map<UUID, User> userData;
 
-    private final Map<UUID, DelayTeleport> delayTeleportMap = new HashMap<>();
-
     private final @NotNull HashMap<String, Module> modules = new HashMap<>();
     private final @NotNull Module chatModule = new ChatModule();
     private final @NotNull Module chatgamesModule = new ChatgamesModule();
@@ -66,7 +63,7 @@ public final class Main extends JavaPlugin {
 
         registerListeners();
 
-        TeleportUtils teleportUtils = new TeleportUtils();
+        new TeleportUtils();
 
         modules.put(chatModule.getId(), chatModule);
         modules.put(chatgamesModule.getId(), chatgamesModule);
