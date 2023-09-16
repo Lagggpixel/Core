@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Collections;
 import java.util.List;
 
 public class SpawnCommand extends CommandClass {
@@ -32,7 +33,7 @@ public class SpawnCommand extends CommandClass {
 
     @Override
     public List<String> getCommandAliases() {
-        return null;
+        return Collections.emptyList();
     }
 
     @Override
