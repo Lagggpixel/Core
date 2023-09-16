@@ -20,7 +20,7 @@ import java.util.Map;
 
 public class TeleportUtils {
 
-    public TeleportUtils() {
+    public static void startTeleportTask() {
         BukkitRunnable teleportRunnable = new BukkitRunnable() {
             @Override
             public void run() {

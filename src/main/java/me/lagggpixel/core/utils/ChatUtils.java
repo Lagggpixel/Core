@@ -6,7 +6,7 @@ import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
-public class ChatUtil {
+public class ChatUtils {
 
     public static @NotNull Component convertStringWithColorCodesToComponent(String stringWithColorCodes) {
         return LegacyComponentSerializer.legacy('&').deserialize(stringWithColorCodes).asComponent();

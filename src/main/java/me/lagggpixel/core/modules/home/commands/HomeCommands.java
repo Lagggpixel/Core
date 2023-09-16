@@ -7,7 +7,7 @@ import me.lagggpixel.core.data.User;
 import me.lagggpixel.core.modules.Module;
 import me.lagggpixel.core.modules.home.data.Home;
 import me.lagggpixel.core.modules.home.managers.HomeManager;
-import me.lagggpixel.core.utils.ChatUtil;
+import me.lagggpixel.core.utils.ChatUtils;
 import me.lagggpixel.core.utils.CommandUtils;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -161,7 +161,7 @@ public class HomeCommands extends CommandClass implements Listener {
         ItemMeta meta = item.getItemMeta();
 
         assert meta != null;
-        meta.displayName(ChatUtil.convertStringToComponent(homeName));
+        meta.displayName(ChatUtils.convertStringToComponent(homeName));
         meta.getPersistentDataContainer().set(homeManager.HOME_ITEM_NAMESPACE_KEY, PersistentDataType.STRING, homeName);
 
         item.setItemMeta(meta);

@@ -3,7 +3,7 @@ package me.lagggpixel.core.modules.home.managers;
 import me.lagggpixel.core.Main;
 import me.lagggpixel.core.data.User;
 import me.lagggpixel.core.modules.home.data.Home;
-import me.lagggpixel.core.utils.ChatUtil;
+import me.lagggpixel.core.utils.ChatUtils;
 import me.lagggpixel.core.utils.TeleportUtils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
@@ -17,7 +17,7 @@ import java.util.UUID;
 
 public class HomeManager {
 
-    public final Component HOME_GUI_NAME = ChatUtil.convertStringWithColorCodesToComponent("&aHomes");
+    public final Component HOME_GUI_NAME = ChatUtils.convertStringWithColorCodesToComponent("&aHomes");
     public final NamespacedKey HOME_ITEM_NAMESPACE_KEY = new NamespacedKey(Main.getInstance(), "HOME_NAME");
 
     private final Map<UUID, BukkitTask> teleportTasks = new HashMap<>();

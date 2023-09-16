@@ -54,7 +54,7 @@ build: change maven artifactId
 ## Permission
 Per module permission:
 For each the modules' player commands, their base usage permission will be `coreplugin.<module-id>.command.player.<command-name>.use`.
-Each player command's sub permission will look like this: `coreplugin.<module-id>.command.player.<command-name>.<sub-branch>`
+Each player command's sub permission will look like this: `coreplugin.<module-id>.command.player.<command-name>.<sub-branch>`.
 
 ## Data Storage
 Data storage modules for each module are stored at the location of `Main.getInstance().getDataFolder() + "/data/modules/<module-id>"`. 
