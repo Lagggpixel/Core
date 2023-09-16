@@ -25,9 +25,9 @@ public class NMSUtils {
     protected static Class<?> class_EntityPlayer;
     protected static Method method_CraftPlayer_getHandle;
     protected static Method method_EntityPlayer_getGameProfile;
-    protected static Method method_GameProfile_getProperties;
+    public static Method method_GameProfile_getProperties;
     protected static Field field_PropertyMap_properties;
-    protected static Field field_GameProfileProperty_value;
+    public static Field field_GameProfileProperty_value;
 
     static {
         String className = Bukkit.getServer().getClass().getName();
