@@ -26,9 +26,5 @@ public class onPlayerJoin implements Listener {
         if (Main.getUser(uuid) == null) {
             Main.getUserData().put(uuid, new User(player));
         }
-        else {
-            Main.getUser(uuid).setPlayerDisplayName(player.displayName());
-        }
-
     }
 }

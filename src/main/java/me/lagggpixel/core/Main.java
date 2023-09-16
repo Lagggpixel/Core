@@ -7,12 +7,14 @@ import me.lagggpixel.core.data.UserUtils;
 import me.lagggpixel.core.listeners.onPlayerJoin;
 import me.lagggpixel.core.modules.Module;
 import me.lagggpixel.core.modules.homes.HomeModule;
+import me.lagggpixel.core.modules.homes.data.Home;
 import me.lagggpixel.core.modules.inventory.InventoryModule;
 import me.lagggpixel.core.modules.rtp.RtpModule;
 import me.lagggpixel.core.modules.spawn.SpawnModule;
 import me.lagggpixel.core.modules.staff.StaffModule;
 import me.lagggpixel.core.utils.TeleportUtils;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
@@ -28,8 +30,13 @@ import java.util.logging.Level;
 
 public final class Main extends JavaPlugin {
 
+    static {
+        ConfigurationSerialization.registerClass(User.class);
+        ConfigurationSerialization.registerClass(Home.class);
+    }
+
     private static Main INSTANCE;
-    private static HashMap<UUID, User> userData;
+    private static Map<UUID, User> userData;
 
     private final Map<UUID, DelayTeleport> delayTeleportMap = new HashMap<>();
 
@@ -76,7 +83,7 @@ public final class Main extends JavaPlugin {
         return INSTANCE;
     }
 
-    public static @Nonnull HashMap<UUID, User> getUserData() {
+    public static @Nonnull Map<UUID, User> getUserData() {
         return userData;
     }
 

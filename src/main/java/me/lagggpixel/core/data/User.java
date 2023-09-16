@@ -1,43 +1,39 @@
 package me.lagggpixel.core.data;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import me.lagggpixel.core.modules.homes.data.Home;
-import net.kyori.adventure.text.Component;
-import org.bukkit.Bukkit;
+import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.UUID;
 
 @Data
 @Getter
 @Setter
-public class User {
+@AllArgsConstructor
+public class User implements ConfigurationSerializable {
     @NotNull
-    private final UUID playerUUID;
-
-    @NotNull
-    private String playerName;
+    public final UUID playerUUID;
 
     @NotNull
-    private Boolean isVanished;
-
-    @Nullable
-    private Component playerDisplayName;
+    public String playerName;
 
     @NotNull
-    private Double playerBalance;
+    public Boolean isVanished;
 
     @NotNull
-    private Boolean afk;
+    public Double playerBalance;
 
-    private Map<String, Home> homes;
+    @NotNull
+    public Boolean afk;
+
+    public Map<String, Home> homes;
 
     /**
      * Constructs a new user.
@@ -47,38 +43,34 @@ public class User {
     public User(@NotNull Player player) {
         this.playerUUID = player.getUniqueId();
         this.playerName = player.getName();
-        this.playerDisplayName = player.displayName();
         this.playerBalance = 0.00;
         this.homes = new HashMap<>();
         afk = false;
         isVanished = false;
     }
 
-    /**
-     * Constructs a new user.
-     *
-     * @param playerUUID        The UUID of the player.
-     * @param playerName        The name of the player.
-     * @param playerDisplayName The display name of the player.
-     * @param playerBalance     The balance of the player.
-     * @param isVanished        If the player is vanished or not
-     * @param homes             The homes that the player has.
-     */
-    public User(@NotNull UUID playerUUID, @NotNull String playerName, @Nullable Component playerDisplayName, @NotNull Double playerBalance,
-                @NotNull Boolean afk, @NotNull Boolean isVanished,
-                @NotNull Map<String, Home> homes) {
-        this.playerUUID = playerUUID;
-        this.playerName = playerName;
-        this.playerDisplayName = playerDisplayName;
-        this.playerBalance = playerBalance;
-        this.homes = homes;
-        this.isVanished = isVanished;
-        this.afk = afk;
+    public User(Map<String, Object> map) {
+        this.playerName = String.valueOf(map.get("name"));
+        this.playerUUID = UUID.fromString(String.valueOf(map.get("uuid")));
+
+        this.playerBalance = Double.valueOf(String.valueOf(map.get("balance")));
+        // noinspection unchecked
+        this.homes = (Map<String, Home>) map.get("homes");
+
+        this.isVanished = Boolean.valueOf((String) map.get("vanished"));
+        this.afk = false;
     }
 
-    public void setPlayerDisplayName(@Nullable Component playerDisplayName) {
-        if (playerDisplayName != null && Bukkit.getOfflinePlayer(this.playerUUID).isOnline()) {Objects.requireNonNull(Bukkit.getPlayer(this.playerUUID)).displayName(playerDisplayName);
-        }
-        this.playerDisplayName = playerDisplayName;
+    @Override
+    public @NotNull Map<String, Object> serialize() {
+        return new HashMap<>() {{
+            put("name", playerName);
+            put("uuid", playerUUID);
+
+            put("balance", playerBalance);
+            put("homes", homes);
+
+            put("vanished", isVanished);
+        }};
     }
 }
