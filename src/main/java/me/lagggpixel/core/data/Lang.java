@@ -1,7 +1,7 @@
 package me.lagggpixel.core.data;
 
 import lombok.Getter;
-import me.lagggpixel.core.utils.ChatUtil;
+import me.lagggpixel.core.utils.ChatUtils;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -70,7 +70,7 @@ public enum Lang {
     }
 
     public TextComponent toTextComponent() {
-        return ChatUtil.convertStringToComponent(LANG.getString(this.path, def));
+        return ChatUtils.convertStringToComponent(LANG.getString(this.path, def));
     }
 
     public String toString() {
@@ -84,7 +84,7 @@ public enum Lang {
             placeholders.forEach((k, v) -> var1[0] = var1[0].replace(k, v));
         }
 
-        return ChatUtil.convertStringWithColorCodesToComponent(var1[0]);
+        return ChatUtils.convertStringWithColorCodesToComponent(var1[0]);
     }
 
     /**
