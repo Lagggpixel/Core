@@ -71,6 +71,7 @@ Todo list:
 - Add a `homeadmin delete <player> <hoem name>` subcommand
 - Add a `homeadmin view <player>` subcommand
 - Add a `homeadmin tpto <player> <home name>` subcommand
+- Ability to block players doing `home` command in certain worlds
 
 #### Warps Module
 Todo list:
@@ -80,6 +81,8 @@ Todo list:
 - Add a `warp <warp name>` subcommand
 - Add a `warp create <name>` subcommand
 - Add a `warp delete <name>` subcommand
+- Ability to block players doing `warp` or `warps` command in certain worlds
+
 
 ### Spawn Module
 Todo list:
@@ -88,3 +91,4 @@ Todo list:
 - Add tab completion for `spawn` command
 - Add appropriate permissions for `spawn` command
 - Add a `spawn set` subcommand
+- Ability to block `spawn` command in certain worlds
