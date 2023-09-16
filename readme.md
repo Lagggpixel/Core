@@ -42,8 +42,8 @@ build: change maven artifactId
 ```
 
 ## Modules
-- Chat
-- Chat games
+- chat
+- chat games
 - homes
 - inventory
 - rtp
