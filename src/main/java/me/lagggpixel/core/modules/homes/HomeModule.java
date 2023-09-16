@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class HomeModule extends Module {
 
-    HomeManager homeManager;
+    private HomeManager homeManager;
 
     @Override
     public @NotNull String getId() {
@@ -23,7 +23,7 @@ public class HomeModule extends Module {
 
     @Override
     public void registerCommands() {
-        CommandUtils.registerCommand(new HomeCommands(homeManager));
+        CommandUtils.registerCommand(new HomeCommands(this, homeManager));
     }
 
     @Override

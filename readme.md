@@ -1,0 +1,41 @@
+# Core plugin for InfiniteMinecrafters server
+
+## Module
+- Chat
+- Chat games
+- homes
+- inventory
+- rtp
+- spawn
+- staff
+- warps
+
+## Permission
+Per module permission:
+For each the modules' player commands, their base usage permission will be `coreplugin.<module-id>.command.player.<command-name>.use`.
+Each player command's sub permission will look like this: `coreplugin.<module-id>.command.player.<command-name>.<sub-branch>`
+
+## Data Storage
+Data storage modules for each module are stored at the location of `Main.getInstance().getDataFolder() + "/data/modules/<module-id>"`. 
+Data for users are stored at `Main.getInstance.getDataFolder + "data/users"`
+
+## Per Module Todo List
+
+#### Home Module
+Todo list:
+- Add appropriate permissions for the `home` command
+- Add tab completion for the `home` command
+- Add a `homeadmin` command class
+- Add a `homeadmin create <player> <home name>` subcommand
+- Add a `homeadmin delete <player> <hoem name>` subcommand
+- Add a `homeadmin view <player>` subcommand
+- Add a `homeadmin tpto <player> <home name>` subcommand
+
+#### Warps Module
+Todo list:
+- Add a `warps` command class
+- Add gui handling for `warps` command
+- Add a `warp` command class
+- Add a `warp <warp name>` subcommand
+- Add a `warp create <name>` subcommand
+- Add a `warp delete <name>` subcommand

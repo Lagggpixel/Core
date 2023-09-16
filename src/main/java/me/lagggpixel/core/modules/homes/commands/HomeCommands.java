@@ -4,9 +4,11 @@ import me.lagggpixel.core.Main;
 import me.lagggpixel.core.data.CommandClass;
 import me.lagggpixel.core.data.Lang;
 import me.lagggpixel.core.data.User;
+import me.lagggpixel.core.modules.Module;
 import me.lagggpixel.core.modules.homes.data.Home;
 import me.lagggpixel.core.modules.homes.managers.HomeManager;
 import me.lagggpixel.core.utils.ChatUtil;
+import me.lagggpixel.core.utils.CommandUtils;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -25,9 +27,11 @@ import java.util.UUID;
 
 public class HomeCommands extends CommandClass implements Listener {
 
+    Module module;
     HomeManager homeManager;
 
-    public HomeCommands(HomeManager homeManager) {
+    public HomeCommands(Module module, HomeManager homeManager) {
+        this.module = module;
         this.homeManager = homeManager;
     }
 
@@ -48,7 +52,7 @@ public class HomeCommands extends CommandClass implements Listener {
 
     @Override
     public String getCommandPermission() {
-        return "core.home.command";
+        return CommandUtils.generateCommandBasePermission(module, this);
     }
 
     @Override

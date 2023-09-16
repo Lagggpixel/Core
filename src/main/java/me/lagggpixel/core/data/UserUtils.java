@@ -15,17 +15,16 @@ import java.util.logging.Level;
 
 public class UserUtils {
 
-    private static final String PATH = "data/users";
-    private static final File parentFile = new File(Main.getInstance().getDataFolder(), PATH);
+    private static final File parentFolder = new File(Main.getInstance().getDataFolder(), "data/users");
 
     @NotNull
     public static Map<UUID, User> loadData() {
-        if (!parentFile.exists()) {
-            parentFile.mkdirs();
+        if (!parentFolder.exists()) {
+            parentFolder.mkdirs();
         }
 
         final var map = new ConcurrentHashMap<UUID, User>();
-        final var files = parentFile.listFiles();
+        final var files = parentFolder.listFiles();
 
         if (files == null) {
             return new ConcurrentHashMap<>();
@@ -57,7 +56,7 @@ public class UserUtils {
     @Nullable
     public static User getDataFromFile(File file) {
         try {
-            return getPlayerConfig(file).getSerializable(PATH, User.class);
+            return getPlayerConfig(file).getSerializable("user", User.class);
         } catch (Exception e) {
             return null;
         }
@@ -67,7 +66,7 @@ public class UserUtils {
         var file = getPlayerFile(data.getPlayerUUID());
         var config = YamlConfiguration.loadConfiguration(file);
 
-        config.set(PATH, data);
+        config.set("user", data);
 
         try {
             config.save(file);
@@ -81,10 +80,10 @@ public class UserUtils {
     }
 
     public static File getPlayerFile(UUID uuid) {
-        if (!parentFile.exists()) {
-            parentFile.mkdirs();
+        if (!parentFolder.exists()) {
+            parentFolder.mkdirs();
         }
 
-        return new File(parentFile, uuid.toString() + ".yml");
+        return new File(parentFolder, uuid.toString() + ".yml");
     }
 }

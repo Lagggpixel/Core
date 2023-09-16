@@ -2,6 +2,7 @@ package me.lagggpixel.core.utils;
 
 import me.lagggpixel.core.Main;
 import me.lagggpixel.core.data.CommandClass;
+import me.lagggpixel.core.modules.Module;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.Plugin;
 
@@ -24,7 +25,7 @@ public class CommandUtils {
         command.setTabCompleter(commandClass);
 
         Main.getInstance().getServer().getCommandMap().register("minecraft", command);
-        Main.getInstance().getServer().getLogger().log(Level.INFO,  "[" + Main.getInstance().getName() + "] Registered " + command.getName() + " command.");
+        Main.log(Level.INFO, "Registered " + command.getName() + " command.");
     }
 
     private static PluginCommand getCommand(String name) {
@@ -42,5 +43,9 @@ public class CommandUtils {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public static String generateCommandBasePermission(Module module, CommandClass commandClass) {
+        return "coreplugin." + module.getId() + "command.player." + commandClass.getCommandName() + ".use";
     }
 }
