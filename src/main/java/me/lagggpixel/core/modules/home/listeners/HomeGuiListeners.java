@@ -1,9 +1,9 @@
-package me.lagggpixel.core.modules.homes.listeners;
+package me.lagggpixel.core.modules.home.listeners;
 
 import me.lagggpixel.core.Main;
 import me.lagggpixel.core.data.User;
-import me.lagggpixel.core.modules.homes.data.Home;
-import me.lagggpixel.core.modules.homes.managers.HomeManager;
+import me.lagggpixel.core.modules.home.data.Home;
+import me.lagggpixel.core.modules.home.managers.HomeManager;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

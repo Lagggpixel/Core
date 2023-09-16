@@ -1,13 +1,13 @@
-package me.lagggpixel.core.modules.warps;
+package me.lagggpixel.core.modules.chatgames;
 
 import me.lagggpixel.core.modules.Module;
 import org.jetbrains.annotations.NotNull;
 
-public class WarpsModule extends Module {
-
+public class ChatgamesModule extends Module {
+    @NotNull
     @Override
-    public @NotNull String getId() {
-        return "warps";
+    public String getId() {
+        return "chatgames";
     }
 
     @Override

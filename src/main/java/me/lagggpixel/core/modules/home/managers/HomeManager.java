@@ -1,8 +1,8 @@
-package me.lagggpixel.core.modules.homes.managers;
+package me.lagggpixel.core.modules.home.managers;
 
 import me.lagggpixel.core.Main;
 import me.lagggpixel.core.data.User;
-import me.lagggpixel.core.modules.homes.data.Home;
+import me.lagggpixel.core.modules.home.data.Home;
 import me.lagggpixel.core.utils.ChatUtil;
 import me.lagggpixel.core.utils.TeleportUtils;
 import net.kyori.adventure.text.Component;

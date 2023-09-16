@@ -1,19 +1,20 @@
 package me.lagggpixel.core;
 
-import me.lagggpixel.core.commands.DebugCommands;
 import me.lagggpixel.core.data.DelayTeleport;
 import me.lagggpixel.core.data.Lang;
 import me.lagggpixel.core.data.User;
-import me.lagggpixel.core.data.UserUtils;
+import me.lagggpixel.core.utils.UserUtils;
 import me.lagggpixel.core.listeners.onPlayerJoin;
 import me.lagggpixel.core.modules.Module;
-import me.lagggpixel.core.modules.homes.HomeModule;
-import me.lagggpixel.core.modules.homes.data.Home;
+import me.lagggpixel.core.modules.chat.ChatModule;
+import me.lagggpixel.core.modules.chatgames.ChatgamesModule;
+import me.lagggpixel.core.modules.home.HomeModule;
+import me.lagggpixel.core.modules.home.data.Home;
 import me.lagggpixel.core.modules.inventory.InventoryModule;
 import me.lagggpixel.core.modules.rtp.RtpModule;
 import me.lagggpixel.core.modules.spawn.SpawnModule;
 import me.lagggpixel.core.modules.staff.StaffModule;
-import me.lagggpixel.core.utils.CommandUtils;
+import me.lagggpixel.core.modules.warp.WarpModule;
 import me.lagggpixel.core.utils.TeleportUtils;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
@@ -43,11 +44,16 @@ public final class Main extends JavaPlugin {
     private final Map<UUID, DelayTeleport> delayTeleportMap = new HashMap<>();
 
     private final @NotNull HashMap<String, Module> modules = new HashMap<>();
+    private final @NotNull Module chatModule = new ChatModule();
+    private final @NotNull Module chatgamesModule = new ChatgamesModule();
     private final @NotNull Module homeModule = new HomeModule();
-    private final @NotNull Module spawnModule = new SpawnModule();
-    private final @NotNull Module staffModule = new StaffModule();
     private final @NotNull Module inventoryModule = new InventoryModule();
     private final @NotNull Module rtpModule = new RtpModule();
+    private final @NotNull Module spawnModule = new SpawnModule();
+    private final @NotNull Module staffModule = new StaffModule();
+    private final @NotNull Module warpModule = new WarpModule();
+
+
 
     @Override
     public void onEnable() {
@@ -60,15 +66,16 @@ public final class Main extends JavaPlugin {
 
         registerListeners();
 
-        CommandUtils.registerCommand(new DebugCommands());
-
         TeleportUtils teleportUtils = new TeleportUtils();
 
+        modules.put(chatModule.getId(), chatModule);
+        modules.put(chatgamesModule.getId(), chatgamesModule);
         modules.put(homeModule.getId(), homeModule);
-        modules.put(spawnModule.getId(), spawnModule);
-        modules.put(staffModule.getId(), staffModule);
         modules.put(inventoryModule.getId(), inventoryModule);
         modules.put(rtpModule.getId(), rtpModule);
+        modules.put(spawnModule.getId(), spawnModule);
+        modules.put(staffModule.getId(), staffModule);
+        modules.put(warpModule.getId(), warpModule);
 
         modules.forEach((k, v) -> {
             v.initialize();
@@ -101,10 +108,6 @@ public final class Main extends JavaPlugin {
 
     public static @NotNull PluginManager getPluginManager() {
         return INSTANCE.getServer().getPluginManager();
-    }
-
-    public Map<UUID, DelayTeleport> getDelayTeleportMap() {
-        return delayTeleportMap;
     }
 
     private void loadLangConfig() {

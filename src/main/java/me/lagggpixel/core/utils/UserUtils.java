@@ -1,6 +1,7 @@
-package me.lagggpixel.core.data;
+package me.lagggpixel.core.utils;
 
 import me.lagggpixel.core.Main;
+import me.lagggpixel.core.data.User;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
