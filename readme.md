@@ -1,6 +1,47 @@
 # Core plugin for InfiniteMinecrafters server
 
-## Module
+## Making changes
+### Commits
+
+Commit messages should be structured like this:
+
+
+```
+<type>[optional scope]: <description>
+# OR, FOR BREAKING CHANGES
+<type>[optional scope]!: <description>
+
+[optional body]
+
+[optional footer(s)]
+```
+
+...where `type` can be any of the following:
+
+```
+feat: Features
+fix: Bug fixes
+docs: Documentation
+style: Styles
+refactor: Code Refactoring
+perf: Performance Improvements
+test: Tests
+build: Build changes
+ci: CI Config
+chore: Chores (other changes)
+revert: Revert a commit
+```
+
+### Examples
+```
+fix(modules): load crash due to thread unsafety
+```
+
+```
+build: change maven artifactId
+```
+
+## Modules
 - Chat
 - Chat games
 - homes
@@ -39,3 +80,11 @@ Todo list:
 - Add a `warp <warp name>` subcommand
 - Add a `warp create <name>` subcommand
 - Add a `warp delete <name>` subcommand
+
+### Spawn Module
+Todo list:
+- Add a `spawn <player>` subcommand
+- Add a `setspawn` command class
+- Add tab completion for `spawn` command
+- Add appropriate permissions for `spawn` command
+- Add a `spawn set` subcommand
