@@ -1,14 +1,12 @@
 package me.lagggpixel.core;
 
-import me.lagggpixel.core.data.DelayTeleport;
 import me.lagggpixel.core.data.Lang;
 import me.lagggpixel.core.data.User;
-import me.lagggpixel.core.utils.DiscordUtils;
-import me.lagggpixel.core.utils.UserUtils;
 import me.lagggpixel.core.listeners.onPlayerJoin;
 import me.lagggpixel.core.modules.Module;
 import me.lagggpixel.core.modules.chat.ChatModule;
 import me.lagggpixel.core.modules.chatgames.ChatgamesModule;
+import me.lagggpixel.core.modules.discord.DiscordModule;
 import me.lagggpixel.core.modules.home.HomeModule;
 import me.lagggpixel.core.modules.home.data.Home;
 import me.lagggpixel.core.modules.inventory.InventoryModule;
@@ -16,7 +14,9 @@ import me.lagggpixel.core.modules.rtp.RtpModule;
 import me.lagggpixel.core.modules.spawn.SpawnModule;
 import me.lagggpixel.core.modules.staff.StaffModule;
 import me.lagggpixel.core.modules.warp.WarpModule;
+import me.lagggpixel.core.utils.DiscordUtils;
 import me.lagggpixel.core.utils.TeleportUtils;
+import me.lagggpixel.core.utils.UserUtils;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.plugin.PluginManager;
@@ -45,6 +45,7 @@ public final class Main extends JavaPlugin {
     private final @NotNull HashMap<String, Module> modules = new HashMap<>();
     private final @NotNull Module chatModule = new ChatModule();
     private final @NotNull Module chatgamesModule = new ChatgamesModule();
+    private final @NotNull Module discordModule = new DiscordModule();
     private final @NotNull Module homeModule = new HomeModule();
     private final @NotNull Module inventoryModule = new InventoryModule();
     private final @NotNull Module rtpModule = new RtpModule();
@@ -70,6 +71,7 @@ public final class Main extends JavaPlugin {
 
         modules.put(chatModule.getId(), chatModule);
         modules.put(chatgamesModule.getId(), chatgamesModule);
+        modules.put(discordModule.getId(), discordModule);
         modules.put(homeModule.getId(), homeModule);
         modules.put(inventoryModule.getId(), inventoryModule);
         modules.put(rtpModule.getId(), rtpModule);
