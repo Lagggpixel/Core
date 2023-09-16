@@ -10,11 +10,11 @@ import me.lagggpixel.core.modules.discord.DiscordModule;
 import me.lagggpixel.core.modules.home.HomeModule;
 import me.lagggpixel.core.modules.home.data.Home;
 import me.lagggpixel.core.modules.inventory.InventoryModule;
+import me.lagggpixel.core.modules.restart.RestartModule;
 import me.lagggpixel.core.modules.rtp.RtpModule;
 import me.lagggpixel.core.modules.spawn.SpawnModule;
 import me.lagggpixel.core.modules.staff.StaffModule;
 import me.lagggpixel.core.modules.warp.WarpModule;
-import me.lagggpixel.core.utils.DiscordUtils;
 import me.lagggpixel.core.utils.TeleportUtils;
 import me.lagggpixel.core.utils.UserUtils;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -48,6 +48,7 @@ public final class Main extends JavaPlugin {
     private final @NotNull Module discordModule = new DiscordModule();
     private final @NotNull Module homeModule = new HomeModule();
     private final @NotNull Module inventoryModule = new InventoryModule();
+    private final @NotNull Module restartModule = new RestartModule();
     private final @NotNull Module rtpModule = new RtpModule();
     private final @NotNull Module spawnModule = new SpawnModule();
     private final @NotNull Module staffModule = new StaffModule();
@@ -67,13 +68,13 @@ public final class Main extends JavaPlugin {
         registerListeners();
 
         TeleportUtils.startTeleportTask();
-        DiscordUtils.initialize();
 
         modules.put(chatModule.getId(), chatModule);
         modules.put(chatgamesModule.getId(), chatgamesModule);
         modules.put(discordModule.getId(), discordModule);
         modules.put(homeModule.getId(), homeModule);
         modules.put(inventoryModule.getId(), inventoryModule);
+        modules.put(restartModule.getId(), restartModule);
         modules.put(rtpModule.getId(), rtpModule);
         modules.put(spawnModule.getId(), spawnModule);
         modules.put(staffModule.getId(), staffModule);
