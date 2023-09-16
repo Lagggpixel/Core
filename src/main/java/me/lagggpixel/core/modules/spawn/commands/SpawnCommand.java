@@ -33,7 +33,7 @@ public class SpawnCommand extends CommandClass {
 
     @Override
     public List<String> getCommandAliases() {
-        return Collections.emptyList();
+        return List.of();
     }
 
     @Override
