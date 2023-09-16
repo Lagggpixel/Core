@@ -9,18 +9,11 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitTask;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
 
 public class HomeManager {
 
     public final Component HOME_GUI_NAME = ChatUtils.convertStringWithColorCodesToComponent("&aHomes");
     public final NamespacedKey HOME_ITEM_NAMESPACE_KEY = new NamespacedKey(Main.getInstance(), "HOME_NAME");
-
-    private final Map<UUID, BukkitTask> teleportTasks = new HashMap<>();
 
     public void teleportToHome(Player player, Home home) {
         TeleportUtils.teleportWithDelay(player, home.location(),  home.name() + " home");
