@@ -1,5 +1,6 @@
 package me.lagggpixel.core;
 
+import me.lagggpixel.core.commands.DebugCommands;
 import me.lagggpixel.core.data.DelayTeleport;
 import me.lagggpixel.core.data.Lang;
 import me.lagggpixel.core.data.User;
@@ -12,6 +13,7 @@ import me.lagggpixel.core.modules.inventory.InventoryModule;
 import me.lagggpixel.core.modules.rtp.RtpModule;
 import me.lagggpixel.core.modules.spawn.SpawnModule;
 import me.lagggpixel.core.modules.staff.StaffModule;
+import me.lagggpixel.core.utils.CommandUtils;
 import me.lagggpixel.core.utils.TeleportUtils;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
@@ -57,6 +59,8 @@ public final class Main extends JavaPlugin {
         userData = UserUtils.loadData();
 
         registerListeners();
+
+        CommandUtils.registerCommand(new DebugCommands());
 
         TeleportUtils teleportUtils = new TeleportUtils();
 

@@ -1,11 +1,13 @@
 package me.lagggpixel.core.data;
 
-import com.google.gson.Gson;
 import me.lagggpixel.core.Main;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -39,13 +41,7 @@ public class UserUtils {
                 continue;
             }
 
-            User data = null;
-            try {
-                data = getDataFromFile(file);
-            } catch (FileNotFoundException e) {
-                Main.getInstance().getLogger().log(Level.SEVERE, "[Core]: Failed to load one user file.");
-            }
-
+            var data = getDataFromFile(file);
             if (data != null) map.put(uuid, data);
         }
 
@@ -54,38 +50,41 @@ public class UserUtils {
 
     public static void saveData(Map<UUID, User> map) {
         for (User value : map.values()) {
-            try {
-                setData(value);
-            } catch (IOException e) {
-                Main.getInstance().getLogger().log(Level.SEVERE, "[Core]: Player data did not save correctly");
-            }
+            setData(value);
         }
     }
 
     @Nullable
-    public static User getDataFromFile(File file) throws FileNotFoundException {
-        Gson gson = new Gson();
-
-        Reader reader = new FileReader(file);
-        return gson.fromJson(reader, User.class);
+    public static User getDataFromFile(File file) {
+        try {
+            return getPlayerConfig(file).getSerializable(PATH, User.class);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
-    public static void setData(User data) throws IOException {
-        Gson gson = new Gson();
-        File file = getPlayerFile(data.getPlayerUUID());
+    public static void setData(User data) {
+        var file = getPlayerFile(data.getPlayerUUID());
+        var config = YamlConfiguration.loadConfiguration(file);
 
-        Writer writer = new FileWriter(file, false);
+        config.set(PATH, data);
 
-        gson.toJson(data, writer);
-        writer.flush();
-        writer.close();
+        try {
+            config.save(file);
+        } catch (IOException e) {
+            Main.getInstance().getLogger().log(Level.WARNING, "Unable to save player moderation data " + data, e);
+        }
     }
 
-    public static File getPlayerFile(UUID player) {
+    public static FileConfiguration getPlayerConfig(File file) {
+        return YamlConfiguration.loadConfiguration(file);
+    }
+
+    public static File getPlayerFile(UUID uuid) {
         if (!parentFile.exists()) {
             parentFile.mkdirs();
         }
 
-        return new File(parentFile, player.toString() + ".json");
+        return new File(parentFile, uuid.toString() + ".yml");
     }
 }

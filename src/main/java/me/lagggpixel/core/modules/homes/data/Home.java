@@ -13,8 +13,8 @@ import java.util.Objects;
 @Data
 @Getter
 public final class Home implements ConfigurationSerializable {
-    public final String name;
-    public final Location location;
+    private final String name;
+    private final Location location;
 
     /**
      * Constructs a new home.

@@ -19,21 +19,18 @@ import java.util.UUID;
 @AllArgsConstructor
 public class User implements ConfigurationSerializable {
     @NotNull
-    public final UUID playerUUID;
+    private final UUID playerUUID;
 
     @NotNull
-    public String playerName;
+    private String playerName;
 
-    @NotNull
-    public Boolean isVanished;
+    private Map<String, Home> homes;
 
-    @NotNull
-    public Double playerBalance;
+    private double playerBalance;
 
-    @NotNull
-    public Boolean afk;
+    private boolean afk = false;
 
-    public Map<String, Home> homes;
+    private boolean isVanished;
 
     /**
      * Constructs a new user.
@@ -53,19 +50,18 @@ public class User implements ConfigurationSerializable {
         this.playerName = String.valueOf(map.get("name"));
         this.playerUUID = UUID.fromString(String.valueOf(map.get("uuid")));
 
-        this.playerBalance = Double.valueOf(String.valueOf(map.get("balance")));
+        this.playerBalance = Double.parseDouble(String.valueOf(map.get("balance")));
         // noinspection unchecked
         this.homes = (Map<String, Home>) map.get("homes");
 
-        this.isVanished = Boolean.valueOf((String) map.get("vanished"));
-        this.afk = false;
+        this.isVanished = (boolean) map.get("vanished");
     }
 
     @Override
     public @NotNull Map<String, Object> serialize() {
         return new HashMap<>() {{
             put("name", playerName);
-            put("uuid", playerUUID);
+            put("uuid", playerUUID.toString());
 
             put("balance", playerBalance);
             put("homes", homes);
