@@ -1,12 +1,12 @@
-package me.lagggpixel.core.modules.homes.commands;
+package me.lagggpixel.core.modules.home.commands;
 
 import me.lagggpixel.core.Main;
 import me.lagggpixel.core.data.CommandClass;
 import me.lagggpixel.core.data.Lang;
 import me.lagggpixel.core.data.User;
 import me.lagggpixel.core.modules.Module;
-import me.lagggpixel.core.modules.homes.data.Home;
-import me.lagggpixel.core.modules.homes.managers.HomeManager;
+import me.lagggpixel.core.modules.home.data.Home;
+import me.lagggpixel.core.modules.home.managers.HomeManager;
 import me.lagggpixel.core.utils.ChatUtil;
 import me.lagggpixel.core.utils.CommandUtils;
 import org.bukkit.Material;

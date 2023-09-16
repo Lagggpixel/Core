@@ -1,4 +1,4 @@
-package me.lagggpixel.core.modules.homes.data;
+package me.lagggpixel.core.modules.home.data;
 
 import lombok.Data;
 import lombok.Getter;

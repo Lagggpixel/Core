@@ -1,9 +1,9 @@
-package me.lagggpixel.core.modules.homes;
+package me.lagggpixel.core.modules.home;
 
 import me.lagggpixel.core.modules.Module;
-import me.lagggpixel.core.modules.homes.commands.HomeCommands;
-import me.lagggpixel.core.modules.homes.listeners.HomeGuiListeners;
-import me.lagggpixel.core.modules.homes.managers.HomeManager;
+import me.lagggpixel.core.modules.home.commands.HomeCommands;
+import me.lagggpixel.core.modules.home.listeners.HomeGuiListeners;
+import me.lagggpixel.core.modules.home.managers.HomeManager;
 import me.lagggpixel.core.utils.CommandUtils;
 import org.jetbrains.annotations.NotNull;
 
