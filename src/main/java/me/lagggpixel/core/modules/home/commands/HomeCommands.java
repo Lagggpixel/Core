@@ -47,7 +47,7 @@ public class HomeCommands extends CommandClass implements Listener {
 
     @Override
     public List<String> getCommandAliases() {
-        return List.of("homes");
+        return List.of("homes", "sethome", "delhome");
     }
 
     @Override
@@ -70,81 +70,107 @@ public class HomeCommands extends CommandClass implements Listener {
         UUID playerUUID = player.getUniqueId();
         User user = Main.getUser(playerUUID);
 
-        if (args.length == 0) {
-            openHomesGUI(player, user);
+        if (label.equals("homes") || label.equals("home")) {
+
+            if (args.length == 0) {
+                openHomesGUI(player, user);
+                return true;
+            }
+
+            if (args[0].equalsIgnoreCase("list")) {
+                openHomesGUI(player, user);
+                return true;
+            }
+
+            if (args[0].equalsIgnoreCase("set")) {
+
+                if (args.length != 2) {
+                    player.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix(null));
+                    return true;
+                }
+
+                handleCreateHome(player, user, args[1]);
+
+                return true;
+            }
+
+            if (args[0].equalsIgnoreCase("del") || args[0].equalsIgnoreCase("delete")) {
+
+                if (args.length != 2) {
+                    player.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix(null));
+                    return true;
+                }
+
+
+                handleDeleteHome(player, user, args[1]);
+                return true;
+            }
+
+            player.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix(null));
+
             return true;
         }
-
-        if (args[0].equalsIgnoreCase("list")) {
-            // Open homes GUI
-            openHomesGUI(player, user);
-            return true;
-        }
-
-        if (args[0].equalsIgnoreCase("set")) {
-
-            if (args.length != 2) {
+        if (label.equals("sethome")) {
+            if (args.length != 1) {
                 player.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix(null));
                 return true;
             }
 
-            // Checks if the player can create more homes
-
-            String homeName = args[1];
-
-            if (user.getHomes().containsKey(homeName)) {
-                player.sendMessage(Lang.HOME_ALREADY_EXIST.toComponentWithPrefix(Map.of(
-                        "%home%", homeName
-                )));
-                return true;
-            }
-
-            if (!isHomeNameValid(homeName)) {
-                player.sendMessage(Lang.HOME_NAME_INVALID.toComponentWithPrefix(null));
-                return true;
-            }
-
-            Home home = homeManager.createHomeObject(homeName, player.getLocation());
-            homeManager.setHome(user, homeName, home);
-
-            player.sendMessage(Lang.HOME_CREATED.toComponentWithPrefix(Map.of(
-                    "%home%", homeName
-            )));
+            handleCreateHome(player, user, args[0]);
 
             return true;
         }
-
-        if (args[0].equalsIgnoreCase("del") || args[0].equalsIgnoreCase("delete")) {
-
-            if (args.length != 2) {
+        if (label.equals("delhome")) {
+            if (args.length != 1) {
                 player.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix(null));
                 return true;
             }
-
-            String homeName = args[1];
-
-            if (!user.getHomes().containsKey(homeName)) {
-                player.sendMessage(Lang.HOME_DOES_NOT_EXIST.toComponentWithPrefix(Map.of(
-                        "%home%", homeName
-                )));
-                return true;
-            }
-
-            homeManager.deleteHome(user, homeName);
-
-            player.sendMessage(Lang.HOME_DELETED.toComponentWithPrefix(Map.of(
-                    "%home%", homeName
-            )));
-
+            handleDeleteHome(player, user, args[0]);
             return true;
         }
 
         player.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix(null));
-
         return true;
     }
 
-    private void openHomesGUI(Player player, User user) {
+    private void handleCreateHome(Player player, @NotNull User user, String homeName) {
+        if (user.getHomes().containsKey(homeName)) {
+            player.sendMessage(Lang.HOME_ALREADY_EXIST.toComponentWithPrefix(Map.of(
+                    "%home%", homeName
+            )));
+            return;
+        }
+
+        if (homeNameInvalid(homeName)) {
+            player.sendMessage(Lang.HOME_NAME_INVALID.toComponentWithPrefix(null));
+            return;
+        }
+
+        Home home = homeManager.createHomeObject(homeName, player.getLocation());
+        homeManager.setHome(user, homeName, home);
+
+        player.sendMessage(Lang.HOME_CREATED.toComponentWithPrefix(Map.of(
+                "%home%", homeName
+        )));
+
+    }
+
+    private void handleDeleteHome(Player player, @NotNull User user, String homeName) {
+        if (!user.getHomes().containsKey(homeName)) {
+            player.sendMessage(Lang.HOME_DOES_NOT_EXIST.toComponentWithPrefix(Map.of(
+                    "%home%", homeName
+            )));
+            return;
+        }
+
+        homeManager.deleteHome(user, homeName);
+
+        player.sendMessage(Lang.HOME_DELETED.toComponentWithPrefix(Map.of(
+                "%home%", homeName
+        )));
+    }
+
+    private void openHomesGUI(@NotNull Player player, @NotNull User user) {
         Inventory gui = player.getServer().createInventory(null, 27, homeManager.HOME_GUI_NAME);
 
         for (Map.Entry<String, Home> homeEntry : user.getHomes().entrySet()) {
@@ -155,7 +181,7 @@ public class HomeCommands extends CommandClass implements Listener {
         player.openInventory(gui);
     }
 
-    private ItemStack createHomeItem(String homeName) {
+    private @NotNull ItemStack createHomeItem(String homeName) {
 
         ItemStack item = new ItemStack(Material.PLAYER_HEAD);
         ItemMeta meta = item.getItemMeta();
@@ -174,20 +200,20 @@ public class HomeCommands extends CommandClass implements Listener {
         return null;
     }
 
-    public boolean isHomeNameValid(String homeName) {
+    private boolean homeNameInvalid(@NotNull String homeName) {
         int minLength = 3;
         int maxLength = 20;
 
         if (homeName.length() < minLength || homeName.length() > maxLength) {
-            return false;
+            return true;
         }
 
         // Check if the home name contains special characters
         if (!homeName.matches("^[a-zA-Z0-9]+$")) {
-            return false;
+            return true;
         }
 
-        return true;
+        return false;
     }
 
 }

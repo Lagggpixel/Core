@@ -52,7 +52,7 @@ public class User implements ConfigurationSerializable {
 
     public User(@NotNull Map<String, Object> map) {
         this.playerName = String.valueOf(map.get("name"));
-        this.playerUUID = UUID.fromString(String.valueOf(map.get("uuid")));
+            this.playerUUID = UUID.fromString(String.valueOf(map.get("uuid")));
 
         this.playerBalance = Double.parseDouble(String.valueOf(map.get("balance")));
         // noinspection unchecked
