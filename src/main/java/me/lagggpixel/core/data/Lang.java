@@ -9,6 +9,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 
+@Getter
 public enum Lang {
 
     PREFIX("prefix",  "&#fb0000I&#f4011bn&#ec0335f&#e50450i&#de056bn&#d60685i&#cf08a0t&#c709bae &#c00ad5M&#b90bf0i&#b216fbn&#ac2bf7e&#a63ff3c&#a054efr&#9a68eba&#947de6f&#8e91e2t&#88a6dee&#82badar&#7ccfd6s &r&7» &r"),
@@ -38,6 +39,24 @@ public enum Lang {
     SPAWN_NO_SET_SPAWN("spawn.no_set_spawn", "&aNo spawn is set, therefore you cannot teleport to spawn,"),
     SPAWN_SUCCESSFULLY_SET("spawn.successfully_set", "&aYou have successfully set the new spawn location to your current location"),
 
+    SN_WORLD_NO_OVERWORLD("skipnight.world_not_overworld", "&cYou must be in the overworld to start a vote!"),
+    SN_IN_BED_VOTED_YES("skipnight.in_bed_voted_yes", "&aYou are now in bed, automatically voting yes."),
+    SN_IN_BED_NO_VOTE_IN_PROGRESS("skipnight.in_bed_no_vote_in_progress", "&aStart a vote to skip the night?"),
+    SN_VOTED_SELF("skipnight.voted_self", "&aYou voted &9&l%status% &r&a."),
+    SN_AFK("skipnight.afk", "&aYou are currently afk, your vote will not count."),
+    SN_BACK_FROM_AFK("skipnight.back_from_afk", "&aWelcome back from afk."),
+    SN_VOTE_STARTED("skipnight.vote_started", "&a%player% has started a vote to skip the night."),
+    SN_LEFT_WORLD("skipnight.left_world", "&aYou left the world, your vote will not count."),
+    SN_ALREADY_VOTED("skipnight.already_voted", "&cYou have already voted!"),
+    SN_CAN_ONLY_VOTE_AT_NIGHT("skipnight.can_only_vote_at_night", "&aYou can only start a vote at night!"),
+    SN_NO_VOTE_WHILE_AFK("skipnight.no_vote_while_afk", "You cannot start a vote while afk!"),
+    SN_VOTE_ALREADY_IN_PROGRESS("skipnight.vote_already_in_progress", "&aVote already in progress!"),
+    SN_TEN_SECOND_LEFT("skipnight.ten_seconds_left", "&9&l10 &r&aseconds left to vote!"),
+    SN_ALREADY_DAY_BOSS_BAR("skipnight.boss_bar.already_night", "It is already day time!"),
+    SN_VOTE_PASSED_BOSS_BAR("skipnight.boss_bar.vote_passed", "Vote passed!"),
+    SN_VOTE_FAILED_BOSS_BAR("skipnight.boss_bar.vote_failed", "Vote failed!"),
+    SN_ALL_PLAYERS_VOTED_BOSS_BAR("skipnight.boss_bar.all_players_voted", "All players have voted!"),
+
     RTP_NO_SAFE_LOCATION("rtp.no_safe_location", "&aNo safe location was found, please try again."),
     RTP_ATTEMPTING_TO_FIND_LOCATION("rtp.attempting_to_find_location", "&aAttempting to find a location. Attempt %num% out of %max%.");
 
@@ -45,9 +64,7 @@ public enum Lang {
      * -- GETTER --
      *  Get the path to the string.
      */
-    @Getter
     private final String path;
-    @Getter
     private final String def;
     private static YamlConfiguration LANG;
 
