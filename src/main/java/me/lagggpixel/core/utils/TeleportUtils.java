@@ -66,7 +66,6 @@ public class TeleportUtils {
 
 
     public static void cancelTeleport(Player player, String reason) {
-        // Check if there is a teleport task for the player and cancel it
         DelayTeleport teleportTask = teleportTasks.get(player);
         teleportTasks.remove(player, teleportTask);
 
