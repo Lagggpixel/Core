@@ -1,4 +1,4 @@
-package me.lagggpixel.core.utils;
+package me.lagggpixel.core.modules.discord.managers;
 
 import org.apache.commons.codec.binary.Base64;
 import org.bukkit.Bukkit;
@@ -13,23 +13,21 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class NMSUtils {
-    public static final Pattern TEXTURE_URL_PATTERN = Pattern.compile("https?://.+(?<texture>\\w{64})\"");
+public class NMSManager {
+    protected String versionPrefix = "";
+    protected boolean failed = false;
 
-    protected static String versionPrefix = "";
-    protected static boolean failed = false;
+    protected Class<?> class_CraftPlayer;
+    protected Class<?> class_GameProfile;
+    protected Class<?> class_GameProfileProperty;
+    protected Class<?> class_EntityPlayer;
+    protected Method method_CraftPlayer_getHandle;
+    protected Method method_EntityPlayer_getGameProfile;
+    public Method method_GameProfile_getProperties;
+    protected Field field_PropertyMap_properties;
+    public Field field_GameProfileProperty_value;
 
-    protected static Class<?> class_CraftPlayer;
-    protected static Class<?> class_GameProfile;
-    protected static Class<?> class_GameProfileProperty;
-    protected static Class<?> class_EntityPlayer;
-    protected static Method method_CraftPlayer_getHandle;
-    protected static Method method_EntityPlayer_getGameProfile;
-    public static Method method_GameProfile_getProperties;
-    protected static Field field_PropertyMap_properties;
-    public static Field field_GameProfileProperty_value;
-
-    static {
+    {
         String className = Bukkit.getServer().getClass().getName();
         String[] packages = className.split("\\.");
         if (packages.length == 5) {
@@ -70,24 +68,25 @@ public class NMSUtils {
         }
     }
 
-    public static Class<?> getClass(String className) {
+    public Class<?> getClass(String className) {
         Class<?> result = null;
         try {
-            result = NMSUtils.class.getClassLoader().loadClass(className);
-        } catch (Exception ignored) {}
+            result = NMSManager.class.getClassLoader().loadClass(className);
+        } catch (Exception ignored) {
+        }
         return result;
     }
 
-    public static Class<?> fixBukkitClass(String className, String... alternateClassNames) throws ClassNotFoundException {
+    public Class<?> fixBukkitClass(String className, String... alternateClassNames) throws ClassNotFoundException {
         List<String> classNames = new ArrayList<>();
         classNames.add(className);
         classNames.addAll(Arrays.asList(alternateClassNames));
 
         for (String name : classNames) {
             try {
-                // Try without prefix, Spigot 1.17
-                return NMSUtils.class.getClassLoader().loadClass(name);
-            } catch (ClassNotFoundException ignored) {}
+                return NMSManager.class.getClassLoader().loadClass(name);
+            } catch (ClassNotFoundException ignored) {
+            }
 
             if (!versionPrefix.isEmpty()) {
                 name = name.replace("org.bukkit.craftbukkit.", "org.bukkit.craftbukkit." + versionPrefix);
@@ -95,13 +94,14 @@ public class NMSUtils {
             }
 
             try {
-                return NMSUtils.class.getClassLoader().loadClass(name);
-            } catch (ClassNotFoundException ignored) {}
+                return NMSManager.class.getClassLoader().loadClass(name);
+            } catch (ClassNotFoundException ignored) {
+            }
         }
         throw new ClassNotFoundException("Could not find " + className);
     }
 
-    public static Object getHandle(Player player) {
+    public Object getHandle(Player player) {
         if (failed) return null;
 
         try {
@@ -112,7 +112,7 @@ public class NMSUtils {
         return null;
     }
 
-    public static Object getGameProfile(Player player) {
+    public Object getGameProfile(Player player) {
         if (failed) return null;
 
         Object handle = getHandle(player);
@@ -126,11 +126,11 @@ public class NMSUtils {
         return null;
     }
 
-    public static Object getTextureProperty(Object propertyMap) {
+    public Object getTextureProperty(Object propertyMap) {
         if (failed) return null;
 
         try {
-            Object multi = NMSUtils.field_PropertyMap_properties.get(propertyMap);
+            Object multi = field_PropertyMap_properties.get(propertyMap);
             //noinspection rawtypes
             Iterator it = ((Iterable) multi.getClass()
                     .getMethod("get", Object.class)
@@ -144,7 +144,7 @@ public class NMSUtils {
         return null;
     }
 
-    public static String getTexture(Player player) {
+    public String getTexture(Player player) {
         if (failed) return null;
 
         try {
@@ -155,7 +155,7 @@ public class NMSUtils {
             if (textureProperty != null) {
                 String textureB64 = (String) field_GameProfileProperty_value.get(textureProperty);
                 String textureData = new String(Base64.decodeBase64(textureB64));
-                Matcher matcher = TEXTURE_URL_PATTERN.matcher(textureData);
+                Matcher matcher = Pattern.compile("https?://.+(?<texture>\\w{64})\"").matcher(textureData);
                 if (matcher.find()) return matcher.group("texture");
             }
         } catch (Throwable e) {

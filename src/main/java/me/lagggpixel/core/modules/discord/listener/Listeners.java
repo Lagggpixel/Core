@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class Listeners implements Listener {
 
-    DiscordManager discordManager;
+    private final DiscordManager discordManager;
 
     public Listeners(DiscordManager discordManager) {
         Main.getPluginManager().registerEvents(this, Main.getInstance());
@@ -21,17 +21,17 @@ public class Listeners implements Listener {
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
     public void PlayerJoinEvent(@NotNull PlayerJoinEvent event) {
-        discordManager.sendEmbed(discordManager.createJoinMessageEmbed(event));
+        discordManager.sendEmbed(discordManager.MESSAGING_CHANNEL, discordManager.createJoinMessageEmbed(event));
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
     public void PlayerQuitEvent(@NotNull PlayerQuitEvent event) {
-        discordManager.sendEmbed(discordManager.createQuitMessageEmbed(event));
+        discordManager.sendEmbed(discordManager.MESSAGING_CHANNEL, discordManager.createQuitMessageEmbed(event));
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
     public void PlayerAsyncChatEvent(AsyncChatEvent event) {
-        discordManager.sendEmbed(discordManager.createChatEmbed(event));
+        discordManager.sendEmbed(discordManager.MESSAGING_CHANNEL, discordManager.createChatEmbed(event));
     }
 
 }

@@ -8,6 +8,7 @@ import me.lagggpixel.core.modules.home.data.Home;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,6 +33,9 @@ public class User implements ConfigurationSerializable {
 
     private boolean isVanished;
 
+    @Nullable
+    private Long discordId;
+
     /**
      * Constructs a new user.
      *
@@ -46,7 +50,7 @@ public class User implements ConfigurationSerializable {
         isVanished = false;
     }
 
-    public User(Map<String, Object> map) {
+    public User(@NotNull Map<String, Object> map) {
         this.playerName = String.valueOf(map.get("name"));
         this.playerUUID = UUID.fromString(String.valueOf(map.get("uuid")));
 
@@ -55,6 +59,7 @@ public class User implements ConfigurationSerializable {
         this.homes = (Map<String, Home>) map.get("homes");
 
         this.isVanished = (boolean) map.get("vanished");
+        this.discordId = Long.getLong(String.valueOf(map.get("discordId")));
     }
 
     @Override
@@ -62,6 +67,7 @@ public class User implements ConfigurationSerializable {
         return new HashMap<>() {{
             put("name", playerName);
             put("uuid", playerUUID.toString());
+            put("discordId", discordId);
 
             put("balance", playerBalance);
             put("homes", homes);
