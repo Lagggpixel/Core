@@ -1,12 +1,14 @@
 package me.lagggpixel.core.modules.discord.managers;
 
 import io.papermc.paper.event.player.AsyncChatEvent;
+import lombok.Getter;
 import me.clip.placeholderapi.PlaceholderAPI;
 import me.lagggpixel.core.utils.HookUtils;
-import me.lagggpixel.core.utils.NMSUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
@@ -23,16 +25,31 @@ import java.util.UUID;
 import java.util.regex.Pattern;
 
 public class DiscordManager {
-    private final static String CONSOLE_CHANNEL_ID = "1152691818916487348";
-    private final static String FEATURE_TESTING_ID = "1152311090332586045";
 
-    public static JDA jda;
+    private final NMSManager nmsManager;
+    public final TextChannel CONSOLE_CHANNEL;
+    public final TextChannel MESSAGING_CHANNEL;
 
-    public void initialize() {
+    @Getter private final JDA jda;
+    @Getter private final Guild guild;
+
+    public DiscordManager(NMSManager nmsManager) {
+        this.nmsManager = nmsManager;
         jda = JDABuilder.createDefault("MTAwMTU4MDA4NjE4Njc1NDIwOQ.GCSQD2.xpfFptXlfirUex4nO9DOx4gLJXClbLjYUvTvyk").build();
+        guild = jda.getGuilds().get(0);
+        MESSAGING_CHANNEL = jda.getTextChannelById("1152311090332586045");
+        CONSOLE_CHANNEL = jda.getTextChannelById("1152691818916487348");
     }
 
     // "MTE1MjU5ODM3ODIwMzU4NjY5NQ.GBogbS.tKNCHVoS5Qa8N4DWH9EgMlwbfw7a7qQsZVIiMw"
+
+    public Member getMemberById(String id) {
+        return guild.getMemberById(id);
+    }
+
+    public void sendEmbed(@NotNull TextChannel textChannel, @NotNull MessageEmbed embed) {
+        textChannel.sendMessageEmbeds(embed).queue();
+    }
 
     public @NotNull MessageEmbed createJoinMessageEmbed(@NotNull PlayerJoinEvent event) {
 
@@ -70,16 +87,6 @@ public class DiscordManager {
                 .build();
     }
 
-    public void sendEmbed(MessageEmbed embed) {
-
-        TextChannel textChannel = jda.getTextChannelById(FEATURE_TESTING_ID);
-
-        assert textChannel != null;
-
-        textChannel.sendMessageEmbeds(embed).queue();
-    }
-
-
     private String getAvatarUrl(String username, UUID uuid) {
         String avatarUrl = constructAvatarUrl(username, uuid, "");
         avatarUrl = replacePlaceholdersToDiscord(avatarUrl);
@@ -97,7 +104,7 @@ public class DiscordManager {
     }
 
     private String getAvatarUrl(@NotNull Player player) {
-        String avatarUrl = constructAvatarUrl(player.getName(), player.getUniqueId(), NMSUtils.getTexture(player));
+        String avatarUrl = constructAvatarUrl(player.getName(), player.getUniqueId(), nmsManager.getTexture(player));
         avatarUrl = replacePlaceholdersToDiscord(avatarUrl, player);
         return avatarUrl;
     }
@@ -108,7 +115,7 @@ public class DiscordManager {
             player = Bukkit.getOfflinePlayer(uuid);
         }
         if (StringUtils.isBlank(texture) && player != null && player.isOnline()) {
-            texture = NMSUtils.getTexture(player.getPlayer());
+            texture = nmsManager.getTexture(player.getPlayer());
         }
 
         String avatarUrl = "https://crafatar.com/avatars/{uuid-nodashes}.png?size={size}&overlay#{texture}";

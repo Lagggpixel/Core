@@ -3,10 +3,12 @@ package me.lagggpixel.core.modules.discord;
 import me.lagggpixel.core.modules.Module;
 import me.lagggpixel.core.modules.discord.listener.Listeners;
 import me.lagggpixel.core.modules.discord.managers.DiscordManager;
+import me.lagggpixel.core.modules.discord.managers.NMSManager;
 import org.jetbrains.annotations.NotNull;
 
 public class DiscordModule extends Module {
 
+    NMSManager nmsManager;
     DiscordManager discordManager;
 
     @NotNull
@@ -17,7 +19,8 @@ public class DiscordModule extends Module {
 
     @Override
     public void initialize() {
-discordManager = new DiscordManager();
+        nmsManager = new NMSManager();
+        discordManager = new DiscordManager(nmsManager);
     }
 
     @Override

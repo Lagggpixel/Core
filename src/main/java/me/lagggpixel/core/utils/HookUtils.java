@@ -25,10 +25,10 @@ public class HookUtils {
     public static void unloadPlugin(Plugin plugin) {
         String name = plugin.getName();
         PluginManager pluginManager = Bukkit.getPluginManager();
-        SimpleCommandMap commandMap = null;
-        List<Plugin> plugins = null;
-        Map<String, Plugin> names = null;
-        Map<String, Command> commands = null;
+        SimpleCommandMap commandMap;
+        List<Plugin> plugins;
+        Map<String, Plugin> names;
+        Map<String, Command> commands;
         Map<Event, SortedSet<RegisteredListener>> listeners = null;
 
         boolean reloadListeners = true;
