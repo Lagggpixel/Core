@@ -35,13 +35,13 @@ public class DiscordManager {
 
     public DiscordManager(NMSManager nmsManager) {
         this.nmsManager = nmsManager;
-        jda = JDABuilder.createDefault("MTAwMTU4MDA4NjE4Njc1NDIwOQ.GCSQD2.xpfFptXlfirUex4nO9DOx4gLJXClbLjYUvTvyk").build();
-        guild = jda.getGuilds().get(0);
+        jda = JDABuilder.createDefault("MTE1MjU5ODM3ODIwMzU4NjY5NQ.GBogbS.tKNCHVoS5Qa8N4DWH9EgMlwbfw7a7qQsZVIiMw").build();
+        guild = jda.getGuildById("773814795291328512");
         MESSAGING_CHANNEL = jda.getTextChannelById("1152311090332586045");
         CONSOLE_CHANNEL = jda.getTextChannelById("1152691818916487348");
     }
 
-    // "MTE1MjU5ODM3ODIwMzU4NjY5NQ.GBogbS.tKNCHVoS5Qa8N4DWH9EgMlwbfw7a7qQsZVIiMw"
+    // "MTAwMTU4MDA4NjE4Njc1NDIwOQ.GCSQD2.xpfFptXlfirUex4nO9DOx4gLJXClbLjYUvTvyk"
 
     public Member getMemberById(String id) {
         return guild.getMemberById(id);
