@@ -1,5 +1,5 @@
 items:
-  minecraft;WHEAT:
+  WHEAT:
     buyPrice: 0.0
     sellPrice: 0.0
     orders: []
@@ -12,7 +12,7 @@ items:
       amount: 0
       orders: 0
     last7dInstantSellVolume: 0
-  minecraft;ENCHANTED_BREAD:
+  HAY_BALE:
     buyPrice: 0.0
     sellPrice: 0.0
     orders: []
@@ -25,46 +25,7 @@ items:
       amount: 0
       orders: 0
     last7dInstantSellVolume: 0
-  minecraft;HAY_BALE:
-    buyPrice: 0.0
-    sellPrice: 0.0
-    orders: []
-    offers: []
-    buyVolume:
-      amount: 0
-      offers: 0
-    last7dInstantBuyVolume: 0
-    sellVolume:
-      amount: 0
-      orders: 0
-    last7dInstantSellVolume: 0
-  minecraft;ENCHANTED_HAY_BALE:
-    buyPrice: 0.0
-    sellPrice: 0.0
-    orders: []
-    offers: []
-    buyVolume:
-      amount: 0
-      offers: 0
-    last7dInstantBuyVolume: 0
-    sellVolume:
-      amount: 0
-      orders: 0
-    last7dInstantSellVolume: 0
-  minecraft;SEEDS:
-    buyPrice: 0.0
-    sellPrice: 0.0
-    orders: []
-    offers: []
-    buyVolume:
-      amount: 0
-      offers: 0
-    last7dInstantBuyVolume: 0
-    sellVolume:
-      amount: 0
-      orders: 0
-    last7dInstantSellVolume: 0
-  minecraft;ENCHANTED_SEEDS:
+  SEEDS:
     buyPrice: 0.0
     sellPrice: 0.0
     orders: []
@@ -79,17 +40,13 @@ items:
     last7dInstantSellVolume: 0
 categories:
   Farming:
-    icon: GOLD_HOE
+    icon: GOLDEN_HOE
     items:
       Wheat & Seeds:
         size: 36
         slots:
-          skyblock;WHEAT: 11
-          skyblock;ENCHANTED_BREAD: 12
-          skyblock;HAY_BALE: 13
-          skyblock;ENCHANTED_HAY_BALE: 14
-          skyblock;SEEDS: 15
-          skyblock;ENCHANTED_SEEDS: 22
+          WHEAT: 11
+          HAY_BALE: 12
   Mining:
     icon: DIAMOND_PICKAXE
     items: []
@@ -100,5 +57,5 @@ categories:
     icon: FISHING_ROD
     items: []
   Oddities:
-    icon: ENCHANTMENT_TABLE
+    icon: ENCHANTING_TABLE
     items: []

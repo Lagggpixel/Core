@@ -1,10 +1,10 @@
 package me.lagggpixel.core.modules.bazaar.impl;
 
-import kotlin.Pair;
 import me.lagggpixel.core.modules.bazaar.interfaces.Bazaar;
 import me.lagggpixel.core.modules.bazaar.interfaces.BazaarCategory;
 import me.lagggpixel.core.modules.bazaar.interfaces.BazaarConfigIndexer;
 import me.lagggpixel.core.modules.bazaar.interfaces.BazaarSubItem;
+import me.lagggpixel.core.utils.Pair;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.json.simple.JSONArray;
@@ -26,7 +26,7 @@ public class SkyblockBazaarConfigIndexer implements BazaarConfigIndexer {
     private final Bazaar bazaar;
     private final File items;
 
-    public SkyblockBazaarConfigIndexer(Bazaar bazaar, File items) throws Bazaar.BazaarIOException, Bazaar.BazaarItemNotFoundException {
+    public SkyblockBazaarConfigIndexer(Bazaar bazaar, File items) {
         this.bazaar = bazaar;
         this.items = items;
     }
@@ -76,7 +76,7 @@ public class SkyblockBazaarConfigIndexer implements BazaarConfigIndexer {
             }
         }
 
-        return new Pair<>(bazaarCategories, rawItems);
+        return Pair.of(bazaarCategories, rawItems);
     }
 
     @Override

@@ -4,9 +4,9 @@ import me.lagggpixel.core.modules.bazaar.BazaarModule;
 import me.lagggpixel.core.modules.bazaar.escrow.EscrowTransaction;
 import me.lagggpixel.core.modules.bazaar.interfaces.Bazaar;
 import me.lagggpixel.core.modules.bazaar.interfaces.BazaarSubItem;
+import me.lagggpixel.core.modules.bazaar.utils.gui.BazaarGui;
 import me.lagggpixel.core.utils.ItemBuilder;
-import me.lagggpixel.core.utils.MiscUtil;
-import me.lagggpixel.core.utils.gui.Gui;
+import me.lagggpixel.core.modules.bazaar.utils.BazaarMiscUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -18,11 +18,11 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
-public class BazaarSubItemGui extends Gui {
+public class BazaarSubItemBazaarGui extends BazaarGui {
 
-    public BazaarSubItemGui(Player player, BazaarSubItem item) {
+    public BazaarSubItemBazaarGui(Player player, BazaarSubItem item) {
         super(item.getParent().getCategory().getName() + " ➜ " + ChatColor.stripColor(item.getNamedIcon().toItemStack().getItemMeta().getDisplayName()), 36, new HashMap<String, Runnable>() {{
-            Runnable back = () -> new BazaarCategoryGui(player, item.getParent().getCategory(), false).show(player);
+            Runnable back = () -> new BazaarCategoryBazaarGui(player, item.getParent().getCategory(), false).show(player);
 
             put(ChatColor.GREEN + "Go Back", back);
             put(ChatColor.GOLD + "Go Back", back);
@@ -33,10 +33,10 @@ public class BazaarSubItemGui extends Gui {
                 // TODO: implement graphs
             });
 
-            put(ChatColor.GREEN + "Buy Instantly", () -> new BazaarInstantBuyGui(player, item, 0).show(player));
+            put(ChatColor.GREEN + "Buy Instantly", () -> new BazaarInstantBuyBazaarGui(player, item, 0).show(player));
         }});
 
-        MiscUtil.fillEmpty(this);
+        BazaarMiscUtil.fillEmpty(this);
 
         String name = ChatColor.stripColor(item.getNamedIcon().toItemStack().getItemMeta().getDisplayName());
         AtomicInteger amountToSell = new AtomicInteger();
@@ -45,14 +45,14 @@ public class BazaarSubItemGui extends Gui {
         List<EscrowTransaction> top6SellOrders = BazaarModule.getBazaar().getEscrow().getRankedSellOrders().stream().filter(transaction -> transaction.getSubItem().equals(item)).limit(6).collect(Collectors.toList());
         List<EscrowTransaction> top6BuyOrders = BazaarModule.getBazaar().getEscrow().getRankedBuyOrders().stream().filter(transaction -> transaction.getSubItem().equals(item)).limit(6).collect(Collectors.toList());
 
-        this.addItem(10, new ItemBuilder(ChatColor.GREEN + "Buy Instantly", Material.GOLDEN_HORSE_ARMOR).addLore(Arrays.asList(MiscUtil.buildLore(
+        this.addItem(10, new ItemBuilder(ChatColor.GREEN + "Buy Instantly", Material.GOLDEN_HORSE_ARMOR).addLore(Arrays.asList(BazaarMiscUtil.buildLore(
                 "&8" + name + "\n\n" +
                         "&7Price per unit: &6" + BazaarModule.getBazaar().getEscrow().getBuyPrice(item) + "\n" +
                         "&7Stack price: &6" + BazaarModule.getBazaar().getEscrow().getBuyPrice(item) * 64 + "\n\n" +
                         "&eClick to pick amount!"
         ))).toItemStack());
 
-        this.addItem(11, new ItemBuilder(ChatColor.GOLD + "Sell Instantly", Material.HOPPER).addLore(Arrays.asList(MiscUtil.buildLore(
+        this.addItem(11, new ItemBuilder(ChatColor.GOLD + "Sell Instantly", Material.HOPPER).addLore(Arrays.asList(BazaarMiscUtil.buildLore(
                 "&8" + name + "\n\n" +
                         "&7Inventory: &a" + amountToSell.get() + "\n\n" +
                         "&7Amount: &a" + amountToSell.get() + "&7x\n" +
@@ -63,13 +63,13 @@ public class BazaarSubItemGui extends Gui {
 
         this.addItem(13, item.getItem());
 
-        this.addItem(15, new ItemBuilder(ChatColor.GREEN + "Create Buy Order", Material.MAP).addLore(Arrays.asList(MiscUtil.buildLore(
+        this.addItem(15, new ItemBuilder(ChatColor.GREEN + "Create Buy Order", Material.MAP).addLore(Arrays.asList(BazaarMiscUtil.buildLore(
                 "&8" + name + "\n\n" +
                         "&aTop Orders:\n" + (top6BuyOrders.isEmpty() ? "&c No buy orders!" : top6BuyOrders.stream().map(transaction -> "&8- &6" + transaction.getPrice() + " coins&7 each | &a" + transaction.getAmount() + "&7x from &f1 &7offer").collect(Collectors.joining("\n"))) +
                         (top6BuyOrders.isEmpty() ? "" : "\n&eClick to setup buy order!")
         ))).toItemStack());
 
-        this.addItem(16, new ItemBuilder(ChatColor.GOLD + "Create Sell Offer", Material.MAP).addLore(Arrays.asList(MiscUtil.buildLore(
+        this.addItem(16, new ItemBuilder(ChatColor.GOLD + "Create Sell Offer", Material.MAP).addLore(Arrays.asList(BazaarMiscUtil.buildLore(
                 "&8" + name + "\n\n" +
                         "&6Top Offers:\n" + (top6SellOrders.isEmpty() ? "&c No sell orders!" : top6SellOrders.stream().map(transaction -> "&8- &6" + transaction.getPrice() + " coins&7 each | &a" + transaction.getAmount() + "&7x from &f1 &7offer").collect(Collectors.joining("\n"))) +
                         (top6SellOrders.isEmpty() ? "" : (amountToSell.get() < 1 ? "\n&8None in inventory!" : "\n&eClick to setup sell order!"))

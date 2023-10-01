@@ -1,8 +1,10 @@
-package me.lagggpixel.core.modules.rtp.commands;
+package me.lagggpixel.core.modules.bazaar.commands;
 
 import me.lagggpixel.core.data.CommandClass;
 import me.lagggpixel.core.data.Lang;
-import me.lagggpixel.core.modules.rtp.managers.RtpManager;
+import me.lagggpixel.core.modules.bazaar.BazaarModule;
+import me.lagggpixel.core.modules.bazaar.gui.BazaarCategoryBazaarGui;
+import me.lagggpixel.core.utils.CommandUtils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -11,10 +13,17 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class RtpCommand extends CommandClass {
+public class BazaarCommand extends CommandClass {
+
+    BazaarModule bazaarModule;;
+
+    public BazaarCommand(BazaarModule bazaarModule) {
+        this.bazaarModule = bazaarModule;
+    }
+
     @Override
     public String getCommandName() {
-        return "rtp";
+        return "bazaar";
     }
 
     @Override
@@ -24,12 +33,12 @@ public class RtpCommand extends CommandClass {
 
     @Override
     public List<String> getCommandAliases() {
-        return List.of("randomteleport");
+        return List.of("bazaar", "bz");
     }
 
     @Override
     public String getCommandPermission() {
-        return null;
+        return CommandUtils.generateCommandBasePermission(bazaarModule, this);
     }
 
     @Override
@@ -37,19 +46,15 @@ public class RtpCommand extends CommandClass {
         return null;
     }
 
-    public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String label, String[] args) {
-        if (!(commandSender instanceof Player)) {
+    @Override
+    public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
+
+        if (!(commandSender instanceof Player sender)) {
             commandSender.sendMessage(Lang.PLAYER_ONLY.toComponentWithPrefix(null));
             return true;
         }
 
-        Player sender = (Player) commandSender;
-
-        if (args.length != 0) {
-            sender.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix(null));
-            return true;
-        }
-        RtpManager.teleportRandomly(sender);
+        new BazaarCategoryBazaarGui(sender, BazaarModule.getBazaar().getCategories().stream().filter(category -> category.getName().equals("Farming")).findFirst().get(), false).show(sender);
         return true;
     }
 

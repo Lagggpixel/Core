@@ -1,9 +1,9 @@
-package me.lagggpixel.core.utils.gui;
+package me.lagggpixel.core.modules.bazaar.utils.gui;
 
 import lombok.Getter;
 import me.lagggpixel.core.Main;
-import me.lagggpixel.core.modules.bazaar.gui.BazaarCategoryGui;
-import me.lagggpixel.core.utils.MiscUtil;
+import me.lagggpixel.core.modules.bazaar.gui.BazaarCategoryBazaarGui;
+import me.lagggpixel.core.modules.bazaar.utils.BazaarMiscUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -24,9 +24,9 @@ import java.util.List;
 import java.util.Objects;
 
 @Getter
-public class Gui implements Listener {
+public class BazaarGui implements Listener {
 
-    private static final HashMap<Gui, Boolean> REGISTERED_LISTENERS = new HashMap<>();
+    private static final HashMap<BazaarGui, Boolean> REGISTERED_LISTENERS = new HashMap<>();
 
     public final HashMap<ItemStack, Runnable> specificClickEvents;
     public final HashMap<String, Runnable> clickEvents;
@@ -36,33 +36,27 @@ public class Gui implements Listener {
     public final int slots;
     public String name;
 
-    public Gui(String name, int slots, HashMap<String, Runnable> clickEvents) {
+    public BazaarGui(String name, int slots, HashMap<String, Runnable> clickEvents) {
         this(name, slots, clickEvents, new HashMap<>());
     }
 
-    private static class AbstractCommandGui extends Gui {
+    private static class AbstractCommandBazaarGui extends BazaarGui {
         private final String command;
 
         @SuppressWarnings("unused")
-        public AbstractCommandGui(String command, Player opener) {
+        public AbstractCommandBazaarGui(String command, Player opener) {
             super("Command", 9, new HashMap<>());
 
             this.command = command;
         }
     }
 
-    private static final class SkyblockMenuAbstractGui extends AbstractCommandGui {
-        public SkyblockMenuAbstractGui(Player opener) {
-            super("sb menu", opener);
-        }
-    }
-
-    private static final HashMap<String, Class<? extends Gui>> BACK_BUTTONS = new HashMap<String, Class<? extends Gui>>() {{
-        put("To Bazaar", BazaarCategoryGui.class);
-        put("To SkyBlock Menu", SkyblockMenuAbstractGui.class);
+    private static final HashMap<String, Class<? extends BazaarGui>> BACK_BUTTONS = new HashMap<>() {{
+        put("To Bazaar", BazaarCategoryBazaarGui.class);
     }};
 
-    public Gui(String name, int slots, HashMap<String, Runnable> clickEvents, HashMap<ItemStack, Runnable> specificClickEvents) {
+    public BazaarGui(String name, int slots, HashMap<String, Runnable> clickEvents, HashMap<ItemStack, Runnable> specificClickEvents) {
+        Main.getPluginManager().registerEvents(this, Main.getInstance());
         this.name = name;
         this.slots = slots;
 
@@ -75,8 +69,8 @@ public class Gui implements Listener {
     }
 
     public void show(Player player) {
-        if (this instanceof AbstractCommandGui) {
-            player.performCommand(((AbstractCommandGui) this).command);
+        if (this instanceof AbstractCommandBazaarGui) {
+            player.performCommand(((AbstractCommandBazaarGui) this).command);
             return;
         }
 
@@ -104,6 +98,7 @@ public class Gui implements Listener {
 
         for (ItemStack stack : this.addableItems) inventory.addItem(stack);
 
+        player.closeInventory();
         player.openInventory(inventory);
 
         Bukkit.getPluginManager().registerEvents(this, Main.getInstance());
@@ -146,15 +141,15 @@ public class Gui implements Listener {
             if (!event.getCurrentItem().getItemMeta().hasDisplayName()) return;
 
             if (event.getCurrentItem().getItemMeta().getDisplayName().equals(
-                    MiscUtil.buildCloseButton().getItemMeta().getDisplayName())) {
+                    BazaarMiscUtil.buildCloseButton().getItemMeta().getDisplayName())) {
                 event.getWhoClicked().closeInventory();
                 return;
             }
 
             List<String> lore = event.getCurrentItem().getItemMeta().getLore();
 
-            if (lore != null && lore.size() > 0 && BACK_BUTTONS.containsKey(ChatColor.stripColor(lore.get(0)))) {
-                Class<? extends Gui> clazz = BACK_BUTTONS.get(ChatColor.stripColor(lore.get(0)));
+            if (lore != null && !lore.isEmpty() && BACK_BUTTONS.containsKey(ChatColor.stripColor(lore.get(0)))) {
+                Class<? extends BazaarGui> clazz = BACK_BUTTONS.get(ChatColor.stripColor(lore.get(0)));
 
                 try {
                     clazz.getConstructor(Player.class).newInstance(event.getWhoClicked()).show((Player) event.getWhoClicked());

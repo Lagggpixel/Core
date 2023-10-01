@@ -7,8 +7,8 @@ import java.util.List;
 
 public interface Bazaar {
 
-    String ITEMS_PATH = "bazaar/items.json";
-    String FILE_NAME = "bazaar/bazaar.yml";
+    String ITEMS_PATH = "items.json";
+    String FILE_NAME = "bazaar.yml";
 
     double BAZAAR_TAX = 1.1;
 

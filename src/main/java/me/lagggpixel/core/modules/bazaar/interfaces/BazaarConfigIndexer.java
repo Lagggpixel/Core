@@ -1,11 +1,11 @@
 package me.lagggpixel.core.modules.bazaar.interfaces;
 
-import kotlin.Pair;
 import lombok.Data;
 import me.lagggpixel.core.modules.bazaar.impl.SkyblockBazaarCategory;
 import me.lagggpixel.core.modules.bazaar.impl.SkyblockBazaarItem;
 import me.lagggpixel.core.modules.bazaar.impl.SkyblockBazaarSubItem;
-import me.lagggpixel.core.utils.MiscUtil;
+import me.lagggpixel.core.modules.bazaar.utils.BazaarMiscUtil;
+import me.lagggpixel.core.utils.Pair;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -30,7 +30,7 @@ public interface BazaarConfigIndexer {
                 bazaarItems.add(item.toBazaarEquivalent());
             }
 
-            SkyblockBazaarCategory category = new SkyblockBazaarCategory(this.name, this.icon, this.color, MiscUtil.getPaneColor(this.color), bazaarItems);
+            SkyblockBazaarCategory category = new SkyblockBazaarCategory(this.name, this.icon, this.color, BazaarMiscUtil.getPaneColor(this.color), bazaarItems);
 
             for (BazaarItem item : bazaarItems) {
                 ((SkyblockBazaarItem) item).setCategory(category);
@@ -69,10 +69,10 @@ public interface BazaarConfigIndexer {
         private final int slot;
 
         public BazaarSubItem toBazaarEquivalent() throws Bazaar.BazaarItemNotFoundException {
-            ItemStack icon = MiscUtil.getItem(this.material);
+            ItemStack icon = BazaarMiscUtil.getItem(this.material);
 
             if (icon == null) {
-                throw new Bazaar.BazaarItemNotFoundException("Could not find skyblock or minecraft material: " + this.material);
+                throw new Bazaar.BazaarItemNotFoundException("Could not find material: " + this.material);
             }
 
             return new SkyblockBazaarSubItem(icon, this.slot, this.material ,new ArrayList<>(), new ArrayList<>());

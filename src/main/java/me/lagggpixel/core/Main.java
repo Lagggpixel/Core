@@ -4,6 +4,7 @@ import me.lagggpixel.core.data.Lang;
 import me.lagggpixel.core.data.User;
 import me.lagggpixel.core.listeners.onPlayerJoin;
 import me.lagggpixel.core.modules.Module;
+import me.lagggpixel.core.modules.bazaar.BazaarModule;
 import me.lagggpixel.core.modules.chat.ChatModule;
 import me.lagggpixel.core.modules.chatgames.ChatgamesModule;
 import me.lagggpixel.core.modules.discord.DiscordModule;
@@ -16,7 +17,6 @@ import me.lagggpixel.core.modules.skipnight.SkipNightModule;
 import me.lagggpixel.core.modules.spawn.SpawnModule;
 import me.lagggpixel.core.modules.staff.StaffModule;
 import me.lagggpixel.core.modules.warp.WarpModule;
-import me.lagggpixel.core.utils.ChatUtils;
 import me.lagggpixel.core.utils.TeleportUtils;
 import me.lagggpixel.core.utils.UserUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -47,6 +47,7 @@ public final class Main extends JavaPlugin {
     private static Map<UUID, User> userData;
 
     private final @NotNull HashMap<String, Module> modules = new HashMap<>();
+    private final @NotNull Module bazaarModule = new BazaarModule();
     private final @NotNull Module chatModule = new ChatModule();
     private final @NotNull Module chatgamesModule = new ChatgamesModule();
     private final @NotNull Module discordModule = new DiscordModule();
@@ -74,6 +75,7 @@ public final class Main extends JavaPlugin {
 
         TeleportUtils.startTeleportTask();
 
+        modules.put(bazaarModule.getId(), bazaarModule);
         modules.put(chatModule.getId(), chatModule);
         modules.put(chatgamesModule.getId(), chatgamesModule);
         modules.put(discordModule.getId(), discordModule);

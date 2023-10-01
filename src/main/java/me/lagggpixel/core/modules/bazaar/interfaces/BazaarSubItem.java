@@ -1,7 +1,7 @@
 package me.lagggpixel.core.modules.bazaar.interfaces;
 
 import me.lagggpixel.core.utils.ItemBuilder;
-import me.lagggpixel.core.utils.MiscUtil;
+import me.lagggpixel.core.modules.bazaar.utils.BazaarMiscUtil;
 import org.apache.commons.lang3.text.WordUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemFlag;
@@ -31,7 +31,7 @@ public interface BazaarSubItem {
     }
 
     default ItemStack getItem() {
-        return MiscUtil.getItem(getMaterial());
+        return BazaarMiscUtil.getItem(getMaterial());
     }
 
 }

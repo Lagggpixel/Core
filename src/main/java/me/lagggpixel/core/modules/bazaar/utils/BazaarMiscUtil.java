@@ -1,8 +1,8 @@
-package me.lagggpixel.core.utils;
+package me.lagggpixel.core.modules.bazaar.utils;
 
-import de.tr7zw.changeme.nbtapi.NBTItem;
 import lombok.experimental.UtilityClass;
-import me.lagggpixel.core.utils.gui.Gui;
+import me.lagggpixel.core.modules.bazaar.utils.gui.BazaarGui;
+import me.lagggpixel.core.utils.ItemBuilder;
 import org.apache.commons.lang3.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
@@ -30,7 +30,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
 @UtilityClass
-public class MiscUtil {
+public class BazaarMiscUtil {
 
     private final static String EMPTY = "PLACEHOLDER STRING";
 
@@ -131,36 +131,24 @@ public class MiscUtil {
     }
 
     public ItemStack buildCloseButton() {
-        NBTItem item = new NBTItem(new ItemBuilder(ChatColor.RED + "Close", Material.BARRIER).toItemStack());
-
-        item.setBoolean("close", true);
-
-        return item.getItem();
+        return new ItemBuilder(ChatColor.RED + "Close", Material.BARRIER).toItemStack();
     }
 
     public ItemStack buildBackButton() {
-        NBTItem item = new NBTItem(new ItemBuilder(ChatColor.GREEN + "Go Back", Material.ARROW).addLore(ChatColor.GRAY + "To SkyBlock Menu").toItemStack());
-
-        item.setBoolean("back", true);
-
-        return item.getItem();
+        return new ItemBuilder(ChatColor.GREEN + "Go Back", Material.ARROW).addLore(ChatColor.GRAY + "To SkyBlock Menu").toItemStack();
     }
 
     public ItemStack buildBackButton(String lore) {
-        NBTItem item = new NBTItem(new ItemBuilder(ChatColor.GREEN + "Go Back", Material.ARROW).addLore(MiscUtil.buildLore(lore)).toItemStack());
-
-        item.setBoolean("back", true);
-
-        return item.getItem();
+        return new ItemBuilder(ChatColor.GREEN + "Go Back", Material.ARROW).addLore(BazaarMiscUtil.buildLore(lore)).toItemStack();
     }
 
     public void fillEmpty(Inventory inventory) {
-        fillEmpty(inventory, Material.GRAY_STAINED_GLASS);
+        fillEmpty(inventory, Material.GRAY_STAINED_GLASS_PANE);
     }
 
-    public void fillEmpty(Gui gui) {
-        for (int i = 0; i < gui.getSlots(); i++)
-            gui.addItem(i, new ItemBuilder(" ", Material.GRAY_STAINED_GLASS).toItemStack());
+    public void fillEmpty(BazaarGui bazaarGui) {
+        for (int i = 0; i < bazaarGui.getSlots(); i++)
+            bazaarGui.addItem(i, new ItemBuilder(" ", Material.GRAY_STAINED_GLASS_PANE).toItemStack());
     }
 
     public void fillEmpty(Inventory inventory, Material material) {
@@ -181,29 +169,29 @@ public class MiscUtil {
             inventory.setItem(i, new ItemBuilder(" ", material).toItemStack());
     }
 
-    public void fillBorder(Gui gui) {
-        fillBorder(gui, Material.GRAY_STAINED_GLASS_PANE);
+    public void fillBorder(BazaarGui bazaarGui) {
+        fillBorder(bazaarGui, Material.GRAY_STAINED_GLASS_PANE);
     }
 
-    public void fillBorder(Gui gui, Material material) {
-        for (int i = 0; i < 9; i++) gui.addItem(i, new ItemBuilder(" ", material).toItemStack());
-        for (int i = 45; i < 54; i++) gui.addItem(i, new ItemBuilder(" ", material).toItemStack());
-        for (int i = 9; i < 45; i += 9) gui.addItem(i, new ItemBuilder(" ", material).toItemStack());
-        for (int i = 17; i < 45; i += 9) gui.addItem(i, new ItemBuilder(" ", material).toItemStack());
+    public void fillBorder(BazaarGui bazaarGui, Material material) {
+        for (int i = 0; i < 9; i++) bazaarGui.addItem(i, new ItemBuilder(" ", material).toItemStack());
+        for (int i = 45; i < 54; i++) bazaarGui.addItem(i, new ItemBuilder(" ", material).toItemStack());
+        for (int i = 9; i < 45; i += 9) bazaarGui.addItem(i, new ItemBuilder(" ", material).toItemStack());
+        for (int i = 17; i < 45; i += 9) bazaarGui.addItem(i, new ItemBuilder(" ", material).toItemStack());
     }
 
-    public void fillSidesLeftOneIndented(Gui gui, Material material, int data) {
+    public void fillSidesLeftOneIndented(BazaarGui bazaarGui, Material material, int data) {
         for (int i = 10; i < 45; i += 9)
-            if (gui.getItem(i) == null) gui.addItem(i, new ItemBuilder(" ", material, (short) data).toItemStack());
+            if (bazaarGui.getItem(i) == null) bazaarGui.addItem(i, new ItemBuilder(" ", material, (short) data).toItemStack());
         for (int i = 17; i < 45; i += 9)
-            if (gui.getItem(i) == null) gui.addItem(i, new ItemBuilder(" ", material, (short) data).toItemStack());
+            if (bazaarGui.getItem(i) == null) bazaarGui.addItem(i, new ItemBuilder(" ", material, (short) data).toItemStack());
         for (int i = 0; i < 9; i += 1)
-            if (gui.getItem(i) == null) gui.addItem(i, new ItemBuilder(" ", material, (short) data).toItemStack());
+            if (bazaarGui.getItem(i) == null) bazaarGui.addItem(i, new ItemBuilder(" ", material, (short) data).toItemStack());
 
-        if (gui.getItem(1) == null) gui.addItem(1, new ItemBuilder(" ", material, (short) data).toItemStack());
-        if (gui.getItem(8) == null) gui.addItem(8, new ItemBuilder(" ", material, (short) data).toItemStack());
-        if (gui.getItem(46) == null) gui.addItem(46, new ItemBuilder(" ", material, (short) data).toItemStack());
-        if (gui.getItem(53) == null) gui.addItem(53, new ItemBuilder(" ", material, (short) data).toItemStack());
+        if (bazaarGui.getItem(1) == null) bazaarGui.addItem(1, new ItemBuilder(" ", material, (short) data).toItemStack());
+        if (bazaarGui.getItem(8) == null) bazaarGui.addItem(8, new ItemBuilder(" ", material, (short) data).toItemStack());
+        if (bazaarGui.getItem(46) == null) bazaarGui.addItem(46, new ItemBuilder(" ", material, (short) data).toItemStack());
+        if (bazaarGui.getItem(53) == null) bazaarGui.addItem(53, new ItemBuilder(" ", material, (short) data).toItemStack());
     }
 
     public void fillSides45Slots(Inventory inventory, Material material, int data) {
@@ -537,7 +525,7 @@ public class MiscUtil {
                 int compare = name1.compareTo(name2);
                 if (compare != 0) return compare;
 
-                return MiscUtil.fromRoman(name1) - MiscUtil.fromRoman(name2);
+                return BazaarMiscUtil.fromRoman(name1) - BazaarMiscUtil.fromRoman(name2);
             } else {
                 return name1.compareTo(name2);
             }

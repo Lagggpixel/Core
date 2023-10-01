@@ -1,6 +1,5 @@
 package me.lagggpixel.core.utils;
 
-import de.tr7zw.changeme.nbtapi.NBTItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
@@ -206,46 +205,6 @@ public class ItemBuilder {
         LeatherArmorMeta leather = (LeatherArmorMeta) meta;
         leather.setColor(color);
         item.setItemMeta(leather);
-        return this;
-    }
-
-    public ItemBuilder addNBT(String key, String value) {
-        NBTItem nbt = new NBTItem(item);
-
-        nbt.setString(key, value);
-
-        this.item = nbt.getItem();
-
-        return this;
-    }
-
-    public ItemBuilder addNBT(String key, int value) {
-        NBTItem nbt = new NBTItem(item);
-
-        nbt.setInteger(key, value);
-
-        this.item = nbt.getItem();
-
-        return this;
-    }
-
-    public ItemBuilder addNBT(String key, double value) {
-        NBTItem nbt = new NBTItem(item);
-
-        nbt.setDouble(key, value);
-
-        this.item = nbt.getItem();
-
-        return this;
-    }
-
-    public ItemBuilder addNBT(String key, boolean value) {
-        NBTItem nbt = new NBTItem(item);
-
-        nbt.setBoolean(key, value);
-
-        this.item = nbt.getItem();
-
         return this;
     }
 

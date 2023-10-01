@@ -1,10 +1,10 @@
 package me.lagggpixel.core.modules.bazaar.impl;
 
-import kotlin.Pair;
 import me.lagggpixel.core.Main;
 import me.lagggpixel.core.modules.bazaar.escrow.Escrow;
 import me.lagggpixel.core.modules.bazaar.impl.escrow.SkyblockEscrow;
 import me.lagggpixel.core.modules.bazaar.interfaces.*;
+import me.lagggpixel.core.utils.Pair;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -32,56 +32,46 @@ public class SkyblockBazaar implements Bazaar {
         this.itemsFile = new File(dataFolder, Bazaar.ITEMS_PATH);
         this.file = new File(dataFolder, Bazaar.FILE_NAME);
 
-        try {
-            if (!this.itemsFile.exists()) {
-                String resourcePath = ITEMS_PATH;
-                boolean replace = false;
+        if (!this.itemsFile.exists()) {
+            String resourcePath = ITEMS_PATH;
+            boolean replace = false;
 
-                resourcePath = resourcePath.replace('\\', '/');
-                InputStream in = Main.getInstance().getResource(resourcePath);
-                if (in == null) {
-                    throw new IllegalArgumentException("The embedded resource '" + resourcePath + "' cannot be found in " + this.file);
-                } else {
-                    File outFile = new File(dataFolder, resourcePath);
-                    int lastIndex = resourcePath.lastIndexOf(47);
-                    File outDir = new File(dataFolder, resourcePath.substring(0, Math.max(lastIndex, 0)));
-                    if (!outDir.exists()) {
-                        outDir.mkdirs();
-                    }
-
-                    try {
-                        if (outFile.exists() && !replace) {
-                            Main.log(Level.WARNING, "Could not save " + resourcePath + " to " + outFile + " because " + outFile.getName() + " already exists.");
-                        } else {
-                            OutputStream out = new FileOutputStream(outFile);
-                            byte[] buf = new byte[1024];
-
-                            int len;
-                            while((len = in.read(buf)) > 0) {
-                                out.write(buf, 0, len);
-                            }
-
-                            out.close();
-                            in.close();
-                        }
-                    } catch (IOException var10) {
-                        Main.log(Level.SEVERE, "Could not save " + outFile.getName() + " to " + outFile);
-                        var10.printStackTrace();
-                    }
-
+            resourcePath = resourcePath.replace('\\', '/');
+            InputStream in = Main.getInstance().getResource(resourcePath);
+            if (in == null) {
+                throw new IllegalArgumentException("The embedded resource '" + resourcePath + "' cannot be found in " + this.file);
+            } else {
+                File outFile = new File(dataFolder, resourcePath);
+                int lastIndex = resourcePath.lastIndexOf(47);
+                File outDir = new File(dataFolder, resourcePath.substring(0, Math.max(lastIndex, 0)));
+                if (!outDir.exists()) {
+                    outDir.mkdirs();
                 }
 
+                try {
+                    if (outFile.exists() && !replace) {
+                        Main.log(Level.WARNING, "Could not save " + resourcePath + " to " + outFile + " because " + outFile.getName() + " already exists.");
+                    } else {
+                        OutputStream out = new FileOutputStream(outFile);
+                        byte[] buf = new byte[1024];
 
-                Main.getInstance().log(Level.SEVERE, "&cCould not find " + Bazaar.ITEMS_PATH + ", unable to start Bazaar.");
-                Main.getPluginManager().disablePlugin(Main.getInstance());
-                throw new BazaarIOException("Could not find " + Bazaar.ITEMS_PATH + ", unable to start Bazaar.");
+                        int len;
+                        while((len = in.read(buf)) > 0) {
+                            out.write(buf, 0, len);
+                        }
+
+                        out.close();
+                        in.close();
+                    }
+                } catch (IOException var10) {
+                    Main.log(Level.SEVERE, "Could not save " + outFile.getName() + " to " + outFile);
+                    var10.printStackTrace();
+                }
             }
-
-            if (!this.file.exists())
-                this.file.getParentFile().mkdirs();
-        } catch (BazaarIOException ex) {
-            throw new BazaarIOException("Failed to create bazaar config files", ex);
         }
+
+        if (!this.file.exists())
+            this.file.getParentFile().mkdirs();
 
         this.config = YamlConfiguration.loadConfiguration(this.file);
 
@@ -147,8 +137,6 @@ public class SkyblockBazaar implements Bazaar {
 
                         for (BazaarSubItem subItem : item.getSubItems()) {
                             String displayName = subItem.getIcon().getItemMeta().getDisplayName();
-
-                            boolean hasSkyblockNamespace = true;
 
                             this.set("categories." + category.getName() + ".items." + item.getName() + ".size", item.getInventorySize());
 

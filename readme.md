@@ -77,7 +77,7 @@ Todo list:
 #### Warps Module
 Todo list:
 - Add a `warps` command class
-- Add gui handling for `warps` command
+- Add bazaarGui handling for `warps` command
 - Add a `warp` command class
 - Add a `warp <warp name>` subcommand
 - Add a `warp create <name>` subcommand
