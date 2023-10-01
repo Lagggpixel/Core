@@ -13,6 +13,11 @@ public class RtpModule extends Module {
     }
 
     @Override
+    public boolean isEnabled() {
+        return false;
+    }
+
+    @Override
     public void initialize() {
 
     }

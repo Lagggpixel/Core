@@ -1,0 +1,67 @@
+{
+  "bazaar": {
+    "categories": [
+      {
+        "name": "Farming",
+        "icon": "GOLD_HOE",
+        "color": "YELLOW",
+        "items": [
+          {
+            "name": "Wheat & Seeds",
+            "inventorySize": 36,
+            "subItems": [
+              {
+                "material": "minecraft:wheat",
+                "slot": 11
+              },
+              {
+                "material": "minecraft:enchanted_bread",
+                "slot": 12
+              },
+              {
+                "material": "minecraft:hay_block",
+                "slot": 13
+              },
+              {
+                "material": "minecraft:enchanted_hay_block",
+                "slot": 14
+              },
+              {
+                "material": "minecraft:seeds",
+                "slot": 15
+              },
+              {
+                "material": "minecraft:enchanted_seeds",
+                "slot": 22
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Mining",
+        "icon": "DIAMOND_PICKAXE",
+        "color": "AQUA",
+        "items": []
+      },
+      {
+        "name": "Combat",
+        "icon": "IRON_SWORD",
+        "color": "RED",
+        "items": []
+      },
+      {
+        "name": "Woods & Fishes",
+        "icon": "FISHING_ROD",
+        "color": "GOLD",
+        "items": []
+      },
+      {
+        "name": "Oddities",
+        "icon": "ENCHANTMENT_TABLE",
+        "color": "LIGHT_PURPLE",
+        "items": []
+      }
+    ]
+  }
+}

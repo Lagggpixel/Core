@@ -16,6 +16,11 @@ public class SpawnModule extends Module{
     }
 
     @Override
+    public boolean isEnabled() {
+        return false;
+    }
+
+    @Override
     public void initialize() {
         spawnManager = new SpawnManager();
     }

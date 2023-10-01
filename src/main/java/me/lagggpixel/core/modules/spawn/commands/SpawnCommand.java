@@ -10,7 +10,6 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Collections;
 import java.util.List;
 
 public class SpawnCommand extends CommandClass {
@@ -48,10 +47,13 @@ public class SpawnCommand extends CommandClass {
 
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String label, String[] args) {
-        if (!(commandSender instanceof Player sender)) {
+        if (!(commandSender instanceof Player)) {
             commandSender.sendMessage(Lang.PLAYER_ONLY.toComponentWithPrefix(null));
             return true;
         }
+
+        Player sender = (Player) commandSender;
+
         if (args.length == 0) {
             if (spawnManager.getSpawnLocation() == null) {
                 sender.sendMessage(Lang.SPAWN_NO_SET_SPAWN.toComponentWithPrefix(null));

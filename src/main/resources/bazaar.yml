@@ -1,0 +1,104 @@
+items:
+  minecraft;WHEAT:
+    buyPrice: 0.0
+    sellPrice: 0.0
+    orders: []
+    offers: []
+    buyVolume:
+      amount: 0
+      offers: 0
+    last7dInstantBuyVolume: 0
+    sellVolume:
+      amount: 0
+      orders: 0
+    last7dInstantSellVolume: 0
+  minecraft;ENCHANTED_BREAD:
+    buyPrice: 0.0
+    sellPrice: 0.0
+    orders: []
+    offers: []
+    buyVolume:
+      amount: 0
+      offers: 0
+    last7dInstantBuyVolume: 0
+    sellVolume:
+      amount: 0
+      orders: 0
+    last7dInstantSellVolume: 0
+  minecraft;HAY_BALE:
+    buyPrice: 0.0
+    sellPrice: 0.0
+    orders: []
+    offers: []
+    buyVolume:
+      amount: 0
+      offers: 0
+    last7dInstantBuyVolume: 0
+    sellVolume:
+      amount: 0
+      orders: 0
+    last7dInstantSellVolume: 0
+  minecraft;ENCHANTED_HAY_BALE:
+    buyPrice: 0.0
+    sellPrice: 0.0
+    orders: []
+    offers: []
+    buyVolume:
+      amount: 0
+      offers: 0
+    last7dInstantBuyVolume: 0
+    sellVolume:
+      amount: 0
+      orders: 0
+    last7dInstantSellVolume: 0
+  minecraft;SEEDS:
+    buyPrice: 0.0
+    sellPrice: 0.0
+    orders: []
+    offers: []
+    buyVolume:
+      amount: 0
+      offers: 0
+    last7dInstantBuyVolume: 0
+    sellVolume:
+      amount: 0
+      orders: 0
+    last7dInstantSellVolume: 0
+  minecraft;ENCHANTED_SEEDS:
+    buyPrice: 0.0
+    sellPrice: 0.0
+    orders: []
+    offers: []
+    buyVolume:
+      amount: 0
+      offers: 0
+    last7dInstantBuyVolume: 0
+    sellVolume:
+      amount: 0
+      orders: 0
+    last7dInstantSellVolume: 0
+categories:
+  Farming:
+    icon: GOLD_HOE
+    items:
+      Wheat & Seeds:
+        size: 36
+        slots:
+          skyblock;WHEAT: 11
+          skyblock;ENCHANTED_BREAD: 12
+          skyblock;HAY_BALE: 13
+          skyblock;ENCHANTED_HAY_BALE: 14
+          skyblock;SEEDS: 15
+          skyblock;ENCHANTED_SEEDS: 22
+  Mining:
+    icon: DIAMOND_PICKAXE
+    items: []
+  Combat:
+    icon: IRON_SWORD
+    items: []
+  Woods & Fishes:
+    icon: FISHING_ROD
+    items: []
+  Oddities:
+    icon: ENCHANTMENT_TABLE
+    items: []

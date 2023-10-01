@@ -17,6 +17,11 @@ public class HomeModule extends Module {
     }
 
     @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    @Override
     public void initialize() {
         homeManager = new HomeManager();
     }

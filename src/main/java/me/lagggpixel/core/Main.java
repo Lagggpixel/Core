@@ -12,11 +12,15 @@ import me.lagggpixel.core.modules.home.data.Home;
 import me.lagggpixel.core.modules.inventory.InventoryModule;
 import me.lagggpixel.core.modules.restart.RestartModule;
 import me.lagggpixel.core.modules.rtp.RtpModule;
+import me.lagggpixel.core.modules.skipnight.SkipNightModule;
 import me.lagggpixel.core.modules.spawn.SpawnModule;
 import me.lagggpixel.core.modules.staff.StaffModule;
 import me.lagggpixel.core.modules.warp.WarpModule;
+import me.lagggpixel.core.utils.ChatUtils;
 import me.lagggpixel.core.utils.TeleportUtils;
 import me.lagggpixel.core.utils.UserUtils;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.plugin.PluginManager;
@@ -50,6 +54,7 @@ public final class Main extends JavaPlugin {
     private final @NotNull Module inventoryModule = new InventoryModule();
     private final @NotNull Module restartModule = new RestartModule();
     private final @NotNull Module rtpModule = new RtpModule();
+    private final @NotNull Module skipnightModule = new SkipNightModule();
     private final @NotNull Module spawnModule = new SpawnModule();
     private final @NotNull Module staffModule = new StaffModule();
     private final @NotNull Module warpModule = new WarpModule();
@@ -76,21 +81,38 @@ public final class Main extends JavaPlugin {
         modules.put(inventoryModule.getId(), inventoryModule);
         modules.put(restartModule.getId(), restartModule);
         modules.put(rtpModule.getId(), rtpModule);
+        modules.put(skipnightModule.getId(), skipnightModule);
         modules.put(spawnModule.getId(), spawnModule);
         modules.put(staffModule.getId(), staffModule);
         modules.put(warpModule.getId(), warpModule);
 
+        EmbedBuilder startupLogEmbed = new EmbedBuilder();
+        startupLogEmbed.setTitle("**Core Plugin Started**");
+
         modules.forEach((k, v) -> {
-            v.initialize();
-            v.registerCommands();
-            v.registerListeners();
+            if (v.isEnabled()) {
+                log(Level.INFO, "Module " + v.getId() + " is enabled.");
+                startupLogEmbed.addField(new MessageEmbed.Field(v.getId() + " module", "Enabled", false));
+                v.initialize();
+                v.registerCommands();
+                v.registerListeners();
+            }
+            else {
+                startupLogEmbed.addField(new MessageEmbed.Field(v.getId() + " module", "Disabled", false));
+                log(Level.WARNING, "Module " + v.getId() + " is disabled.");
+            }
         });
+
+        DiscordModule.discordManager.sendEmbed(DiscordModule.discordManager.LOGGING_CHANNEL, startupLogEmbed.build());
+
 
     }
 
     @Override
     public void onDisable() {
+        DiscordModule.discordManager.sendEmbed(DiscordModule.discordManager.LOGGING_CHANNEL, new EmbedBuilder().setTitle("**Core Plugin Disabled**").build());
         UserUtils.saveData(userData);
+        DiscordModule.discordManager.getJda().shutdown();
     }
 
     public static @Nonnull Main getInstance() {

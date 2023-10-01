@@ -21,27 +21,35 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
 public class DiscordManager {
 
-    private final NMSManager nmsManager;
-    public final TextChannel CONSOLE_CHANNEL;
-    public final TextChannel MESSAGING_CHANNEL;
+    @NotNull private final NMSManager nmsManager;
+    @NotNull public final TextChannel CONSOLE_CHANNEL;
+    @NotNull public final TextChannel MESSAGING_CHANNEL;
+    @NotNull public final TextChannel LOGGING_CHANNEL;
 
     @Getter private final JDA jda;
-    @Getter private final Guild guild;
+    @NotNull @Getter private final Guild guild;
 
-    public DiscordManager(NMSManager nmsManager) {
+    public DiscordManager(@NotNull NMSManager nmsManager) {
         this.nmsManager = nmsManager;
-        jda = JDABuilder.createDefault("MTE1MjU5ODM3ODIwMzU4NjY5NQ.GBogbS.tKNCHVoS5Qa8N4DWH9EgMlwbfw7a7qQsZVIiMw").build();
-        guild = jda.getGuildById("773814795291328512");
-        MESSAGING_CHANNEL = jda.getTextChannelById("1152311090332586045");
-        CONSOLE_CHANNEL = jda.getTextChannelById("1152691818916487348");
+        try {
+            jda = JDABuilder.createDefault("MTAwMTU4MDA4NjE4Njc1NDIwOQ.GCSQD2.xpfFptXlfirUex4nO9DOx4gLJXClbLjYUvTvyk").build().awaitReady();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        guild = Objects.requireNonNull(jda.getGuildById("773814795291328512"));
+        MESSAGING_CHANNEL = Objects.requireNonNull(jda.getTextChannelById("1151605428371869696"));
+        CONSOLE_CHANNEL = Objects.requireNonNull(jda.getTextChannelById("1152691818916487348"));
+        LOGGING_CHANNEL = Objects.requireNonNull(jda.getTextChannelById("1157654059378036776"));
     }
 
-    // "MTAwMTU4MDA4NjE4Njc1NDIwOQ.GCSQD2.xpfFptXlfirUex4nO9DOx4gLJXClbLjYUvTvyk"
+    // ""MTE1MjU5ODM3ODIwMzU4NjY5NQ.GBogbS.tKNCHVoS5Qa8N4DWH9EgMlwbfw7a7qQsZVIiMw""
+
 
     public Member getMemberById(String id) {
         return guild.getMemberById(id);

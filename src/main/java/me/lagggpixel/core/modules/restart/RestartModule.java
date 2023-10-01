@@ -11,6 +11,11 @@ public class RestartModule extends Module {
     }
 
     @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    @Override
     public void initialize() {
 
     }

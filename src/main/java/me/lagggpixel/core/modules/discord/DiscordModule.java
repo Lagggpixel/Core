@@ -9,12 +9,17 @@ import org.jetbrains.annotations.NotNull;
 public class DiscordModule extends Module {
 
     NMSManager nmsManager;
-    DiscordManager discordManager;
+    public static DiscordManager discordManager;
 
     @NotNull
     @Override
     public String getId() {
         return "discord";
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
     @Override

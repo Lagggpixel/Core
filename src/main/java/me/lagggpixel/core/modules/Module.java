@@ -6,6 +6,8 @@ public abstract class Module {
 
     public @Nonnull abstract String getId();
 
+    public abstract boolean isEnabled();
+
     public abstract void initialize();
 
     public abstract void registerCommands();
