@@ -60,7 +60,7 @@ public class BazaarInstantBuyBazaarGui extends BazaarGui {
                         (item.getLowestSellPrice() > 0.0 ? "\n\n" + (possibleAmountToCarry >= bazaarItem.getMaxStackSize() ?
                                 (Main.getUser(opener.getUniqueId()).getPlayerBalance() < item.getLowestSellPrice() * bazaarItem.getMaxStackSize() ? "&cNot enough coins!" : "&eClick to buy now!")
                                 : "&cNot enough inventory space!") : ""), '7'
-        ))).toItemStack();
+        ))).setAmount(64).toItemStack();
 
         boolean canFillInventory = item.getLowestSellPrice(possibleAmountToCarry) > 0.0;
 

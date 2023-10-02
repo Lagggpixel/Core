@@ -119,7 +119,7 @@ public class BazaarMiscUtil {
         ArrayList<Component> components = new ArrayList<>();
 
         for (String s : lore.split("\n")) {
-            components.add(ChatUtils.stringToComponent(s));
+            components.add(ChatUtils.stringToComponentCC(s));
         }
         return components.toArray(new Component[0]);
     }
@@ -188,18 +188,18 @@ public class BazaarMiscUtil {
         for (int i = 17; i < 45; i += 9) bazaarGui.addItem(i, new ItemBuilder(ChatUtils.stringToComponent(" "), material).toItemStack());
     }
 
-    public void fillSidesLeftOneIndented(BazaarGui bazaarGui, Material material, int data) {
+    public void fillSidesLeftOneIndented(BazaarGui bazaarGui, Material material) {
         for (int i = 10; i < 45; i += 9)
-            if (bazaarGui.getItem(i) == null) bazaarGui.addItem(i, new ItemBuilder(ChatUtils.stringToComponent(" "), material, (short) data).toItemStack());
+            if (bazaarGui.getItem(i) == null) bazaarGui.addItem(i, new ItemBuilder(ChatUtils.stringToComponent(" "), material).toItemStack());
         for (int i = 17; i < 45; i += 9)
-            if (bazaarGui.getItem(i) == null) bazaarGui.addItem(i, new ItemBuilder(ChatUtils.stringToComponent(" "), material, (short) data).toItemStack());
+            if (bazaarGui.getItem(i) == null) bazaarGui.addItem(i, new ItemBuilder(ChatUtils.stringToComponent(" "), material).toItemStack());
         for (int i = 0; i < 9; i += 1)
-            if (bazaarGui.getItem(i) == null) bazaarGui.addItem(i, new ItemBuilder(ChatUtils.stringToComponent(" "), material, (short) data).toItemStack());
+            if (bazaarGui.getItem(i) == null) bazaarGui.addItem(i, new ItemBuilder(ChatUtils.stringToComponent(" "), material).toItemStack());
 
-        if (bazaarGui.getItem(1) == null) bazaarGui.addItem(1, new ItemBuilder(ChatUtils.stringToComponent(" "), material, (short) data).toItemStack());
-        if (bazaarGui.getItem(8) == null) bazaarGui.addItem(8, new ItemBuilder(ChatUtils.stringToComponent(" "), material, (short) data).toItemStack());
-        if (bazaarGui.getItem(46) == null) bazaarGui.addItem(46, new ItemBuilder(ChatUtils.stringToComponent(" "), material, (short) data).toItemStack());
-        if (bazaarGui.getItem(53) == null) bazaarGui.addItem(53, new ItemBuilder(ChatUtils.stringToComponent(" "), material, (short) data).toItemStack());
+        if (bazaarGui.getItem(1) == null) bazaarGui.addItem(1, new ItemBuilder(ChatUtils.stringToComponent(" "), material).toItemStack());
+        if (bazaarGui.getItem(8) == null) bazaarGui.addItem(8, new ItemBuilder(ChatUtils.stringToComponent(" "), material).toItemStack());
+        if (bazaarGui.getItem(46) == null) bazaarGui.addItem(46, new ItemBuilder(ChatUtils.stringToComponent(" "), material).toItemStack());
+        if (bazaarGui.getItem(53) == null) bazaarGui.addItem(53, new ItemBuilder(ChatUtils.stringToComponent(" "), material).toItemStack());
     }
 
     public void fillSides45Slots(Inventory inventory, Material material, int data) {

@@ -89,7 +89,7 @@ public class BazaarCategoryBazaarGui extends BazaarGui {
         addItem(51, new ItemBuilder(ChatUtils.stringToComponent(" "), Material.GRAY_STAINED_GLASS_PANE).toItemStack());
         addItem(52, advanced ? advancedMode : directMode);
 
-        BazaarMiscUtil.fillSidesLeftOneIndented(this, Material.GRAY_STAINED_GLASS_PANE, category.getPaneColor());
+        BazaarMiscUtil.fillSidesLeftOneIndented(this, Material.GRAY_STAINED_GLASS_PANE);
 
         for (BazaarItem item : category.getItems()) {
             addItem(new ItemBuilder(ChatUtils.stringToComponentCC(category.getColor() + item.getName()), item.getSubItems().get(0).getIcon().getType()).addLore(Arrays.asList(BazaarMiscUtil.buildLore(

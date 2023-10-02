@@ -112,14 +112,15 @@ public class BazaarGui implements Listener {
             if (!event.getCurrentItem().hasItemMeta()) return;
             if (!event.getCurrentItem().getItemMeta().hasDisplayName()) return;
 
+            // Close button logic
             Component displayName = event.getCurrentItem().getItemMeta().displayName();
             if (displayName != null && displayName.equals(BazaarMiscUtil.buildCloseButton().getItemMeta().displayName())) {
                 event.getWhoClicked().closeInventory();
                 return;
             }
 
+            // Back button logic
             List<Component> lore = event.getCurrentItem().getItemMeta().lore();
-
             if (lore != null && !lore.isEmpty() && BACK_BUTTONS.containsKey(ChatUtils.componentToString(lore.get(0)))) {
                 Class<? extends BazaarGui> clazz = BACK_BUTTONS.get(ChatUtils.componentToString(lore.get(0)));
 
@@ -146,5 +147,18 @@ public class BazaarGui implements Listener {
     }
 
     public void onClose(Player p) { }
-    public void onInventoryClick(InventoryClickEvent e) { }
+    public void onInventoryClick(InventoryClickEvent e) {
+
+        if (e.getCurrentItem() != null) {
+
+            Component name = e.getCurrentItem().getItemMeta().displayName();
+
+            if (clickEvents.containsKey(name)) {
+                clickEvents.get(name).run();
+            }
+
+        }
+
+
+    }
 }
