@@ -86,7 +86,7 @@ public class EnderchestCommands extends CommandClass implements Listener {
     private Inventory getOrCreateEnderChest(Player player) {
         return enderChestContents.computeIfAbsent(player, p -> {
 
-            Inventory enderChest = Bukkit.createInventory(p, 27, ChatUtils.convertStringToComponent(player.getName() + "'s Ender Chest"));
+            Inventory enderChest = Bukkit.createInventory(p, 27, ChatUtils.stringToComponent(player.getName() + "'s Ender Chest"));
             enderChest.setContents(p.getEnderChest().getContents());
             return enderChest;
         });

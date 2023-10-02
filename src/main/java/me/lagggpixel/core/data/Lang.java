@@ -87,7 +87,7 @@ public enum Lang {
     }
 
     public TextComponent toTextComponent() {
-        return ChatUtils.convertStringToComponent(LANG.getString(this.path, def));
+        return ChatUtils.stringToComponent(LANG.getString(this.path, def));
     }
 
     public String toString() {
@@ -101,7 +101,7 @@ public enum Lang {
             placeholders.forEach((k, v) -> var1[0] = var1[0].replace(k, v));
         }
 
-        return ChatUtils.convertStringWithColorCodesToComponent(var1[0]);
+        return ChatUtils.stringToComponentCC(var1[0]);
     }
 
     /**

@@ -4,9 +4,9 @@ import lombok.Getter;
 import me.lagggpixel.core.Main;
 import me.lagggpixel.core.modules.bazaar.gui.BazaarCategoryBazaarGui;
 import me.lagggpixel.core.modules.bazaar.utils.BazaarMiscUtil;
+import me.lagggpixel.core.utils.ChatUtils;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
@@ -15,13 +15,12 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.SkullMeta;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
+import java.util.logging.Level;
 
 @Getter
 public class BazaarGui implements Listener {
@@ -29,33 +28,22 @@ public class BazaarGui implements Listener {
     private static final HashMap<BazaarGui, Boolean> REGISTERED_LISTENERS = new HashMap<>();
 
     public final HashMap<ItemStack, Runnable> specificClickEvents;
-    public final HashMap<String, Runnable> clickEvents;
+    public final HashMap<Component, Runnable> clickEvents;
     public final HashMap<Integer, ItemStack> items;
     public final HashMap<Player, Boolean> opened;
     public final List<ItemStack> addableItems;
     public final int slots;
-    public String name;
+    public Component name;
 
-    public BazaarGui(String name, int slots, HashMap<String, Runnable> clickEvents) {
+    public BazaarGui(Component name, int slots, HashMap<Component, Runnable> clickEvents) {
         this(name, slots, clickEvents, new HashMap<>());
-    }
-
-    private static class AbstractCommandBazaarGui extends BazaarGui {
-        private final String command;
-
-        @SuppressWarnings("unused")
-        public AbstractCommandBazaarGui(String command, Player opener) {
-            super("Command", 9, new HashMap<>());
-
-            this.command = command;
-        }
     }
 
     private static final HashMap<String, Class<? extends BazaarGui>> BACK_BUTTONS = new HashMap<>() {{
         put("To Bazaar", BazaarCategoryBazaarGui.class);
     }};
 
-    public BazaarGui(String name, int slots, HashMap<String, Runnable> clickEvents, HashMap<ItemStack, Runnable> specificClickEvents) {
+    public BazaarGui(Component name, int slots, HashMap<Component, Runnable> clickEvents, HashMap<ItemStack, Runnable> specificClickEvents) {
         Main.getPluginManager().registerEvents(this, Main.getInstance());
         this.name = name;
         this.slots = slots;
@@ -69,29 +57,10 @@ public class BazaarGui implements Listener {
     }
 
     public void show(Player player) {
-        if (this instanceof AbstractCommandBazaarGui) {
-            player.performCommand(((AbstractCommandBazaarGui) this).command);
-            return;
-        }
-
         Inventory inventory = player.getServer().createInventory(null, slots, name);
 
         for (int i = 0; i < slots; i++) {
             if (items.containsKey(i)) {
-                if (Objects.equals(this.getName(), "Skyblock Menu") && items.get(i).getType().equals(Material.PLAYER_HEAD) && items.get(i).getItemMeta().getDisplayName().equals(ChatColor.GREEN + "Your SkyBlock Profile")) {
-                    ItemStack stack = items.get(i);
-
-                    SkullMeta meta = (SkullMeta) stack.getItemMeta();
-
-                    meta.setOwner(player.getName());
-
-                    stack.setItemMeta(meta);
-
-                    inventory.setItem(i, stack);
-
-                    continue;
-                }
-
                 inventory.setItem(i, items.get(i));
             }
         }
@@ -122,8 +91,6 @@ public class BazaarGui implements Listener {
         return this.items.get(slot);
     }
 
-    protected boolean getSpecificClickSound() { return true; }
-
     public void fillEmpty(ItemStack stack) {
         for (int i = 0; i < this.slots; i++) {
             if (!this.items.containsKey(i)) this.items.put(i, stack);
@@ -132,7 +99,12 @@ public class BazaarGui implements Listener {
 
     @EventHandler
     public void onClick(InventoryClickEvent event) {
-        if (event.getView().getTitle().equals(name) && opened.containsKey((Player) event.getWhoClicked())) {
+        if (event.getView().title().equals(name) && opened.containsKey((Player) event.getWhoClicked())) {
+
+            if (event.getCurrentItem() == null) {
+                return;
+            }
+
             event.setCancelled(true);
             onInventoryClick(event);
 
@@ -140,31 +112,32 @@ public class BazaarGui implements Listener {
             if (!event.getCurrentItem().hasItemMeta()) return;
             if (!event.getCurrentItem().getItemMeta().hasDisplayName()) return;
 
-            if (event.getCurrentItem().getItemMeta().getDisplayName().equals(
-                    BazaarMiscUtil.buildCloseButton().getItemMeta().getDisplayName())) {
+            Component displayName = event.getCurrentItem().getItemMeta().displayName();
+            if (displayName != null && displayName.equals(BazaarMiscUtil.buildCloseButton().getItemMeta().displayName())) {
                 event.getWhoClicked().closeInventory();
                 return;
             }
 
-            List<String> lore = event.getCurrentItem().getItemMeta().getLore();
+            List<Component> lore = event.getCurrentItem().getItemMeta().lore();
 
-            if (lore != null && !lore.isEmpty() && BACK_BUTTONS.containsKey(ChatColor.stripColor(lore.get(0)))) {
-                Class<? extends BazaarGui> clazz = BACK_BUTTONS.get(ChatColor.stripColor(lore.get(0)));
+            if (lore != null && !lore.isEmpty() && BACK_BUTTONS.containsKey(ChatUtils.componentToString(lore.get(0)))) {
+                Class<? extends BazaarGui> clazz = BACK_BUTTONS.get(ChatUtils.componentToString(lore.get(0)));
 
                 try {
-                    clazz.getConstructor(Player.class).newInstance(event.getWhoClicked()).show((Player) event.getWhoClicked());
+                    if (event.getWhoClicked() instanceof Player player) {
+                        clazz.getConstructor(Player.class).newInstance(player).show(player);
+                    }
                 } catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
-                    e.printStackTrace();
+                    Main.log(Level.SEVERE, "Failed to create instance of " + clazz.getName() + ".");
+                    Main.log(Level.SEVERE, e.getMessage());
                 }
-
-                return;
             }
         }
     }
 
     @EventHandler
     public void onClose(InventoryCloseEvent e) {
-        if (e.getView().getTitle().equals(name) && opened.containsKey((Player) e.getPlayer())) {
+        if (e.getView().title().equals(name) && opened.containsKey((Player) e.getPlayer())) {
             onClose((Player) e.getPlayer());
 
             HandlerList.unregisterAll(this);

@@ -1,5 +1,6 @@
 package me.lagggpixel.core.utils;
 
+import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
@@ -10,6 +11,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @SuppressWarnings({"unused"})
@@ -28,7 +30,7 @@ public class ItemBuilder {
         meta = item.getItemMeta();
     }
 
-    public ItemBuilder(String name) {
+    public ItemBuilder(Component name) {
         item = new ItemStack(Material.DIRT);
         meta = item.getItemMeta();
         setDisplayName(name);
@@ -39,44 +41,22 @@ public class ItemBuilder {
         meta = item.getItemMeta();
     }
 
-    public ItemBuilder(String name, int amount) {
+    public ItemBuilder(Component name, int amount) {
         item = new ItemStack(Material.DIRT, amount);
         meta = item.getItemMeta();
         setDisplayName(name);
     }
 
-    public ItemBuilder(String name, Material material) {
+    public ItemBuilder(Component name, Material material) {
         item = new ItemStack(material);
         meta = item.getItemMeta();
         setDisplayName(name);
     }
 
-    public ItemBuilder(String name, Material material, short dmg) {
-        item = new ItemStack(material, 1, dmg);
-        meta = item.getItemMeta();
-        setDisplayName(name);
-    }
-
-    public ItemBuilder(String name, Material material, int amount) {
+    public ItemBuilder(Component name, Material material, int amount) {
         item = new ItemStack(material, amount);
         meta = item.getItemMeta();
         setDisplayName(name);
-    }
-
-    public ItemBuilder(String name, Material material, int amount, short damage) {
-        item = new ItemStack(material, amount, damage);
-        meta = item.getItemMeta();
-        setDisplayName(name);
-    }
-
-    public ItemBuilder setDamage(int damage) {
-        item.setDurability((short) damage);
-        return this;
-    }
-
-    public ItemBuilder setDamage(short damage) {
-        item.setDurability(damage);
-        return this;
     }
 
     public ItemBuilder setAmount(int amount) {
@@ -84,8 +64,8 @@ public class ItemBuilder {
         return this;
     }
 
-    public ItemBuilder setDisplayName(String name) {
-        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
+    public ItemBuilder setDisplayName(Component name) {
+        meta.displayName(name);
         item.setItemMeta(meta);
         return this;
     }
@@ -95,47 +75,46 @@ public class ItemBuilder {
         return this;
     }
 
-    public ItemBuilder setLore(List<String> lore) {
-        meta.setLore(lore);
+    public ItemBuilder setLore(List<Component> lore) {
+        meta.lore(lore);
         item.setItemMeta(meta);
         return this;
     }
 
-    public ItemBuilder setLore(String... lore) {
-        List<String> ls = new ArrayList<>();
-        for(String s : lore) {
-            ls.add(ChatColor.translateAlternateColorCodes('&', s));
-        }
-        meta.setLore(ls);
+    public ItemBuilder setLore(Component... lore) {
+        List<Component> ls = new ArrayList<>();
+        Collections.addAll(ls, lore);
+        meta.lore(ls);
         item.setItemMeta(meta);
         return this;
     }
 
-    public ItemBuilder addLore(List<String> lore) {
-        List<String> ls;
-        if (meta.getLore() != null) ls = meta.getLore(); else ls = new ArrayList<>();
+    public ItemBuilder addLore(List<Component> lore) {
+        List<Component> ls;
+        if (meta.lore() != null) ls = meta.lore(); else ls = new ArrayList<>();
+        assert ls != null;
         ls.addAll(lore);
-        meta.setLore(ls);
+        meta.lore(ls);
         item.setItemMeta(meta);
         return this;
     }
 
-    public ItemBuilder addLore(String lore) {
-        List<String> ls;
-        if (meta.getLore() != null) ls = meta.getLore(); else ls = new ArrayList<>();
-        ls.add(ChatColor.translateAlternateColorCodes('&', lore));
-        meta.setLore(ls);
+    public ItemBuilder addLore(Component lore) {
+        List<Component> ls;
+        if (meta.lore() != null) ls = meta.lore(); else ls = new ArrayList<>();
+        assert ls != null;
+        ls.add(lore);
+        meta.lore(ls);
         item.setItemMeta(meta);
         return this;
     }
 
-    public ItemBuilder addLore(String... lore) {
-        List<String> ls;
-        if (meta.getLore() != null) ls = meta.getLore(); else ls = new ArrayList<>();
-        for(String s : lore) {
-            ls.add(ChatColor.translateAlternateColorCodes('&', s));
-        }
-        meta.setLore(ls);
+    public ItemBuilder addLore(Component... lore) {
+        List<Component> ls;
+        if (meta.lore() != null) ls = meta.lore(); else ls = new ArrayList<>();
+        assert ls != null;
+        Collections.addAll(ls, lore);
+        meta.lore(ls);
         item.setItemMeta(meta);
         return this;
     }

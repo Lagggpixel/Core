@@ -2,7 +2,9 @@ package me.lagggpixel.core.modules.bazaar.utils;
 
 import lombok.experimental.UtilityClass;
 import me.lagggpixel.core.modules.bazaar.utils.gui.BazaarGui;
+import me.lagggpixel.core.utils.ChatUtils;
 import me.lagggpixel.core.utils.ItemBuilder;
+import net.kyori.adventure.text.Component;
 import org.apache.commons.lang3.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
@@ -29,6 +31,7 @@ import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
+@SuppressWarnings("unused")
 @UtilityClass
 public class BazaarMiscUtil {
 
@@ -112,18 +115,23 @@ public class BazaarMiscUtil {
         return -1;
     }
 
-    public String[] buildLore(String lore) {
-        return ChatColor.translateAlternateColorCodes('&', lore).split("\n");
+    public Component[] buildLore(String lore) {
+        ArrayList<Component> components = new ArrayList<>();
+
+        for (String s : lore.split("\n")) {
+            components.add(ChatUtils.stringToComponent(s));
+        }
+        return components.toArray(new Component[0]);
     }
 
-    public String[] buildLore(String lore, char defaultColor) {
-        String[] built = buildLore(lore);
+    public Component[] buildLore(String lore, char defaultColor) {
+        Component[] built = buildLore(lore);
 
         for (int i = 0; i < built.length; i++) {
-            built[i] = "" + '&' + defaultColor + built[i];
+            built[i] = ChatUtils.stringToComponentCC("" + '&' + defaultColor + ChatUtils.componentToString(built[i]));
         }
 
-        return ChatColor.translateAlternateColorCodes('&', String.join("\n", built)).split("\n");
+        return built;
     }
 
     public List<String> buildLoreList(String lore) {
@@ -131,15 +139,15 @@ public class BazaarMiscUtil {
     }
 
     public ItemStack buildCloseButton() {
-        return new ItemBuilder(ChatColor.RED + "Close", Material.BARRIER).toItemStack();
+        return new ItemBuilder(ChatUtils.stringToComponentCC("&cClose"), Material.BARRIER).toItemStack();
     }
 
     public ItemStack buildBackButton() {
-        return new ItemBuilder(ChatColor.GREEN + "Go Back", Material.ARROW).addLore(ChatColor.GRAY + "To SkyBlock Menu").toItemStack();
+        return new ItemBuilder(ChatUtils.stringToComponentCC("&aGo Back"), Material.ARROW).addLore(ChatUtils.stringToComponentCC("&aTo SkyBlock Menu")).toItemStack();
     }
 
     public ItemStack buildBackButton(String lore) {
-        return new ItemBuilder(ChatColor.GREEN + "Go Back", Material.ARROW).addLore(BazaarMiscUtil.buildLore(lore)).toItemStack();
+        return new ItemBuilder(ChatUtils.stringToComponentCC("&aGo Back"), Material.ARROW).addLore(BazaarMiscUtil.buildLore(lore)).toItemStack();
     }
 
     public void fillEmpty(Inventory inventory) {
@@ -148,12 +156,12 @@ public class BazaarMiscUtil {
 
     public void fillEmpty(BazaarGui bazaarGui) {
         for (int i = 0; i < bazaarGui.getSlots(); i++)
-            bazaarGui.addItem(i, new ItemBuilder(" ", Material.GRAY_STAINED_GLASS_PANE).toItemStack());
+            bazaarGui.addItem(i, new ItemBuilder(ChatUtils.stringToComponent(" "), Material.GRAY_STAINED_GLASS_PANE).toItemStack());
     }
 
     public void fillEmpty(Inventory inventory, Material material) {
         for (int i = 0; i < inventory.getSize(); i++)
-            inventory.setItem(i, new ItemBuilder(" ", material).toItemStack());
+            inventory.setItem(i, new ItemBuilder(ChatUtils.stringToComponent(" "), material).toItemStack());
     }
 
     public void fillBorder(Inventory inventory) {
@@ -161,12 +169,12 @@ public class BazaarMiscUtil {
     }
 
     public void fillBorder(Inventory inventory, Material material) {
-        for (int i = 0; i < 9; i++) inventory.setItem(i, new ItemBuilder(" ", material).toItemStack());
-        for (int i = 45; i < 54; i++) inventory.setItem(i, new ItemBuilder(" ", material).toItemStack());
+        for (int i = 0; i < 9; i++) inventory.setItem(i, new ItemBuilder(ChatUtils.stringToComponent(" "), material).toItemStack());
+        for (int i = 45; i < 54; i++) inventory.setItem(i, new ItemBuilder(ChatUtils.stringToComponent(" "), material).toItemStack());
         for (int i = 9; i < 45; i += 9)
-            inventory.setItem(i, new ItemBuilder(" ", material).toItemStack());
+            inventory.setItem(i, new ItemBuilder(ChatUtils.stringToComponent(" "), material).toItemStack());
         for (int i = 17; i < 45; i += 9)
-            inventory.setItem(i, new ItemBuilder(" ", material).toItemStack());
+            inventory.setItem(i, new ItemBuilder(ChatUtils.stringToComponent(" "), material).toItemStack());
     }
 
     public void fillBorder(BazaarGui bazaarGui) {
@@ -174,56 +182,40 @@ public class BazaarMiscUtil {
     }
 
     public void fillBorder(BazaarGui bazaarGui, Material material) {
-        for (int i = 0; i < 9; i++) bazaarGui.addItem(i, new ItemBuilder(" ", material).toItemStack());
-        for (int i = 45; i < 54; i++) bazaarGui.addItem(i, new ItemBuilder(" ", material).toItemStack());
-        for (int i = 9; i < 45; i += 9) bazaarGui.addItem(i, new ItemBuilder(" ", material).toItemStack());
-        for (int i = 17; i < 45; i += 9) bazaarGui.addItem(i, new ItemBuilder(" ", material).toItemStack());
+        for (int i = 0; i < 9; i++) bazaarGui.addItem(i, new ItemBuilder(ChatUtils.stringToComponent(" "), material).toItemStack());
+        for (int i = 45; i < 54; i++) bazaarGui.addItem(i, new ItemBuilder(ChatUtils.stringToComponent(" "), material).toItemStack());
+        for (int i = 9; i < 45; i += 9) bazaarGui.addItem(i, new ItemBuilder(ChatUtils.stringToComponent(" "), material).toItemStack());
+        for (int i = 17; i < 45; i += 9) bazaarGui.addItem(i, new ItemBuilder(ChatUtils.stringToComponent(" "), material).toItemStack());
     }
 
     public void fillSidesLeftOneIndented(BazaarGui bazaarGui, Material material, int data) {
         for (int i = 10; i < 45; i += 9)
-            if (bazaarGui.getItem(i) == null) bazaarGui.addItem(i, new ItemBuilder(" ", material, (short) data).toItemStack());
+            if (bazaarGui.getItem(i) == null) bazaarGui.addItem(i, new ItemBuilder(ChatUtils.stringToComponent(" "), material, (short) data).toItemStack());
         for (int i = 17; i < 45; i += 9)
-            if (bazaarGui.getItem(i) == null) bazaarGui.addItem(i, new ItemBuilder(" ", material, (short) data).toItemStack());
+            if (bazaarGui.getItem(i) == null) bazaarGui.addItem(i, new ItemBuilder(ChatUtils.stringToComponent(" "), material, (short) data).toItemStack());
         for (int i = 0; i < 9; i += 1)
-            if (bazaarGui.getItem(i) == null) bazaarGui.addItem(i, new ItemBuilder(" ", material, (short) data).toItemStack());
+            if (bazaarGui.getItem(i) == null) bazaarGui.addItem(i, new ItemBuilder(ChatUtils.stringToComponent(" "), material, (short) data).toItemStack());
 
-        if (bazaarGui.getItem(1) == null) bazaarGui.addItem(1, new ItemBuilder(" ", material, (short) data).toItemStack());
-        if (bazaarGui.getItem(8) == null) bazaarGui.addItem(8, new ItemBuilder(" ", material, (short) data).toItemStack());
-        if (bazaarGui.getItem(46) == null) bazaarGui.addItem(46, new ItemBuilder(" ", material, (short) data).toItemStack());
-        if (bazaarGui.getItem(53) == null) bazaarGui.addItem(53, new ItemBuilder(" ", material, (short) data).toItemStack());
+        if (bazaarGui.getItem(1) == null) bazaarGui.addItem(1, new ItemBuilder(ChatUtils.stringToComponent(" "), material, (short) data).toItemStack());
+        if (bazaarGui.getItem(8) == null) bazaarGui.addItem(8, new ItemBuilder(ChatUtils.stringToComponent(" "), material, (short) data).toItemStack());
+        if (bazaarGui.getItem(46) == null) bazaarGui.addItem(46, new ItemBuilder(ChatUtils.stringToComponent(" "), material, (short) data).toItemStack());
+        if (bazaarGui.getItem(53) == null) bazaarGui.addItem(53, new ItemBuilder(ChatUtils.stringToComponent(" "), material, (short) data).toItemStack());
     }
 
     public void fillSides45Slots(Inventory inventory, Material material, int data) {
         for (int i = 9; i < 36; i += 9)
-            inventory.setItem(i, new ItemBuilder(" ", material, (short) data).toItemStack());
+            inventory.setItem(i, new ItemBuilder(ChatUtils.stringToComponent(" "), material, (short) data).toItemStack());
         for (int i = 17; i < 36; i += 9)
-            inventory.setItem(i, new ItemBuilder(" ", material, (short) data).toItemStack());
+            inventory.setItem(i, new ItemBuilder(ChatUtils.stringToComponent(" "), material, (short) data).toItemStack());
 
-        inventory.setItem(0, new ItemBuilder(" ", material, (short) data).toItemStack());
-        inventory.setItem(8, new ItemBuilder(" ", material, (short) data).toItemStack());
-        inventory.setItem(36, new ItemBuilder(" ", material, (short) data).toItemStack());
-        inventory.setItem(44, new ItemBuilder(" ", material, (short) data).toItemStack());
+        inventory.setItem(0, new ItemBuilder(ChatUtils.stringToComponent(" "), material, (short) data).toItemStack());
+        inventory.setItem(8, new ItemBuilder(ChatUtils.stringToComponent(" "), material, (short) data).toItemStack());
+        inventory.setItem(36, new ItemBuilder(ChatUtils.stringToComponent(" "), material, (short) data).toItemStack());
+        inventory.setItem(44, new ItemBuilder(ChatUtils.stringToComponent(" "), material, (short) data).toItemStack());
     }
 
     public boolean notNull(ItemStack item) {
         return item != null && !item.getType().equals(Material.AIR);
-    }
-
-    public String getTimeDifferenceAndColor(long start, long end) {
-        return getColorBasedOnSize((end - start), 20, 5000, 10000) + "" + (end - start) + "ms";
-    }
-
-    public ChatColor getColorBasedOnSize(long num, int low, int med, int high) {
-        if (num <= low) {
-            return ChatColor.GREEN;
-        } else if (num <= med) {
-            return ChatColor.YELLOW;
-        } else if (num <= high) {
-            return ChatColor.RED;
-        } else {
-            return ChatColor.DARK_RED;
-        }
     }
 
     public String ordinalSuffixOf(int i) {

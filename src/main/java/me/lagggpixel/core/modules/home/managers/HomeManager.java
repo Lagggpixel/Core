@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 
 public class HomeManager {
 
-    public final Component HOME_GUI_NAME = ChatUtils.convertStringWithColorCodesToComponent("&aHomes");
+    public final Component HOME_GUI_NAME = ChatUtils.stringToComponentCC("&aHomes");
     public final NamespacedKey HOME_ITEM_NAMESPACE_KEY = new NamespacedKey(Main.getInstance(), "HOME_NAME");
 
     public void teleportToHome(Player player, Home home) {

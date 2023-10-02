@@ -187,7 +187,7 @@ public class HomeCommands extends CommandClass implements Listener {
         ItemMeta meta = item.getItemMeta();
 
         assert meta != null;
-        meta.displayName(ChatUtils.convertStringToComponent(homeName));
+        meta.displayName(ChatUtils.stringToComponent(homeName));
         meta.getPersistentDataContainer().set(homeManager.HOME_ITEM_NAMESPACE_KEY, PersistentDataType.STRING, homeName);
 
         item.setItemMeta(meta);

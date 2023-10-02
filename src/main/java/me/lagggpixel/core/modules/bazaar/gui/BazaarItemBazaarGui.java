@@ -6,6 +6,7 @@ import me.lagggpixel.core.modules.bazaar.interfaces.BazaarItem;
 import me.lagggpixel.core.modules.bazaar.interfaces.BazaarSubItem;
 import me.lagggpixel.core.modules.bazaar.utils.BazaarMiscUtil;
 import me.lagggpixel.core.modules.bazaar.utils.gui.BazaarGui;
+import me.lagggpixel.core.utils.ChatUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -16,9 +17,9 @@ import java.util.HashMap;
 public class BazaarItemBazaarGui extends BazaarGui {
 
     public BazaarItemBazaarGui(Player player, BazaarCategory category, BazaarItem item) {
-        super(category.getName() + " ➜ " + item.getName(), item.getInventorySize(), new HashMap<String, Runnable>() {{
+        super(ChatUtils.stringToComponentCC(category.getName() + " ➜ " + item.getName()), item.getInventorySize(), new HashMap<>() {{
             for (BazaarSubItem subItem : item.getSubItems()) {
-                put(subItem.getNamedIcon().toItemStack().getItemMeta().getDisplayName(), () -> {
+                put(subItem.getNamedIcon().toItemStack().getItemMeta().displayName(), () -> {
                     new BazaarSubItemBazaarGui(player, subItem).show(player);
                 });
             }
@@ -30,8 +31,8 @@ public class BazaarItemBazaarGui extends BazaarGui {
             ItemStack stack = new ItemStack(subItem.getIcon().getType());
             ItemMeta meta = stack.getItemMeta();
 
-            meta.setDisplayName(subItem.getIcon().getItemMeta().getDisplayName() == null ? subItem.getIcon().getType().name() : subItem.getIcon().getItemMeta().getDisplayName());
-            meta.setLore(Arrays.asList(BazaarMiscUtil.buildLore(
+            meta.displayName(subItem.getIcon().getItemMeta().displayName() == null ? ChatUtils.stringToComponentCC(subItem.getIcon().getType().name()) : subItem.getIcon().getItemMeta().displayName());
+            meta.lore(Arrays.asList(BazaarMiscUtil.buildLore(
                             "&7Buy Price: &6" + BazaarModule.getBazaar().getEscrow().getBuyPrice(subItem) +
                             "\n&7Sell Price: &6" + BazaarModule.getBazaar().getEscrow().getSellPrice(subItem) + "\n\n&eClick to view details!")));
 
