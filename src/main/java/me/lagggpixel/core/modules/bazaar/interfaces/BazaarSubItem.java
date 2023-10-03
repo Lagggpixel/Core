@@ -3,7 +3,7 @@ package me.lagggpixel.core.modules.bazaar.interfaces;
 import me.lagggpixel.core.modules.bazaar.utils.BazaarMiscUtil;
 import me.lagggpixel.core.utils.ChatUtils;
 import me.lagggpixel.core.utils.ItemBuilder;
-import org.apache.commons.lang3.text.WordUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 
@@ -31,7 +31,7 @@ public interface BazaarSubItem {
                 ChatUtils.stringToComponentCC(
                         getParent().getCategory().getColor() +
                                 ChatUtils.componentToString(ChatUtils.stringToComponent(getIcon().getItemMeta().displayName() == null ?
-                                        WordUtils.capitalize(getIcon().getType().name().toLowerCase().replace("_", " ")) : ChatUtils.componentToString(getIcon().getItemMeta().displayName())))))
+                                        StringUtils.capitalize(getIcon().getType().name().toLowerCase().replace("_", " ")) : ChatUtils.componentToString(getIcon().getItemMeta().displayName())))))
                 .addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE);
     }
 
