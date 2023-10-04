@@ -1,6 +1,8 @@
 package me.lagggpixel.core.modules.bazaar.gui;
 
 import me.lagggpixel.core.Main;
+import me.lagggpixel.core.modules.bazaar.BazaarModule;
+import me.lagggpixel.core.modules.bazaar.escrow.EscrowTransaction;
 import me.lagggpixel.core.modules.bazaar.interfaces.BazaarSubItem;
 import me.lagggpixel.core.modules.bazaar.utils.BazaarMiscUtil;
 import me.lagggpixel.core.modules.bazaar.utils.gui.BazaarGui;
@@ -13,21 +15,127 @@ import org.bukkit.inventory.ItemStack;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class BazaarInstantBuyBazaarGui extends BazaarGui {
 
     public BazaarInstantBuyBazaarGui(Player opener, BazaarSubItem item, int customAmount) {
         super(Objects.requireNonNull(item.getIcon().getItemMeta().displayName()).append(ChatUtils.stringToComponentCC(" ➜ Instant Buy")), 36, new HashMap<>() {{
             put(ChatUtils.stringToComponentCC("&aBuy only &eone&a!"), () -> {
+                int amountToBuy = 1;
+                if (item.getLowestSellPrice() < 0.0) {
+                    opener.sendMessage(ChatUtils.stringToComponentCC("&cNo sell offers!"));
+                    return;
+                }
+                if (Main.getUser(opener.getUniqueId()).getPlayerBalance() < item.getLowestSellPrice(amountToBuy)) {
+                    opener.sendMessage(ChatUtils.stringToComponentCC("&cNot enough coins!"));
+                    return;
+                }
+                int possibleAmountToCarry = opener.getInventory().firstEmpty() == -1 ? 0 : opener.getInventory().firstEmpty() * item.getItem().getMaxStackSize();
 
+                if (possibleAmountToCarry < amountToBuy) {
+                    opener.sendMessage(ChatUtils.stringToComponentCC("&cNot enough inventory space!"));
+                    return;
+                }
+                while (amountToBuy > 0) {
+                    EscrowTransaction escrowTransaction = BazaarModule.getBazaar().getEscrow().getRankedSellOrders().get(0);
+                    int amountBuyable = escrowTransaction.getAmount();
+                    if (amountBuyable > amountToBuy) {
+                        BazaarModule.getBazaar().getEscrow().fillSellOrder(escrowTransaction, amountToBuy);
+                        opener.sendMessage(ChatUtils.stringToComponentCC("&6You have bought &e" + amountToBuy + "&6 "
+                                + ChatUtils.componentToString(item.getItem().displayName()) + " for &e" + escrowTransaction.getPrice() + "each&6!"));
+                    }
+                    else {
+                        BazaarModule.getBazaar().getEscrow().fillSellOrder(escrowTransaction, amountBuyable);
+                        opener.sendMessage(ChatUtils.stringToComponentCC("&6You have bought &e" + amountToBuy + "&6 "
+                                + ChatUtils.componentToString(item.getItem().displayName()) + " for &e" + escrowTransaction.getPrice() + "each&6!"));
+                        amountToBuy = amountToBuy - amountBuyable;
+                    }
+                }
             });
 
             put(ChatUtils.stringToComponentCC("&aBuy a stack!"), () -> {
+                int amountToBuy = item.getItem().getMaxStackSize();
+                if (item.getLowestSellPrice() < 0.0) {
+                    opener.sendMessage(ChatUtils.stringToComponentCC("&cNo sell offers!"));
+                    return;
+                }
+                AtomicInteger possibleToBuy = new AtomicInteger();
+                item.getOffers().forEach(offer -> {
+                    possibleToBuy.set(possibleToBuy.get() + offer.getAmount());
+                });
+                if (amountToBuy > possibleToBuy.get()) {
+                    opener.sendMessage(ChatUtils.stringToComponentCC("&cNot enough items in escrow!"));
+                    return;
+                }
+                if (Main.getUser(opener.getUniqueId()).getPlayerBalance() < item.getLowestSellPrice(amountToBuy)) {
+                    opener.sendMessage(ChatUtils.stringToComponentCC("&cNot enough coins!"));
+                    return;
+                }
+                int possibleAmountToCarry = opener.getInventory().firstEmpty() == -1 ? 0 : opener.getInventory().firstEmpty() * item.getItem().getMaxStackSize();
 
+                if (possibleAmountToCarry < amountToBuy) {
+                    opener.sendMessage(ChatUtils.stringToComponentCC("&cNot enough inventory space!"));
+                    return;
+                }
+
+                while (amountToBuy > 0) {
+                    EscrowTransaction escrowTransaction = BazaarModule.getBazaar().getEscrow().getRankedSellOrders().get(0);
+                    int amountBuyable = escrowTransaction.getAmount();
+                    if (amountBuyable > amountToBuy) {
+                        BazaarModule.getBazaar().getEscrow().fillSellOrder(escrowTransaction, amountToBuy);
+                        opener.sendMessage(ChatUtils.stringToComponentCC("&6You have bought &e" + amountToBuy + "&6 "
+                                + ChatUtils.componentToString(item.getItem().displayName()) + " for &e" + escrowTransaction.getPrice() + "each&6!"));
+                    }
+                    else {
+                        BazaarModule.getBazaar().getEscrow().fillSellOrder(escrowTransaction, amountBuyable);
+                        opener.sendMessage(ChatUtils.stringToComponentCC("&6You have bought &e" + amountToBuy + "&6 "
+                                + ChatUtils.componentToString(item.getItem().displayName()) + " for &e" + escrowTransaction.getPrice() + "each&6!"));
+                        amountToBuy = amountToBuy - amountBuyable;
+                    }
+                }
             });
 
             put(ChatUtils.stringToComponentCC("&aFill my inventory!"), () -> {
+                int amountToBuy = opener.getInventory().firstEmpty() == -1 ? 0 : opener.getInventory().firstEmpty() * item.getItem().getMaxStackSize();
+                if (item.getLowestSellPrice() < 0.0) {
+                    opener.sendMessage(ChatUtils.stringToComponentCC("&cNo sell offers!"));
+                    return;
+                }
+                AtomicInteger possibleToBuy = new AtomicInteger();
+                item.getOffers().forEach(offer -> {
+                    possibleToBuy.set(possibleToBuy.get() + offer.getAmount());
+                });
+                if (amountToBuy > possibleToBuy.get()) {
+                    opener.sendMessage(ChatUtils.stringToComponentCC("&cNot enough items in escrow!"));
+                    return;
+                }
+                if (Main.getUser(opener.getUniqueId()).getPlayerBalance() < item.getLowestSellPrice(amountToBuy)) {
+                    opener.sendMessage(ChatUtils.stringToComponentCC("&cNot enough coins!"));
+                    return;
+                }
+                int possibleAmountToCarry = opener.getInventory().firstEmpty() == -1 ? 0 : opener.getInventory().firstEmpty() * item.getItem().getMaxStackSize();
 
+                if (possibleAmountToCarry < amountToBuy) {
+                    opener.sendMessage(ChatUtils.stringToComponentCC("&cNot enough inventory space!"));
+                    return;
+                }
+
+                while (amountToBuy > 0) {
+                    EscrowTransaction escrowTransaction = BazaarModule.getBazaar().getEscrow().getRankedSellOrders().get(0);
+                    int amountBuyable = escrowTransaction.getAmount();
+                    if (amountBuyable > amountToBuy) {
+                        BazaarModule.getBazaar().getEscrow().fillSellOrder(escrowTransaction, amountToBuy);
+                        opener.sendMessage(ChatUtils.stringToComponentCC("&6You have bought &e" + amountToBuy + "&6 "
+                                + ChatUtils.componentToString(item.getItem().displayName()) + " for &e" + escrowTransaction.getPrice() + "each&6!"));
+                    }
+                    else {
+                        BazaarModule.getBazaar().getEscrow().fillSellOrder(escrowTransaction, amountBuyable);
+                        opener.sendMessage(ChatUtils.stringToComponentCC("&6You have bought &e" + amountToBuy + "&6 "
+                                + ChatUtils.componentToString(item.getItem().displayName()) + " for &e" + escrowTransaction.getPrice() + "each&6!"));
+                        amountToBuy = amountToBuy - amountBuyable;
+                    }
+                }
             });
 
             put(ChatUtils.stringToComponentCC("&aCustom Amount"), () -> {
