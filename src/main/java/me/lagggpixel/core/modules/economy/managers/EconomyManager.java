@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 
 public class EconomyManager {
 
-    private List<Map.Entry<UUID, Double>> balanceTop;
+    private final List<Map.Entry<UUID, Double>> balanceTop;
 
     public EconomyManager() {
         this.balanceTop = new ArrayList<>();
