@@ -19,6 +19,9 @@ public class ChatUtils {
     }
 
     public static @NotNull String componentToString(Component component) {
+        if (component == null) {
+            return "";
+        }
         return PlainTextComponentSerializer.plainText().serialize(component);
     }
 }
