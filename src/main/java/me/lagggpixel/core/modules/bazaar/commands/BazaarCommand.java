@@ -4,7 +4,9 @@ import me.lagggpixel.core.data.CommandClass;
 import me.lagggpixel.core.data.Lang;
 import me.lagggpixel.core.modules.bazaar.BazaarModule;
 import me.lagggpixel.core.modules.bazaar.gui.BazaarCategoryBazaarGui;
+import me.lagggpixel.core.utils.ChatUtils;
 import me.lagggpixel.core.utils.CommandUtils;
+import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -54,7 +56,7 @@ public class BazaarCommand extends CommandClass {
             return true;
         }
 
-        new BazaarCategoryBazaarGui(sender, BazaarModule.getBazaar().getCategories().stream().filter(category -> category.getName().equals("Farming")).findFirst().get(), false).show(sender);
+        new BazaarCategoryBazaarGui(sender, BazaarModule.getBazaar().getCategories().stream().filter(category -> category.getName().equals(ChatUtils.stringToComponent("Farming").color(TextColor.fromHexString("FFFF00")))).findFirst().get(), false).show(sender);
         return true;
     }
 
