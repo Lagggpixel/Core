@@ -71,8 +71,8 @@ public class SkyblockBazaarConfigIndexer implements BazaarConfigIndexer {
         for (BazaarConfigCategorySchema categorySchema : categorySchemas) {
             bazaarCategories.add(categorySchema.toBazaarEquivalent());
 
-            for (BazaarConfigIndexer.BazaarConfigCategoryItemSchema itemSchema : categorySchema.getItems()) {
-                for (BazaarConfigIndexer.BazaarConfigCategorySubItemSchema subItemSchema : itemSchema.getSubItems()) {
+            for (BazaarConfigIndexer.BazaarConfigCategoryItemSchema itemSchema : categorySchema.items()) {
+                for (BazaarConfigIndexer.BazaarConfigCategorySubItemSchema subItemSchema : itemSchema.subItems()) {
                     rawItems.add(subItemSchema.toBazaarEquivalent());
                 }
             }
