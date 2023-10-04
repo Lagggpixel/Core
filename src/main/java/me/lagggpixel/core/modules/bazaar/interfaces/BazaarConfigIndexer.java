@@ -6,7 +6,8 @@ import me.lagggpixel.core.modules.bazaar.impl.SkyblockBazaarItem;
 import me.lagggpixel.core.modules.bazaar.impl.SkyblockBazaarSubItem;
 import me.lagggpixel.core.modules.bazaar.utils.BazaarMiscUtil;
 import me.lagggpixel.core.utils.Pair;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.json.simple.JSONObject;
@@ -18,9 +19,9 @@ public interface BazaarConfigIndexer {
 
     @Data
     class BazaarConfigCategorySchema {
-        private final String name;
+        private final Component name;
         private final Material icon;
-        private final ChatColor color;
+        private final TextColor color;
         private final List<BazaarConfigCategoryItemSchema> items;
 
         public BazaarCategory toBazaarEquivalent() throws Bazaar.BazaarItemNotFoundException {
@@ -30,7 +31,7 @@ public interface BazaarConfigIndexer {
                 bazaarItems.add(item.toBazaarEquivalent());
             }
 
-            SkyblockBazaarCategory category = new SkyblockBazaarCategory(this.name, this.icon, this.color, BazaarMiscUtil.getPaneColor(this.color), bazaarItems);
+            SkyblockBazaarCategory category = new SkyblockBazaarCategory(this.name, this.icon, this.color, bazaarItems);
 
             for (BazaarItem item : bazaarItems) {
                 ((SkyblockBazaarItem) item).setCategory(category);
@@ -42,7 +43,7 @@ public interface BazaarConfigIndexer {
 
     @Data
     class BazaarConfigCategoryItemSchema {
-        private final String name;
+        private final Component name;
         private final int inventorySize;
         private final List<BazaarConfigCategorySubItemSchema> subItems;
 

@@ -1,16 +1,16 @@
 package me.lagggpixel.core.modules.bazaar.interfaces;
 
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
 
 import java.util.List;
 
 public interface BazaarCategory {
 
-    String getName();
+    Component getName();
     Material getIcon();
-    ChatColor getColor();
-    Short getPaneColor();
+    TextColor getColor();
 
     List<BazaarItem> getItems();
 

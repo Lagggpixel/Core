@@ -27,13 +27,13 @@ public class BazaarCategoryBazaarGui extends BazaarGui {
             for (BazaarCategory bazaarCategory : BazaarModule.getBazaar().getCategories()) {
                 if (bazaarCategory.getName().equals(category.getName())) continue;
 
-                put(ChatUtils.stringToComponentCC(bazaarCategory.getColor() + bazaarCategory.getName()), () -> {
+                put(bazaarCategory.getName().color(bazaarCategory.getColor()), () -> {
                     new BazaarCategoryBazaarGui(player, bazaarCategory, advanced).show(player);
                 });
             }
 
             for (BazaarItem item : category.getItems()) {
-                put(ChatUtils.stringToComponentCC(category.getColor() + item.getName()), () -> {
+                put(item.getName().color(category.getColor()), () -> {
                     new BazaarItemBazaarGui(player, category, item).show(player);
                 });
             }
@@ -64,11 +64,11 @@ public class BazaarCategoryBazaarGui extends BazaarGui {
         int categoryIndex = 0;
         for (BazaarCategory cat :BazaarModule.getBazaar().getCategories()) {
             if (!cat.getName().equals(category.getName())) {
-                addItem(categoryIndex, new ItemBuilder(ChatUtils.stringToComponentCC(cat.getColor() + cat.getName()), cat.getIcon()).addLore(Arrays.asList(BazaarMiscUtil.buildLore(
+                addItem(categoryIndex, new ItemBuilder(cat.getName().color(cat.getColor()), cat.getIcon()).addLore(Arrays.asList(BazaarMiscUtil.buildLore(
                         "&8Category\n\n&eClick to view!"
                 ))).addItemFlags(ItemFlag.HIDE_UNBREAKABLE, ItemFlag.HIDE_ATTRIBUTES).toItemStack());
             } else {
-                addItem(categoryIndex, new ItemBuilder(ChatUtils.stringToComponentCC(cat.getColor() + cat.getName()), cat.getIcon()).addLore(Arrays.asList(BazaarMiscUtil.buildLore(
+                addItem(categoryIndex, new ItemBuilder(cat.getName().color(cat.getColor()), cat.getIcon()).addLore(Arrays.asList(BazaarMiscUtil.buildLore(
                         "&8Category\n\n&aCurrently viewing!"
                 ))).addItemFlags(ItemFlag.HIDE_UNBREAKABLE, ItemFlag.HIDE_ATTRIBUTES).addEnchantmentGlint().toItemStack());
             }
@@ -92,7 +92,7 @@ public class BazaarCategoryBazaarGui extends BazaarGui {
         BazaarMiscUtil.fillSidesLeftOneIndented(this, Material.GRAY_STAINED_GLASS_PANE);
 
         for (BazaarItem item : category.getItems()) {
-            addItem(new ItemBuilder(ChatUtils.stringToComponentCC(category.getColor() + item.getName()), item.getSubItems().get(0).getIcon().getType()).addLore(Arrays.asList(BazaarMiscUtil.buildLore(
+            addItem(new ItemBuilder(item.getName().color(category.getColor()), item.getSubItems().get(0).getIcon().getType()).addLore(Arrays.asList(BazaarMiscUtil.buildLore(
                     "&8" + item.getProductAmount() + " product" + (item.getProductAmount() == 1 ? "" : "s") + "\n\n" +
                             "&7Buy Price: &6" + BazaarModule.getBazaar().getEscrow().getBuyPrice(item.getSubItems().get(0)) + " coins\n" +
                             "&7Sell Price: &6" + BazaarModule.getBazaar().getEscrow().getSellPrice(item.getSubItems().get(0)) + " coins\n\n" +

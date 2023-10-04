@@ -4,7 +4,7 @@
       {
         "name": "Farming",
         "icon": "GOLDEN_HOE",
-        "color": "YELLOW",
+        "color": "FFFF00",
         "items": [
           {
             "name": "Wheat & Seeds",
@@ -29,25 +29,25 @@
       {
         "name": "Mining",
         "icon": "DIAMOND_PICKAXE",
-        "color": "AQUA",
+        "color": "00FFFF",
         "items": []
       },
       {
         "name": "Combat",
         "icon": "IRON_SWORD",
-        "color": "RED",
+        "color": "FF0000",
         "items": []
       },
       {
         "name": "Woods & Fishes",
         "icon": "FISHING_ROD",
-        "color": "GOLD",
+        "color": "FFAA00",
         "items": []
       },
       {
         "name": "Oddities",
         "icon": "ENCHANTING_TABLE",
-        "color": "LIGHT_PURPLE",
+        "color": "FF55FF",
         "items": []
       }
     ]

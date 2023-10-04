@@ -4,8 +4,10 @@ import me.lagggpixel.core.modules.bazaar.interfaces.Bazaar;
 import me.lagggpixel.core.modules.bazaar.interfaces.BazaarCategory;
 import me.lagggpixel.core.modules.bazaar.interfaces.BazaarConfigIndexer;
 import me.lagggpixel.core.modules.bazaar.interfaces.BazaarSubItem;
+import me.lagggpixel.core.utils.ChatUtils;
 import me.lagggpixel.core.utils.Pair;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -81,9 +83,9 @@ public class SkyblockBazaarConfigIndexer implements BazaarConfigIndexer {
 
     @Override
     public BazaarConfigCategorySchema indexCategory(Bazaar bazaar, JSONObject category) {
-        String name = (String) category.get("name");
+        Component name = ChatUtils.stringToComponent((String) category.get("name"));
         Material icon = Material.valueOf(((String) category.get("icon")).toUpperCase());
-        ChatColor color = ChatColor.valueOf(((String) category.get("color")).toUpperCase());
+        TextColor color = TextColor.fromHexString((String) category.get("color"));
         List<BazaarConfigCategoryItemSchema> items = new ArrayList<>();
 
         JSONArray categoryItems = (JSONArray) category.get("items");
@@ -96,7 +98,7 @@ public class SkyblockBazaarConfigIndexer implements BazaarConfigIndexer {
 
     @Override
     public BazaarConfigCategoryItemSchema indexCategoryItem(Bazaar bazaar, JSONObject categoryItem) {
-        String name = (String) categoryItem.get("name");
+        Component name = ChatUtils.stringToComponent((String) categoryItem.get("name"));
         long inventorySize = (long) categoryItem.get("inventorySize");
         List<BazaarConfigCategorySubItemSchema> subItems = new ArrayList<>();
 

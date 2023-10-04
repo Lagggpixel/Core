@@ -4,6 +4,7 @@ import lombok.Data;
 import me.lagggpixel.core.modules.bazaar.interfaces.BazaarCategory;
 import me.lagggpixel.core.modules.bazaar.interfaces.BazaarItem;
 import me.lagggpixel.core.modules.bazaar.interfaces.BazaarSubItem;
+import net.kyori.adventure.text.Component;
 
 import java.util.List;
 
@@ -11,7 +12,7 @@ import java.util.List;
 public class SkyblockBazaarItem implements BazaarItem {
 
     private BazaarCategory category;
-    private final String name;
+    private final Component name;
     private final List<BazaarSubItem> subItems;
     private final int inventorySize;
 

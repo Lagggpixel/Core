@@ -107,10 +107,6 @@ public class SkyblockBazaar implements Bazaar {
 
                     boolean hasSkyblockNamespace = true;
 
-                    if (displayName == null) {
-                        displayName = item.getIcon().getType().name();
-                        hasSkyblockNamespace = false;
-                    }
                     String name = (hasSkyblockNamespace ? "skyblock;": "minecraft;") + ChatColor.stripColor(displayName).toUpperCase().replace(" ", "_");
                     this.set("items." + name + ".buyPrice", 0.0);
                     this.set("items." + name + ".sellPrice", 0.0);
