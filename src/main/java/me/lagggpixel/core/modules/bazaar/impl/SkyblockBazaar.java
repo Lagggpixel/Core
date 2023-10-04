@@ -4,8 +4,9 @@ import me.lagggpixel.core.Main;
 import me.lagggpixel.core.modules.bazaar.escrow.Escrow;
 import me.lagggpixel.core.modules.bazaar.impl.escrow.SkyblockEscrow;
 import me.lagggpixel.core.modules.bazaar.interfaces.*;
+import me.lagggpixel.core.utils.ChatUtils;
 import me.lagggpixel.core.utils.Pair;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.Component;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.*;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 
+@SuppressWarnings({"FieldCanBeLocal", "ResultOfMethodCallIgnored"})
 public class SkyblockBazaar implements Bazaar {
 
     private final File dataFolder = new File(Main.getInstance().getDataFolder(), "data/modules/bazaar");
@@ -103,11 +105,10 @@ public class SkyblockBazaar implements Bazaar {
 
             this.rawItems.forEach(item -> {
                 try {
-                    String displayName = item.getIcon().getItemMeta().getDisplayName();
+                    Component displayName = item.getIcon().getItemMeta().displayName();
 
-                    boolean hasSkyblockNamespace = true;
+                    String name = ChatUtils.componentToString(displayName).toUpperCase().replace(" ", "_");
 
-                    String name = (hasSkyblockNamespace ? "skyblock;": "minecraft;") + ChatColor.stripColor(displayName).toUpperCase().replace(" ", "_");
                     this.set("items." + name + ".buyPrice", 0.0);
                     this.set("items." + name + ".sellPrice", 0.0);
                     this.set("items." + name + ".orders", item.getOrders());
@@ -132,11 +133,11 @@ public class SkyblockBazaar implements Bazaar {
                         this.set("categories." + category.getName() + ".items." + item.getName(), new ArrayList<>());
 
                         for (BazaarSubItem subItem : item.getSubItems()) {
-                            String displayName = subItem.getIcon().getItemMeta().getDisplayName();
+                            Component displayName = subItem.getIcon().getItemMeta().displayName();
 
                             this.set("categories." + category.getName() + ".items." + item.getName() + ".size", item.getInventorySize());
 
-                            this.set("categories." + category.getName() + ".items." + item.getName() + ".slots." + "skyblock;" + ChatColor.stripColor(displayName).toUpperCase().replace(" ", "_"), subItem.getSlot());
+                            this.set("categories." + category.getName() + ".items." + item.getName() + ".slots." + ChatUtils.componentToString(displayName).toUpperCase().replace(" ", "_"), subItem.getSlot());
                         }
                     }
                 } catch (BazaarIOException ex) {

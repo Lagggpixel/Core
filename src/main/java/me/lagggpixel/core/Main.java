@@ -104,7 +104,7 @@ public final class Main extends JavaPlugin {
             }
             else {
                 startupLogEmbed.addField(new MessageEmbed.Field(v.getId() + " module", "Disabled", false));
-                log(Level.WARNING, "Module " + v.getId() + " is disabled.");
+                log(Level.INFO, "Module " + v.getId() + " is disabled.");
             }
         });
 
