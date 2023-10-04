@@ -23,7 +23,7 @@ public class BazaarCategoryBazaarGui extends BazaarGui {
     private final ItemStack advancedMode = new ItemBuilder(ChatUtils.stringToComponentCC("&aAdvanced Mode"), Material.GOLD_ORE).addLore(Arrays.asList(BazaarMiscUtil.buildLore("&8Bazaar View\n\n&7View prices, orders volume,\n&7recent transactions and graphs\n&7for each product.\n\n&7Front page data accounts for\n&7enchanted recipes.\n\n&eClick to toggle view!"))).toItemStack();
 
     public BazaarCategoryBazaarGui(Player player, BazaarCategory category, boolean advanced) {
-        super(ChatUtils.stringToComponentCC("Bazaar ➜ " + category.getName()), 54, new HashMap<>() {{
+        super(ChatUtils.stringToComponentCC("Bazaar ➜ ").append(category.getName()), 54, new HashMap<>() {{
             for (BazaarCategory bazaarCategory : BazaarModule.getBazaar().getCategories()) {
                 if (bazaarCategory.getName().equals(category.getName())) continue;
 
