@@ -17,12 +17,15 @@ import java.util.HashMap;
 public class BazaarItemBazaarGui extends BazaarGui {
 
     public BazaarItemBazaarGui(Player player, BazaarCategory category, BazaarItem item) {
-        super(ChatUtils.stringToComponentCC(category.getName() + " ➜ " + item.getName()), item.getInventorySize(), new HashMap<>() {{
+        super(category.getName().append(ChatUtils.stringToComponentCC(" ➜ " + item.getName())), item.getInventorySize(), new HashMap<>() {{
             for (BazaarSubItem subItem : item.getSubItems()) {
                 put(subItem.getNamedIcon().toItemStack().getItemMeta().displayName(), () -> {
                     new BazaarSubItemBazaarGui(player, subItem).show(player);
                 });
             }
+
+            put(ChatUtils.stringToComponentCC("&aGo Back"), () ->
+                    new BazaarCategoryBazaarGui(player, BazaarModule.getBazaar().getCategories().stream().filter(cat -> cat.getName().equals(category.getName().color(category.getColor()))).toList().get(0), false).show(player));
         }});
 
         BazaarMiscUtil.fillEmpty(this);

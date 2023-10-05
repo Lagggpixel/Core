@@ -172,9 +172,7 @@ public class BazaarInstantBuyBazaarGui extends BazaarGui {
 
         BazaarMiscUtil.fillEmpty(this);
 
-        String name = ChatUtils.componentToString(Objects.requireNonNull(item.getIcon().getItemMeta().displayName()));
-
-        this.addItem(31, BazaarMiscUtil.buildBackButton("&7To " + name));
+        this.addItem(31, BazaarMiscUtil.buildBackButton("&7To " + ChatUtils.componentToString(item.getItem().displayName())));
 
         ItemStack icon = item.getIcon().clone();
 
@@ -182,14 +180,14 @@ public class BazaarInstantBuyBazaarGui extends BazaarGui {
         int possibleAmountToCarry = opener.getInventory().firstEmpty() == -1 ? 0 : opener.getInventory().firstEmpty() * bazaarItem.getMaxStackSize();
 
         ItemStack buyOne = new ItemBuilder(icon.clone()).setDisplayName(ChatUtils.stringToComponentCC("&aBuy only &eone&a!")).setLore(Arrays.asList(BazaarMiscUtil.buildLore(
-                "&8" + name + "\n\nAmount: &a1&7x\n\n" + (item.getLowestSellPrice() > 0.0 ? "Price: &6" + item.getLowestSellPrice() + " coins" : "&cNo sell offers!") +
+                "\nAmount: &a1&7x\n\n" + (item.getLowestSellPrice() > 0.0 ? "Price: &6" + item.getLowestSellPrice() + " coins" : "&cNo sell offers!") +
                         (item.getLowestSellPrice() > 0.0 ? "\n\n" + (possibleAmountToCarry >= 1 ?
                                 (Main.getUser(opener.getUniqueId()).getPlayerBalance() < item.getLowestSellPrice() ? "&cNot enough coins!" : "&eClick to buy now!")
                                 : "&cNot enough inventory space!") : ""), '7'
         ))).toItemStack();
 
         ItemStack buyStack = new ItemBuilder(icon.clone()).setDisplayName(ChatUtils.stringToComponentCC("&aBuy a stack!")).setLore(Arrays.asList(BazaarMiscUtil.buildLore(
-                "&8" + name + "\n\nAmount: &a" + bazaarItem.getMaxStackSize() + "&7x\n\n" + (item.getLowestSellPrice() > 0.0 ? "Per Unit: &6" + BazaarMiscUtil.formatDouble(item.getLowestSellPrice()) + " coins\n" + "Price: &6" + BazaarMiscUtil.formatDouble(item.getLowestSellPrice() * bazaarItem.getMaxStackSize()) + " coins" : "&cNo sell offers!") +
+                "\nAmount: &a" + bazaarItem.getMaxStackSize() + "&7x\n\n" + (item.getLowestSellPrice() > 0.0 ? "Per Unit: &6" + BazaarMiscUtil.formatDouble(item.getLowestSellPrice()) + " coins\n" + "Price: &6" + BazaarMiscUtil.formatDouble(item.getLowestSellPrice() * bazaarItem.getMaxStackSize()) + " coins" : "&cNo sell offers!") +
                         (item.getLowestSellPrice() > 0.0 ? "\n\n" + (possibleAmountToCarry >= bazaarItem.getMaxStackSize() ?
                                 (Main.getUser(opener.getUniqueId()).getPlayerBalance() < item.getLowestSellPrice() * bazaarItem.getMaxStackSize() ? "&cNot enough coins!" : "&eClick to buy now!")
                                 : "&cNot enough inventory space!") : ""), '7'
@@ -199,7 +197,7 @@ public class BazaarInstantBuyBazaarGui extends BazaarGui {
 
         ItemStack buyInventory = new ItemBuilder(ChatUtils.stringToComponentCC("&aFill my inventory!"), Material.CHEST).setLore(
                 Arrays.asList(BazaarMiscUtil.buildLore(
-                        "&8" + name + "\n\n" + (canFillInventory ? "Amount: &a" + BazaarMiscUtil.formatInt(possibleAmountToCarry) + "&7x\n\nPer Unit: &6" + BazaarMiscUtil.formatDouble(item.getLowestSellPrice()) + " coins\nPrice: &6" + BazaarMiscUtil.formatDouble(item.getLowestSellPrice() * possibleAmountToCarry) + " coins" : "No one is selling this item!") + "\n\n" +
+                        "\n" + (canFillInventory ? "Amount: &a" + BazaarMiscUtil.formatInt(possibleAmountToCarry) + "&7x\n\nPer Unit: &6" + BazaarMiscUtil.formatDouble(item.getLowestSellPrice()) + " coins\nPrice: &6" + BazaarMiscUtil.formatDouble(item.getLowestSellPrice() * possibleAmountToCarry) + " coins" : "No one is selling this item!") + "\n\n" +
                                 (item.getLowestSellPrice() <= 0 ? "&cNo sell offers!" : (canFillInventory ? (Main.getUser(opener.getUniqueId()).getPlayerBalance() < item.getLowestSellPrice() * possibleAmountToCarry ? "&cNot enough coins!" : "&eClick to buy now!") : "&cNot enough inventory space!"))
                         , '7'
                 ))

@@ -56,7 +56,7 @@ public class BazaarCommand extends CommandClass {
             return true;
         }
 
-        new BazaarCategoryBazaarGui(sender, BazaarModule.getBazaar().getCategories().stream().filter(category -> category.getName().equals(ChatUtils.stringToComponent("Farming").color(TextColor.fromHexString("FFFF00")))).findFirst().get(), false).show(sender);
+        new BazaarCategoryBazaarGui(sender, BazaarModule.getBazaar().getCategories().stream().filter(category -> category.getName().equals(ChatUtils.stringToComponent("Farming").color(TextColor.fromHexString("#FFFF00")))).findFirst().get(), false).show(sender);
         return true;
     }
 

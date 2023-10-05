@@ -1,7 +1,6 @@
 package me.lagggpixel.core.utils;
 
 import net.kyori.adventure.text.Component;
-import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -17,7 +16,7 @@ import java.util.List;
 @SuppressWarnings({"unused"})
 public class ItemBuilder {
 
-    private ItemStack item;
+    private final ItemStack item;
     private final ItemMeta meta;
 
     public ItemBuilder() {
