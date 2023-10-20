@@ -15,6 +15,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class BazaarInstantBuyBazaarGui extends BazaarGui {
@@ -39,26 +40,28 @@ public class BazaarInstantBuyBazaarGui extends BazaarGui {
                 }
 
                 while (amountToBuy > 0) {
-                    EscrowTransaction escrowTransaction = BazaarModule.getBazaar().getEscrow().getRankedSellOrders().stream().filter(transaction -> transaction.getSubItem().equals(item)).findFirst().get();
+                    Optional<EscrowTransaction> escrowTransactions = BazaarModule.getBazaar().getEscrow().getRankedSellOrders().stream().filter(transaction -> transaction.getSubItem().equals(item)).findFirst();
+                    if (escrowTransactions.isEmpty()) {
+                        opener.sendMessage(ChatUtils.stringToComponentCC("&cNo sell offers in escrow!"));
+                        return;
+                    }
+                    EscrowTransaction escrowTransaction = escrowTransactions.get();
                     int amountBuyable = escrowTransaction.getAmount();
                     if (amountBuyable > amountToBuy) {
                         BazaarModule.getBazaar().getEscrow().fillSellOrder(escrowTransaction, amountToBuy);
                         ItemStack itemstack = item.getItem();
                         itemstack.setAmount(amountToBuy);
                         opener.getInventory().addItem(itemstack);
-                        opener.sendMessage(ChatUtils.stringToComponentCC("&6You have bought &e" + amountToBuy + "&6 "
-                                + ChatUtils.componentToString(item.getItem().displayName()) + " for &e" + escrowTransaction.getPrice() + "each&6!"));
-                        amountToBuy = amountToBuy - amountBuyable;
                     }
                     else {
                         BazaarModule.getBazaar().getEscrow().fillSellOrder(escrowTransaction, amountBuyable);
                         ItemStack itemstack = item.getItem();
                         itemstack.setAmount(amountBuyable);
                         opener.getInventory().addItem(itemstack);
-                        opener.sendMessage(ChatUtils.stringToComponentCC("&6You have bought &e" + amountToBuy + "&6 "
-                                + ChatUtils.componentToString(item.getItem().displayName()) + " for &e" + escrowTransaction.getPrice() + "each&6!"));
-                        amountToBuy = amountToBuy - amountBuyable;
                     }
+                    opener.sendMessage(ChatUtils.stringToComponentCC("&6You have bought &e" + amountToBuy + "&6 "
+                            + ChatUtils.componentToString(item.getItem().displayName()) + " for &e" + escrowTransaction.getPrice() + "each&6!"));
+                    amountToBuy = amountToBuy - amountBuyable;
                 }
             });
 
@@ -88,26 +91,28 @@ public class BazaarInstantBuyBazaarGui extends BazaarGui {
                 }
 
                 while (amountToBuy > 0) {
-                    EscrowTransaction escrowTransaction = BazaarModule.getBazaar().getEscrow().getRankedSellOrders().stream().filter(transaction -> transaction.getSubItem().equals(item)).findFirst().get();
+                    Optional<EscrowTransaction> escrowTransactions = BazaarModule.getBazaar().getEscrow().getRankedSellOrders().stream().filter(transaction -> transaction.getSubItem().equals(item)).findFirst();
+                    if (escrowTransactions.isEmpty()) {
+                        opener.sendMessage(ChatUtils.stringToComponentCC("&cNo sell offers in escrow!"));
+                        return;
+                    }
+                    EscrowTransaction escrowTransaction = escrowTransactions.get();
                     int amountBuyable = escrowTransaction.getAmount();
                     if (amountBuyable > amountToBuy) {
                         BazaarModule.getBazaar().getEscrow().fillSellOrder(escrowTransaction, amountToBuy);
                         ItemStack itemstack = item.getItem();
                         itemstack.setAmount(amountToBuy);
                         opener.getInventory().addItem(itemstack);
-                        opener.sendMessage(ChatUtils.stringToComponentCC("&6You have bought &e" + amountToBuy + "&6 "
-                                + ChatUtils.componentToString(item.getItem().displayName()) + " for &e" + escrowTransaction.getPrice() + "each&6!"));
-                        amountToBuy = amountToBuy - amountBuyable;
                     }
                     else {
                         BazaarModule.getBazaar().getEscrow().fillSellOrder(escrowTransaction, amountBuyable);
                         ItemStack itemstack = item.getItem();
                         itemstack.setAmount(amountBuyable);
                         opener.getInventory().addItem(itemstack);
-                        opener.sendMessage(ChatUtils.stringToComponentCC("&6You have bought &e" + amountToBuy + "&6 "
-                                + ChatUtils.componentToString(item.getItem().displayName()) + " for &e" + escrowTransaction.getPrice() + "each&6!"));
-                        amountToBuy = amountToBuy - amountBuyable;
                     }
+                    opener.sendMessage(ChatUtils.stringToComponentCC("&6You have bought &e" + amountToBuy + "&6 "
+                            + ChatUtils.componentToString(item.getItem().displayName()) + " for &e" + escrowTransaction.getPrice() + "each&6!"));
+                    amountToBuy = amountToBuy - amountBuyable;
                 }
             });
 
@@ -137,26 +142,28 @@ public class BazaarInstantBuyBazaarGui extends BazaarGui {
                 }
 
                 while (amountToBuy > 0) {
-                    EscrowTransaction escrowTransaction = BazaarModule.getBazaar().getEscrow().getRankedSellOrders().stream().filter(transaction -> transaction.getSubItem().equals(item)).findFirst().get();
+                    Optional<EscrowTransaction> escrowTransactions = BazaarModule.getBazaar().getEscrow().getRankedSellOrders().stream().filter(transaction -> transaction.getSubItem().equals(item)).findFirst();
+                    if (escrowTransactions.isEmpty()) {
+                        opener.sendMessage(ChatUtils.stringToComponentCC("&cNo sell offers in escrow!"));
+                        return;
+                    }
+                    EscrowTransaction escrowTransaction = escrowTransactions.get();
                     int amountBuyable = escrowTransaction.getAmount();
                     if (amountBuyable > amountToBuy) {
                         BazaarModule.getBazaar().getEscrow().fillSellOrder(escrowTransaction, amountToBuy);
                         ItemStack itemstack = item.getItem();
                         itemstack.setAmount(amountToBuy);
                         opener.getInventory().addItem(itemstack);
-                        opener.sendMessage(ChatUtils.stringToComponentCC("&6You have bought &e" + amountToBuy + "&6 "
-                                + ChatUtils.componentToString(item.getItem().displayName()) + " for &e" + escrowTransaction.getPrice() + "each&6!"));
-                        amountToBuy = amountToBuy - amountBuyable;
                     }
                     else {
                         BazaarModule.getBazaar().getEscrow().fillSellOrder(escrowTransaction, amountBuyable);
                         ItemStack itemstack = item.getItem();
                         itemstack.setAmount(amountBuyable);
                         opener.getInventory().addItem(itemstack);
-                        opener.sendMessage(ChatUtils.stringToComponentCC("&6You have bought &e" + amountToBuy + "&6 "
-                                + ChatUtils.componentToString(item.getItem().displayName()) + " for &e" + escrowTransaction.getPrice() + "each&6!"));
-                        amountToBuy = amountToBuy - amountBuyable;
                     }
+                    opener.sendMessage(ChatUtils.stringToComponentCC("&6You have bought &e" + amountToBuy + "&6 "
+                            + ChatUtils.componentToString(item.getItem().displayName()) + " for &e" + escrowTransaction.getPrice() + "each&6!"));
+                    amountToBuy = amountToBuy - amountBuyable;
                 }
             });
 

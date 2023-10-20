@@ -1,6 +1,5 @@
 package me.lagggpixel.core.modules.discord.listener;
 
-import io.papermc.paper.event.player.AsyncChatEvent;
 import me.lagggpixel.core.Main;
 import me.lagggpixel.core.modules.discord.managers.DiscordManager;
 import org.bukkit.event.EventHandler;
@@ -28,10 +27,4 @@ public class Listeners implements Listener {
     public void PlayerQuitEvent(@NotNull PlayerQuitEvent event) {
         discordManager.sendEmbed(discordManager.MESSAGING_CHANNEL, discordManager.createQuitMessageEmbed(event));
     }
-
-    @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
-    public void PlayerAsyncChatEvent(AsyncChatEvent event) {
-        discordManager.sendEmbed(discordManager.MESSAGING_CHANNEL, discordManager.createChatEmbed(event));
-    }
-
 }

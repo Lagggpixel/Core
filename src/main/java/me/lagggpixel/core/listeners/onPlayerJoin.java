@@ -12,19 +12,17 @@ import org.jetbrains.annotations.NotNull;
 import java.util.UUID;
 
 public class onPlayerJoin implements Listener {
-
-    public onPlayerJoin() {
-        Main.getPluginManager().registerEvents(this, Main.getInstance());
+  
+  public onPlayerJoin() {
+    Main.getPluginManager().registerEvents(this, Main.getInstance());
+  }
+  
+  @EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)
+  public void PlayerJoinEvent(@NotNull PlayerJoinEvent event) {
+    Player player = event.getPlayer();
+    UUID uuid = player.getUniqueId();
+    if (Main.getUser(uuid) == null) {
+      Main.getUserData().put(uuid, new User(player));
     }
-
-    @EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)
-    public void PlayerJoinEvent(@NotNull PlayerJoinEvent event) {
-
-        Player player = event.getPlayer();
-        UUID uuid = player.getUniqueId();
-
-        if (Main.getUser(uuid) == null) {
-            Main.getUserData().put(uuid, new User(player));
-        }
-    }
+  }
 }

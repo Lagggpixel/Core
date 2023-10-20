@@ -27,6 +27,7 @@ import java.util.regex.Pattern;
 
 public class DiscordManager {
 
+    private static DiscordManager instance;
     @NotNull private final NMSManager nmsManager;
     @NotNull public final TextChannel CONSOLE_CHANNEL;
     @NotNull public final TextChannel MESSAGING_CHANNEL;
@@ -36,6 +37,7 @@ public class DiscordManager {
     @NotNull @Getter private final Guild guild;
 
     public DiscordManager(@NotNull NMSManager nmsManager) {
+        instance = this;
         this.nmsManager = nmsManager;
         try {
             jda = JDABuilder.createDefault("MTAwMTU4MDA4NjE4Njc1NDIwOQ.GCSQD2.xpfFptXlfirUex4nO9DOx4gLJXClbLjYUvTvyk").build().awaitReady();
@@ -49,6 +51,10 @@ public class DiscordManager {
     }
 
     // ""MTE1MjU5ODM3ODIwMzU4NjY5NQ.GBogbS.tKNCHVoS5Qa8N4DWH9EgMlwbfw7a7qQsZVIiMw""
+
+    public static DiscordManager getInstance() {
+        return instance;
+    }
 
 
     public Member getMemberById(String id) {
