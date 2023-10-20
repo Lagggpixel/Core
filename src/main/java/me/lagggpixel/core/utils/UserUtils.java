@@ -15,76 +15,76 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 
 public class UserUtils {
-
-    private static final File parentFolder = new File(Main.getInstance().getDataFolder(), "data/users");
-
-    @NotNull
-    public static Map<UUID, User> loadData() {
-        if (!parentFolder.exists()) {
-            parentFolder.mkdirs();
-        }
-
-        final var map = new ConcurrentHashMap<UUID, User>();
-        final var files = parentFolder.listFiles();
-
-        if (files == null) {
-            return new ConcurrentHashMap<>();
-        }
-
-        for (File file : files) {
-            final var name = file.getName().split("\\.")[0];
-            final UUID uuid;
-
-            try {
-                uuid = UUID.fromString(name);
-            } catch (IllegalArgumentException e) {
-                continue;
-            }
-
-            var data = getDataFromFile(file);
-            if (data != null) map.put(uuid, data);
-        }
-
-        return map;
+  
+  private static final File parentFolder = new File(Main.getInstance().getDataFolder(), "data/users");
+  
+  @NotNull
+  public static Map<UUID, User> loadData() {
+    if (!parentFolder.exists()) {
+      parentFolder.mkdirs();
     }
-
-    public static void saveData(Map<UUID, User> map) {
-        for (User value : map.values()) {
-            setData(value);
-        }
+    
+    final var map = new ConcurrentHashMap<UUID, User>();
+    final var files = parentFolder.listFiles();
+    
+    if (files == null) {
+      return new ConcurrentHashMap<>();
     }
-
-    @Nullable
-    public static User getDataFromFile(File file) {
-        try {
-            return getPlayerConfig(file).getSerializable("user", User.class);
-        } catch (Exception e) {
-            return null;
-        }
+    
+    for (File file : files) {
+      final var name = file.getName().split("\\.")[0];
+      final UUID uuid;
+      
+      try {
+        uuid = UUID.fromString(name);
+      } catch (IllegalArgumentException e) {
+        continue;
+      }
+      
+      var data = getDataFromFile(file);
+      if (data != null) map.put(uuid, data);
     }
-
-    public static void setData(User data) {
-        var file = getPlayerFile(data.getPlayerUUID());
-        var config = YamlConfiguration.loadConfiguration(file);
-
-        config.set("user", data);
-
-        try {
-            config.save(file);
-        } catch (IOException e) {
-            Main.getInstance().getLogger().log(Level.WARNING, "Unable to save player moderation data " + data, e);
-        }
+    
+    return map;
+  }
+  
+  public static void saveData(Map<UUID, User> map) {
+    for (User value : map.values()) {
+      setData(value);
     }
-
-    public static FileConfiguration getPlayerConfig(File file) {
-        return YamlConfiguration.loadConfiguration(file);
+  }
+  
+  @Nullable
+  public static User getDataFromFile(File file) {
+    try {
+      return getPlayerConfig(file).getSerializable("user", User.class);
+    } catch (Exception e) {
+      return null;
     }
-
-    public static File getPlayerFile(UUID uuid) {
-        if (!parentFolder.exists()) {
-            parentFolder.mkdirs();
-        }
-
-        return new File(parentFolder, uuid.toString() + ".yml");
+  }
+  
+  public static void setData(User data) {
+    var file = getPlayerFile(data.getPlayerUUID());
+    var config = YamlConfiguration.loadConfiguration(file);
+    
+    config.set("user", data);
+    
+    try {
+      config.save(file);
+    } catch (IOException e) {
+      Main.getInstance().getLogger().log(Level.WARNING, "Unable to save player moderation data " + data, e);
     }
+  }
+  
+  public static FileConfiguration getPlayerConfig(File file) {
+    return YamlConfiguration.loadConfiguration(file);
+  }
+  
+  public static File getPlayerFile(UUID uuid) {
+    if (!parentFolder.exists()) {
+      parentFolder.mkdirs();
+    }
+    
+    return new File(parentFolder, uuid.toString() + ".yml");
+  }
 }

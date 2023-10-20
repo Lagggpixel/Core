@@ -10,10 +10,10 @@ import java.util.List;
 
 @Data
 public class SkyblockBazaarItem implements BazaarItem {
-
-    private BazaarCategory category;
-    private final Component name;
-    private final List<BazaarSubItem> subItems;
-    private final int inventorySize;
-
+  
+  private BazaarCategory category;
+  private final Component name;
+  private final List<BazaarSubItem> subItems;
+  private final int inventorySize;
+  
 }

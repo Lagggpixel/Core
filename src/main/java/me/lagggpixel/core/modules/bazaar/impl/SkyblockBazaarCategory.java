@@ -11,11 +11,11 @@ import java.util.List;
 
 @Data
 public class SkyblockBazaarCategory implements BazaarCategory {
-
-    private final Component name;
-    private final Material icon;
-    private final TextColor color;
-
-    private final List<BazaarItem> items;
-
+  
+  private final Component name;
+  private final Material icon;
+  private final TextColor color;
+  
+  private final List<BazaarItem> items;
+  
 }

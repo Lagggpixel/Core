@@ -12,49 +12,49 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public class RtpCommand extends CommandClass {
-    @Override
-    public String getCommandName() {
-        return "rtp";
+  @Override
+  public String getCommandName() {
+    return "rtp";
+  }
+  
+  @Override
+  public String getCommandDescription() {
+    return null;
+  }
+  
+  @Override
+  public List<String> getCommandAliases() {
+    return List.of("randomteleport");
+  }
+  
+  @Override
+  public String getCommandPermission() {
+    return null;
+  }
+  
+  @Override
+  public String getUsage() {
+    return null;
+  }
+  
+  public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String label, String[] args) {
+    if (!(commandSender instanceof Player)) {
+      commandSender.sendMessage(Lang.PLAYER_ONLY.toComponentWithPrefix(null));
+      return true;
     }
-
-    @Override
-    public String getCommandDescription() {
-        return null;
+    
+    Player sender = (Player) commandSender;
+    
+    if (args.length != 0) {
+      sender.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix(null));
+      return true;
     }
-
-    @Override
-    public List<String> getCommandAliases() {
-        return List.of("randomteleport");
-    }
-
-    @Override
-    public String getCommandPermission() {
-        return null;
-    }
-
-    @Override
-    public String getUsage() {
-        return null;
-    }
-
-    public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String label, String[] args) {
-        if (!(commandSender instanceof Player)) {
-            commandSender.sendMessage(Lang.PLAYER_ONLY.toComponentWithPrefix(null));
-            return true;
-        }
-
-        Player sender = (Player) commandSender;
-
-        if (args.length != 0) {
-            sender.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix(null));
-            return true;
-        }
-        RtpManager.teleportRandomly(sender);
-        return true;
-    }
-
-    @Override
-    public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
-        return null;
-    }
+    RtpManager.teleportRandomly(sender);
+    return true;
+  }
+  
+  @Override
+  public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
+    return null;
+  }
 }

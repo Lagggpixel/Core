@@ -12,38 +12,38 @@ import org.jetbrains.annotations.NotNull;
 import java.util.logging.Level;
 
 public class BazaarModule extends Module {
-
-    @Getter
-    private static Bazaar bazaar;
-
-    @NotNull
-    @Override
-    public String getId() {
-        return "bazaar";
+  
+  @Getter
+  private static Bazaar bazaar;
+  
+  @NotNull
+  @Override
+  public String getId() {
+    return "bazaar";
+  }
+  
+  @Override
+  public boolean isEnabled() {
+    return true;
+  }
+  
+  @Override
+  public void initialize() {
+    try {
+      bazaar = new SkyblockBazaar();
+    } catch (Bazaar.BazaarIOException | Bazaar.BazaarItemNotFoundException ex) {
+      Main.log(Level.SEVERE, ("Failed to initialize bazaar: " + ex.getMessage()));
     }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
-
-    @Override
-    public void initialize() {
-        try {
-            bazaar = new SkyblockBazaar();
-        } catch (Bazaar.BazaarIOException | Bazaar.BazaarItemNotFoundException ex) {
-            Main.log(Level.SEVERE, ("Failed to initialize bazaar: " + ex.getMessage()));
-        }
-    }
-
-    @Override
-    public void registerCommands() {
-        CommandUtils.registerCommand(new BazaarCommand(this));
-    }
-
-    @Override
-    public void registerListeners() {
-
-    }
-
+  }
+  
+  @Override
+  public void registerCommands() {
+    CommandUtils.registerCommand(new BazaarCommand(this));
+  }
+  
+  @Override
+  public void registerListeners() {
+  
+  }
+  
 }

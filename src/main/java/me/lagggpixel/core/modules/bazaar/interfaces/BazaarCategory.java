@@ -7,11 +7,13 @@ import org.bukkit.Material;
 import java.util.List;
 
 public interface BazaarCategory {
-
-    Component getName();
-    Material getIcon();
-    TextColor getColor();
-
-    List<BazaarItem> getItems();
-
+  
+  Component getName();
+  
+  Material getIcon();
+  
+  TextColor getColor();
+  
+  List<BazaarItem> getItems();
+  
 }

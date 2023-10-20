@@ -8,20 +8,20 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 public class ChatUtils {
-
-    public static @NotNull Component stringToComponentCC(String stringWithColorCodes) {
-        return LegacyComponentSerializer.legacy('&').deserialize(stringWithColorCodes).asComponent();
+  
+  public static @NotNull Component stringToComponentCC(String stringWithColorCodes) {
+    return LegacyComponentSerializer.legacy('&').deserialize(stringWithColorCodes).asComponent();
+  }
+  
+  @Contract("_ -> new")
+  public static @NotNull TextComponent stringToComponent(String string) {
+    return Component.text(string).toBuilder().build();
+  }
+  
+  public static @NotNull String componentToString(Component component) {
+    if (component == null) {
+      return "";
     }
-
-    @Contract("_ -> new")
-    public static @NotNull TextComponent stringToComponent(String string) {
-        return Component.text(string).toBuilder().build();
-    }
-
-    public static @NotNull String componentToString(Component component) {
-        if (component == null) {
-            return "";
-        }
-        return PlainTextComponentSerializer.plainText().serialize(component);
-    }
+    return PlainTextComponentSerializer.plainText().serialize(component);
+  }
 }

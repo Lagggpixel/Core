@@ -10,33 +10,38 @@ import org.bukkit.inventory.ItemStack;
 import java.util.List;
 
 public interface BazaarSubItem {
-
-    BazaarItem getParent();
-
-    ItemStack getIcon();
-    int getSlot();
-    String getMaterial();
-
-    List<BazaarOffer> getOrders();
-    List<BazaarOffer> getOffers();
-
-    double getLowestSellPrice();
-    double getHighestBuyPrice();
-
-    double getLowestSellPrice(int requiredAmount);
-    double getHighestBuyPrice(int requiredAmount);
-
-    default ItemBuilder getNamedIcon() {
-        return new ItemBuilder(getIcon()).setDisplayName(
-                ChatUtils.stringToComponentCC(
-                        getParent().getCategory().getColor() +
-                                ChatUtils.componentToString(ChatUtils.stringToComponent(getIcon().getItemMeta().displayName() == null ?
-                                        StringUtils.capitalize(getIcon().getType().name().toLowerCase().replace("_", " ")) : ChatUtils.componentToString(getIcon().getItemMeta().displayName())))))
-                .addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE);
-    }
-
-    default ItemStack getItem() {
-        return BazaarMiscUtil.getItem(getMaterial());
-    }
-
+  
+  BazaarItem getParent();
+  
+  ItemStack getIcon();
+  
+  int getSlot();
+  
+  String getMaterial();
+  
+  List<BazaarOffer> getOrders();
+  
+  List<BazaarOffer> getOffers();
+  
+  double getLowestSellPrice();
+  
+  double getHighestBuyPrice();
+  
+  double getLowestSellPrice(int requiredAmount);
+  
+  double getHighestBuyPrice(int requiredAmount);
+  
+  default ItemBuilder getNamedIcon() {
+    return new ItemBuilder(getIcon()).setDisplayName(
+            ChatUtils.stringToComponentCC(
+                getParent().getCategory().getColor() +
+                    ChatUtils.componentToString(ChatUtils.stringToComponent(getIcon().getItemMeta().displayName() == null ?
+                        StringUtils.capitalize(getIcon().getType().name().toLowerCase().replace("_", " ")) : ChatUtils.componentToString(getIcon().getItemMeta().displayName())))))
+        .addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE);
+  }
+  
+  default ItemStack getItem() {
+    return BazaarMiscUtil.getItem(getMaterial());
+  }
+  
 }
