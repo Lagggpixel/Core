@@ -44,7 +44,7 @@ public class RtpManager {
       )));
       
       if (attempts > maxAttempts) {
-        player.sendMessage(Lang.RTP_NO_SAFE_LOCATION.toComponentWithPrefix(null));
+        player.sendMessage(Lang.RTP_NO_SAFE_LOCATION.toComponentWithPrefix());
         return;
       }
     } while (!isSafeLocation(randomLocation) || randomLocation.getY() <= 60);

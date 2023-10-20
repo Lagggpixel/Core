@@ -5,7 +5,6 @@ import me.lagggpixel.core.utils.ChatUtils;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 
@@ -21,6 +20,18 @@ public enum Lang {
   TELEPORTATION_CANCELED("teleportation.canceled", "&cTeleportation canceled due to %reason%."),
   TELEPORTATION_SUCCESS("teleportation.success", "You have been teleported to %name%."),
   
+  // Bazaar Module
+  
+  // Chat Module
+  CHAT_STAFF_CHAT("chat.staffchat", "&cStaff-Chat&r&7» &r%message%"),
+  
+  // Chat-games Module
+  
+  // Discord Module
+  
+  // Economy Module
+  
+  // Home Module
   HOME_ALREADY_EXIST("home.already_exist", "&cA home named '&e%home%&c' already exists."),
   HOME_DOES_NOT_EXIST("home.does_not_exist", "&cThe home '&e%home%&c' does not exist."),
   HOME_CREATED("home.created", "&aYou've successfully created a home called '&e%home%&a'."),
@@ -28,6 +39,7 @@ public enum Lang {
   HOME_DELETED("home.deleted", "&aYou've deleted the home '&e%home%&a'."),
   HOME_NAME_INVALID("home.invalid_name", "&cPlease create a home with a different name. (Home names cannot start with numbers and cannot contain special characters)"),
   
+  // Inventory Module
   INVENTORY_CLEARED_SELF("inventory.cleared.self", "&aYou have cleared your inventory."),
   INVENTORY_CLEARED_OTHER("inventory.cleared.other", "&aYou have cleared %player%'s inventory."),
   INVENTORY_OPENED_SELF("inventory.opened.self", "&aYou have opened your own inventory."),
@@ -35,10 +47,13 @@ public enum Lang {
   INVENTORY_CLONED_PUBLIC("inventory.cloned.public", "&cYou have cloned %player%'s inventory to your own."),
   INVENTORY_CLONED_SILENT("inventory.cloned.silent", "&cYou have silently cloned %player%'s inventory"),
   
-  SPAWN_NAME("spawn.name", "spawn"),
-  SPAWN_NO_SET_SPAWN("spawn.no_set_spawn", "&aNo spawn is set, therefore you cannot teleport to spawn,"),
-  SPAWN_SUCCESSFULLY_SET("spawn.successfully_set", "&aYou have successfully set the new spawn location to your current location"),
+  // Restart Module
   
+  // Rtp Module
+  RTP_NO_SAFE_LOCATION("rtp.no_safe_location", "&aNo safe location was found, please try again."),
+  RTP_ATTEMPTING_TO_FIND_LOCATION("rtp.attempting_to_find_location", "&aAttempting to find a location. Attempt %num% out of %max%."),
+  
+  // Skip-night Module
   SN_WORLD_NO_OVERWORLD("skipnight.world_not_overworld", "&cYou must be in the overworld to start a vote!"),
   SN_IN_BED_VOTED_YES("skipnight.in_bed_voted_yes", "&aYou are now in bed, automatically voting yes."),
   SN_IN_BED_NO_VOTE_IN_PROGRESS("skipnight.in_bed_no_vote_in_progress", "&aStart a vote to skip the night?"),
@@ -57,8 +72,16 @@ public enum Lang {
   SN_VOTE_FAILED_BOSS_BAR("skipnight.boss_bar.vote_failed", "Vote failed!"),
   SN_ALL_PLAYERS_VOTED_BOSS_BAR("skipnight.boss_bar.all_players_voted", "All players have voted!"),
   
-  RTP_NO_SAFE_LOCATION("rtp.no_safe_location", "&aNo safe location was found, please try again."),
-  RTP_ATTEMPTING_TO_FIND_LOCATION("rtp.attempting_to_find_location", "&aAttempting to find a location. Attempt %num% out of %max%.");
+  // Spawn module
+  SPAWN_NAME("spawn.name", "spawn"),
+  SPAWN_NO_SET_SPAWN("spawn.no_set_spawn", "&aNo spawn is set, therefore you cannot teleport to spawn,"),
+  SPAWN_SUCCESSFULLY_SET("spawn.successfully_set", "&aYou have successfully set the new spawn location to your current location")
+  
+  // Staff Module
+  
+  // Warp Module
+  
+  ;
   
   /**
    * -- GETTER --
@@ -66,7 +89,7 @@ public enum Lang {
    */
   private final String path;
   private final String def;
-  private static YamlConfiguration LANG;
+  public static YamlConfiguration LANG;
   
   /**
    * Lang enum constructor.
@@ -88,7 +111,15 @@ public enum Lang {
     LANG = config;
   }
   
-  public TextComponent toTextComponent() {
+  public TextComponent toComponent() {
+    return ChatUtils.stringToComponent(LANG.getString(this.path, def));
+  }
+  
+  public Component toComponent(Map<String, String> placeholders) {
+    String[] var1 = {LANG.getString(this.path, def)};
+    if (placeholders != null) {
+      placeholders.forEach((k, v) -> var1[0] = var1[0].replace(k, v));
+    }
     return ChatUtils.stringToComponent(LANG.getString(this.path, def));
   }
   
@@ -96,7 +127,13 @@ public enum Lang {
     return LANG.getString(this.path, def);
   }
   
-  public Component toComponentWithPrefix(@Nullable Map<String, String> placeholders) {
+  public Component toComponentWithPrefix() {
+    
+    String[] var1 = {Lang.LANG.getString(Lang.PREFIX.path, Lang.PREFIX.def) + LANG.getString(this.path, def)};
+    
+    return ChatUtils.stringToComponentCC(var1[0]);
+  }
+  public Component toComponentWithPrefix(Map<String, String> placeholders) {
     
     String[] var1 = {Lang.LANG.getString(Lang.PREFIX.path, Lang.PREFIX.def) + LANG.getString(this.path, def)};
     if (placeholders != null) {

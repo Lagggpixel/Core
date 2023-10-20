@@ -138,6 +138,7 @@ public final class Main extends JavaPlugin {
     return INSTANCE.getServer().getPluginManager();
   }
   
+  @SuppressWarnings("ResultOfMethodCallIgnored")
   private void loadLangConfig() {
     File langFile = new File(getDataFolder(), "lang.yml");
     if (!langFile.exists()) {
@@ -151,9 +152,9 @@ public final class Main extends JavaPlugin {
           Lang.setFile(defConfig);
         }
       } catch (IOException e) {
-        e.printStackTrace();
-        Main.getInstance().getServer().getLogger().severe("Couldn't create language file.");
-        Main.getInstance().getServer().getLogger().severe("This is a fatal error. Now disabling");
+        log(Level.SEVERE, "Couldn't create language file.");
+        log(Level.SEVERE, "This is a fatal error. Now disabling");
+        log(Level.SEVERE, e.getMessage());
         this.onDisable();
       }
     }
@@ -167,9 +168,9 @@ public final class Main extends JavaPlugin {
     try {
       conf.save(langFile);
     } catch (IOException e) {
-      Main.getInstance().getServer().getLogger().log(Level.WARNING, "Failed to save lang.yml.");
-      Main.getInstance().getServer().getLogger().log(Level.WARNING, "Report this stack trace to the plugin creator.");
-      e.printStackTrace();
+      log(Level.WARNING, "Failed to save lang.yml.");
+      log(Level.WARNING, "Report this stack trace to the plugin creator.");
+      log(Level.SEVERE, e.getMessage());
     }
   }
   

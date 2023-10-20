@@ -54,7 +54,7 @@ public class InventoryCommands extends CommandClass {
   public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
     
     if (!(commandSender instanceof Player sender)) {
-      commandSender.sendMessage(Lang.PLAYER_ONLY.toComponentWithPrefix(null));
+      commandSender.sendMessage(Lang.PLAYER_ONLY.toComponentWithPrefix());
       return true;
     }
     
@@ -99,7 +99,7 @@ public class InventoryCommands extends CommandClass {
       
       if (args.length == 0) {
         clearInventory(sender);
-        sender.sendMessage(Lang.INVENTORY_CLEARED_SELF.toComponentWithPrefix(null));
+        sender.sendMessage(Lang.INVENTORY_CLEARED_SELF.toComponentWithPrefix());
         return true;
       }
       

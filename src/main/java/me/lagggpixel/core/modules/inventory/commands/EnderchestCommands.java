@@ -57,7 +57,7 @@ public class EnderchestCommands extends CommandClass implements Listener {
   
   public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
     if (!(commandSender instanceof Player sender)) {
-      commandSender.sendMessage(Lang.PLAYER_ONLY.toComponentWithPrefix(null));
+      commandSender.sendMessage(Lang.PLAYER_ONLY.toComponentWithPrefix());
       return true;
     }
     if (args.length == 0) {

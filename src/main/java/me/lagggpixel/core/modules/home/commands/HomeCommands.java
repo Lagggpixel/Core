@@ -63,7 +63,7 @@ public class HomeCommands extends CommandClass implements Listener {
   @Override
   public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command cmd, @NotNull String label, String[] args) {
     if (!(commandSender instanceof Player player)) {
-      commandSender.sendMessage(Lang.PLAYER_ONLY.toComponentWithPrefix(null));
+      commandSender.sendMessage(Lang.PLAYER_ONLY.toComponentWithPrefix());
       return true;
     }
     
@@ -85,7 +85,7 @@ public class HomeCommands extends CommandClass implements Listener {
       if (args[0].equalsIgnoreCase("set")) {
         
         if (args.length != 2) {
-          player.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix(null));
+          player.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
           return true;
         }
         
@@ -97,7 +97,7 @@ public class HomeCommands extends CommandClass implements Listener {
       if (args[0].equalsIgnoreCase("del") || args[0].equalsIgnoreCase("delete")) {
         
         if (args.length != 2) {
-          player.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix(null));
+          player.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
           return true;
         }
         
@@ -106,13 +106,13 @@ public class HomeCommands extends CommandClass implements Listener {
         return true;
       }
       
-      player.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix(null));
+      player.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
       
       return true;
     }
     if (label.equals("sethome")) {
       if (args.length != 1) {
-        player.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix(null));
+        player.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
         return true;
       }
       
@@ -122,14 +122,14 @@ public class HomeCommands extends CommandClass implements Listener {
     }
     if (label.equals("delhome")) {
       if (args.length != 1) {
-        player.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix(null));
+        player.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
         return true;
       }
       handleDeleteHome(player, user, args[0]);
       return true;
     }
     
-    player.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix(null));
+    player.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
     return true;
   }
   
@@ -142,7 +142,7 @@ public class HomeCommands extends CommandClass implements Listener {
     }
     
     if (homeNameInvalid(homeName)) {
-      player.sendMessage(Lang.HOME_NAME_INVALID.toComponentWithPrefix(null));
+      player.sendMessage(Lang.HOME_NAME_INVALID.toComponentWithPrefix());
       return;
     }
     

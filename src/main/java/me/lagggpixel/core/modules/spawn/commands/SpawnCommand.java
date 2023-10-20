@@ -47,16 +47,14 @@ public class SpawnCommand extends CommandClass {
   
   @Override
   public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String label, String[] args) {
-    if (!(commandSender instanceof Player)) {
-      commandSender.sendMessage(Lang.PLAYER_ONLY.toComponentWithPrefix(null));
+    if (!(commandSender instanceof Player sender)) {
+      commandSender.sendMessage(Lang.PLAYER_ONLY.toComponentWithPrefix());
       return true;
     }
     
-    Player sender = (Player) commandSender;
-    
     if (args.length == 0) {
       if (spawnManager.getSpawnLocation() == null) {
-        sender.sendMessage(Lang.SPAWN_NO_SET_SPAWN.toComponentWithPrefix(null));
+        sender.sendMessage(Lang.SPAWN_NO_SET_SPAWN.toComponentWithPrefix());
         return true;
       }
       

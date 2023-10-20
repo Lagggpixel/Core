@@ -38,15 +38,13 @@ public class RtpCommand extends CommandClass {
   }
   
   public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String label, String[] args) {
-    if (!(commandSender instanceof Player)) {
-      commandSender.sendMessage(Lang.PLAYER_ONLY.toComponentWithPrefix(null));
+    if (!(commandSender instanceof Player sender)) {
+      commandSender.sendMessage(Lang.PLAYER_ONLY.toComponentWithPrefix());
       return true;
     }
     
-    Player sender = (Player) commandSender;
-    
     if (args.length != 0) {
-      sender.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix(null));
+      sender.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
       return true;
     }
     RtpManager.teleportRandomly(sender);
