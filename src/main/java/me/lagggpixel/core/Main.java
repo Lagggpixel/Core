@@ -107,8 +107,6 @@ public final class Main extends JavaPlugin {
     });
     
     DiscordModule.discordManager.sendEmbed(DiscordModule.discordManager.LOGGING_CHANNEL, startupLogEmbed.build());
-    
-    
   }
   
   @Override
