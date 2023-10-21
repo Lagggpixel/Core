@@ -23,7 +23,9 @@ public enum Lang {
   // Bazaar Module
   
   // Chat Module
-  CHAT_STAFF_CHAT("chat.staffchat", "&cStaff-Chat&r&7» &r%message%"),
+  CHAT_STAFF_CHAT("chat.staffchat.format", "&c[Staff-Chat] &r&b%sender% &r&7» &r%message%"),
+  CHAT_STAFF_CHAT_TOGGLE_ON("chat.staffchat.toggle.on", "&c[Staff-Chat] &aYou have toggled staff chat on."),
+  CHAT_STAFF_CHAT_TOGGLE_OFF("chat.staffchat.toggle.off", "&c[Staff-Chat] &aYou have toggled staff chat off."),
   
   // Chat-games Module
   
