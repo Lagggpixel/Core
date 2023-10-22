@@ -17,7 +17,7 @@ import java.util.HashMap;
 public class BazaarItemBazaarGui extends BazaarGui {
   
   public BazaarItemBazaarGui(Player player, BazaarCategory category, BazaarItem item) {
-    super(category.getName().append(ChatUtils.stringToComponentCC(" ➜ " + item.getName())), item.getInventorySize(), new HashMap<>() {{
+    super(category.getName().append(ChatUtils.stringToComponentCC(" ➜ ").append(item.getName())), item.getInventorySize(), new HashMap<>() {{
       for (BazaarSubItem subItem : item.getSubItems()) {
         put(subItem.getNamedIcon().toItemStack().getItemMeta().displayName(), () -> {
           new BazaarSubItemBazaarGui(player, subItem).show(player);
@@ -34,7 +34,7 @@ public class BazaarItemBazaarGui extends BazaarGui {
       ItemStack stack = new ItemStack(subItem.getIcon().getType());
       ItemMeta meta = stack.getItemMeta();
       
-      meta.displayName(subItem.getIcon().getItemMeta().displayName() == null ? ChatUtils.stringToComponentCC(subItem.getIcon().getType().name()) : subItem.getIcon().getItemMeta().displayName());
+      meta.displayName(subItem.getNamedIcon().toItemStack().getItemMeta().displayName());
       meta.lore(Arrays.asList(BazaarMiscUtil.buildLore(
           "&7Buy Price: &6" + BazaarModule.getBazaar().getEscrow().getBuyPrice(subItem) +
               "\n&7Sell Price: &6" + BazaarModule.getBazaar().getEscrow().getSellPrice(subItem) + "\n\n&eClick to view details!")));

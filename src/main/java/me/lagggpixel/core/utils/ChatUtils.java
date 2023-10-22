@@ -24,4 +24,9 @@ public class ChatUtils {
     }
     return PlainTextComponentSerializer.plainText().serialize(component);
   }
+
+  public static @NotNull Component stripColor(Component component) {
+    return PlainTextComponentSerializer.builder().build().deserialize(PlainTextComponentSerializer.plainText().serialize(component));
+  }
+
 }

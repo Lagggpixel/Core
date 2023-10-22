@@ -20,7 +20,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.logging.Level;
 
 @Getter
 public class BazaarGui implements Listener {
@@ -130,8 +129,8 @@ public class BazaarGui implements Listener {
           }
         } catch (NoSuchMethodException | InvocationTargetException | InstantiationException |
                  IllegalAccessException e) {
-          Main.log(Level.SEVERE, "Failed to create instance of " + clazz.getName() + ".");
-          Main.log(Level.SEVERE, e.getMessage());
+          // Main.log(Level.SEVERE, "Failed to create instance of " + clazz.getName() + ".");
+          // Main.log(Level.SEVERE, e.getMessage());
         }
       }
     }

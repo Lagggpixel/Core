@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 public class BazaarSubItemBazaarGui extends BazaarGui {
 
     public BazaarSubItemBazaarGui(Player player, BazaarSubItem item) {
-        super(item.getParent().getCategory().getName().append(ChatUtils.stringToComponentCC( " ➜ " + ChatUtils.componentToString(item.getNamedIcon().toItemStack().getItemMeta().displayName()))), 36, new HashMap<>() {{
+        super(item.getParent().getCategory().getName().append(ChatUtils.stringToComponentCC(" ➜ ")).append(ChatUtils.stripColor(item.getNamedIcon().toItemStack().getItemMeta().displayName())), 36, new HashMap<>() {{
             Runnable back = () -> new BazaarCategoryBazaarGui(player, item.getParent().getCategory(), false).show(player);
 
             put(ChatUtils.stringToComponentCC("&aGo Back"), back);

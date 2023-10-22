@@ -12,6 +12,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 
@@ -137,7 +138,7 @@ public class SkyblockBazaar implements Bazaar {
 
                             this.set("categories." + category.getName() + ".items." + item.getName() + ".size", item.getInventorySize());
 
-                            this.set("categories." + category.getName() + ".items." + item.getName() + ".slots." + ChatUtils.componentToString(displayName).toUpperCase().replace(" ", "_"), subItem.getSlot());
+                            this.set("categories." + category.getName() + ".items." + item.getName() + ".slots." + Objects.requireNonNull(ChatUtils.componentToString(displayName).toUpperCase().replace(" ", "_")), subItem.getSlot());
                         }
                     }
                 } catch (BazaarIOException ex) {
