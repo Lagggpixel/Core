@@ -20,11 +20,15 @@ public class Listeners implements Listener {
   
   @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
   public void PlayerJoinEvent(@NotNull PlayerJoinEvent event) {
-    discordManager.sendEmbed(discordManager.MESSAGING_CHANNEL, discordManager.createJoinMessageEmbed(event));
+    if (event.getPlayer().hasPermission("coreplugin.discord.silent.join")) {
+      discordManager.sendEmbed(discordManager.MESSAGING_CHANNEL, discordManager.createJoinMessageEmbed(event));
+    }
   }
   
   @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
   public void PlayerQuitEvent(@NotNull PlayerQuitEvent event) {
-    discordManager.sendEmbed(discordManager.MESSAGING_CHANNEL, discordManager.createQuitMessageEmbed(event));
+    if (event.getPlayer().hasPermission("coreplugin.discord.silent.leave")) {
+      discordManager.sendEmbed(discordManager.MESSAGING_CHANNEL, discordManager.createQuitMessageEmbed(event));
+    }
   }
 }
