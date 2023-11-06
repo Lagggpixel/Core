@@ -24,10 +24,7 @@ public class BazaarInstantBuyBazaarGui extends BazaarGui {
     super(Objects.requireNonNull(item.getIcon().getItemMeta().displayName()).append(ChatUtils.stringToComponentCC(" ➜ Instant Buy")), 36, new HashMap<>() {{
       put(ChatUtils.stringToComponentCC("&aBuy only &eone&a!"), () -> {
         int amountToBuy = 1;
-        if (item.getLowestSellPrice() < 0.0) {
-          opener.sendMessage(ChatUtils.stringToComponentCC("&cNo sell offers!"));
-          return;
-        }
+        BazaarModule.checkBuyOrderAvailability(item, opener);
         if (Main.getUser(opener.getUniqueId()).getPlayerBalance() < item.getLowestSellPrice(amountToBuy)) {
           opener.sendMessage(ChatUtils.stringToComponentCC("&cNot enough coins!"));
           return;
@@ -66,10 +63,7 @@ public class BazaarInstantBuyBazaarGui extends BazaarGui {
       
       put(ChatUtils.stringToComponentCC("&aBuy a stack!"), () -> {
         int amountToBuy = item.getItem().getMaxStackSize();
-        if (item.getLowestSellPrice() < 0.0) {
-          opener.sendMessage(ChatUtils.stringToComponentCC("&cNo sell offers!"));
-          return;
-        }
+        BazaarModule.checkBuyOrderAvailability(item, opener);
         AtomicInteger possibleToBuy = new AtomicInteger();
         item.getOffers().forEach(offer -> {
           possibleToBuy.set(possibleToBuy.get() + offer.getAmount());
@@ -116,10 +110,7 @@ public class BazaarInstantBuyBazaarGui extends BazaarGui {
       
       put(ChatUtils.stringToComponentCC("&aFill my inventory!"), () -> {
         int amountToBuy = opener.getInventory().firstEmpty() == -1 ? 0 : opener.getInventory().firstEmpty() * item.getItem().getMaxStackSize();
-        if (item.getLowestSellPrice() < 0.0) {
-          opener.sendMessage(ChatUtils.stringToComponentCC("&cNo sell offers!"));
-          return;
-        }
+        BazaarModule.checkBuyOrderAvailability(item, opener);
         AtomicInteger possibleToBuy = new AtomicInteger();
         item.getOffers().forEach(offer -> {
           possibleToBuy.set(possibleToBuy.get() + offer.getAmount());
