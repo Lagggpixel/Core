@@ -77,9 +77,15 @@ public enum Lang {
   // Spawn module
   SPAWN_NAME("spawn.name", "spawn"),
   SPAWN_NO_SET_SPAWN("spawn.no_set_spawn", "&aNo spawn is set, therefore you cannot teleport to spawn,"),
-  SPAWN_SUCCESSFULLY_SET("spawn.successfully_set", "&aYou have successfully set the new spawn location to your current location")
+  SPAWN_SUCCESSFULLY_SET("spawn.successfully_set", "&aYou have successfully set the new spawn location to your current location"),
   
   // Staff Module
+  STAFF_VANISHED_SELF("staff.vanish.self.true", "&aYou are now in vanish mode."),
+  STAFF_UNVANISHED_SELF("staff.vanish.self.false", "&aYou are no longer in vanish mode."),
+  STAFF_VANISHED_OTHER("staff.vanish.other.true", "&a%player% is now in vanish mode."),
+  STAFF_UNVANISHED_OTHER("staff.vanish.other.false", "&a%player% is no longer in vanish mode."),
+  STAFF_VANISHED_OTHER_NOTIFY("staff.vanish.other_notify.true", "&aYou are now in vanish mode. Action performed by %player%."),
+  STAFF_UNVANISHED_OTHER_NOTIFY("staff.vanish.other_notify.false", "&aYou are no longer in vanish mode. Action performed by %player%"),
   
   // Warp Module
   

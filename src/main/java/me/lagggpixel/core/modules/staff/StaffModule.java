@@ -1,6 +1,8 @@
 package me.lagggpixel.core.modules.staff;
 
 import me.lagggpixel.core.modules.Module;
+import me.lagggpixel.core.modules.staff.commands.VanishCommand;
+import me.lagggpixel.core.utils.CommandUtils;
 import org.jetbrains.annotations.NotNull;
 
 public class StaffModule extends Module {
@@ -12,12 +14,12 @@ public class StaffModule extends Module {
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 
     @Override
     public void initialize() {
-
+        CommandUtils.registerCommand(new VanishCommand(this));
     }
 
     @Override
