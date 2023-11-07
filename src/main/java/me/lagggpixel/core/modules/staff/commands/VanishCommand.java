@@ -9,6 +9,7 @@ import me.lagggpixel.core.utils.CommandUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -52,7 +53,21 @@ public class VanishCommand extends CommandClass {
   @Override
   public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
     if (!(commandSender instanceof Player sender)) {
-      commandSender.sendMessage(Lang.PLAYER_ONLY.toComponentWithPrefix());
+      if (args.length == 1) {
+        Player target = Bukkit.getPlayer(args[0]);
+        if (target != null) {
+          User user = Main.getUser(target.getUniqueId());
+          if (user.isVanished()) {
+            showPlayer(commandSender, target);
+          } else {
+            vanishPlayer(commandSender, target);
+          }
+        } else {
+          commandSender.sendMessage(Lang.PLAYER_NOT_FOUND.toComponentWithPrefix(Map.of("%player%", args[0])));
+        }
+      }
+
+      commandSender.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
       return true;
     }
     
@@ -106,7 +121,8 @@ public class VanishCommand extends CommandClass {
     });
     player.sendMessage(Lang.STAFF_VANISHED_SELF.toComponentWithPrefix());
   }
-  
+
+
   public void showPlayer(Player sender, Player target) {
     User user = Main.getUser(target.getUniqueId());
     user.setVanished(false);
@@ -127,6 +143,39 @@ public class VanishCommand extends CommandClass {
     });
     sender.sendMessage(Lang.STAFF_VANISHED_OTHER.toComponentWithPrefix(Map.of("%%player%", target.getName())));
     target.sendMessage(Lang.STAFF_VANISHED_OTHER_NOTIFY.toComponentWithPrefix(Map.of("%%player%", sender.getName())));
+  }
+
+  public void showPlayer(CommandSender sender, Player target) {
+    User user = Main.getUser(target.getUniqueId());
+    user.setVanished(false);
+    Main.getInstance().getServer().getOnlinePlayers().forEach(onlinePlayer -> {
+      onlinePlayer.showPlayer(Main.getInstance(), target);
+    });
+    sender.sendMessage(Lang.STAFF_UNVANISHED_OTHER.toComponentWithPrefix(Map.of("%%player%", target.getName())));
+    if (sender instanceof ConsoleCommandSender) {
+      target.sendMessage(Lang.STAFF_UNVANISHED_OTHER_NOTIFY.toComponentWithPrefix(Map.of("%%player%", "console")));
+    }
+    else {
+      target.sendMessage(Lang.STAFF_UNVANISHED_OTHER_NOTIFY.toComponentWithPrefix(Map.of("%%player%", "unknown")));
+
+    }
+  }
+
+  public void vanishPlayer(CommandSender sender, Player target) {
+    User user = Main.getUser(target.getUniqueId());
+    user.setVanished(true);
+    Main.getInstance().getServer().getOnlinePlayers().forEach(onlinePlayer -> {
+      if (onlinePlayer.hasPermission("coreplugin.staff.command.vanish.see")) {
+        onlinePlayer.hidePlayer(Main.getInstance(), target);
+      }
+    });
+    sender.sendMessage(Lang.STAFF_VANISHED_OTHER.toComponentWithPrefix(Map.of("%%player%", target.getName())));
+    if (sender instanceof ConsoleCommandSender) {
+      target.sendMessage(Lang.STAFF_VANISHED_OTHER_NOTIFY.toComponentWithPrefix(Map.of("%%player%", "console")));
+    }
+    else {
+      target.sendMessage(Lang.STAFF_VANISHED_OTHER_NOTIFY.toComponentWithPrefix(Map.of("%%player%", "unknown")));
+    }
   }
   
 }
