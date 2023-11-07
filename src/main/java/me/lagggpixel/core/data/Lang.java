@@ -86,6 +86,10 @@ public enum Lang {
   STAFF_UNVANISHED_OTHER("staff.vanish.other.false", "&a%player% is no longer in vanish mode."),
   STAFF_VANISHED_OTHER_NOTIFY("staff.vanish.other_notify.true", "&aYou are now in vanish mode. Action performed by %player%."),
   STAFF_UNVANISHED_OTHER_NOTIFY("staff.vanish.other_notify.false", "&aYou are no longer in vanish mode. Action performed by %player%"),
+  STAFF_GAMEMODE_INVALID("staff.gamemode.invalid", "&aInvalid gamemode: %gamemode%."),
+  STAFF_GAMEMODE_SELF("staff.gamemode.self", "&aYou are now in gamemode %gamemode%."),
+  STAFF_GAMEMODE_OTHER("staff.gamemode.other", "&a%player% is now in gamemode %gamemode%."),
+  STAFF_GAMEMODE_OTHER_NOTIFY("staff.gamemode.other_notify", "&aYou are now in gamemode %gamemode%. Action performed by %player%.");
   
   // Warp Module
   
