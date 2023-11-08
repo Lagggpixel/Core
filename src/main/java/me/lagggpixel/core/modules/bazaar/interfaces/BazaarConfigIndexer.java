@@ -4,7 +4,7 @@ import me.lagggpixel.core.modules.bazaar.impl.SkyblockBazaarCategory;
 import me.lagggpixel.core.modules.bazaar.impl.SkyblockBazaarItem;
 import me.lagggpixel.core.modules.bazaar.impl.SkyblockBazaarSubItem;
 import me.lagggpixel.core.modules.bazaar.utils.BazaarMiscUtil;
-import me.lagggpixel.core.utils.Pair;
+import me.lagggpixel.core.data.Pair;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;

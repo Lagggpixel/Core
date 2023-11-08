@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 public class GamemodeCommands extends CommandClass {
-  private StaffModule module;
+  private final StaffModule module;
   public GamemodeCommands(StaffModule module) {
     this.module = module;
   }

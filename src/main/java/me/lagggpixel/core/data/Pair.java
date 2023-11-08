@@ -1,4 +1,4 @@
-package me.lagggpixel.core.utils;
+package me.lagggpixel.core.data;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

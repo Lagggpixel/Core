@@ -1,6 +1,5 @@
 package me.lagggpixel.core;
 
-import me.lagggpixel.core.data.Lang;
 import me.lagggpixel.core.data.User;
 import me.lagggpixel.core.listeners.onPlayerJoin;
 import me.lagggpixel.core.modules.Module;
@@ -18,20 +17,17 @@ import me.lagggpixel.core.modules.skipnight.SkipNightModule;
 import me.lagggpixel.core.modules.spawn.SpawnModule;
 import me.lagggpixel.core.modules.staff.StaffModule;
 import me.lagggpixel.core.modules.warp.WarpModule;
+import me.lagggpixel.core.utils.LangUtils;
 import me.lagggpixel.core.utils.TeleportUtils;
-import me.lagggpixel.core.utils.UserUtils;
+import me.lagggpixel.core.utils.UserDataUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -68,9 +64,9 @@ public final class Main extends JavaPlugin {
     
     INSTANCE = this;
     
-    this.loadLangConfig();
+    LangUtils.loadLangConfig();
     
-    userData = UserUtils.loadData();
+    userData = UserDataUtils.loadData();
     
     registerListeners();
     
@@ -112,7 +108,7 @@ public final class Main extends JavaPlugin {
   @Override
   public void onDisable() {
     DiscordModule.discordManager.sendEmbed(DiscordModule.discordManager.LOGGING_CHANNEL, new EmbedBuilder().setTitle("**Core Plugin Disabled**").build());
-    UserUtils.saveData(userData);
+    UserDataUtils.saveData(userData);
     DiscordModule.discordManager.getJda().shutdown();
   }
   
@@ -134,42 +130,6 @@ public final class Main extends JavaPlugin {
   
   public static @NotNull PluginManager getPluginManager() {
     return INSTANCE.getServer().getPluginManager();
-  }
-  
-  @SuppressWarnings("ResultOfMethodCallIgnored")
-  private void loadLangConfig() {
-    File langFile = new File(getDataFolder(), "lang.yml");
-    if (!langFile.exists()) {
-      try {
-        getDataFolder().mkdir();
-        langFile.createNewFile();
-        InputStream defConfigStream = this.getResource("lang.yml");
-        if (defConfigStream != null) {
-          YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(langFile);
-          defConfig.save(langFile);
-          Lang.setFile(defConfig);
-        }
-      } catch (IOException e) {
-        log(Level.SEVERE, "Couldn't create language file.");
-        log(Level.SEVERE, "This is a fatal error. Now disabling");
-        log(Level.SEVERE, e.getMessage());
-        this.onDisable();
-      }
-    }
-    YamlConfiguration conf = YamlConfiguration.loadConfiguration(langFile);
-    for (Lang item : Lang.values()) {
-      if (conf.getString(item.getPath()) == null) {
-        conf.set(item.getPath(), item.getDefault());
-      }
-    }
-    Lang.setFile(conf);
-    try {
-      conf.save(langFile);
-    } catch (IOException e) {
-      log(Level.WARNING, "Failed to save lang.yml.");
-      log(Level.WARNING, "Report this stack trace to the plugin creator.");
-      log(Level.SEVERE, e.getMessage());
-    }
   }
   
   private void registerListeners() {

@@ -14,7 +14,7 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 
-public class UserUtils {
+public class UserDataUtils {
   
   private static final File parentFolder = new File(Main.getInstance().getDataFolder(), "data/users");
   
