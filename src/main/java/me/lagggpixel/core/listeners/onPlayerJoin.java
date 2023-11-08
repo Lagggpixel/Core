@@ -2,7 +2,7 @@ package me.lagggpixel.core.listeners;
 
 import me.lagggpixel.core.Main;
 import me.lagggpixel.core.data.User;
-import me.lagggpixel.core.modules.staff.commands.VanishCommand;
+import me.lagggpixel.core.modules.staff.handlers.VanishHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -33,7 +33,7 @@ public class onPlayerJoin implements Listener {
   private void handleVanishPlayers(PlayerJoinEvent event) {
     Player player = event.getPlayer();
     
-    if (player.hasPermission(VanishCommand.vanishSeePermission)) {
+    if (player.hasPermission(VanishHandler.vanishSeePermission)) {
       return;
     }
     

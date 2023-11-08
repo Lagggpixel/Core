@@ -3,11 +3,11 @@ package me.lagggpixel.core.modules.staff.commands;
 import me.lagggpixel.core.data.CommandClass;
 import me.lagggpixel.core.data.Lang;
 import me.lagggpixel.core.modules.staff.StaffModule;
+import me.lagggpixel.core.modules.staff.handlers.GamemodeHandler;
 import me.lagggpixel.core.utils.CommandUtils;
 import org.bukkit.GameMode;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -17,9 +17,13 @@ import java.util.Map;
 
 public class GamemodeCommands extends CommandClass {
   private final StaffModule module;
+  private final GamemodeHandler gamemodeHandler;
+  
   public GamemodeCommands(StaffModule module) {
     this.module = module;
+    this.gamemodeHandler = new GamemodeHandler();
   }
+  
   @Override
   public String getCommandName() {
     return "gamemode";
@@ -57,10 +61,14 @@ public class GamemodeCommands extends CommandClass {
     if (commandSender instanceof Player sender) {
       if (args.length == 0) {
         switch (s) {
-          case "gma", "gamemodeadventure", "gmadventure", "gamemodea" -> setGameMode(sender, GameMode.ADVENTURE);
-          case "gmc", "gamemodecreative", "gmcreative", "gamemodec" -> setGameMode(sender, GameMode.CREATIVE);
-          case "gmsp", "gamemodespectator", "gmspectator", "gamemodesp" -> setGameMode(sender, GameMode.SPECTATOR);
-          case "gms", "gamemodesurvival", "gmsurvival", "gamemodes" -> setGameMode(sender, GameMode.SURVIVAL);
+          case "gma", "gamemodeadventure", "gmadventure", "gamemodea" ->
+              gamemodeHandler.setGameMode(sender, GameMode.ADVENTURE);
+          case "gmc", "gamemodecreative", "gmcreative", "gamemodec" ->
+              gamemodeHandler.setGameMode(sender, GameMode.CREATIVE);
+          case "gmsp", "gamemodespectator", "gmspectator", "gamemodesp" ->
+              gamemodeHandler.setGameMode(sender, GameMode.SPECTATOR);
+          case "gms", "gamemodesurvival", "gmsurvival", "gamemodes" ->
+              gamemodeHandler.setGameMode(sender, GameMode.SURVIVAL);
           default -> {
             sender.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
           }
@@ -77,21 +85,23 @@ public class GamemodeCommands extends CommandClass {
           }
           switch (s) {
             case "gma", "gamemodeadventure", "gmadventure", "gamemodea" ->
-                setGameMode(sender, target, GameMode.ADVENTURE);
-            case "gmc", "gamemodecreative", "gmcreative", "gamemodec" -> setGameMode(sender, target, GameMode.CREATIVE);
+                gamemodeHandler.setGameMode(sender, target, GameMode.ADVENTURE);
+            case "gmc", "gamemodecreative", "gmcreative", "gamemodec" ->
+                gamemodeHandler.setGameMode(sender, target, GameMode.CREATIVE);
             case "gmsp", "gamemodespectator", "gmspectator", "gamemodesp" ->
-                setGameMode(sender, target, GameMode.SPECTATOR);
-            case "gms", "gamemodesurvival", "gmsurvival", "gamemodes" -> setGameMode(sender, target, GameMode.SURVIVAL);
+                gamemodeHandler.setGameMode(sender, target, GameMode.SPECTATOR);
+            case "gms", "gamemodesurvival", "gmsurvival", "gamemodes" ->
+                gamemodeHandler.setGameMode(sender, target, GameMode.SURVIVAL);
             default -> sender.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
           }
           return true;
         }
         
         switch (args[0].toLowerCase()) {
-          case "s", "survival", "0" -> setGameMode(sender, GameMode.SURVIVAL);
-          case "c", "creative", "1" -> setGameMode(sender, GameMode.CREATIVE);
-          case "a", "adventure", "2" -> setGameMode(sender, GameMode.ADVENTURE);
-          case "sp", "spectator", "3" -> setGameMode(sender, GameMode.SPECTATOR);
+          case "s", "survival", "0" -> gamemodeHandler.setGameMode(sender, GameMode.SURVIVAL);
+          case "c", "creative", "1" -> gamemodeHandler.setGameMode(sender, GameMode.CREATIVE);
+          case "a", "adventure", "2" -> gamemodeHandler.setGameMode(sender, GameMode.ADVENTURE);
+          case "sp", "spectator", "3" -> gamemodeHandler.setGameMode(sender, GameMode.SPECTATOR);
           default ->
               sender.sendMessage(Lang.STAFF_GAMEMODE_INVALID.toComponentWithPrefix(Map.of("%gamemode%", args[0])));
         }
@@ -111,10 +121,10 @@ public class GamemodeCommands extends CommandClass {
         }
         
         switch (args[0].toLowerCase()) {
-          case "s", "survival", "0" -> setGameMode(sender, target, GameMode.SURVIVAL);
-          case "c", "creative", "1" -> setGameMode(sender, target, GameMode.CREATIVE);
-          case "a", "adventure", "2" -> setGameMode(sender, target, GameMode.ADVENTURE);
-          case "sp", "spectator", "3" -> setGameMode(sender, target, GameMode.SPECTATOR);
+          case "s", "survival", "0" -> gamemodeHandler.setGameMode(sender, target, GameMode.SURVIVAL);
+          case "c", "creative", "1" -> gamemodeHandler.setGameMode(sender, target, GameMode.CREATIVE);
+          case "a", "adventure", "2" -> gamemodeHandler.setGameMode(sender, target, GameMode.ADVENTURE);
+          case "sp", "spectator", "3" -> gamemodeHandler.setGameMode(sender, target, GameMode.SPECTATOR);
           default ->
               sender.sendMessage(Lang.STAFF_GAMEMODE_INVALID.toComponentWithPrefix(Map.of("%gamemode%", args[0])));
         }
@@ -133,13 +143,13 @@ public class GamemodeCommands extends CommandClass {
       }
       switch (s) {
         case "gma", "gamemodeadventure", "gmadventure", "gamemodea" ->
-            setGameMode(commandSender, target, GameMode.ADVENTURE);
+            gamemodeHandler.setGameMode(commandSender, target, GameMode.ADVENTURE);
         case "gmc", "gamemodecreative", "gmcreative", "gamemodec" ->
-            setGameMode(commandSender, target, GameMode.CREATIVE);
+            gamemodeHandler.setGameMode(commandSender, target, GameMode.CREATIVE);
         case "gmsp", "gamemodespectator", "gmspectator", "gamemodesp" ->
-            setGameMode(commandSender, target, GameMode.SPECTATOR);
+            gamemodeHandler.setGameMode(commandSender, target, GameMode.SPECTATOR);
         case "gms", "gamemodesurvival", "gmsurvival", "gamemodes" ->
-            setGameMode(commandSender, target, GameMode.SURVIVAL);
+            gamemodeHandler.setGameMode(commandSender, target, GameMode.SURVIVAL);
         default -> commandSender.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
       }
       return true;
@@ -158,11 +168,12 @@ public class GamemodeCommands extends CommandClass {
       }
       
       switch (args[0].toLowerCase()) {
-        case "s", "survival", "0" -> setGameMode(commandSender, target, GameMode.SURVIVAL);
-        case "c", "creative", "1" -> setGameMode(commandSender, target, GameMode.CREATIVE);
-        case "a", "adventure", "2" -> setGameMode(commandSender, target, GameMode.ADVENTURE);
-        case "sp", "spectator", "3" -> setGameMode(commandSender, target, GameMode.SPECTATOR);
-        default -> commandSender.sendMessage(Lang.STAFF_GAMEMODE_INVALID.toComponentWithPrefix(Map.of("%gamemode%", args[0])));
+        case "s", "survival", "0" -> gamemodeHandler.setGameMode(commandSender, target, GameMode.SURVIVAL);
+        case "c", "creative", "1" -> gamemodeHandler.setGameMode(commandSender, target, GameMode.CREATIVE);
+        case "a", "adventure", "2" -> gamemodeHandler.setGameMode(commandSender, target, GameMode.ADVENTURE);
+        case "sp", "spectator", "3" -> gamemodeHandler.setGameMode(commandSender, target, GameMode.SPECTATOR);
+        default ->
+            commandSender.sendMessage(Lang.STAFF_GAMEMODE_INVALID.toComponentWithPrefix(Map.of("%gamemode%", args[0])));
       }
       return true;
     }
@@ -174,29 +185,6 @@ public class GamemodeCommands extends CommandClass {
   @Override
   public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
     return null;
-  }
-  
-  public void setGameMode(Player player, GameMode gamemode) {
-    player.setGameMode(gamemode);
-    player.sendMessage(Lang.STAFF_GAMEMODE_SELF.toComponentWithPrefix(Map.of("gamemode", gamemode.name().toLowerCase())));
-  }
-  
-  public void setGameMode(Player sender, Player target, GameMode gamemode) {
-    target.setGameMode(gamemode);
-    sender.sendMessage(Lang.STAFF_GAMEMODE_OTHER.toComponentWithPrefix(Map.of("gamemode", gamemode.name().toLowerCase(), "player", target.getName())));
-    target.sendMessage(Lang.STAFF_GAMEMODE_OTHER_NOTIFY.toComponentWithPrefix(Map.of("gamemode", gamemode.name().toLowerCase(), "player", sender.getName())));
-  }
-  
-  public void setGameMode(CommandSender sender, Player target, GameMode gamemode) {
-    target.setGameMode(gamemode);
-    sender.sendMessage(Lang.STAFF_GAMEMODE_OTHER.toComponentWithPrefix(Map.of("gamemode", gamemode.name().toLowerCase(), "player", target.getName())));
-    if (sender instanceof ConsoleCommandSender) {
-      target.sendMessage(Lang.STAFF_GAMEMODE_OTHER_NOTIFY.toComponentWithPrefix(Map.of("gamemode", gamemode.name().toLowerCase(), "player", "console")));
-    }
-    else {
-      target.sendMessage(Lang.STAFF_GAMEMODE_OTHER_NOTIFY.toComponentWithPrefix(Map.of("gamemode", gamemode.name().toLowerCase(), "player", "unknown")));
-    }
-    
   }
   
 }

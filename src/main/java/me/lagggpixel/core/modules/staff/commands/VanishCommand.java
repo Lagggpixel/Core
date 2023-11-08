@@ -5,11 +5,11 @@ import me.lagggpixel.core.data.CommandClass;
 import me.lagggpixel.core.data.Lang;
 import me.lagggpixel.core.data.User;
 import me.lagggpixel.core.modules.staff.StaffModule;
+import me.lagggpixel.core.modules.staff.handlers.VanishHandler;
 import me.lagggpixel.core.utils.CommandUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -20,10 +20,11 @@ import java.util.Map;
 public class VanishCommand extends CommandClass {
   
   private final StaffModule module;
-  public static final String vanishSeePermission = "coreplugin.staff.command.vanish.see";
+  private final VanishHandler vanishHandler;
   
   public VanishCommand(StaffModule module) {
     this.module = module;
+    this.vanishHandler = new VanishHandler();
   }
   
   @Override
@@ -59,9 +60,9 @@ public class VanishCommand extends CommandClass {
         if (target != null) {
           User user = Main.getUser(target.getUniqueId());
           if (user.isVanished()) {
-            showPlayer(commandSender, target);
+            vanishHandler.showPlayer(commandSender, target);
           } else {
-            vanishPlayer(commandSender, target);
+            vanishHandler.vanishPlayer(commandSender, target);
           }
         } else {
           commandSender.sendMessage(Lang.PLAYER_NOT_FOUND.toComponentWithPrefix(Map.of("%player%", args[0])));
@@ -75,18 +76,18 @@ public class VanishCommand extends CommandClass {
     if (args.length == 0) {
       User user = Main.getUser(sender.getUniqueId());
       if (user.isVanished()) {
-        showPlayer(sender);
+        vanishHandler.showPlayer(sender);
       } else {
-        vanishPlayer(sender);
+        vanishHandler.vanishPlayer(sender);
       }
     } else if (args.length == 1) {
       Player target = Bukkit.getPlayer(args[0]);
       if (target != null) {
         User user = Main.getUser(target.getUniqueId());
         if (user.isVanished()) {
-          showPlayer(sender, target);
+          vanishHandler.showPlayer(sender, target);
         } else {
-          vanishPlayer(sender, target);
+          vanishHandler.vanishPlayer(sender, target);
         }
       } else {
         sender.sendMessage(Lang.PLAYER_NOT_FOUND.toComponentWithPrefix(Map.of("%player%", args[0])));
@@ -101,82 +102,6 @@ public class VanishCommand extends CommandClass {
   @Override
   public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
     return null;
-  }
-  
-  public void showPlayer(Player player) {
-    User user = Main.getUser(player.getUniqueId());
-    user.setVanished(false);
-    Main.getInstance().getServer().getOnlinePlayers().forEach(onlinePlayer -> {
-      onlinePlayer.showPlayer(Main.getInstance(), player);
-    });
-    player.sendMessage(Lang.STAFF_UNVANISHED_SELF.toComponentWithPrefix());
-  }
-  
-  public void vanishPlayer(Player player) {
-    User user = Main.getUser(player.getUniqueId());
-    user.setVanished(true);
-    Main.getInstance().getServer().getOnlinePlayers().forEach(onlinePlayer -> {
-      if (onlinePlayer.hasPermission(vanishSeePermission)) {
-        onlinePlayer.hidePlayer(Main.getInstance(), player);
-      }
-    });
-    player.sendMessage(Lang.STAFF_VANISHED_SELF.toComponentWithPrefix());
-  }
-
-
-  public void showPlayer(Player sender, Player target) {
-    User user = Main.getUser(target.getUniqueId());
-    user.setVanished(false);
-    Main.getInstance().getServer().getOnlinePlayers().forEach(onlinePlayer -> {
-      onlinePlayer.showPlayer(Main.getInstance(), target);
-    });
-    sender.sendMessage(Lang.STAFF_UNVANISHED_OTHER.toComponentWithPrefix(Map.of("%%player%", target.getName())));
-    target.sendMessage(Lang.STAFF_UNVANISHED_OTHER_NOTIFY.toComponentWithPrefix(Map.of("%%player%", sender.getName())));
-  }
-  
-  public void vanishPlayer(Player sender, Player target) {
-    User user = Main.getUser(target.getUniqueId());
-    user.setVanished(true);
-    Main.getInstance().getServer().getOnlinePlayers().forEach(onlinePlayer -> {
-      if (onlinePlayer.hasPermission(vanishSeePermission)) {
-        onlinePlayer.hidePlayer(Main.getInstance(), target);
-      }
-    });
-    sender.sendMessage(Lang.STAFF_VANISHED_OTHER.toComponentWithPrefix(Map.of("%%player%", target.getName())));
-    target.sendMessage(Lang.STAFF_VANISHED_OTHER_NOTIFY.toComponentWithPrefix(Map.of("%%player%", sender.getName())));
-  }
-
-  public void showPlayer(CommandSender sender, Player target) {
-    User user = Main.getUser(target.getUniqueId());
-    user.setVanished(false);
-    Main.getInstance().getServer().getOnlinePlayers().forEach(onlinePlayer -> {
-      onlinePlayer.showPlayer(Main.getInstance(), target);
-    });
-    sender.sendMessage(Lang.STAFF_UNVANISHED_OTHER.toComponentWithPrefix(Map.of("%%player%", target.getName())));
-    if (sender instanceof ConsoleCommandSender) {
-      target.sendMessage(Lang.STAFF_UNVANISHED_OTHER_NOTIFY.toComponentWithPrefix(Map.of("%%player%", "console")));
-    }
-    else {
-      target.sendMessage(Lang.STAFF_UNVANISHED_OTHER_NOTIFY.toComponentWithPrefix(Map.of("%%player%", "unknown")));
-
-    }
-  }
-
-  public void vanishPlayer(CommandSender sender, Player target) {
-    User user = Main.getUser(target.getUniqueId());
-    user.setVanished(true);
-    Main.getInstance().getServer().getOnlinePlayers().forEach(onlinePlayer -> {
-      if (onlinePlayer.hasPermission(vanishSeePermission)) {
-        onlinePlayer.hidePlayer(Main.getInstance(), target);
-      }
-    });
-    sender.sendMessage(Lang.STAFF_VANISHED_OTHER.toComponentWithPrefix(Map.of("%%player%", target.getName())));
-    if (sender instanceof ConsoleCommandSender) {
-      target.sendMessage(Lang.STAFF_VANISHED_OTHER_NOTIFY.toComponentWithPrefix(Map.of("%%player%", "console")));
-    }
-    else {
-      target.sendMessage(Lang.STAFF_VANISHED_OTHER_NOTIFY.toComponentWithPrefix(Map.of("%%player%", "unknown")));
-    }
   }
   
 }
