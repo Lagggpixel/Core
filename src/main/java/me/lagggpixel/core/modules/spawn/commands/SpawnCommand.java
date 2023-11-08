@@ -1,6 +1,5 @@
 package me.lagggpixel.core.modules.spawn.commands;
 
-import me.lagggpixel.core.Main;
 import me.lagggpixel.core.data.CommandClass;
 import me.lagggpixel.core.data.Lang;
 import me.lagggpixel.core.modules.spawn.SpawnModule;
@@ -60,7 +59,7 @@ public class SpawnCommand extends CommandClass {
           commandSender.sendMessage(Lang.PLAYER_NOT_FOUND.toComponentWithPrefix(Map.of("%player%", args[0])));
           return true;
         }
-        
+
         if (spawnManager.getSpawnLocation() == null) {
           commandSender.sendMessage(Lang.SPAWN_NO_SET_SPAWN.toComponentWithPrefix());
           return true;
@@ -83,7 +82,7 @@ public class SpawnCommand extends CommandClass {
       TeleportUtils.teleportWithDelay(sender, spawnManager.getSpawnLocation(), Lang.SPAWN_NAME.getDef());
       return true;
     }
-    
+
     if (args.length == 1) {
       // Todo - add permission
       if (!sender.hasPermission("placeholder_permission")) {
@@ -95,7 +94,7 @@ public class SpawnCommand extends CommandClass {
         sender.sendMessage(Lang.PLAYER_NOT_FOUND.toComponentWithPrefix(Map.of("%player%", args[0])));
         return true;
       }
-      
+
       if (spawnManager.getSpawnLocation() == null) {
         sender.sendMessage(Lang.SPAWN_NO_SET_SPAWN.toComponentWithPrefix());
         return true;
@@ -105,7 +104,7 @@ public class SpawnCommand extends CommandClass {
       sender.sendMessage(Lang.SPAWN_TELEPORTED_OTHER.toComponentWithPrefix(Map.of("%player%", target.getName())));
       return true;
     }
-    
+
     sender.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
     return true;
   }
