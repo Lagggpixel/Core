@@ -5,7 +5,7 @@ import me.lagggpixel.core.modules.bazaar.escrow.Escrow;
 import me.lagggpixel.core.modules.bazaar.impl.escrow.SkyblockEscrow;
 import me.lagggpixel.core.modules.bazaar.interfaces.*;
 import me.lagggpixel.core.utils.ChatUtils;
-import me.lagggpixel.core.utils.Pair;
+import me.lagggpixel.core.data.Pair;
 import net.kyori.adventure.text.Component;
 import org.bukkit.configuration.file.YamlConfiguration;
 

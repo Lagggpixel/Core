@@ -5,7 +5,7 @@ import me.lagggpixel.core.modules.bazaar.interfaces.BazaarCategory;
 import me.lagggpixel.core.modules.bazaar.interfaces.BazaarConfigIndexer;
 import me.lagggpixel.core.modules.bazaar.interfaces.BazaarSubItem;
 import me.lagggpixel.core.utils.ChatUtils;
-import me.lagggpixel.core.utils.Pair;
+import me.lagggpixel.core.data.Pair;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
