@@ -20,6 +20,7 @@ import java.util.Map;
 public class VanishCommand extends CommandClass {
   
   private final StaffModule module;
+  public static final String vanishSeePermission = "coreplugin.staff.command.vanish.see";
   
   public VanishCommand(StaffModule module) {
     this.module = module;
@@ -115,7 +116,7 @@ public class VanishCommand extends CommandClass {
     User user = Main.getUser(player.getUniqueId());
     user.setVanished(true);
     Main.getInstance().getServer().getOnlinePlayers().forEach(onlinePlayer -> {
-      if (onlinePlayer.hasPermission("coreplugin.staff.command.vanish.see")) {
+      if (onlinePlayer.hasPermission(vanishSeePermission)) {
         onlinePlayer.hidePlayer(Main.getInstance(), player);
       }
     });
@@ -137,7 +138,7 @@ public class VanishCommand extends CommandClass {
     User user = Main.getUser(target.getUniqueId());
     user.setVanished(true);
     Main.getInstance().getServer().getOnlinePlayers().forEach(onlinePlayer -> {
-      if (onlinePlayer.hasPermission("coreplugin.staff.command.vanish.see")) {
+      if (onlinePlayer.hasPermission(vanishSeePermission)) {
         onlinePlayer.hidePlayer(Main.getInstance(), target);
       }
     });
@@ -165,7 +166,7 @@ public class VanishCommand extends CommandClass {
     User user = Main.getUser(target.getUniqueId());
     user.setVanished(true);
     Main.getInstance().getServer().getOnlinePlayers().forEach(onlinePlayer -> {
-      if (onlinePlayer.hasPermission("coreplugin.staff.command.vanish.see")) {
+      if (onlinePlayer.hasPermission(vanishSeePermission)) {
         onlinePlayer.hidePlayer(Main.getInstance(), target);
       }
     });
