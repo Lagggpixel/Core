@@ -1,4 +1,4 @@
-# Core plugin for InfiniteMinecrafters server
+# Core plugin for Infinite Minecrafters server
 
 ## Making changes
 ### Commits
@@ -42,15 +42,19 @@ build: change maven artifactId
 ```
 
 ## Modules
+- bazaar
 - chat
 - chat games
 - discord
+- economy
 - homes
 - inventory
+- restart
 - rtp
+- skipnight
 - spawn
 - staff
-- warps
+- warp
 
 ## Permission
 Per module permission:
@@ -61,21 +65,65 @@ Each player command's sub permission will look like this: `coreplugin.<module-id
 Data storage modules for each module are stored at the location of `Main.getInstance().getDataFolder() + "/data/modules/<module-id>"`. 
 Data for users are stored at `Main.getInstance.getDataFolder + "data/users"`
 
-## Per Module Todo List
 
-#### Home Module
-Todo list:
-- Add appropriate permissions for the `home` command
-- Add tab completion for the `home` command
+## Per Module Todo List 
+### Note this omits all the item marked in the code
+
+**Bazaar Module**
+- Fix items.json
+
+
+**Chat Module**
+- None
+
+
+**Chatgames Module**
+- Add chatgames handling
+
+
+**Discord Module**
+- Add console messages handling
+
+
+**Economy Module**
+- Add baltop command
+
+
+**Home Module**
 - Add a `homeadmin` command class
 - Add a `homeadmin create <player> <home name>` subcommand
 - Add a `homeadmin delete <player> <hoem name>` subcommand
 - Add a `homeadmin view <player>` subcommand
 - Add a `homeadmin tpto <player> <home name>` subcommand
-- Ability to block players doing `home` command in certain worlds
 
-#### Warps Module
-Todo list:
+
+**Inventory Module**
+- TBC
+
+
+**Restart Module**
+- Add restart handling
+
+
+**Rtp Module**
+- Fix RtpCommand.java
+
+
+**Skipnight Module**
+- None
+
+
+**Spawn Module**
+- Ability to block `spawn` command in certain worlds
+
+
+**Staff Module**
+- Add staff mode
+- Add staff action messages
+- Add `broadcast`
+
+
+**Warps Module**
 - Add a `warps` command class
 - Add bazaarGui handling for `warps` command
 - Add a `warp` command class
@@ -83,13 +131,3 @@ Todo list:
 - Add a `warp create <name>` subcommand
 - Add a `warp delete <name>` subcommand
 - Ability to block players doing `warp` or `warps` command in certain worlds
-
-
-### Spawn Module
-Todo list:
-- Add a `spawn <player>` subcommand
-- Add a `setspawn` command class
-- Add tab completion for `spawn` command
-- Add appropriate permissions for `spawn` command
-- Add a `spawn set` subcommand
-- Ability to block `spawn` command in certain worlds

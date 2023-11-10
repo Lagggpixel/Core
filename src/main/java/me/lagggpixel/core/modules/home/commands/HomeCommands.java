@@ -66,6 +66,8 @@ public class HomeCommands extends CommandClass implements Listener {
       commandSender.sendMessage(Lang.PLAYER_ONLY.toComponentWithPrefix());
       return true;
     }
+
+    // Todo - block commands in certain worlds
     
     UUID playerUUID = player.getUniqueId();
     User user = Main.getUser(playerUUID);
@@ -88,7 +90,8 @@ public class HomeCommands extends CommandClass implements Listener {
           player.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
           return true;
         }
-        
+
+        // Todo - check if player has the permission to create another home
         handleCreateHome(player, user, args[1]);
         
         return true;
