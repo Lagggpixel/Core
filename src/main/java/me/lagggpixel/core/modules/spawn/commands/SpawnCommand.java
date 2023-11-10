@@ -1,5 +1,6 @@
 package me.lagggpixel.core.modules.spawn.commands;
 
+import me.lagggpixel.core.Main;
 import me.lagggpixel.core.data.CommandClass;
 import me.lagggpixel.core.data.Lang;
 import me.lagggpixel.core.modules.spawn.SpawnModule;
