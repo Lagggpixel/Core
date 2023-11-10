@@ -1,5 +1,6 @@
 package me.lagggpixel.core;
 
+import lombok.Getter;
 import me.lagggpixel.core.data.User;
 import me.lagggpixel.core.listeners.onPlayerJoin;
 import me.lagggpixel.core.modules.Module;
@@ -7,6 +8,7 @@ import me.lagggpixel.core.modules.bazaar.BazaarModule;
 import me.lagggpixel.core.modules.chat.ChatModule;
 import me.lagggpixel.core.modules.chatgames.ChatgamesModule;
 import me.lagggpixel.core.modules.discord.DiscordModule;
+import me.lagggpixel.core.modules.discord.handlers.CaptureAppender;
 import me.lagggpixel.core.modules.economy.EconomyModule;
 import me.lagggpixel.core.modules.home.HomeModule;
 import me.lagggpixel.core.modules.home.data.Home;
@@ -22,6 +24,9 @@ import me.lagggpixel.core.utils.TeleportUtils;
 import me.lagggpixel.core.utils.UserDataUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.core.LoggerContext;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -43,6 +48,9 @@ public final class Main extends JavaPlugin {
   private static Main INSTANCE;
   private static Map<UUID, User> userData;
   
+  @Getter
+  private Logger log4jLogger;
+  
   private final @NotNull HashMap<String, Module> modules = new HashMap<>();
   private final @NotNull Module bazaarModule = new BazaarModule();
   private final @NotNull Module chatModule = new ChatModule();
@@ -63,6 +71,12 @@ public final class Main extends JavaPlugin {
   public void onEnable() {
     
     INSTANCE = this;
+    
+    // Log4j Appender implementation
+    log4jLogger = LogManager.getRootLogger();
+    LoggerContext context = (LoggerContext) LogManager.getContext(false);
+    context.getRootLogger().addAppender(CaptureAppender.createAppender("CaptureAppender", false, null));
+    CaptureAppender.clearCapturedLogs();
     
     LangUtils.loadLangConfig();
     
