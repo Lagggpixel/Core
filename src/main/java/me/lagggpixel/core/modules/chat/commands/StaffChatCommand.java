@@ -61,18 +61,13 @@ public class StaffChatCommand extends CommandClass {
         sender.sendMessage(Lang.CHAT_STAFF_CHAT_TOGGLE_OFF.toComponentWithPrefix());
         return true;
       }
-      user.setStaffChatToggled(false);
-      sender.sendMessage(Lang.CHAT_STAFF_CHAT_TOGGLE_OFF.toComponentWithPrefix());
+      user.setStaffChatToggled(true);
+      sender.sendMessage(Lang.CHAT_STAFF_CHAT_TOGGLE_ON.toComponentWithPrefix());
       return true;
     }
     
-    StringBuilder stringBuilder = new StringBuilder();
-    for (String arg : args) {
-      stringBuilder.append(arg);
-      stringBuilder.append(" ");
-    }
-    stringBuilder.deleteCharAt(stringBuilder.length()-1);
-    StaffChatHandler.sendStaffChatMessage(sender, ChatUtils.stringToComponent(stringBuilder.toString()));
+    String message = String.join(" ", args);
+    StaffChatHandler.sendStaffChatMessage(sender, ChatUtils.stringToComponent(message));
     
     return true;
   }
