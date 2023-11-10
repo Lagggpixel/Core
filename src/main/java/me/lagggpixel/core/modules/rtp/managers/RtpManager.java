@@ -2,10 +2,7 @@ package me.lagggpixel.core.modules.rtp.managers;
 
 import me.lagggpixel.core.data.Lang;
 import me.lagggpixel.core.utils.TeleportUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -52,6 +49,8 @@ public class RtpManager {
     TeleportUtils.teleportWithDelay(player, randomLocation, "a random location");
   }
   
+  
+  
   private static boolean isSafeLocation(@NotNull Location location) {
     Block block = location.getBlock();
     Material blockType = block.getType();
@@ -59,3 +58,4 @@ public class RtpManager {
     return !blockType.equals(Material.LAVA) && !blockType.equals(Material.WATER);
   }
 }
+
