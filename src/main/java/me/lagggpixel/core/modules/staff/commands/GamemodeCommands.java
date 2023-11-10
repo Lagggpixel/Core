@@ -70,7 +70,7 @@ public class GamemodeCommands extends CommandClass {
           case "gms", "gamemodesurvival", "gmsurvival", "gamemodes" ->
               gamemodeHandler.setGameMode(sender, GameMode.SURVIVAL);
           default -> {
-            sender.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
+            sender.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix(Map.of("%gamemode%", s)));
           }
         }
         return true;
@@ -80,7 +80,7 @@ public class GamemodeCommands extends CommandClass {
         if (!(s.equalsIgnoreCase("gamemode") || s.equalsIgnoreCase("gm"))) {
           Player target = sender.getServer().getPlayer(args[0]);
           if (target == null) {
-            sender.sendMessage(Lang.PLAYER_NOT_FOUND.toComponentWithPrefix());
+            sender.sendMessage(Lang.PLAYER_NOT_FOUND.toComponentWithPrefix(Map.of("%player%", args[0])));
             return true;
           }
           switch (s) {
@@ -116,7 +116,7 @@ public class GamemodeCommands extends CommandClass {
         
         Player target = sender.getServer().getPlayer(args[1]);
         if (target == null) {
-          sender.sendMessage(Lang.PLAYER_NOT_FOUND.toComponentWithPrefix());
+          sender.sendMessage(Lang.PLAYER_NOT_FOUND.toComponentWithPrefix(Map.of("%player%", args[1])));
           return true;
         }
         
@@ -138,7 +138,7 @@ public class GamemodeCommands extends CommandClass {
     if (args.length == 1) {
       Player target = commandSender.getServer().getPlayer(args[0]);
       if (target == null) {
-        commandSender.sendMessage(Lang.PLAYER_NOT_FOUND.toComponentWithPrefix());
+        commandSender.sendMessage(Lang.PLAYER_NOT_FOUND.toComponentWithPrefix(Map.of("%player%", args[0])));
         return true;
       }
       switch (s) {
@@ -163,7 +163,7 @@ public class GamemodeCommands extends CommandClass {
       
       Player target = commandSender.getServer().getPlayer(args[1]);
       if (target == null) {
-        commandSender.sendMessage(Lang.PLAYER_NOT_FOUND.toComponentWithPrefix());
+        commandSender.sendMessage(Lang.PLAYER_NOT_FOUND.toComponentWithPrefix(Map.of("%player%", args[1])));
         return true;
       }
       
