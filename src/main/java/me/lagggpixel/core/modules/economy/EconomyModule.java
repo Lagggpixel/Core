@@ -3,6 +3,7 @@ package me.lagggpixel.core.modules.economy;
 import me.lagggpixel.core.Main;
 import me.lagggpixel.core.modules.Module;
 import me.lagggpixel.core.modules.economy.commands.BalanceCommand;
+import me.lagggpixel.core.modules.economy.commands.EconomyCommand;
 import me.lagggpixel.core.modules.economy.managers.EconomyManager;
 import me.lagggpixel.core.utils.CommandUtils;
 import net.milkbowl.vault.economy.Economy;
@@ -39,6 +40,7 @@ public class EconomyModule extends Module {
   @Override
   public void registerCommands() {
     CommandUtils.registerCommand(new BalanceCommand(this, economyManager));
+    CommandUtils.registerCommand(new EconomyCommand(this, economyManager));
   }
   
   @Override

@@ -34,6 +34,10 @@ public enum Lang {
   // Economy Module
   ECONOMY_BALANCE_SELF("economy.balance.self", "&aYour balance is &e%balance%&a."),
   ECONOMY_BALANCE_OTHER("economy.balance.other", "&a%player%'s balance is &e%balance%&a."),
+  ECONOMY_INVALID_AMOUNT("economy.invalid_amount", "&cThat is not a valid amount. Please provide a valid number."),
+  ECONOMY_SET("economy.economy.set", "&aYou have set %player%'s balance to &e%balance%&a."),
+  ECONOMY_GIVE("economy.economy.give", "&aYou have given %player% &e%amount%&a. Their new balance is &e%balance%&a."),
+  ECONOMY_REMOVE("economy.economy.remove", "&aYou have removed &e%amount%&a from %player%'s balance. Their new balance is &e%balance%&a."),
   
   // Home Module
   HOME_ALREADY_EXIST("home.already_exist", "&cA home named '&e%home%&c' already exists."),
@@ -78,8 +82,9 @@ public enum Lang {
   
   // Spawn module
   SPAWN_NAME("spawn.name", "spawn"),
-  SPAWN_NO_SET_SPAWN("spawn.no_set_spawn", "&aNo spawn is set, therefore you cannot teleport to spawn,"),
-  SPAWN_SUCCESSFULLY_SET("spawn.successfully_set", "&aYou have successfully set the new spawn location to your current location"),
+  SPAWN_NO_SET_SPAWN("spawn.no_set_spawn", "&aNo spawn is set, therefore you cannot teleport to spawn."),
+  SPAWN_SUCCESSFULLY_SET("spawn.successfully_set", "&aYou have successfully set the new spawn location to your current location."),
+  SPAWN_TELEPORTED_OTHER("spawn.teleported_other", "&aYou have teleported %player% to spawn."),
   
   // Staff Module
   STAFF_VANISHED_SELF("staff.vanish.self.true", "&aYou are now in vanish mode."),
@@ -87,7 +92,7 @@ public enum Lang {
   STAFF_VANISHED_OTHER("staff.vanish.other.true", "&a%player% is now in vanish mode."),
   STAFF_UNVANISHED_OTHER("staff.vanish.other.false", "&a%player% is no longer in vanish mode."),
   STAFF_VANISHED_OTHER_NOTIFY("staff.vanish.other_notify.true", "&aYou are now in vanish mode. Action performed by %player%."),
-  STAFF_UNVANISHED_OTHER_NOTIFY("staff.vanish.other_notify.false", "&aYou are no longer in vanish mode. Action performed by %player%"),
+  STAFF_UNVANISHED_OTHER_NOTIFY("staff.vanish.other_notify.false", "&aYou are no longer in vanish mode. Action performed by %player%."),
   STAFF_GAMEMODE_INVALID("staff.gamemode.invalid", "&aInvalid gamemode: %gamemode%."),
   STAFF_GAMEMODE_SELF("staff.gamemode.self", "&aYou are now in gamemode %gamemode%."),
   STAFF_GAMEMODE_OTHER("staff.gamemode.other", "&a%player% is now in gamemode %gamemode%."),
