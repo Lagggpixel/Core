@@ -32,6 +32,8 @@ public enum Lang {
   // Discord Module
   
   // Economy Module
+  ECONOMY_BALANCE_SELF("economy.balance.self", "&aYour balance is &e%balance%&a."),
+  ECONOMY_BALANCE_OTHER("economy.balance.other", "&a%player%'s balance is &e%balance%&a."),
   
   // Home Module
   HOME_ALREADY_EXIST("home.already_exist", "&cA home named '&e%home%&c' already exists."),

@@ -26,7 +26,6 @@ public class EconomyManager {
       }
     };
     
-    // 12000 ticks for 10 minutes
     runnable.runTaskTimerAsynchronously(Main.getInstance(), 0L, 12000L);
   }
   
