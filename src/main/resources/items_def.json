@@ -1,0 +1,55 @@
+{
+  "bazaar": {
+    "categories": [
+      {
+        "name": "Farming",
+        "icon": "GOLDEN_HOE",
+        "color": "#FFFF00",
+        "items": [
+          {
+            "name": "Wheat & Seeds",
+            "inventorySize": 36,
+            "subItems": [
+              {
+                "material": "wheat",
+                "slot": 11
+              },
+              {
+                "material": "hay_block",
+                "slot": 12
+              },
+              {
+                "material": "wheat_seeds",
+                "slot": 13
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Mining",
+        "icon": "DIAMOND_PICKAXE",
+        "color": "#00FFFF",
+        "items": []
+      },
+      {
+        "name": "Combat",
+        "icon": "IRON_SWORD",
+        "color": "#FF0000",
+        "items": []
+      },
+      {
+        "name": "Woods & Fishes",
+        "icon": "FISHING_ROD",
+        "color": "#FFAA00",
+        "items": []
+      },
+      {
+        "name": "Oddities",
+        "icon": "ENCHANTING_TABLE",
+        "color": "#FF55FF",
+        "items": []
+      }
+    ]
+  }
+}
