@@ -18,16 +18,23 @@ import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
+import java.util.UUID;
 
 public class HomeHandler {
   
-  private final Component HOME_GUI_NAME = ChatUtils.stringToComponentCC("&aHomes");
-  private final Component HOME_GUI_NAME_OTHER = ChatUtils.stringToComponentCC("&a%player%'s homes");
-  public final NamespacedKey HOME_ITEM_NAMESPACE_KEY = new NamespacedKey(Main.getInstance(), "HOME_NAME");
+  public final Component HOME_GUI_NAME = ChatUtils.stringToComponentCC("&aHomes");
+  public final Component HOME_GUI_NAME_OTHER = ChatUtils.stringToComponentCC("&a%player%'s homes");
+  public final String HOME_GUI_NAME_FILTER = "homes";
+  public final NamespacedKey HOME_ITEM_NAMESPACE_KEY_UUID = new NamespacedKey(Main.getInstance(), "HOME_USER_UUID");
+  public final NamespacedKey HOME_ITEM_NAMESPACE_KEY_NAME = new NamespacedKey(Main.getInstance(), "HOME_NAME");
   public final String HOME_PERMISSION_PREFIX = "coreplugin.home.command.max.";
   
   public void teleportToHome(Player player, Home home) {
     TeleportUtils.teleportWithDelay(player, home.location(), home.name() + " home");
+  }
+
+  public void teleportToOthersHome(Player player, User target, Home home) {
+    TeleportUtils.teleportWithDelay(player, home.location(), target.getPlayerName() + "'s " + home.name() + " home");
   }
   
   public void setHome(User player, String homeName, Home home) {
@@ -46,7 +53,7 @@ public class HomeHandler {
     Inventory gui = player.getServer().createInventory(null, 27, HOME_GUI_NAME);
 
     for (Map.Entry<String, Home> homeEntry : user.getHomes().entrySet()) {
-      ItemStack homeItem = createHomeItem(homeEntry.getKey());
+      ItemStack homeItem = createHomeItem(player.getUniqueId(), homeEntry.getKey());
       gui.addItem(homeItem);
     }
 
@@ -57,21 +64,22 @@ public class HomeHandler {
     Inventory gui = player.getServer().createInventory(null, 27, HOME_GUI_NAME_OTHER.replaceText(TextReplacementConfig.builder().match("%player%").replacement(target.getPlayerName()).build()));
 
     for (Map.Entry<String, Home> homeEntry : target.getHomes().entrySet()) {
-      ItemStack homeItem = createHomeItem(homeEntry.getKey());
+      ItemStack homeItem = createHomeItem(target.getPlayerUUID(), homeEntry.getKey());
       gui.addItem(homeItem);
     }
 
     player.openInventory(gui);
   }
 
-  private @NotNull ItemStack createHomeItem(String homeName) {
+  private @NotNull ItemStack createHomeItem(UUID playerUUID, String homeName) {
 
     ItemStack item = new ItemStack(Material.PLAYER_HEAD);
     ItemMeta meta = item.getItemMeta();
 
     assert meta != null;
     meta.displayName(ChatUtils.stringToComponent(homeName));
-    meta.getPersistentDataContainer().set(HOME_ITEM_NAMESPACE_KEY, PersistentDataType.STRING, homeName);
+    meta.getPersistentDataContainer().set(HOME_ITEM_NAMESPACE_KEY_UUID, PersistentDataType.STRING, playerUUID.toString());
+    meta.getPersistentDataContainer().set(HOME_ITEM_NAMESPACE_KEY_NAME, PersistentDataType.STRING, homeName);
 
     item.setItemMeta(meta);
 
