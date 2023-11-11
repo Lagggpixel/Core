@@ -49,7 +49,11 @@ public enum Lang {
   HOME_LIMIT_REACHED("home.limit_reached", "&cYou cannot create more homes."),
   HOME_DELETED("home.deleted", "&aYou've deleted the home '&e%home%&a'."),
   HOME_NAME_INVALID("home.invalid_name", "&cPlease create a home with a different name. (Home names cannot start with numbers and cannot contain special characters)"),
-  
+  HOME_CREATED_OTHER_PLAYER("home.admin.created_other_player", "&aYou have created a home for %player%, named '&e%home%&a'."),
+  HOME_DELETED_OTHER_PLAYER("home.admin.deleted_other_player", "&aYou have deleted %player%'s home, named '&e%home%&a'."),
+  TELEPORTED_TO_HOME_OTHER_PLAYER("home.admin.teleported_to_home_other_player", "&aYou have teleported to %player%'s home, named '&e%home%&a'."),
+  NO_HOMES_OTHER_PLAYER("home.admin.no_homes_other_player", "&a%player% does not have any homes."),
+
   // Inventory Module
   INVENTORY_CLEARED_SELF("inventory.cleared.self", "&aYou have cleared your inventory."),
   INVENTORY_CLEARED_OTHER("inventory.cleared.other", "&aYou have cleared %player%'s inventory."),

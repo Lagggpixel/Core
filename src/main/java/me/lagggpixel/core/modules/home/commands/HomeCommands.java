@@ -7,18 +7,12 @@ import me.lagggpixel.core.data.User;
 import me.lagggpixel.core.modules.Module;
 import me.lagggpixel.core.modules.home.data.Home;
 import me.lagggpixel.core.modules.home.handlers.HomeHandler;
-import me.lagggpixel.core.utils.ChatUtils;
 import me.lagggpixel.core.utils.CommandUtils;
-import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.permissions.PermissionAttachmentInfo;
-import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -77,12 +71,12 @@ public class HomeCommands extends CommandClass implements Listener {
     if (label.equals("homes") || label.equals("home")) {
 
       if (args.length == 0) {
-        openHomesGUI(player, user);
+        homeHandler.openHomesGUI(player, user);
         return true;
       }
 
       if (args[0].equalsIgnoreCase("list")) {
-        openHomesGUI(player, user);
+        homeHandler.openHomesGUI(player, user);
         return true;
       }
 
@@ -144,7 +138,7 @@ public class HomeCommands extends CommandClass implements Listener {
       return;
     }
 
-    if (homeNameInvalid(homeName)) {
+    if (homeHandler.homeNameInvalid(homeName)) {
       player.sendMessage(Lang.HOME_NAME_INVALID.toComponentWithPrefix());
       return;
     }
@@ -202,50 +196,9 @@ public class HomeCommands extends CommandClass implements Listener {
     )));
   }
 
-  private void openHomesGUI(@NotNull Player player, @NotNull User user) {
-    Inventory gui = player.getServer().createInventory(null, 27, homeHandler.HOME_GUI_NAME);
-
-    for (Map.Entry<String, Home> homeEntry : user.getHomes().entrySet()) {
-      ItemStack homeItem = createHomeItem(homeEntry.getKey());
-      gui.addItem(homeItem);
-    }
-
-    player.openInventory(gui);
-  }
-
-  private @NotNull ItemStack createHomeItem(String homeName) {
-
-    ItemStack item = new ItemStack(Material.PLAYER_HEAD);
-    ItemMeta meta = item.getItemMeta();
-
-    assert meta != null;
-    meta.displayName(ChatUtils.stringToComponent(homeName));
-    meta.getPersistentDataContainer().set(homeHandler.HOME_ITEM_NAMESPACE_KEY, PersistentDataType.STRING, homeName);
-
-    item.setItemMeta(meta);
-
-    return item;
-  }
-
   @Override
   public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
     return null;
-  }
-
-  private boolean homeNameInvalid(@NotNull String homeName) {
-    int minLength = 3;
-    int maxLength = 20;
-
-    if (homeName.length() < minLength || homeName.length() > maxLength) {
-      return true;
-    }
-
-    // Check if the home name contains special characters
-    if (!homeName.matches("^[a-zA-Z0-9]+$")) {
-      return true;
-    }
-
-    return false;
   }
 
   private int largest(Integer[] permArray) {
