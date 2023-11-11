@@ -24,6 +24,7 @@ import me.lagggpixel.core.utils.TeleportUtils;
 import me.lagggpixel.core.utils.UserDataUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.Logger;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.plugin.PluginManager;
@@ -117,12 +118,12 @@ public final class Main extends JavaPlugin {
     modules.forEach((k, v) -> {
       if (v.isEnabled()) {
         log(Level.INFO, "Module " + v.getId() + " is enabled.");
-        startupLogEmbed.addField(new MessageEmbed.Field(v.getId() + " module", "Enabled", false));
+        startupLogEmbed.addField(new MessageEmbed.Field(StringUtils.capitalize(v.getId()) + " module", "Enabled", true));
         v.initialize();
         v.registerCommands();
         v.registerListeners();
       } else {
-        startupLogEmbed.addField(new MessageEmbed.Field(v.getId() + " module", "Disabled", false));
+        startupLogEmbed.addField(new MessageEmbed.Field(StringUtils.capitalize(v.getId()) + " module", "Disabled", true));
         log(Level.INFO, "Module " + v.getId() + " is disabled.");
       }
     });
