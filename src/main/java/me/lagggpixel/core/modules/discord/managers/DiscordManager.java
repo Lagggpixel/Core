@@ -27,6 +27,7 @@ import java.util.regex.Pattern;
 
 public class DiscordManager {
   
+  @Getter
   private static DiscordManager instance;
   @NotNull
   private final NMSManager nmsManager;
@@ -58,12 +59,8 @@ public class DiscordManager {
   }
   
   // ""MTE1MjU5ODM3ODIwMzU4NjY5NQ.GBogbS.tKNCHVoS5Qa8N4DWH9EgMlwbfw7a7qQsZVIiMw""
-  
-  public static DiscordManager getInstance() {
-    return instance;
-  }
-  
-  
+
+
   public Member getMemberById(String id) {
     return guild.getMemberById(id);
   }
