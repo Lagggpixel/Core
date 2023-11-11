@@ -86,7 +86,7 @@ Data for users are stored at `Main.getInstance.getDataFolder + "data/users"`
 
 
 **Economy Module**
-- Add baltop command
+- None
 
 
 **Home Module**
