@@ -45,7 +45,7 @@ public class BazaarModule extends Module {
         saveEscrow();
       }
     };
-    autoSaveRunnable.runTaskTimerAsynchronously(Main.getInstance(), 300L, 600L);
+    autoSaveRunnable.runTaskTimerAsynchronously(Main.getInstance(), 6000L, 6000L);
   }
   
   @Override
