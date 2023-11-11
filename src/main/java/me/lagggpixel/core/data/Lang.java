@@ -38,6 +38,9 @@ public enum Lang {
   ECONOMY_SET("economy.economy.set", "&aYou have set %player%'s balance to &e%balance%&a."),
   ECONOMY_GIVE("economy.economy.give", "&aYou have given %player% &e%amount%&a. Their new balance is &e%balance%&a."),
   ECONOMY_REMOVE("economy.economy.remove", "&aYou have removed &e%amount%&a from %player%'s balance. Their new balance is &e%balance%&a."),
+  ECONOMY_BALTOP_NO_PLAYER_FOUND("economy.baltop.no_player_found", "&cNo players found."),
+  ECONOMY_BALTOP_HEADER("economy.baltop.header", "&aTop Players by Balance:"),
+  ECONOMY_BALTOP_LISTING("economy.baltop.listing", "&a%position%. %player%: &e%balance%&a"),
   
   // Home Module
   HOME_ALREADY_EXIST("home.already_exist", "&cA home named '&e%home%&c' already exists."),
