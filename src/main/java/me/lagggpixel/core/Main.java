@@ -70,7 +70,7 @@ public final class Main extends JavaPlugin {
   }
 
   public static void log(Level level, String message) {
-    Main.getInstance().getLogger().log(level, "[core]: " + message);
+    Main.getInstance().getLogger().log(level, "[Infinite Minecrafters Core]: " + message);
   }
 
   public static @Nonnull Map<UUID, User> getUserData() {

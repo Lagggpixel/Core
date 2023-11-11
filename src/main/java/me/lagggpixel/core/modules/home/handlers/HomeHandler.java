@@ -1,4 +1,4 @@
-package me.lagggpixel.core.modules.home.managers;
+package me.lagggpixel.core.modules.home.handlers;
 
 import me.lagggpixel.core.Main;
 import me.lagggpixel.core.data.User;
@@ -10,10 +10,11 @@ import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 
-public class HomeManager {
+public class HomeHandler {
   
   public final Component HOME_GUI_NAME = ChatUtils.stringToComponentCC("&aHomes");
   public final NamespacedKey HOME_ITEM_NAMESPACE_KEY = new NamespacedKey(Main.getInstance(), "HOME_NAME");
+  public final String HOME_PERMISSION_PREFIX = "coreplugin.home.command.max.";
   
   public void teleportToHome(Player player, Home home) {
     TeleportUtils.teleportWithDelay(player, home.location(), home.name() + " home");

@@ -3,7 +3,7 @@ package me.lagggpixel.core.modules.home.listeners;
 import me.lagggpixel.core.Main;
 import me.lagggpixel.core.data.User;
 import me.lagggpixel.core.modules.home.data.Home;
-import me.lagggpixel.core.modules.home.managers.HomeManager;
+import me.lagggpixel.core.modules.home.handlers.HomeHandler;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,10 +15,10 @@ import org.jetbrains.annotations.NotNull;
 
 public class HomeGuiListeners implements Listener {
   
-  HomeManager homeManager;
+  HomeHandler homeHandler;
   
-  public HomeGuiListeners(HomeManager homeManager) {
-    this.homeManager = homeManager;
+  public HomeGuiListeners(HomeHandler homeHandler) {
+    this.homeHandler = homeHandler;
     Main.getPluginManager().registerEvents(this, Main.getInstance());
   }
   
@@ -30,7 +30,7 @@ public class HomeGuiListeners implements Listener {
     
     Component menuName = event.getView().title();
     
-    if (menuName != homeManager.HOME_GUI_NAME) {
+    if (menuName != homeHandler.HOME_GUI_NAME) {
       return;
     }
     
@@ -42,11 +42,11 @@ public class HomeGuiListeners implements Listener {
       return;
     }
     
-    String homeName = clickedItem.getItemMeta().getPersistentDataContainer().get(homeManager.HOME_ITEM_NAMESPACE_KEY, PersistentDataType.STRING);
+    String homeName = clickedItem.getItemMeta().getPersistentDataContainer().get(homeHandler.HOME_ITEM_NAMESPACE_KEY, PersistentDataType.STRING);
     
     Home home = user.getHomes().get(homeName);
     
-    homeManager.teleportToHome(player, home);
+    homeHandler.teleportToHome(player, home);
     player.closeInventory();
     
   }

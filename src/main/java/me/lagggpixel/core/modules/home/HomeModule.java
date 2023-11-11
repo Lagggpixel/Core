@@ -3,13 +3,13 @@ package me.lagggpixel.core.modules.home;
 import me.lagggpixel.core.modules.Module;
 import me.lagggpixel.core.modules.home.commands.HomeCommands;
 import me.lagggpixel.core.modules.home.listeners.HomeGuiListeners;
-import me.lagggpixel.core.modules.home.managers.HomeManager;
+import me.lagggpixel.core.modules.home.handlers.HomeHandler;
 import me.lagggpixel.core.utils.CommandUtils;
 import org.jetbrains.annotations.NotNull;
 
 public class HomeModule extends Module {
   
-  private HomeManager homeManager;
+  private HomeHandler homeHandler;
   
   @Override
   public @NotNull String getId() {
@@ -23,16 +23,16 @@ public class HomeModule extends Module {
   
   @Override
   public void initialize() {
-    homeManager = new HomeManager();
+    homeHandler = new HomeHandler();
   }
   
   @Override
   public void registerCommands() {
-    CommandUtils.registerCommand(new HomeCommands(this, homeManager));
+    CommandUtils.registerCommand(new HomeCommands(this, homeHandler));
   }
   
   @Override
   public void registerListeners() {
-    new HomeGuiListeners(homeManager);
+    new HomeGuiListeners(homeHandler);
   }
 }
