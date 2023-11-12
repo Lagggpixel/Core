@@ -4,12 +4,11 @@ import javax.annotation.Nonnull;
 
 public abstract class Module {
 
-  public @Nonnull
-  abstract String getId();
+  public @Nonnull abstract String getId();
 
   public abstract boolean isEnabled();
 
-  public abstract void initialize();
+  public abstract void onEnable();
 
   public abstract void registerCommands();
 

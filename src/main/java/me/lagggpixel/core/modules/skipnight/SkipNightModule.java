@@ -29,7 +29,7 @@ public class SkipNightModule extends Module {
   }
 
   @Override
-  public void initialize() {
+  public void onEnable() {
     skipNightVoteManager = new SkipNightVoteManager(this);
     CommandUtils.registerCommand(new SkipNightCommand(this, skipNightVoteManager));
   }

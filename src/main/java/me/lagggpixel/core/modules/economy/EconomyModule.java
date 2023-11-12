@@ -30,7 +30,7 @@ public class EconomyModule extends Module {
   }
   
   @Override
-  public void initialize() {
+  public void onEnable() {
     this.economyManager = new EconomyManager();
     this.economyImpl = new EconomyImpl(this, economyManager);
     

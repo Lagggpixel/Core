@@ -16,7 +16,7 @@ public class RestartModule extends Module {
   }
   
   @Override
-  public void initialize() {
+  public void onEnable() {
   
   }
   

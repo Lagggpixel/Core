@@ -18,7 +18,7 @@ public class RtpModule extends Module {
   }
   
   @Override
-  public void initialize() {
+  public void onEnable() {
   
   }
   

@@ -22,7 +22,7 @@ public class SpawnModule extends Module {
   }
   
   @Override
-  public void initialize() {
+  public void onEnable() {
     spawnManager = new SpawnManager();
     spawnManager.loadSpawnLocation();
   }

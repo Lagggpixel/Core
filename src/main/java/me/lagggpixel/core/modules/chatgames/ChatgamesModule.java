@@ -16,7 +16,7 @@ public class ChatgamesModule extends Module {
   }
   
   @Override
-  public void initialize() {
+  public void onEnable() {
   
   }
   

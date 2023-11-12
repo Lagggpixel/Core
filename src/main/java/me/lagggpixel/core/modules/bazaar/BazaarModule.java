@@ -33,11 +33,11 @@ public class BazaarModule extends Module {
   }
   
   @Override
-  public void initialize() {
+  public void onEnable() {
     try {
       bazaar = new SkyblockBazaar();
     } catch (Bazaar.BazaarIOException | Bazaar.BazaarItemNotFoundException ex) {
-      Main.log(Level.SEVERE, ("Failed to initialize bazaar: " + ex.getMessage()));
+      Main.log(Level.SEVERE, ("Failed to onEnable bazaar: " + ex.getMessage()));
     }
     autoSaveRunnable = new BukkitRunnable() {
       @Override

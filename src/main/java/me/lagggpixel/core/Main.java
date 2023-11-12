@@ -119,7 +119,7 @@ public final class Main extends JavaPlugin {
       if (v.isEnabled()) {
         log(Level.INFO, "Module " + v.getId() + " is enabled.");
         startupLogEmbed.addField(new MessageEmbed.Field(StringUtils.capitalize(v.getId()) + " module", "Enabled", true));
-        v.initialize();
+        v.onEnable();
         v.registerCommands();
         v.registerListeners();
       } else {

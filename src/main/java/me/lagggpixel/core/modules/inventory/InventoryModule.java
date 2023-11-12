@@ -20,7 +20,7 @@ public class InventoryModule extends Module {
   }
   
   @Override
-  public void initialize() {
+  public void onEnable() {
   
   }
   

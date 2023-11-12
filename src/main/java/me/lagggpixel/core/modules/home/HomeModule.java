@@ -22,7 +22,7 @@ public class HomeModule extends Module {
   }
   
   @Override
-  public void initialize() {
+  public void onEnable() {
     homeHandler = new HomeHandler();
   }
   

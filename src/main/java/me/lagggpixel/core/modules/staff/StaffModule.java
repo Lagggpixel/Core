@@ -19,7 +19,7 @@ public class StaffModule extends Module {
     }
 
     @Override
-    public void initialize() {
+    public void onEnable() {
         CommandUtils.registerCommand(new VanishCommand(this));
         CommandUtils.registerCommand(new GamemodeCommands(this));
     }

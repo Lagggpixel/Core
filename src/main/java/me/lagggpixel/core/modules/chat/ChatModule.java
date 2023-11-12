@@ -19,7 +19,7 @@ public class ChatModule extends Module {
   }
   
   @Override
-  public void initialize() {
+  public void onEnable() {
   
   }
   

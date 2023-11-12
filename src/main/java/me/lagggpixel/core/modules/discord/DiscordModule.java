@@ -29,7 +29,7 @@ public class DiscordModule extends Module {
   }
   
   @Override
-  public void initialize() {
+  public void onEnable() {
     nmsManager = new NMSManager();
     discordManager = new DiscordManager(nmsManager);
 
