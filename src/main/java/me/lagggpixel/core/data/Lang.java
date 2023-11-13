@@ -94,6 +94,8 @@ public enum Lang {
   SPAWN_TELEPORTED_OTHER("spawn.teleported_other", "&aYou have teleported %player% to spawn."),
   
   // Staff Module
+  STAFF_MODE_ENABLED("staff.mode.enabled", "&aStaff mode has been enabled."),
+  STAFF_MODE_DISABLED("staff.mode.disabled", "&aStaff mode has been disabled."),
   STAFF_VANISHED_SELF("staff.vanish.self.true", "&aYou are now in vanish mode."),
   STAFF_UNVANISHED_SELF("staff.vanish.self.false", "&aYou are no longer in vanish mode."),
   STAFF_VANISHED_OTHER("staff.vanish.other.true", "&a%player% is now in vanish mode."),

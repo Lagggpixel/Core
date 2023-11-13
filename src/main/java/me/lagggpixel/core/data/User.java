@@ -37,6 +37,7 @@ public class User implements ConfigurationSerializable {
   // Homes
   private Map<String, Home> homes;
   // Staff configurations
+  private boolean staffMode;
   private boolean isVanished;
   private boolean staffChatToggled;
   
@@ -65,6 +66,7 @@ public class User implements ConfigurationSerializable {
     this.homes = new HashMap<>();
     
     // Staff
+    this.staffMode = false;
     this.isVanished = false;
     this.staffChatToggled = false;
     
@@ -92,6 +94,7 @@ public class User implements ConfigurationSerializable {
     this.homes = (Map<String, Home>) map.get("homes");
     
     // Staff configuration
+    this.staffMode = (boolean) map.getOrDefault("staffMode", false);
     this.isVanished = (boolean) map.getOrDefault("vanished", false);
     this.staffChatToggled = (boolean) map.getOrDefault("staffChatToggled", false);
   }
@@ -120,6 +123,7 @@ public class User implements ConfigurationSerializable {
       put("homes", homes);
       
       // Staff
+      put("staffMode", staffMode);
       put("vanished", isVanished);
       put("staffChatToggled", staffChatToggled);
     }};

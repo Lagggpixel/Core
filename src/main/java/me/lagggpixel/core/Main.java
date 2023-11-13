@@ -46,7 +46,7 @@ public final class Main extends JavaPlugin {
     ConfigurationSerialization.registerClass(User.class);
     ConfigurationSerialization.registerClass(Home.class);
   }
-
+  
   private final @NotNull HashMap<String, Module> modules = new HashMap<>();
   private final @NotNull Module bazaarModule = new BazaarModule();
   private final @NotNull Module chatModule = new ChatModule();
@@ -75,7 +75,13 @@ public final class Main extends JavaPlugin {
   public static @Nonnull Map<UUID, User> getUserData() {
     return userData;
   }
-
+  
+  /**
+   * Retrieves the User object associated with the specified UUID.
+   *
+   * @param  uuid  the UUID of the User to retrieve
+   * @return       the User object associated with the specified UUID
+   */
   public static User getUser(UUID uuid) {
     return userData.get(uuid);
   }
