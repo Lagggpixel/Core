@@ -124,4 +124,46 @@ public class User implements ConfigurationSerializable {
       put("staffChatToggled", staffChatToggled);
     }};
   }
+  
+  public long getEntityKills(EntityType entityType) {
+    return entityKills.getOrDefault(entityType, 0L);
+  }
+  public long getBlockBroken(Material material) {
+    return blocksBroken.getOrDefault(material, 0L);
+  }
+  public long getBlockPlaced(Material material) {
+    return blocksPlaced.getOrDefault(material, 0L);
+  }
+  public long getItemCrafted(Material material) {
+    return itemsCrafted.getOrDefault(material, 0L);
+  }
+  
+  public long getTotalEntityKills() {
+    long total = 0;
+    for (Map.Entry<EntityType, Long> entry : entityKills.entrySet()) {
+      total += entry.getValue();
+    }
+    return total;
+  }
+  public long getTotalBlocksBroken() {
+    long total = 0;
+    for (Map.Entry<Material, Long> entry : blocksBroken.entrySet()) {
+      total += entry.getValue();
+    }
+    return total;
+  }
+  public long getTotalBlocksPlaced() {
+    long total = 0;
+    for (Map.Entry<Material, Long> entry : blocksPlaced.entrySet()) {
+      total += entry.getValue();
+    }
+    return total;
+  }
+  public long getTotalItemsCrafted() {
+    long total = 0;
+    for (Map.Entry<Material, Long> entry : itemsCrafted.entrySet()) {
+      total += entry.getValue();
+    }
+    return total;
+  }
 }
