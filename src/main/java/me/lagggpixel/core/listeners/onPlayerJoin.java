@@ -27,6 +27,10 @@ public class onPlayerJoin implements Listener {
       Main.getUserData().put(uuid, new User(player));
     }
     
+    User user = Main.getUser(uuid);
+    user.setPlayerName(player.getName());
+    user.setAfk(false);
+    
     handleVanishPlayers(event);
   }
   
