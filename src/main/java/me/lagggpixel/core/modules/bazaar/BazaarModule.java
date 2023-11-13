@@ -59,7 +59,7 @@ public class BazaarModule extends Module {
   }
   
   private void saveEscrow() {
-    Main.log(Level.INFO, "Bazaar escrow data saved");
+    // Main.log(Level.INFO, "Bazaar escrow data saved");
   }
   
   public static void checkBuyOrderAvailability(BazaarSubItem item, Player opener) {
