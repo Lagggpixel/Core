@@ -3,6 +3,7 @@ package me.lagggpixel.core;
 import lombok.Getter;
 import lombok.Setter;
 import me.lagggpixel.core.data.User;
+import me.lagggpixel.core.listeners.PlayerStatsListeners;
 import me.lagggpixel.core.listeners.onPlayerJoin;
 import me.lagggpixel.core.modules.Module;
 import me.lagggpixel.core.modules.bazaar.BazaarModule;
@@ -137,6 +138,7 @@ public final class Main extends JavaPlugin {
 
   private void registerListeners() {
     new onPlayerJoin();
+    new PlayerStatsListeners();
 
     TeleportUtils.PlayerTeleportCancelListener listener = new TeleportUtils.PlayerTeleportCancelListener();
     this.getServer().getPluginManager().registerEvents(listener, Main.getInstance());
