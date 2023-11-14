@@ -81,10 +81,10 @@ public class User implements ConfigurationSerializable {
     this.playerUUID = UUID.fromString(String.valueOf(map.get("uuid")));
     
     // Player stats configuration
-    this.entityKills = (HashMap<EntityType, Long>) map.get("entityKills");
-    this.blocksBroken = (HashMap<Material, Long>) map.get("blocksBroken");
-    this.blocksPlaced = (HashMap<Material, Long>) map.get("blocksPlaced");
-    this.itemsCrafted = (HashMap<Material, Long>) map.get("itemsCrafted");
+    this.entityKills = (HashMap<EntityType, Long>) map.getOrDefault("entityKills", new HashMap<>());
+    this.blocksBroken = (HashMap<Material, Long>) map.getOrDefault("blocksBroken", new HashMap<>());
+    this.blocksPlaced = (HashMap<Material, Long>) map.getOrDefault("blocksPlaced", new HashMap<>());
+    this.itemsCrafted = (HashMap<Material, Long>) map.getOrDefault("itemsCrafted", new HashMap<>());
     
     // Discord configuration
     this.discordId = Long.getLong(String.valueOf(map.get("discordId")));
