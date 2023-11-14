@@ -6,7 +6,7 @@
 
     <groupId>me.lagggpixel</groupId>
     <artifactId>core</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <packaging>jar</packaging>
 
     <name>Core</name>
@@ -33,7 +33,7 @@
                 <version>3.2.0</version>
                 <configuration>
                     <!-- Set the output directory for the JAR file here -->
-                    <outputDirectory>D:\Test Server 1.20.2\plugins</outputDirectory>
+                    <!-- outputDirectory>D:\Test Server 1.20.2\plugins</outputDirectory-->
                 </configuration>
             </plugin>
             <plugin>

@@ -107,6 +107,9 @@ public class InstantPlayerData implements ConfigurationSerializable {
   @NotNull
   public static InstantPlayerData deserialize(Map<String, Object> map) {
     InstantPlayerData instantPlayerData = new InstantPlayerData();
+    if (map == null || map.isEmpty()) {
+      return instantPlayerData;
+    }
     instantPlayerData.health = Double.parseDouble(String.valueOf(map.get("health")));
     instantPlayerData.foodLevel = Integer.parseInt(String.valueOf(map.get("foodLevel")));
     instantPlayerData.saturation = Float.parseFloat(String.valueOf(map.get("saturation")));
