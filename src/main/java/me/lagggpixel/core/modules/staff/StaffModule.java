@@ -16,7 +16,7 @@ public class StaffModule extends Module {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return false;
     }
 
     @Override

@@ -18,7 +18,7 @@ public class SpawnModule extends Module {
   
   @Override
   public boolean isEnabled() {
-    return true;
+    return false;
   }
   
   @Override

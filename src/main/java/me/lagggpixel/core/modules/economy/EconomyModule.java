@@ -26,7 +26,7 @@ public class EconomyModule extends Module {
   
   @Override
   public boolean isEnabled() {
-    return true;
+    return false;
   }
   
   @Override
