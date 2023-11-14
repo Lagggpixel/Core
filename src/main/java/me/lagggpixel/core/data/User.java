@@ -97,7 +97,9 @@ public class User implements ConfigurationSerializable {
     this.homes = (Map<String, Home>) map.get("homes");
     
     // Staff configuration
-    this.instantPlayerData = InstantPlayerData.deserialize((Map<String, Object>) map.get("instantPlayerData"));
+    if (map.containsKey("instantPlayerData") && map.get("instantPlayerData") != null) {
+      this.instantPlayerData = InstantPlayerData.deserialize((Map<String, Object>) map.get("instantPlayerData"));
+    }
     this.staffMode = (boolean) map.getOrDefault("staffMode", false);
     this.isVanished = (boolean) map.getOrDefault("vanished", false);
     this.staffChatToggled = (boolean) map.getOrDefault("staffChatToggled", false);
