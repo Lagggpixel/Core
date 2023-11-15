@@ -3,6 +3,7 @@ package me.lagggpixel.core.modules.discord.managers;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import lombok.Getter;
 import me.clip.placeholderapi.PlaceholderAPI;
+import me.lagggpixel.core.utils.ChatUtils;
 import me.lagggpixel.core.utils.HookUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
@@ -16,6 +17,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.jetbrains.annotations.NotNull;
@@ -90,6 +92,18 @@ public class DiscordManager {
         .setAuthor(message, null, getAvatarUrl(player))
         .setTimestamp(java.time.Instant.now())
         .setColor(Color.RED)
+        .build();
+  }
+  
+  public @NotNull MessageEmbed createDeathMessageEmbed(@NotNull PlayerDeathEvent event) {
+    
+    Player player = event.getPlayer();
+    String message = ChatUtils.componentToString(event.deathMessage());
+    
+    return new EmbedBuilder()
+        .setAuthor(message, null, getAvatarUrl(player))
+        .setTimestamp(java.time.Instant.now())
+        .setColor(Color.MAGENTA)
         .build();
   }
   
