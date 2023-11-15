@@ -3,6 +3,7 @@ package me.lagggpixel.core.modules.bazaar.impl;
 import lombok.Data;
 import me.lagggpixel.core.modules.bazaar.interfaces.BazaarOffer;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,7 +17,7 @@ public class SkyblockBazaarOffer implements BazaarOffer, ConfigurationSerializab
   private final double price;
   
   @Override
-  public Map<String, Object> serialize() {
+  public @NotNull Map<String, Object> serialize() {
     HashMap<String, Object> map = new HashMap<>();
     
     map.put("owner", this.owner.toString());
