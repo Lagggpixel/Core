@@ -10,7 +10,7 @@ import java.util.Comparator;
 import java.util.List;
 
 @Data
-public class SkyblockBazaarSubItem implements BazaarSubItem {
+public class CoreBazaarSubItem implements BazaarSubItem {
   
   private BazaarItem parent;
   

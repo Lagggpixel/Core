@@ -9,7 +9,7 @@ import net.kyori.adventure.text.Component;
 import java.util.List;
 
 @Data
-public class SkyblockBazaarItem implements BazaarItem {
+public class CoreBazaarItem implements BazaarItem {
   
   private BazaarCategory category;
   private final Component name;

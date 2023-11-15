@@ -7,7 +7,7 @@ import me.lagggpixel.core.modules.bazaar.interfaces.BazaarOffer;
 import java.util.List;
 
 @Data
-public class SkyblockBazaarItemData implements BazaarItemData {
+public class CoreBazaarItemData implements BazaarItemData {
   
   private final double productAmount;
   private final double buyPrice;

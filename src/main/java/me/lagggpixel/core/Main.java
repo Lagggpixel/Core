@@ -7,7 +7,7 @@ import me.lagggpixel.core.listeners.PlayerStatsListeners;
 import me.lagggpixel.core.listeners.onPlayerJoin;
 import me.lagggpixel.core.modules.Module;
 import me.lagggpixel.core.modules.bazaar.BazaarModule;
-import me.lagggpixel.core.modules.bazaar.impl.SkyblockBazaarOffer;
+import me.lagggpixel.core.modules.bazaar.impl.CoreBazaarOffer;
 import me.lagggpixel.core.modules.chat.ChatModule;
 import me.lagggpixel.core.modules.discord.DiscordModule;
 import me.lagggpixel.core.modules.economy.EconomyModule;
@@ -48,7 +48,7 @@ public final class Main extends JavaPlugin {
     ConfigurationSerialization.registerClass(User.class);
     ConfigurationSerialization.registerClass(InstantPlayerData.class);
     ConfigurationSerialization.registerClass(Home.class);
-    ConfigurationSerialization.registerClass(SkyblockBazaarOffer.class);
+    ConfigurationSerialization.registerClass(CoreBazaarOffer.class);
   }
   
   private final @NotNull HashMap<String, Module> modules = new HashMap<>();

@@ -23,12 +23,12 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SkyblockBazaarConfigIndexer implements BazaarConfigIndexer {
+public class CoreBazaarConfigIndexer implements BazaarConfigIndexer {
   
   private final Bazaar bazaar;
   private final File items;
   
-  public SkyblockBazaarConfigIndexer(Bazaar bazaar, File items) {
+  public CoreBazaarConfigIndexer(Bazaar bazaar, File items) {
     this.bazaar = bazaar;
     this.items = items;
   }

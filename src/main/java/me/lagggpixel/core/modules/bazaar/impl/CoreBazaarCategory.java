@@ -10,7 +10,7 @@ import org.bukkit.Material;
 import java.util.List;
 
 @Data
-public class SkyblockBazaarCategory implements BazaarCategory {
+public class CoreBazaarCategory implements BazaarCategory {
   
   private final Component name;
   private final Material icon;

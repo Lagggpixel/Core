@@ -17,7 +17,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 
 @SuppressWarnings({"FieldCanBeLocal", "ResultOfMethodCallIgnored"})
-public class SkyblockBazaar implements Bazaar {
+public class CoreBazaar implements Bazaar {
 
     private final File dataFolder = new File(Main.getInstance().getDataFolder(), "data/modules/bazaar");
     private final Escrow escrow;
@@ -29,7 +29,7 @@ public class SkyblockBazaar implements Bazaar {
     private final File itemsFile;
     private final File file;
 
-    public SkyblockBazaar() throws BazaarIOException, BazaarItemNotFoundException {
+    public CoreBazaar() throws BazaarIOException, BazaarItemNotFoundException {
         this.escrow = new SkyblockEscrow(this);
 
         this.itemsFile = new File(dataFolder, Bazaar.ITEMS_PATH);
@@ -78,7 +78,7 @@ public class SkyblockBazaar implements Bazaar {
 
         this.config = YamlConfiguration.loadConfiguration(this.file);
 
-        Pair<List<BazaarCategory>, List<BazaarSubItem>> indexed = new SkyblockBazaarConfigIndexer(this, this.itemsFile).index();
+        Pair<List<BazaarCategory>, List<BazaarSubItem>> indexed = new CoreBazaarConfigIndexer(this, this.itemsFile).index();
 //        temp: (fixed by above code line)
 //        this.rawItems.add(new SkyblockBazaarSubItem(BazaarModule.getItemHandler().getItem("ENCHANTED_PUMPKIN.json"), Rarity.UNCOMMON, 12, new ArrayList<BazaarOffer>() {{
 //            add(new SkyblockBazaarOffer(UUID.randomUUID(), 1349, 824.3));
@@ -182,20 +182,20 @@ public class SkyblockBazaar implements Bazaar {
 
     @Override
     public BazaarItemData getItemData(String name) throws BazaarItemNotFoundException {
-        AtomicReference<SkyblockBazaarItemData> data = new AtomicReference<>();
+        AtomicReference<CoreBazaarItemData> data = new AtomicReference<>();
 
         this.config.getConfigurationSection("items").getKeys(false).forEach(key -> {
             if (key.equalsIgnoreCase(name)) {
-                data.set(new SkyblockBazaarItemData(
+                data.set(new CoreBazaarItemData(
                         this.get("items." + key + ".productAmount", Integer.class),
                         this.get("items." + key + ".buyPrice", Double.class),
                         this.get("items." + key + ".sellPrice", Double.class),
-                        new SkyblockBazaarItemData.SkyblockBazaarItemVolume(
+                        new CoreBazaarItemData.SkyblockBazaarItemVolume(
                                 this.get("items." + key + ".buyVolume.amount", Integer.class),
                                 this.get("items." + key + ".buyVolume.offers", Integer.class)
                         ),
                         this.get("items." + key + ".last7dInstantBuyVolume", Integer.class),
-                        new SkyblockBazaarItemData.SkyblockBazaarItemVolume(
+                        new CoreBazaarItemData.SkyblockBazaarItemVolume(
                                 this.get("items." + key + ".sellVolume.amount", Integer.class),
                                 this.get("items." + key + ".sellVolume.orders", Integer.class)
                         ),

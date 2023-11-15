@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @Data
-public class SkyblockBazaarOffer implements BazaarOffer, ConfigurationSerializable {
+public class CoreBazaarOffer implements BazaarOffer, ConfigurationSerializable {
   
   private final UUID owner;
   private final int amount;
@@ -27,8 +27,8 @@ public class SkyblockBazaarOffer implements BazaarOffer, ConfigurationSerializab
     return map;
   }
   
-  public SkyblockBazaarOffer deserialize(Map<String, Object> map) {
-    return new SkyblockBazaarOffer(
+  public CoreBazaarOffer deserialize(Map<String, Object> map) {
+    return new CoreBazaarOffer(
         UUID.fromString((String) map.get("owner")),
         (int) map.get("amount"),
         (double) map.get("price")

@@ -1,8 +1,8 @@
 package me.lagggpixel.core.modules.bazaar.interfaces;
 
-import me.lagggpixel.core.modules.bazaar.impl.SkyblockBazaarCategory;
-import me.lagggpixel.core.modules.bazaar.impl.SkyblockBazaarItem;
-import me.lagggpixel.core.modules.bazaar.impl.SkyblockBazaarSubItem;
+import me.lagggpixel.core.modules.bazaar.impl.CoreBazaarCategory;
+import me.lagggpixel.core.modules.bazaar.impl.CoreBazaarItem;
+import me.lagggpixel.core.modules.bazaar.impl.CoreBazaarSubItem;
 import me.lagggpixel.core.modules.bazaar.utils.BazaarMiscUtil;
 import me.lagggpixel.core.data.Pair;
 import net.kyori.adventure.text.Component;
@@ -26,10 +26,10 @@ public interface BazaarConfigIndexer {
         bazaarItems.add(item.toBazaarEquivalent());
       }
       
-      SkyblockBazaarCategory category = new SkyblockBazaarCategory(this.name, this.icon, this.color, bazaarItems);
+      CoreBazaarCategory category = new CoreBazaarCategory(this.name, this.icon, this.color, bazaarItems);
       
       for (BazaarItem item : bazaarItems) {
-        ((SkyblockBazaarItem) item).setCategory(category);
+        ((CoreBazaarItem) item).setCategory(category);
       }
       
       return category;
@@ -46,10 +46,10 @@ public interface BazaarConfigIndexer {
         bazaarSubItems.add(subItem.toBazaarEquivalent());
       }
       
-      BazaarItem item = new SkyblockBazaarItem(this.name, bazaarSubItems, this.inventorySize);
+      BazaarItem item = new CoreBazaarItem(this.name, bazaarSubItems, this.inventorySize);
       
       for (BazaarSubItem subItem : bazaarSubItems) {
-        ((SkyblockBazaarSubItem) subItem).setParent(item);
+        ((CoreBazaarSubItem) subItem).setParent(item);
       }
       
       return item;
@@ -65,7 +65,7 @@ public interface BazaarConfigIndexer {
         throw new Bazaar.BazaarItemNotFoundException("Could not find material: " + this.material);
       }
       
-      return new SkyblockBazaarSubItem(icon, this.slot, this.material, new ArrayList<>(), new ArrayList<>());
+      return new CoreBazaarSubItem(icon, this.slot, this.material, new ArrayList<>(), new ArrayList<>());
     }
   }
   

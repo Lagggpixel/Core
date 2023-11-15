@@ -4,7 +4,7 @@ import lombok.Getter;
 import me.lagggpixel.core.Main;
 import me.lagggpixel.core.modules.Module;
 import me.lagggpixel.core.modules.bazaar.commands.BazaarCommand;
-import me.lagggpixel.core.modules.bazaar.impl.SkyblockBazaar;
+import me.lagggpixel.core.modules.bazaar.impl.CoreBazaar;
 import me.lagggpixel.core.modules.bazaar.interfaces.Bazaar;
 import me.lagggpixel.core.modules.bazaar.interfaces.BazaarSubItem;
 import me.lagggpixel.core.utils.ChatUtils;
@@ -35,7 +35,7 @@ public class BazaarModule extends Module {
   @Override
   public void onEnable() {
     try {
-      bazaar = new SkyblockBazaar();
+      bazaar = new CoreBazaar();
     } catch (Bazaar.BazaarIOException | Bazaar.BazaarItemNotFoundException ex) {
       Main.log(Level.SEVERE, ("Failed to onEnable bazaar: " + ex.getMessage()));
     }
