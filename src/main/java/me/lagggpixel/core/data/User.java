@@ -72,7 +72,6 @@ public class User implements ConfigurationSerializable {
     this.staffMode = false;
     this.isVanished = false;
     this.staffChatToggled = false;
-    
   }
   
   public User(@NotNull Map<String, Object> map) {
