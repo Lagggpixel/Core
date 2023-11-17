@@ -6,7 +6,7 @@ import me.lagggpixel.core.modules.bazaar.interfaces.BazaarItem;
 import me.lagggpixel.core.modules.bazaar.utils.BazaarMiscUtil;
 import me.lagggpixel.core.modules.bazaar.utils.gui.BazaarGui;
 import me.lagggpixel.core.utils.ChatUtils;
-import me.lagggpixel.core.utils.ItemBuilder;
+import me.lagggpixel.core.builders.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;

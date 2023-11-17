@@ -3,7 +3,7 @@ package me.lagggpixel.core.modules.bazaar.utils;
 import lombok.experimental.UtilityClass;
 import me.lagggpixel.core.modules.bazaar.utils.gui.BazaarGui;
 import me.lagggpixel.core.utils.ChatUtils;
-import me.lagggpixel.core.utils.ItemBuilder;
+import me.lagggpixel.core.builders.ItemBuilder;
 import net.kyori.adventure.text.Component;
 import org.apache.commons.lang3.StringUtils;
 import org.bukkit.ChatColor;

@@ -1,4 +1,4 @@
-package me.lagggpixel.core.utils;
+package me.lagggpixel.core.builders;
 
 import net.kyori.adventure.text.Component;
 import org.bukkit.Color;
