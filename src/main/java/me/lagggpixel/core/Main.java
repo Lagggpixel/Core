@@ -56,6 +56,7 @@ public final class Main extends JavaPlugin {
   private final @NotNull Module chatModule = new ChatModule();
   private final @NotNull Module discordModule = new DiscordModule();
   private final @NotNull Module economyModule = new EconomyModule();
+  private final @NotNull Module guildModule = new HomeModule();
   private final @NotNull Module homeModule = new HomeModule();
   private final @NotNull Module inventoryModule = new InventoryModule();
   private final @NotNull Module restartModule = new RestartModule();
@@ -113,6 +114,7 @@ public final class Main extends JavaPlugin {
     modules.put(homeModule.getId(), homeModule);
     modules.put(inventoryModule.getId(), inventoryModule);
     modules.put(economyModule.getId(), economyModule);
+    modules.put(guildModule.getId(), guildModule);
     modules.put(restartModule.getId(), restartModule);
     modules.put(rtpModule.getId(), rtpModule);
     modules.put(skipnightModule.getId(), skipnightModule);
