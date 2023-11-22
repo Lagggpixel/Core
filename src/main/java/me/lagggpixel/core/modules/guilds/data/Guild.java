@@ -13,9 +13,7 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 public class Guild {
-
-
-
+  
   private String name;
 
   private UUID leader;

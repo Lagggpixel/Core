@@ -119,7 +119,6 @@ public class User implements ConfigurationSerializable {
       
       // Discord
       put("discordId", discordId);
-
       
       // Economy
       put("balance", playerBalance);
