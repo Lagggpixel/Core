@@ -21,6 +21,11 @@ public class WarpModule extends Module {
   }
   
   @Override
+  public void onDisable() {
+  
+  }
+  
+  @Override
   public void registerCommands() {
   
   }

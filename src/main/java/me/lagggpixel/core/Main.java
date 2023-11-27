@@ -143,6 +143,11 @@ public final class Main extends JavaPlugin {
 
   @Override
   public void onDisable() {
+    modules.forEach((k, v) -> {
+      if (v.isEnabled()) {
+        v.onDisable();
+      }
+    });
     DiscordModule.discordManager.sendEmbed(DiscordModule.discordManager.LOGGING_CHANNEL, new EmbedBuilder().setTitle("**Core Plugin Disabled**").build());
     UserDataUtils.saveData(userData);
     DiscordModule.discordManager.getJda().shutdown();

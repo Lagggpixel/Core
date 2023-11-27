@@ -6,10 +6,7 @@ import me.lagggpixel.core.modules.Module;
 import me.lagggpixel.core.modules.skipnight.commands.SkipNightCommand;
 import me.lagggpixel.core.modules.skipnight.managers.SkipNightVoteManager;
 import me.lagggpixel.core.utils.CommandUtils;
-import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Objects;
 
 public class SkipNightModule extends Module {
 
@@ -33,7 +30,12 @@ public class SkipNightModule extends Module {
     skipNightVoteManager = new SkipNightVoteManager(this);
     CommandUtils.registerCommand(new SkipNightCommand(this, skipNightVoteManager));
   }
-
+  
+  @Override
+  public void onDisable() {
+  
+  }
+  
   @Override
   public void registerCommands() {
 

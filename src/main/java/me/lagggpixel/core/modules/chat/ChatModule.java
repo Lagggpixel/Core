@@ -24,6 +24,11 @@ public class ChatModule extends Module {
   }
   
   @Override
+  public void onDisable() {
+  
+  }
+  
+  @Override
   public void registerCommands() {
     CommandUtils.registerCommand(new StaffChatCommand(this));
   }

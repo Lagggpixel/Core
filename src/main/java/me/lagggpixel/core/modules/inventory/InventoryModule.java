@@ -25,6 +25,11 @@ public class InventoryModule extends Module {
   }
   
   @Override
+  public void onDisable() {
+  
+  }
+  
+  @Override
   public void registerCommands() {
     CommandUtils.registerCommand(new InventoryCommands());
     CommandUtils.registerCommand(new EnderchestCommands());

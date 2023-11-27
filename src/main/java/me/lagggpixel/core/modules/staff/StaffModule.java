@@ -25,7 +25,12 @@ public class StaffModule extends Module {
         CommandUtils.registerCommand(new StaffCommand(this));
         CommandUtils.registerCommand(new VanishCommand(this));
     }
-
+    
+    @Override
+    public void onDisable() {
+    
+    }
+    
     @Override
     public void registerCommands() {
 

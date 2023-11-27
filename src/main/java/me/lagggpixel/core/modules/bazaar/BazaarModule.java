@@ -49,6 +49,11 @@ public class BazaarModule extends Module {
   }
   
   @Override
+  public void onDisable() {
+  
+  }
+  
+  @Override
   public void registerCommands() {
     CommandUtils.registerCommand(new BazaarCommand(this));
   }

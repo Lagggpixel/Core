@@ -9,6 +9,8 @@ public abstract class Module {
   public abstract boolean isEnabled();
 
   public abstract void onEnable();
+  
+  public abstract void onDisable();
 
   public abstract void registerCommands();
 

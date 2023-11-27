@@ -39,6 +39,11 @@ public class EconomyModule extends Module {
   }
   
   @Override
+  public void onDisable() {
+  
+  }
+  
+  @Override
   public void registerCommands() {
     CommandUtils.registerCommand(new BalanceCommand(this, economyManager));
     CommandUtils.registerCommand(new EconomyCommand(this, economyManager));

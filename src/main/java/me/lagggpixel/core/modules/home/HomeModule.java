@@ -27,6 +27,11 @@ public class HomeModule extends Module {
   }
   
   @Override
+  public void onDisable() {
+  
+  }
+  
+  @Override
   public void registerCommands() {
     CommandUtils.registerCommand(new HomeCommands(this, homeHandler));
   }

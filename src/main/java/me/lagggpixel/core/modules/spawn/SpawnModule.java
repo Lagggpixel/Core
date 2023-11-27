@@ -28,6 +28,11 @@ public class SpawnModule extends Module {
   }
   
   @Override
+  public void onDisable() {
+  
+  }
+  
+  @Override
   public void registerCommands() {
     CommandUtils.registerCommand(new SpawnCommand(this, spawnManager));
     CommandUtils.registerCommand(new SetSpawnCommand(this, spawnManager));
