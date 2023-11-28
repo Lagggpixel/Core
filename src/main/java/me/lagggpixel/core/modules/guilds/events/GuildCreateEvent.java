@@ -1,9 +1,7 @@
 package me.lagggpixel.core.modules.guilds.events;
 
 import lombok.Getter;
-import me.lagggpixel.core.modules.discord.managers.DiscordManager;
 import me.lagggpixel.core.modules.guilds.data.Guild;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
@@ -25,18 +23,6 @@ public class GuildCreateEvent extends Event implements Cancellable {
     this.player = player;
     handlerList = new HandlerList();
     cancelled = false;
-  }
-  
-  @Override
-  public boolean callEvent() {
-    Bukkit.getPluginManager().callEvent(this);
-    if (isCancelled()) {
-      return false;
-    }
-    else {
-      DiscordManager.getInstance().sendEmbed(DiscordManager.getInstance().LOGGING_CHANNEL, DiscordManager.getInstance().createGuildCreatedEmbed(this));
-      return true;
-    }
   }
   
   @Override
