@@ -1,5 +1,6 @@
 package me.lagggpixel.core.modules.guilds.commands.subCommands;
 
+import me.lagggpixel.core.data.Lang;
 import me.lagggpixel.core.modules.guilds.GuildModule;
 import me.lagggpixel.core.modules.guilds.data.Guild;
 import me.lagggpixel.core.modules.guilds.managers.GuildManager;
@@ -7,6 +8,7 @@ import me.lagggpixel.core.modules.guilds.commands.SubCommand;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.Map;
 import java.util.UUID;
 
 public class GuildCreateCommand implements SubCommand {
@@ -18,9 +20,8 @@ public class GuildCreateCommand implements SubCommand {
   
   @Override
   public void execute(CommandSender sender, String[] args) {
-    // Check if the sender is a player
     if (!(sender instanceof Player player)) {
-      sender.sendMessage("Only players can create guilds!");
+      sender.sendMessage(Lang.PLAYER_ONLY.toComponentWithPrefix());
       return;
     }
     
@@ -29,28 +30,27 @@ public class GuildCreateCommand implements SubCommand {
     UUID playerUniqueId = player.getUniqueId();
     
     if (guildManager.getGuildId(playerUniqueId) != null) {
-      sender.sendMessage("You are already in a guild!");
+      sender.sendMessage(Lang.GUILD_ALREADY_IN_GUILD.toComponentWithPrefix());
       return;
     }
     
-    // Check if the correct number of arguments is provided
     if (args.length != 2) {
-      sender.sendMessage("Usage: /guild create <name>");
+      sender.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
       return;
     }
     
     String guildName = args[1];
     
-    // Validate guild name (add more validation as needed)
-    if (guildName.length() < 3 || guildName.length() > 16) {
-      sender.sendMessage("Guild name must be between 3 and 16 characters.");
+    if (guildName.length() < 3 || guildName.length() > 16 || !Character.isLetter(guildName.charAt(0))) {
+      sender.sendMessage(Lang.GUILD_NAME_INVALID.toComponentWithPrefix());
       return;
     }
     
-    // Create a new guild
-    Guild newGuild = guildManager.createGuild(guildName, playerUniqueId);
-    
-    // Additional logic such as broadcasting, sending messages, etc.
-    sender.sendMessage("Guild '" + guildName + "' created successfully!");
+    Guild newGuild = guildManager.createGuild(guildName, player);
+    if (newGuild == null) {
+      sender.sendMessage(Lang.GUILD_FAILED_TO_CREATE.toComponentWithPrefix());
+      return;
+    }
+    sender.sendMessage(Lang.GUILD_CREATED.toComponentWithPrefix(Map.of("%guild%", newGuild.getName())));
   }
 }

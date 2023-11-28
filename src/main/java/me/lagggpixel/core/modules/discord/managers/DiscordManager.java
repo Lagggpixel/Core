@@ -3,6 +3,7 @@ package me.lagggpixel.core.modules.discord.managers;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import lombok.Getter;
 import me.clip.placeholderapi.PlaceholderAPI;
+import me.lagggpixel.core.modules.guilds.events.GuildCreateEvent;
 import me.lagggpixel.core.utils.ChatUtils;
 import me.lagggpixel.core.utils.HookUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -116,6 +117,18 @@ public class DiscordManager {
         .setDescription("**" + PlainTextComponentSerializer.plainText().serialize(event.message()) + "**")
         .setTimestamp(java.time.Instant.now())
         .setColor(Color.YELLOW)
+        .build();
+  }
+  
+  public @NotNull MessageEmbed createGuildCreatedEmbed(@NotNull GuildCreateEvent event) {
+    
+    Player player = event.getPlayer();
+    
+    return new EmbedBuilder()
+        .setAuthor(player.getName(), null, getAvatarUrl(player))
+        .setDescription("Guild '" + event.getGuild().getName() + "' created successfully by " + player.getName())
+        .setTimestamp(java.time.Instant.now())
+        .setColor(Color.GREEN)
         .build();
   }
   

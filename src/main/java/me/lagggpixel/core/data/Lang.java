@@ -42,6 +42,19 @@ public enum Lang {
   ECONOMY_BALTOP_HEADER("economy.baltop.header", "&aTop Players by Balance:"),
   ECONOMY_BALTOP_LISTING("economy.baltop.listing", "&a%position%. %player%: &e%balance%&a"),
   
+  // Guild module
+  GUILD_FAILED_TO_CREATE("guild.failed_to_create", "&cFailed to create guild."),
+  GUILD_ALREADY_IN_GUILD("guild.already_in_guild", "&cYou are already in a guild!"),
+  GUILD_NOT_IN_GUILD("guild.not_in_guild", "&cYou are not in a guild!"),
+  GUILD_ALREADY_EXIST("guild.already_exist", "&cA guild named '&e%guild%&c' already exists."),
+  GUILD_DOES_NOT_EXIST("guild.does_not_exist", "&cThe guild '&e%guild%&c' does not exist."),
+  GUILD_CREATED("guild.created", "&aYou've successfully created a guild called '&e%guild%&a'."),
+  GUILD_LIMIT_REACHED("guild.limit_reached", "&cYou cannot create more guilds."),
+  GUILD_DISBANDED("guild.disbanded", "&aYou've disbanded the guild '&e%guild%&a'."),
+  GUILD_NAME_INVALID("guild.invalid_name", "&cPlease create a guild with a different name. (Guild names cannot start with numbers and cannot contain special characters and have a length of 3-16 characters)"),
+  GUILD_CREATED_OTHER_PLAYER("guild.admin.created_other_player", "&aYou have created a guild for %player%, named '&e%guild%&a'."),
+  GUILD_DELETED_OTHER_PLAYER("guild.admin.deleted_other_player", "&aYou have deleted %player%'s guild, named '&e%guild%&a'."),
+  
   // Home Module
   HOME_ALREADY_EXIST("home.already_exist", "&cA home named '&e%home%&c' already exists."),
   HOME_DOES_NOT_EXIST("home.does_not_exist", "&cThe home '&e%home%&c' does not exist."),

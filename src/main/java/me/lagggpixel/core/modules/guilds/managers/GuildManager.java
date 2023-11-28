@@ -1,8 +1,11 @@
 package me.lagggpixel.core.modules.guilds.managers;
 
+import lombok.Getter;
 import me.lagggpixel.core.Main;
 import me.lagggpixel.core.modules.guilds.data.Guild;
 import me.lagggpixel.core.modules.guilds.data.loadsave.GuildGsonSerializer;
+import me.lagggpixel.core.modules.guilds.events.GuildCreateEvent;
+import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -10,6 +13,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+@Getter
 public class GuildManager {
   
   private final List<Guild> guilds = new ArrayList<>();
@@ -30,8 +34,13 @@ public class GuildManager {
     }
   }
   
-  public Guild createGuild(String guildName, UUID leaderUniqueId) {
-    Guild guild = new Guild(guildName, leaderUniqueId);
+  public Guild createGuild(String guildName, Player player) {
+    Guild guild = new Guild(guildName, player.getUniqueId());
+    GuildCreateEvent event = new GuildCreateEvent(guild, player);
+    Main.getInstance().getServer().getPluginManager().callEvent(event);
+    if (event.isCancelled()) {
+      return null;
+    }
     guilds.add(guild);
     saveGuild(guild);
     return guild;
@@ -46,10 +55,6 @@ public class GuildManager {
   private void saveGuild(Guild guild) {
     File leaderFile = new File(GUILD_DIRECTORY + guild.getLeader() + ".json");
     GuildGsonSerializer.saveGuild(guild, leaderFile);
-  }
-  
-  public List<Guild> getGuilds() {
-    return guilds;
   }
   
   public Guild getGuild(String name) {
