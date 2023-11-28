@@ -25,11 +25,10 @@ public class GuildCreateCommand implements SubCommand {
       return;
     }
     
-    // Check if the player is already in a guild
     GuildManager guildManager = GuildModule.getInstance().getGuildManager();
     UUID playerUniqueId = player.getUniqueId();
     
-    if (guildManager.getGuildId(playerUniqueId) != null) {
+    if (guildManager.getGuildName(playerUniqueId) != null) {
       sender.sendMessage(Lang.GUILD_ALREADY_IN_GUILD.toComponentWithPrefix());
       return;
     }

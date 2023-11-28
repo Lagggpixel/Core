@@ -5,25 +5,24 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
 
-public class GuildCreateEvent extends GuildEvents {
-  private boolean cancelled;
+public class GuildDisbandEvent extends GuildEvents {
   
-  public GuildCreateEvent(Player player, Guild guild) {
+  public GuildDisbandEvent(Player player, Guild guild) {
     super(player, guild);
   }
   
   @Override
   public boolean isCancelled() {
-    return cancelled;
+    return false;
   }
   
   @Override
   public void setCancelled(boolean b) {
-    cancelled = b;
+  
   }
   
   @Override
   public @NotNull HandlerList getHandlers() {
-    return handlerList;
+    return null;
   }
 }

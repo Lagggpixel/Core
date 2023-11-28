@@ -4,6 +4,7 @@ import io.papermc.paper.event.player.AsyncChatEvent;
 import me.lagggpixel.core.Main;
 import me.lagggpixel.core.modules.discord.managers.DiscordManager;
 import me.lagggpixel.core.modules.guilds.events.GuildCreateEvent;
+import me.lagggpixel.core.modules.guilds.events.GuildDisbandEvent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -49,6 +50,11 @@ public class Listeners implements Listener {
   
   @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
   public void GuildCreateEvent(@NotNull GuildCreateEvent event) {
-    discordManager.sendEmbed(discordManager.MESSAGING_CHANNEL, discordManager.createGuildCreatedEmbed(event));
+    discordManager.sendEmbed(discordManager.LOGGING_CHANNEL, discordManager.createGuildCreatedEmbed(event));
+  }
+  
+  @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
+  public void GuildCreateEvent(@NotNull GuildDisbandEvent event) {
+    discordManager.sendEmbed(discordManager.LOGGING_CHANNEL, discordManager.createGuildDisbandEmbed(event));
   }
 }

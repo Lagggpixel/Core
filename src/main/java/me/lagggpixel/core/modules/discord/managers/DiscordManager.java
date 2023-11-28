@@ -4,6 +4,7 @@ import io.papermc.paper.event.player.AsyncChatEvent;
 import lombok.Getter;
 import me.clip.placeholderapi.PlaceholderAPI;
 import me.lagggpixel.core.modules.guilds.events.GuildCreateEvent;
+import me.lagggpixel.core.modules.guilds.events.GuildDisbandEvent;
 import me.lagggpixel.core.utils.ChatUtils;
 import me.lagggpixel.core.utils.HookUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -72,6 +73,7 @@ public class DiscordManager {
     textChannel.sendMessageEmbeds(embed).queue();
   }
   
+  // <editor-fold defaultstate="collapsed" desc="Join/Quit embeds">
   public @NotNull MessageEmbed createJoinMessageEmbed(@NotNull PlayerJoinEvent event) {
     
     Player player = event.getPlayer();
@@ -95,19 +97,9 @@ public class DiscordManager {
         .setColor(Color.RED)
         .build();
   }
+  // </editor-fold>
   
-  public @NotNull MessageEmbed createDeathMessageEmbed(@NotNull PlayerDeathEvent event) {
-    
-    Player player = event.getPlayer();
-    String message = ChatUtils.componentToString(event.deathMessage());
-    
-    return new EmbedBuilder()
-        .setAuthor(message, null, getAvatarUrl(player))
-        .setTimestamp(java.time.Instant.now())
-        .setColor(Color.MAGENTA)
-        .build();
-  }
-  
+  // <editor-fold defaultstate="collapsed" desc="Chat embed handling">
   public @NotNull MessageEmbed createChatEmbed(@NotNull AsyncChatEvent event) {
     
     Player player = event.getPlayer();
@@ -119,7 +111,23 @@ public class DiscordManager {
         .setColor(Color.YELLOW)
         .build();
   }
+  // </editor-fold>
   
+  // <editor-fold defaultstate="collapsed" desc="Death embed handling">
+  public @NotNull MessageEmbed createDeathMessageEmbed(@NotNull PlayerDeathEvent event) {
+    
+    Player player = event.getPlayer();
+    String message = ChatUtils.componentToString(event.deathMessage());
+    
+    return new EmbedBuilder()
+        .setAuthor(message, null, getAvatarUrl(player))
+        .setTimestamp(java.time.Instant.now())
+        .setColor(Color.MAGENTA)
+        .build();
+  }
+  // </editor-fold>
+  
+  // <editor-fold defaultstate="collapsed" desc="Guilds embed handling">
   public @NotNull MessageEmbed createGuildCreatedEmbed(@NotNull GuildCreateEvent event) {
     
     Player player = event.getPlayer();
@@ -128,10 +136,24 @@ public class DiscordManager {
         .setAuthor(player.getName(), null, getAvatarUrl(player))
         .setDescription("Guild '" + event.getGuild().getName() + "' created successfully by " + player.getName())
         .setTimestamp(java.time.Instant.now())
-        .setColor(Color.GREEN)
+        .setColor(Color.BLUE)
         .build();
   }
   
+  public @NotNull MessageEmbed createGuildDisbandEmbed(@NotNull GuildDisbandEvent event) {
+    
+    Player player = event.getPlayer();
+    
+    return new EmbedBuilder()
+        .setAuthor(player.getName(), null, getAvatarUrl(player))
+        .setDescription("Guild '" + event.getGuild().getName() + "' disbanded successfully by " + player.getName())
+        .setTimestamp(java.time.Instant.now())
+        .setColor(Color.BLUE)
+        .build();
+  }
+  // </editor-fold>
+  
+  // <editor-fold defaultstate="collapsed" desc="Avatar URL">
   private String getAvatarUrl(String username, UUID uuid) {
     String avatarUrl = constructAvatarUrl(username, uuid, "");
     avatarUrl = replacePlaceholdersToDiscord(avatarUrl);
@@ -139,7 +161,7 @@ public class DiscordManager {
   }
   
   private String getAvatarUrl(@NotNull OfflinePlayer player) {
-    if (player.isOnline()) {
+    if (player.isOnline() && player.getPlayer() != null) {
       return getAvatarUrl(player.getPlayer());
     } else {
       String avatarUrl = constructAvatarUrl(player.getName(), player.getUniqueId(), "");
@@ -173,7 +195,9 @@ public class DiscordManager {
     
     return avatarUrl;
   }
+  // </editor-fold>
   
+  // <editor-fold defaultstate="collapsed" desc="Utils">
   private String strip(String text) {
     return stripLegacy(text);
   }
@@ -217,4 +241,5 @@ public class DiscordManager {
     }
     return input;
   }
+  // </editor-fold>
 }

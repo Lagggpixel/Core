@@ -2,9 +2,11 @@ package me.lagggpixel.core.modules.guilds.managers;
 
 import lombok.Getter;
 import me.lagggpixel.core.Main;
+import me.lagggpixel.core.data.Lang;
 import me.lagggpixel.core.modules.guilds.data.Guild;
 import me.lagggpixel.core.modules.guilds.data.loadsave.GuildGsonSerializer;
 import me.lagggpixel.core.modules.guilds.events.GuildCreateEvent;
+import me.lagggpixel.core.modules.guilds.events.GuildDisbandEvent;
 import org.bukkit.entity.Player;
 
 import java.io.File;
@@ -36,7 +38,7 @@ public class GuildManager {
   
   public Guild createGuild(String guildName, Player player) {
     Guild guild = new Guild(guildName, player.getUniqueId());
-    GuildCreateEvent event = new GuildCreateEvent(guild, player);
+    GuildCreateEvent event = new GuildCreateEvent(player, guild);
     Main.getInstance().getServer().getPluginManager().callEvent(event);
     if (event.isCancelled()) {
       return null;
@@ -66,12 +68,33 @@ public class GuildManager {
     return null;
   }
   
-  public String getGuildId(UUID playerUniqueId) {
+  public String getGuildName(UUID playerUniqueId) {
     for (Guild guild : guilds) {
       if (guild.getMembers().contains(playerUniqueId)) {
         return guild.getName();
       }
     }
     return null;
+  }
+  
+  public void disbandGuild(Player player, Guild guild) {
+    GuildDisbandEvent event = new GuildDisbandEvent(player, guild);
+    Main.getInstance().getServer().getPluginManager().callEvent(event);
+    if (event.isCancelled()) {
+      return;
+    }
+    if (guild != null) {
+      guilds.remove(guild);
+      
+      for (UUID uuid: guild.getMembers()) {
+        if (uuid.equals(guild.getLeader())) {
+          continue;
+        }
+        Player p1 = Main.getInstance().getServer().getPlayer(uuid);
+        if (p1 != null) {
+          p1.sendMessage(Lang.GUILD_DISBANDED_MEMBER.toComponentWithPrefix());
+        }
+      }
+    }
   }
 }
