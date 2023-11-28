@@ -3,7 +3,7 @@ package me.lagggpixel.core.modules.guilds.commands.subCommands;
 import me.lagggpixel.core.data.Lang;
 import me.lagggpixel.core.modules.guilds.GuildModule;
 import me.lagggpixel.core.modules.guilds.data.Guild;
-import me.lagggpixel.core.modules.guilds.managers.GuildManager;
+import me.lagggpixel.core.modules.guilds.handlers.GuildHandler;
 import me.lagggpixel.core.modules.guilds.commands.SubCommand;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -25,22 +25,22 @@ public class GuildDisbandCommand implements SubCommand {
       return;
     }
     
-    GuildManager guildManager = guildModule.getGuildManager();
+    GuildHandler guildHandler = guildModule.getGuildHandler();
     UUID playerUniqueId = sender.getUniqueId();
-    String guildName = guildManager.getGuildName(playerUniqueId);
+    String guildName = guildHandler.getGuildName(playerUniqueId);
     
     if (guildName == null) {
       commandSender.sendMessage(Lang.GUILD_NOT_IN_GUILD.toComponentWithPrefix());
       return;
     }
     
-    Guild guild = guildManager.getGuild(guildName);
+    Guild guild = guildHandler.getGuild(guildName);
     if (!guild.getLeader().equals(playerUniqueId)) {
       commandSender.sendMessage(Lang.GUILD_NOT_LEADER.toComponentWithPrefix());
       return;
     }
     
-    guildManager.disbandGuild(sender, guild);
+    guildHandler.disbandGuild(sender, guild);
     
     commandSender.sendMessage(Lang.GUILD_DISBANDED_LEADER.toComponentWithPrefix(Map.of("%guild%", guildName)));
   }

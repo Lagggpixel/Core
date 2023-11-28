@@ -3,7 +3,7 @@ package me.lagggpixel.core.modules.guilds.commands.subCommands;
 import me.lagggpixel.core.data.Lang;
 import me.lagggpixel.core.modules.guilds.GuildModule;
 import me.lagggpixel.core.modules.guilds.data.Guild;
-import me.lagggpixel.core.modules.guilds.managers.GuildManager;
+import me.lagggpixel.core.modules.guilds.handlers.GuildHandler;
 import me.lagggpixel.core.modules.guilds.commands.SubCommand;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -25,10 +25,10 @@ public class GuildCreateCommand implements SubCommand {
       return;
     }
     
-    GuildManager guildManager = GuildModule.getInstance().getGuildManager();
+    GuildHandler guildHandler = GuildModule.getInstance().getGuildHandler();
     UUID playerUniqueId = player.getUniqueId();
     
-    if (guildManager.getGuildName(playerUniqueId) != null) {
+    if (guildHandler.getGuildName(playerUniqueId) != null) {
       sender.sendMessage(Lang.GUILD_ALREADY_IN_GUILD.toComponentWithPrefix());
       return;
     }
@@ -45,7 +45,7 @@ public class GuildCreateCommand implements SubCommand {
       return;
     }
     
-    Guild newGuild = guildManager.createGuild(guildName, player);
+    Guild newGuild = guildHandler.createGuild(guildName, player);
     if (newGuild == null) {
       sender.sendMessage(Lang.GUILD_FAILED_TO_CREATE.toComponentWithPrefix());
       return;

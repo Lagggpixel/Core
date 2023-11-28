@@ -1,4 +1,4 @@
-package me.lagggpixel.core.modules.guilds.managers;
+package me.lagggpixel.core.modules.guilds.handlers;
 
 import lombok.Getter;
 import me.lagggpixel.core.Main;
@@ -8,6 +8,7 @@ import me.lagggpixel.core.modules.guilds.data.loadsave.GuildGsonSerializer;
 import me.lagggpixel.core.modules.guilds.events.GuildCreateEvent;
 import me.lagggpixel.core.modules.guilds.events.GuildDisbandEvent;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -16,9 +17,11 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Getter
-public class GuildManager {
+public class GuildHandler {
   
   private final List<Guild> guilds = new ArrayList<>();
+  
+  private BukkitRunnable autoSave;
   
   private static final String GUILD_DIRECTORY = Main.getInstance().getDataFolder() + "/data/modules/guild/guilds/";
   
@@ -49,6 +52,12 @@ public class GuildManager {
   }
   
   public void saveAllGuilds() {
+    File file = new File(GUILD_DIRECTORY);
+    if (file.isDirectory() && file.listFiles() != null) {
+      for (File guildFile : Objects.requireNonNull(file.listFiles())) {
+        guildFile.delete();
+      }
+    }
     for (Guild guild : guilds) {
       saveGuild(guild);
     }
@@ -97,4 +106,24 @@ public class GuildManager {
       }
     }
   }
+  
+  public void startAutoSave() {
+    if (!autoSave.isCancelled() || autoSave == null) {
+      if (autoSave != null) {
+        autoSave.cancel();
+      }
+      autoSave = new BukkitRunnable() {
+        @Override
+        public void run() {
+          saveAllGuilds();
+        }
+      };
+    }
+    autoSave.runTaskTimerAsynchronously(Main.getInstance(), 20L * 60 * 10, 20L * 60 * 60);
+  }
+  
+  public void stopAutoSave() {
+    autoSave.cancel();
+  }
+  
 }
