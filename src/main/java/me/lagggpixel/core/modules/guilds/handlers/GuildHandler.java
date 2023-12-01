@@ -68,7 +68,7 @@ public class GuildHandler {
     GuildGsonSerializer.saveGuild(guild, leaderFile);
   }
   
-  public Guild getGuild(String name) {
+  public Guild getGuildFromGuildName(String name) {
     for (Guild guild : guilds) {
       if (guild.getName().equalsIgnoreCase(name)) {
         return guild;
@@ -77,10 +77,20 @@ public class GuildHandler {
     return null;
   }
   
-  public String getGuildName(UUID playerUniqueId) {
+  public Guild getGuildFromPlayer(Player player) {
+    UUID uuid = player.getUniqueId();
     for (Guild guild : guilds) {
-      if (guild.getMembers().contains(playerUniqueId)) {
-        return guild.getName();
+      if (guild.isLeader(uuid) || guild.isOfficer(uuid) || guild.getMembers().contains(uuid)) {
+        return guild;
+      }
+    }
+    return null;
+  }
+  
+  public Guild getGuildFromPlayerUUID(UUID playerUniqueId) {
+    for (Guild guild : guilds) {
+      if (guild.isLeader(playerUniqueId) || guild.isOfficer(playerUniqueId) || guild.getMembers().contains(playerUniqueId)) {
+        return guild;
       }
     }
     return null;

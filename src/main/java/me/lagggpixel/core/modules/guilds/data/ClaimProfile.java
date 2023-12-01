@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 
 import java.util.UUID;
 
+@SuppressWarnings("unused")
 @Getter
 public class ClaimProfile {
   private UUID uuid;

@@ -27,14 +27,14 @@ public class GuildDisbandCommand implements SubCommand {
     
     GuildHandler guildHandler = guildModule.getGuildHandler();
     UUID playerUniqueId = sender.getUniqueId();
-    String guildName = guildHandler.getGuildName(playerUniqueId);
+    String guildName = guildHandler.getGuildFromPlayerUUID(playerUniqueId).getName();
     
     if (guildName == null) {
       commandSender.sendMessage(Lang.GUILD_NOT_IN_GUILD.toComponentWithPrefix());
       return;
     }
     
-    Guild guild = guildHandler.getGuild(guildName);
+    Guild guild = guildHandler.getGuildFromGuildName(guildName);
     if (!guild.getLeader().equals(playerUniqueId)) {
       commandSender.sendMessage(Lang.GUILD_NOT_LEADER.toComponentWithPrefix());
       return;

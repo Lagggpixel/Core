@@ -48,7 +48,7 @@ public enum Lang {
   GUILD_NOT_IN_GUILD("guild.not_in_guild", "&cYou are not in a guild!"),
   GUILD_ALREADY_EXIST("guild.already_exist", "&cA guild named '&e%guild%&c' already exists."),
   GUILD_DOES_NOT_EXIST("guild.does_not_exist", "&cThe guild '&e%guild%&c' does not exist."),
-  GUILD_NOT_LEADER("guild.disband_not_leader","Only the guild leader can disband the guild!"),
+  GUILD_NOT_LEADER("guild.disband_not_leader", "Only the guild leader can disband the guild!"),
   GUILD_CREATED("guild.created", "&aYou've successfully created a guild called '&e%guild%&a'."),
   GUILD_LIMIT_REACHED("guild.limit_reached", "&cYou cannot create more guilds."),
   GUILD_DISBANDED_LEADER("guild.disbanded.leader", "&aYou've disbanded the guild '&e%guild%&a'."),
@@ -56,6 +56,32 @@ public enum Lang {
   GUILD_NAME_INVALID("guild.invalid_name", "&cPlease create a guild with a different name. (Guild names cannot start with numbers and cannot contain special characters and have a length of 3-16 characters)"),
   GUILD_CREATED_OTHER_PLAYER("guild.admin.created_other_player", "&aYou have created a guild for %player%, named '&e%guild%&a'."),
   GUILD_DELETED_OTHER_PLAYER("guild.admin.deleted_other_player", "&aYou have deleted %player%'s guild, named '&e%guild%&a'."),
+  GUILD_NAM_EXISTS("guild.tag_exists", "&cThe guild name '&e%tag%&c' already exists."),
+  GUILD_MUST_BE_OFFICER("guild.must_be_officer", "&cYou must be an officer in the guild to do that."),
+  GUILD_MUST_BE_LEADER("guild.must_be_leader", "&cYou must be the guild leader to do that."),
+  GUILD_CLAIM_NO_INTERACT("guild.claim.no_interact", "&cYou cannot interact with anything on this claim!"),
+  GUILD_CLAIM_MESSAGES_ENTERING_ALLY("guild.claim.claim_messages.entering.ally", "&eNow entering &a%guild%&e."),
+  GUILD_CLAIM_MESSAGES_ENTERING_FRIENDLY("guild.claim.claim_messages.entering.friendly", "&eNow entering &a%guild%&e."),
+  GUILD_CLAIM_MESSAGES_ENTERING_ENEMY("guild.claim.claim_messages.entering.enemy", "&eNow entering &c%guild%&e."),
+  GUILD_CLAIM_MESSAGES_ENTERING_SYSTEM("guild.claim.claim_messages.entering.system", "&eNow Entering %S%guild%&e."),
+  GUILD_CLAIM_MESSAGES_LEAVING_ALLY("guild.claim.claim_messages.leaving.ally", "&eNow leaving &a%guild%&e."),
+  GUILD_CLAIM_MESSAGES_LEAVING_FRIENDLY("guild.claim.claim_messages.leaving.friendly", "&eNow leaving &a%guild%&e."),
+  GUILD_CLAIM_MESSAGES_LEAVING_ENEMY("guild.claim.claim_messages.leaving.enemy", "&eNow leaving &c%guild%&e."),
+  GUILD_CLAIM_MESSAGES_LEAVING_SYSTEM("guild.claim.claim_messages.leaving.system", "&eNow Leaving %S%guild%&e."),
+  GUILD_WAND_MESSAGES_CLEAR("guild.claim.wand_messages.clear", "&cRight-click the wand again to clear your selection!"),
+  GUILD_WAND_MESSAGES_CLEARED("guild.claim.wand_messages.cleared", "&aYou have successfully cleared your wand selection!"),
+  GUILD_WAND_MESSAGES_INVALID_SELECTION("guild.claim.wand_messages.invalid_selection", "&cYou do not have a valid selection!"),
+  GUILD_WAND_MESSAGES_FIRST_POINT("guild.claim.wand_messages.first_point", "&eYou have set the &afirst&e point to &7(X:&e %x% &7Z:&e %z%&7)"),
+  GUILD_WAND_MESSAGES_SECOND_POINT("guild.claim.wand_messages.second_point", "&eYou have set the &asecond&e point to &7(X:&e %x% &7Z:&e %z%&7)"),
+  GUILD_WAND_MESSAGES_OVERCLAIM("guild.claim.wand_messages.overclaim", "&cYou cannot claim over claimed faction land!"),
+  GUILD_WAND_MESSAGES_TOO_CLOSE("guild.claim.wand_messages.too_close", "&cYour claim is too close to another faction claim!"),
+  GUILD_WAND_MESSAGES_TOO_FAR("guild.claim.wand_messages.too_far", "&cYou must claim closer to previous claims!"),
+  GUILD_WAND_MESSAGES_OTHER("guild.claim.wand_messages.other", "&cYou cannot claim here!"),
+  GUILD_WAND_MESSAGES_TOO_SMALL("guild.claim.wand_messages.too_small", "&cYour claim is too small!"),
+  GUILD_WAND_MESSAGES_COST_TOO_MUCH("guild.claim.wand_messages.cost_too_much", "&eThis claim will cost &c$%amount%&e!"),
+  GUILD_WAND_MESSAGES_COST_ENOUGH("guild.claim.wand_messages.cost_enough", "&eThis claim will cost &a$%amount%&e!"),
+  GUILD_WAND_MESSAGES_INVALID_FUNDS("guild.claim.wand_messages.invalid_funds", "&cYour faction does not have enough money to purchase this claim!"),
+  GUILD_WAND_MESSAGES_BROADCAST("guild.claim.wand_messages.broadcast", "&7%player% &ehas claimed land for your faction!"),
   
   // Home Module
   HOME_ALREADY_EXIST("home.already_exist", "&cA home named '&e%home%&c' already exists."),
@@ -66,9 +92,9 @@ public enum Lang {
   HOME_NAME_INVALID("home.invalid_name", "&cPlease create a home with a different name. (Home names cannot start with numbers and cannot contain special characters)"),
   HOME_CREATED_OTHER_PLAYER("home.admin.created_other_player", "&aYou have created a home for %player%, named '&e%home%&a'."),
   HOME_DELETED_OTHER_PLAYER("home.admin.deleted_other_player", "&aYou have deleted %player%'s home, named '&e%home%&a'."),
-  TELEPORTED_TO_HOME_OTHER_PLAYER("home.admin.teleported_to_home_other_player", "&aYou have teleported to %player%'s home, named '&e%home%&a'."),
-  NO_HOMES_OTHER_PLAYER("home.admin.no_homes_other_player", "&a%player% does not have any homes."),
-
+  HOME_TELEPORTED_TO_HOME_OTHER_PLAYER("home.admin.teleported_to_home_other_player", "&aYou have teleported to %player%'s home, named '&e%home%&a'."),
+  HOME_NO_HOMES_OTHER_PLAYER("home.admin.no_homes_other_player", "&a%player% does not have any homes."),
+  
   // Inventory Module
   INVENTORY_CLEARED_SELF("inventory.cleared.self", "&aYou have cleared your inventory."),
   INVENTORY_CLEARED_OTHER("inventory.cleared.other", "&aYou have cleared %player%'s inventory."),
@@ -176,6 +202,7 @@ public enum Lang {
     
     return ChatUtils.stringToComponentCC(var1[0]);
   }
+  
   public Component toComponentWithPrefix(Map<String, String> placeholders) {
     
     String[] var1 = {Lang.LANG.getString(Lang.PREFIX.path, Lang.PREFIX.def) + LANG.getString(this.path, def)};

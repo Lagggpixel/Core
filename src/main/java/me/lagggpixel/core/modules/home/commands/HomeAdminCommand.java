@@ -193,7 +193,7 @@ public class HomeAdminCommand extends CommandClass {
     }
 
     if (targetUser.getHomes().isEmpty()) {
-      sender.sendMessage(Lang.NO_HOMES_OTHER_PLAYER.toComponentWithPrefix(Map.of(
+      sender.sendMessage(Lang.HOME_NO_HOMES_OTHER_PLAYER.toComponentWithPrefix(Map.of(
           "%player%", targetPlayer.getName()
       )));
       return;
@@ -241,7 +241,7 @@ public class HomeAdminCommand extends CommandClass {
     Home targetHome = targetUser.getHomes().get(homeName);
     homeHandler.teleportToHome(sender, targetHome);
 
-    sender.sendMessage(Lang.TELEPORTED_TO_HOME_OTHER_PLAYER.toComponentWithPrefix(Map.of(
+    sender.sendMessage(Lang.HOME_TELEPORTED_TO_HOME_OTHER_PLAYER.toComponentWithPrefix(Map.of(
         "%home%", homeName,
         "%player%", targetPlayer.getName()
     )));

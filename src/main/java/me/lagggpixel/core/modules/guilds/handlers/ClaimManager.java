@@ -1,21 +1,23 @@
-package me.lagggpixel.core.modules.guilds.managers;
-
+package me.lagggpixel.core.modules.guilds.handlers;
 
 import lombok.Getter;
 import me.lagggpixel.core.modules.guilds.data.Claim;
+import me.lagggpixel.core.modules.guilds.data.Guild;
 import me.lagggpixel.core.utils.ChatUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 public class ClaimManager {
-  @Getter
-  private static final HashSet<Claim> claims = new HashSet<>();
+  private final HashMap<UUID, Guild> claiming = new HashMap<>();
+  private final HashSet<Claim> claims = new HashSet<>();
 
   public Claim getClaimAt(Location location) {
     for (Claim claim : claims) {
