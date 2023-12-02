@@ -22,6 +22,9 @@ public class GuildHandler {
   private BukkitRunnable autoSave;
   
   private static final String GUILD_DIRECTORY = Main.getInstance().getDataFolder() + "/data/modules/guild/guilds/";
+  private final int MAX_PLAYERS = 10;
+  
+
   
   public Guild createGuild(String guildName, Player player) {
     Guild guild = new Guild(guildName, player.getUniqueId());
@@ -94,5 +97,8 @@ public class GuildHandler {
       autoSave.cancel();
     }
   }
-  
+
+  public int getMaxPlayers() {
+    return MAX_PLAYERS;
+  }
 }

@@ -12,7 +12,7 @@ public class GuildHelpCommand implements ISubCommand {
   }
   
   @Override
-  public void execute(CommandSender sender, String[] args) {
+  public void execute(CommandSender commandSender, String[] args) {
     // TODO: Implement guild help logic here
     // TODO: Provide information about available guild commands
   }

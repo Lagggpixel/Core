@@ -29,6 +29,7 @@ public class GuildCommand extends CommandClass {
     subCommands.put("kick", new GuildKickCommand(guildModule));
     subCommands.put("help", new GuildHelpCommand(guildModule));
     subCommands.put("sethome",  new GuildSetHomeCommand(guildModule));
+    subCommands.put("join", new GuildJoinCommand(guildModule));
   }
 
   
@@ -58,7 +59,7 @@ public class GuildCommand extends CommandClass {
   }
   
   @Override
-  public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
+  public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
     if (args.length == 0) {
       // TODO: Handle case where no subcommand is provided
       return true;
@@ -67,7 +68,7 @@ public class GuildCommand extends CommandClass {
     String subCommand = args[0].toLowerCase();
     
     if (subCommands.containsKey(subCommand)) {
-      subCommands.get(subCommand).execute(sender, args);
+      subCommands.get(subCommand).execute(commandSender, args);
       return true;
     } else {
       // TODO: Handle unknown subcommands

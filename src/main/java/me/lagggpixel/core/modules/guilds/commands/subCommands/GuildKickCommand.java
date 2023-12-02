@@ -12,7 +12,7 @@ public class GuildKickCommand implements ISubCommand {
   }
   
   @Override
-  public void execute(CommandSender sender, String[] args) {
+  public void execute(CommandSender commandSender, String[] args) {
     // TODO: Implement guild kick logic here
     // TODO: Make sure to check permissions and handle edge cases
   }
