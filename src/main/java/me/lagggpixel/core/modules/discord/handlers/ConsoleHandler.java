@@ -24,7 +24,8 @@ public class ConsoleHandler {
     builder.setContent(formatLoggingMessage(logEvent));
     builder.setEmbeds(Collections.emptyList());
     if (!(DiscordManager.getInstance().getJda().getStatus() == JDA.Status.SHUTDOWN
-        || DiscordManager.getInstance().getJda().getStatus() == JDA.Status.SHUTTING_DOWN)) {
+        || DiscordManager.getInstance().getJda().getStatus() == JDA.Status.SHUTTING_DOWN)
+        || DiscordManager.getInstance().getJda().getStatus() == JDA.Status.DISCONNECTED) {
       DiscordManager.getInstance().CONSOLE_CHANNEL.sendMessage(builder.build()).queue();
     }
   }

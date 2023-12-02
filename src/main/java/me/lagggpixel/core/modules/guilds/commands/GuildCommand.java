@@ -28,6 +28,7 @@ public class GuildCommand extends CommandClass {
     subCommands.put("disband", new GuildDisbandCommand(guildModule));
     subCommands.put("kick", new GuildKickCommand(guildModule));
     subCommands.put("help", new GuildHelpCommand(guildModule));
+    subCommands.put("sethome",  new GuildSetHomeCommand(guildModule));
   }
 
   

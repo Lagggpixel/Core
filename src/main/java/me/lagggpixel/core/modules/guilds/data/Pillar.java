@@ -7,7 +7,7 @@ import org.bukkit.Material;
 
 import java.util.ArrayList;
 
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "deprecation"})
 @Getter
 public class Pillar {
   private ClaimProfile profile;
@@ -78,7 +78,9 @@ public class Pillar {
     for (int i = 0; i <= getLocation().getWorld().getMaxHeight(); i++) {
       Location location = new Location(getLocation().getWorld(), x, i, z);
       if (location.getBlock().getType() == Material.AIR) {
-        this.profile.getPlayer().sendBlockChange(location, Material.AIR, (byte) 0);
+        if (profile.getPlayer() != null) {
+          this.profile.getPlayer().sendBlockChange(location, Material.AIR, (byte) 0);
+        }
       }
     }
   }

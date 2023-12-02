@@ -34,7 +34,7 @@ public class GuildDisbandCommand implements ISubCommand {
     }
     String guildName = guildHandler.getGuildFromPlayerUUID(playerUniqueId).getName();
     if (!guild.getLeader().equals(playerUniqueId)) {
-      commandSender.sendMessage(Lang.GUILD_NOT_LEADER.toComponentWithPrefix());
+      commandSender.sendMessage(Lang.GUILD_NOT_LEADER_DISBAND.toComponentWithPrefix());
       return;
     }
     

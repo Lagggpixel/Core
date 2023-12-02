@@ -7,8 +7,10 @@ import me.lagggpixel.core.modules.guilds.data.loadsave.GuildLoadSave;
 import me.lagggpixel.core.modules.guilds.handlers.ClaimManager;
 import me.lagggpixel.core.modules.guilds.handlers.GuildHandler;
 import me.lagggpixel.core.modules.guilds.handlers.PillarManager;
+import me.lagggpixel.core.modules.guilds.hooks.placeholders.GuildExpansions;
 import me.lagggpixel.core.modules.guilds.listeners.ClaimListeners;
 import me.lagggpixel.core.utils.CommandUtils;
+import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
 
 @Getter
@@ -38,6 +40,10 @@ public class GuildModule extends Module {
     pillarManager = new PillarManager();
     GuildLoadSave.load();
     guildHandler.startAutoSave();
+    // Register guild placeholders
+    if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+      new GuildExpansions().register();
+    }
   }
   
   @Override

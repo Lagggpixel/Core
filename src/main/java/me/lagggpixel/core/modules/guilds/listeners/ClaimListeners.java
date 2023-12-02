@@ -35,7 +35,6 @@ public class ClaimListeners implements Listener {
   
   private final int CLAIM_PRICE_MULTIPLER = 100;
   private final int CLAIM_MINIMUM = 5;
-  private final String WILDERNESS_NAME = "&7Wilderness";
   private final List<String> worlds = List.of("world");
   private final String ADMIN_NODE_CLAIM_INTERACTION_BYPASS = "core.guilds.claims.admin_interaction_bypass";
   private final String ADMIN_NODE_CLAIM_WORLD_BYPASS = "core.guilds.claims.admin_world_bypass";
@@ -183,7 +182,7 @@ public class ClaimListeners implements Listener {
         if (claim.isInside(e.getTo(), true) && claim.getWorld() == p.getWorld()) {
           if (profile.getLastInside() == null) {
             profile.setLastInside(claim);
-            p.sendMessage(Lang.GUILD_CLAIM_MESSAGES_LEAVING_SYSTEM.toComponentWithPrefix(Map.of("%S%guild%", WILDERNESS_NAME)));
+            p.sendMessage(Lang.GUILD_CLAIM_MESSAGES_LEAVING_SYSTEM.toComponentWithPrefix());
             sendClaimChange(p, claim.getOwner(), true);
             
             return;
@@ -201,7 +200,7 @@ public class ClaimListeners implements Listener {
             public void run() {
               if (profile.getLastInside() != null && profile.getLastInside() == claim) {
                 ClaimListeners.this.sendClaimChange(p, claim.getOwner(), false);
-                p.sendMessage(Lang.GUILD_CLAIM_MESSAGES_ENTERING_SYSTEM.toComponentWithPrefix(Map.of("%S%guild%", WILDERNESS_NAME)));
+                p.sendMessage(Lang.GUILD_CLAIM_MESSAGES_ENTERING_SYSTEM.toComponentWithPrefix());
                 profile.setLastInside(null);
               }
             }
