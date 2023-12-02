@@ -12,9 +12,18 @@ public class ChatUtils {
   public static @NotNull Component stringToComponentCC(String stringWithColorCodes) {
     return LegacyComponentSerializer.legacy('&').deserialize(stringWithColorCodes).asComponent();
   }
+
+  public static @NotNull TextComponent stringToTextComponentCC(String stringWithColorCodes) {
+    return LegacyComponentSerializer.legacy('&').deserialize(stringWithColorCodes);
+  }
   
   @Contract("_ -> new")
-  public static @NotNull TextComponent stringToComponent(String string) {
+  public static @NotNull Component stringToComponent(String string) {
+    return Component.text(string).toBuilder().build();
+  }
+
+  @Contract("_ -> new")
+  public static @NotNull TextComponent stringToTextComponent(String string) {
     return Component.text(string).toBuilder().build();
   }
   

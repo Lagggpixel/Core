@@ -62,6 +62,12 @@ public enum Lang {
   GUILD_SETHOME_ACKNOWLEDGE("guild.sethome.acknowledge", "&aYou have set your guild's home location to %x%, %y%, %z%."),
   GUILD_SETHOME_BROADCAST("guild.sethome.broadcast", "&a%player% has set their guild's home location to %x%, %y%, %z%."),
   GUILD_SETHOME_NOT_IN_CLAIM("guild.sethome.not_in_claim", "&cYou are not in your guild's claim!"),
+  GUILD_INVITE_PLAYER_ALREADY_JOINED("guild.invite.player_already_joined", "&c%player% is already in your guild!"),
+  GUILD_INVITE_PLAYER_ALREADY_INVITED("guild.invite.player_already_invited", "&c%player% is already invited to your guild!"),
+  GUILD_INVITED_PLAYER_ACKNOWLEDGE("guild.invite.invited_player.acknowledge", "&aYou have invited %player% to your guild!"),
+  GUILD_INVITED_PLAYER_BROADCAST("guild.invite.invited_player.broadcast", "&a%player% has have invited %target% to your guild!"),
+  GUILD_INVITED_PLAYER_NOTIFY("guild.invite.invited_player.notify", "&a%player% has invited you to their guild %guild%!"),
+  GUILD_INVITED_PLAYER_TOOLTIP("guild.invite.invited_player.tooltip", "&eClick to join the guild!"),
   GUILD_CLAIM_NO_INTERACT("guild.claim.no_interact", "&cYou cannot interact with anything on this claim!"),
   GUILD_CLAIM_MESSAGES_ENTERING_ALLY("guild.claim.claim_messages.entering.ally", "&eNow entering &a%guild%&e."),
   GUILD_CLAIM_MESSAGES_ENTERING_FRIENDLY("guild.claim.claim_messages.entering.friendly", "&eNow entering &a%guild%&e."),
@@ -188,7 +194,7 @@ public enum Lang {
     LANG = config;
   }
   
-  public TextComponent toComponent() {
+  public Component toComponent() {
     return ChatUtils.stringToComponent(LANG.getString(this.path, def));
   }
   
@@ -199,11 +205,7 @@ public enum Lang {
     }
     return ChatUtils.stringToComponent(LANG.getString(this.path, def));
   }
-  
-  public String toString() {
-    return LANG.getString(this.path, def);
-  }
-  
+
   public Component toComponentWithPrefix() {
     
     String[] var1 = {Lang.LANG.getString(Lang.PREFIX.path, Lang.PREFIX.def) + LANG.getString(this.path, def)};
@@ -220,7 +222,41 @@ public enum Lang {
     
     return ChatUtils.stringToComponentCC(var1[0]);
   }
-  
+
+  public TextComponent toTextComponent() {
+    return ChatUtils.stringToTextComponent(LANG.getString(this.path, def));
+  }
+
+  public TextComponent toTextComponent(Map<String, String> placeholders) {
+    String[] var1 = {LANG.getString(this.path, def)};
+    if (placeholders != null) {
+      placeholders.forEach((k, v) -> var1[0] = var1[0].replace(k, v));
+    }
+    return ChatUtils.stringToTextComponent(LANG.getString(this.path, def));
+  }
+
+  public TextComponent toTextComponentWithPrefix() {
+
+    String[] var1 = {Lang.LANG.getString(Lang.PREFIX.path, Lang.PREFIX.def) + LANG.getString(this.path, def)};
+
+    return ChatUtils.stringToTextComponentCC(var1[0]);
+  }
+
+  public TextComponent toTextComponentWithPrefix(Map<String, String> placeholders) {
+
+    String[] var1 = {Lang.LANG.getString(Lang.PREFIX.path, Lang.PREFIX.def) + LANG.getString(this.path, def)};
+    if (placeholders != null) {
+      placeholders.forEach((k, v) -> var1[0] = var1[0].replace(k, v));
+    }
+
+    return ChatUtils.stringToTextComponentCC(var1[0]);
+  }
+
+
+  public String toString() {
+    return LANG.getString(this.path, def);
+  }
+
   /**
    * Get the default value of the path.
    *
