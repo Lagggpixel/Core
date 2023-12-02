@@ -5,9 +5,12 @@ import me.lagggpixel.core.utils.ChatUtils;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 
+@SuppressWarnings("unused")
 @Getter
 public enum Lang {
   
@@ -168,8 +171,7 @@ public enum Lang {
   STAFF_GAMEMODE_OTHER_NOTIFY("staff.gamemode.other_notify", "&aYou are now in gamemode %gamemode%. Action performed by %player%.");
   
   // Warp Module
-  
-  ;
+
   
   /**
    * -- GETTER --
@@ -199,11 +201,12 @@ public enum Lang {
     LANG = config;
   }
   
-  public Component toComponent() {
+  @Contract(" -> new")
+  public @NotNull Component toComponent() {
     return ChatUtils.stringToComponent(LANG.getString(this.path, def));
   }
   
-  public Component toComponent(Map<String, String> placeholders) {
+  public @NotNull Component toComponent(Map<String, String> placeholders) {
     String[] var1 = {LANG.getString(this.path, def)};
     if (placeholders != null) {
       placeholders.forEach((k, v) -> var1[0] = var1[0].replace(k, v));
@@ -211,14 +214,14 @@ public enum Lang {
     return ChatUtils.stringToComponent(LANG.getString(this.path, def));
   }
 
-  public Component toComponentWithPrefix() {
+  public @NotNull Component toComponentWithPrefix() {
     
     String[] var1 = {Lang.LANG.getString(Lang.PREFIX.path, Lang.PREFIX.def) + LANG.getString(this.path, def)};
     
     return ChatUtils.stringToComponentCC(var1[0]);
   }
   
-  public Component toComponentWithPrefix(Map<String, String> placeholders) {
+  public @NotNull Component toComponentWithPrefix(Map<String, String> placeholders) {
     
     String[] var1 = {Lang.LANG.getString(Lang.PREFIX.path, Lang.PREFIX.def) + LANG.getString(this.path, def)};
     if (placeholders != null) {
@@ -228,11 +231,12 @@ public enum Lang {
     return ChatUtils.stringToComponentCC(var1[0]);
   }
 
-  public TextComponent toTextComponent() {
+  @Contract(" -> new")
+  public @NotNull TextComponent toTextComponent() {
     return ChatUtils.stringToTextComponent(LANG.getString(this.path, def));
   }
 
-  public TextComponent toTextComponent(Map<String, String> placeholders) {
+  public @NotNull TextComponent toTextComponent(Map<String, String> placeholders) {
     String[] var1 = {LANG.getString(this.path, def)};
     if (placeholders != null) {
       placeholders.forEach((k, v) -> var1[0] = var1[0].replace(k, v));
@@ -240,14 +244,14 @@ public enum Lang {
     return ChatUtils.stringToTextComponent(LANG.getString(this.path, def));
   }
 
-  public TextComponent toTextComponentWithPrefix() {
+  public @NotNull TextComponent toTextComponentWithPrefix() {
 
     String[] var1 = {Lang.LANG.getString(Lang.PREFIX.path, Lang.PREFIX.def) + LANG.getString(this.path, def)};
 
     return ChatUtils.stringToTextComponentCC(var1[0]);
   }
 
-  public TextComponent toTextComponentWithPrefix(Map<String, String> placeholders) {
+  public @NotNull TextComponent toTextComponentWithPrefix(Map<String, String> placeholders) {
 
     String[] var1 = {Lang.LANG.getString(Lang.PREFIX.path, Lang.PREFIX.def) + LANG.getString(this.path, def)};
     if (placeholders != null) {
