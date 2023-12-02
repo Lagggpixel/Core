@@ -14,13 +14,13 @@ public class GuildEvents extends Event implements Cancellable {
   @Getter
   protected final Guild guild;
   
-  protected HandlerList handlerList;
+  @Getter
+  protected static HandlerList handlerList = new HandlerList();
   protected boolean cancelled;
   
   public GuildEvents(Player player, Guild guild) {
     this.player = player;
     this.guild = guild;
-    handlerList = new HandlerList();
     cancelled = false;
   }
   
@@ -33,9 +33,10 @@ public class GuildEvents extends Event implements Cancellable {
   public void setCancelled(boolean b) {
     this.cancelled = b;
   }
-  
+
   @Override
   public @NotNull HandlerList getHandlers() {
     return handlerList;
   }
+
 }

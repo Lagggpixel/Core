@@ -3,6 +3,7 @@ package me.lagggpixel.core.modules.guilds;
 import lombok.Getter;
 import me.lagggpixel.core.modules.Module;
 import me.lagggpixel.core.modules.guilds.commands.GuildCommand;
+import me.lagggpixel.core.modules.guilds.data.loadsave.GuildLoadSave;
 import me.lagggpixel.core.modules.guilds.handlers.ClaimManager;
 import me.lagggpixel.core.modules.guilds.handlers.GuildHandler;
 import me.lagggpixel.core.modules.guilds.handlers.PillarManager;
@@ -33,10 +34,10 @@ public class GuildModule extends Module {
   public void onEnable() {
     INSTANCE = this;
     guildHandler = new GuildHandler();
-    guildHandler.loadAllGuilds();
-    guildHandler.startAutoSave();
     claimManager = new ClaimManager();
     pillarManager = new PillarManager();
+    GuildLoadSave.load();
+    guildHandler.startAutoSave();
   }
   
   @Override
@@ -45,7 +46,7 @@ public class GuildModule extends Module {
       this.pillarManager.removeAll();
     }
     guildHandler.stopAutoSave();
-    guildHandler.saveAllGuilds();
+    GuildLoadSave.save();
   }
   
   @Override

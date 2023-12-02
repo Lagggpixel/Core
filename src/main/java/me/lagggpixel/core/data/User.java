@@ -127,7 +127,12 @@ public class User implements ConfigurationSerializable {
       put("homes", homes);
       
       // Staff
-      put("instantPlayerData", instantPlayerData.serialize());
+      if (instantPlayerData != null) {
+        put("instantPlayerData", instantPlayerData.serialize());
+      }
+      else {
+        put("instantPlayerData", null);
+      }
       put("staffMode", staffMode);
       put("vanished", isVanished);
       put("staffChatToggled", staffChatToggled);

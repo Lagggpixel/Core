@@ -11,6 +11,7 @@ import me.lagggpixel.core.modules.bazaar.impl.CoreBazaarOffer;
 import me.lagggpixel.core.modules.chat.ChatModule;
 import me.lagggpixel.core.modules.discord.DiscordModule;
 import me.lagggpixel.core.modules.economy.EconomyModule;
+import me.lagggpixel.core.modules.guilds.GuildModule;
 import me.lagggpixel.core.modules.home.HomeModule;
 import me.lagggpixel.core.modules.home.data.Home;
 import me.lagggpixel.core.modules.inventory.InventoryModule;
@@ -56,7 +57,7 @@ public final class Main extends JavaPlugin {
   private final @NotNull Module chatModule = new ChatModule();
   private final @NotNull Module discordModule = new DiscordModule();
   private final @NotNull Module economyModule = new EconomyModule();
-  private final @NotNull Module guildModule = new HomeModule();
+  private final @NotNull Module guildModule = new GuildModule();
   private final @NotNull Module homeModule = new HomeModule();
   private final @NotNull Module inventoryModule = new InventoryModule();
   private final @NotNull Module restartModule = new RestartModule();

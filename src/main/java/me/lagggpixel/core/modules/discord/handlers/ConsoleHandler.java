@@ -1,6 +1,7 @@
 package me.lagggpixel.core.modules.discord.handlers;
 
 import me.lagggpixel.core.modules.discord.managers.DiscordManager;
+import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.utils.messages.MessageCreateBuilder;
 import net.dv8tion.jda.api.utils.messages.MessageData;
@@ -19,29 +20,13 @@ public class ConsoleHandler {
   private static MessageData messageData;
 
   public static void onLogEvent(LogEvent logEvent) {
-    /*
-    Integer currentTime = NumberConversions.floor((double) LocalDateTime.now().getMinute() / 5) * 5;
-    if (message == null || !currentTime.equals(time)) {
-      time = NumberConversions.floor((double) LocalDateTime.now().getMinute() / 5) * 5;
-      MessageCreateBuilder builder = new MessageCreateBuilder();
-      builder.setContent(formatLoggingMessage(logEvent));
-      builder.setEmbeds(Collections.emptyList());
-      messageData = builder.build();
-      DiscordManager.getInstance().CONSOLE_CHANNEL.sendMessage(builder.build()).queue((message) -> ConsoleHandler.message = message);
-      return;
-    }
-    
-    MessageEditBuilder builder = new MessageEditBuilder();
-    builder.setContent(messageData.getContent() + "\n" + formatLoggingMessage(logEvent));
-    messageData = builder.build();
-    message.editMessage(builder.build()).queue((message) -> {
-      ConsoleHandler.message = message;
-    });
-     */
     MessageCreateBuilder builder = new MessageCreateBuilder();
     builder.setContent(formatLoggingMessage(logEvent));
     builder.setEmbeds(Collections.emptyList());
-    DiscordManager.getInstance().CONSOLE_CHANNEL.sendMessage(builder.build()).queue();
+    if (!(DiscordManager.getInstance().getJda().getStatus() == JDA.Status.SHUTDOWN
+        || DiscordManager.getInstance().getJda().getStatus() == JDA.Status.SHUTTING_DOWN)) {
+      DiscordManager.getInstance().CONSOLE_CHANNEL.sendMessage(builder.build()).queue();
+    }
   }
 
   private static String stripAnsiColors(String input) {

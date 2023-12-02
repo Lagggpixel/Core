@@ -183,7 +183,7 @@ public class ClaimListeners implements Listener {
         if (claim.isInside(e.getTo(), true) && claim.getWorld() == p.getWorld()) {
           if (profile.getLastInside() == null) {
             profile.setLastInside(claim);
-            p.sendMessage(Lang.GUILD_CLAIM_MESSAGES_LEAVING_SYSTEM.toComponentWithPrefix(Map.of("%S{faction}", WILDERNESS_NAME)));
+            p.sendMessage(Lang.GUILD_CLAIM_MESSAGES_LEAVING_SYSTEM.toComponentWithPrefix(Map.of("%S%guild%", WILDERNESS_NAME)));
             sendClaimChange(p, claim.getOwner(), true);
             
             return;
@@ -201,7 +201,7 @@ public class ClaimListeners implements Listener {
             public void run() {
               if (profile.getLastInside() != null && profile.getLastInside() == claim) {
                 ClaimListeners.this.sendClaimChange(p, claim.getOwner(), false);
-                p.sendMessage(Lang.GUILD_CLAIM_MESSAGES_ENTERING_SYSTEM.toComponentWithPrefix(Map.of("%S{faction}", WILDERNESS_NAME)));
+                p.sendMessage(Lang.GUILD_CLAIM_MESSAGES_ENTERING_SYSTEM.toComponentWithPrefix(Map.of("%S%guild%", WILDERNESS_NAME)));
                 profile.setLastInside(null);
               }
             }
@@ -378,7 +378,7 @@ public class ClaimListeners implements Listener {
           this.pillarManager.getPillars().remove(pillar);
           pillar.removePillar();
         }
-        new Pillar(prof, Material.DIAMOND_BLOCK, (byte) 0, e.getClickedBlock().getLocation(), "second");
+        Pillar pillar1 = new Pillar(prof, Material.DIAMOND_BLOCK, (byte) 0, e.getClickedBlock().getLocation(), "second");
         (new BukkitRunnable() {
           public void run() {
             Pillar pillar = ClaimListeners.this.pillarManager.getPillar(prof, "second");

@@ -26,17 +26,16 @@ public class GuildCreateCommand implements SubCommand {
       sender.sendMessage(Lang.PLAYER_ONLY.toComponentWithPrefix());
       return;
     }
-    
-    
+
     UUID playerUniqueId = player.getUniqueId();
-    
-    if (guildHandler.getGuildFromPlayerUUID(playerUniqueId).getName() != null) {
-      sender.sendMessage(Lang.GUILD_ALREADY_IN_GUILD.toComponentWithPrefix());
-      return;
-    }
-    
+
     if (args.length != 2) {
       sender.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
+      return;
+    }
+
+    if (guildHandler.getGuildFromPlayerUUID(playerUniqueId) != null) {
+      sender.sendMessage(Lang.GUILD_ALREADY_IN_GUILD.toComponentWithPrefix());
       return;
     }
     

@@ -5,7 +5,9 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import me.lagggpixel.core.modules.guilds.GuildModule;
+import me.lagggpixel.core.modules.guilds.data.loadsave.GuildLoadSave;
 import me.lagggpixel.core.utils.ChatUtils;
+import me.lagggpixel.core.utils.LocationUtils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -13,6 +15,8 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -24,8 +28,13 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 public class Guild {
-  private String name;
+
+  private File file;
   private YamlConfiguration configuration;
+  @Getter
+  private YamlConfiguration config = getConfiguration();
+
+  private String name;
   private HashSet<Claim> claims;
   private Location home;
   @Getter
@@ -200,15 +209,6 @@ public class Guild {
   }
   
   /**
-   * Sets the configuration for the object.
-   *
-   * @param configuration the YAML configuration to set
-   */
-  public void setConfiguration(YamlConfiguration configuration) {
-    this.configuration = configuration;
-  }
-  
-  /**
    * Sets the claims for the object.
    *
    * @param claims the set of claims to be set
@@ -262,5 +262,62 @@ public class Guild {
       }
     }
     return false;
+  }
+
+  public void save() throws IOException {
+    if (this.deleted) {
+      return;
+    }
+
+    this.file = new File(GuildLoadSave.getFolder(), getName().toLowerCase() + ".yml");
+
+    if (!this.file.exists()) {
+      if (!this.file.createNewFile()) {
+        throw new IOException("Could not create guild file: " + this.file.getName());
+      }
+    }
+
+    ArrayList<String> mems = new ArrayList<>();
+    ArrayList<String> ofs = new ArrayList<>();
+    ArrayList<String> invs = new ArrayList<>();
+    ArrayList<String> als = new ArrayList<>();
+
+    for (UUID memsid : getMembers()) {
+      mems.add(memsid.toString());
+    }
+    for (UUID ofsid : getOfficers()) {
+      ofs.add(ofsid.toString());
+    }
+    for (Guild guild : getAllies()) {
+      als.add(guild.getName());
+    }
+    for (UUID uuid : this.invitedPlayers) {
+      invs.add(uuid.toString());
+    }
+
+    this.config = YamlConfiguration.loadConfiguration(this.file);
+    for (String string : this.config.getKeys(false)) {
+      this.config.set(string, null);
+    }
+    this.config.save(this.file);
+    this.config.set("name", getName());
+    this.config.set("leader", this.leader.toString());
+    this.config.set("officers", ofs);
+    this.config.set("members", mems);
+    this.config.set("allies", als);
+    this.config.set("invited_players", invs);
+    this.config.set("balance", this.balance);
+    for (Claim claim : getClaims()) {
+      this.config.set("claims." + claim.getId() + ".x1", claim.getX1());
+      this.config.set("claims." + claim.getId() + ".x2", claim.getX2());
+      this.config.set("claims." + claim.getId() + ".z1", claim.getZ1());
+      this.config.set("claims." + claim.getId() + ".z2", claim.getZ2());
+      this.config.set("claims." + claim.getId() + ".world", claim.getWorld().getName());
+      this.config.set("claims." + claim.getId() + ".value", claim.getValue());
+    }
+    if (getHome() != null) {
+      this.config.set("home", LocationUtils.serializeLocation(getHome()));
+    }
+    this.config.save(this.file);
   }
 }

@@ -4,16 +4,14 @@ import lombok.Getter;
 import me.lagggpixel.core.Main;
 import me.lagggpixel.core.data.Lang;
 import me.lagggpixel.core.modules.guilds.data.Guild;
-import me.lagggpixel.core.modules.guilds.data.loadsave.GuildGsonSerializer;
+import me.lagggpixel.core.modules.guilds.data.loadsave.GuildLoadSave;
 import me.lagggpixel.core.modules.guilds.events.GuildCreateEvent;
 import me.lagggpixel.core.modules.guilds.events.GuildDisbandEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 
 @Getter
@@ -25,20 +23,6 @@ public class GuildHandler {
   
   private static final String GUILD_DIRECTORY = Main.getInstance().getDataFolder() + "/data/modules/guild/guilds/";
   
-  public void loadAllGuilds() {
-    File guildDirectory = new File(GUILD_DIRECTORY);
-    if (guildDirectory.exists() && guildDirectory.isDirectory()) {
-      for (File guildFile : Objects.requireNonNull(guildDirectory.listFiles())) {
-        if (guildFile.isFile() && guildFile.getName().endsWith(".json")) {
-          Guild loadedGuild = GuildGsonSerializer.loadGuild(guildFile);
-          if (loadedGuild != null) {
-            guilds.add(loadedGuild);
-          }
-        }
-      }
-    }
-  }
-  
   public Guild createGuild(String guildName, Player player) {
     Guild guild = new Guild(guildName, player.getUniqueId());
     GuildCreateEvent event = new GuildCreateEvent(player, guild);
@@ -47,28 +31,10 @@ public class GuildHandler {
       return null;
     }
     guilds.add(guild);
-    saveGuild(guild);
     return guild;
   }
   
-  public void saveAllGuilds() {
-    File file = new File(GUILD_DIRECTORY);
-    if (file.isDirectory() && file.listFiles() != null) {
-      for (File guildFile : Objects.requireNonNull(file.listFiles())) {
-        guildFile.delete();
-      }
-    }
-    for (Guild guild : guilds) {
-      saveGuild(guild);
-    }
-  }
-  
-  private void saveGuild(Guild guild) {
-    File leaderFile = new File(GUILD_DIRECTORY + guild.getLeader() + ".json");
-    GuildGsonSerializer.saveGuild(guild, leaderFile);
-  }
-  
-  public Guild getGuildFromGuildName(String name) {
+  public Guild getGuildByName(String name) {
     for (Guild guild : guilds) {
       if (guild.getName().equalsIgnoreCase(name)) {
         return guild;
@@ -103,29 +69,20 @@ public class GuildHandler {
       return;
     }
     if (guild != null) {
-      guilds.remove(guild);
-      
-      for (UUID uuid: guild.getMembers()) {
-        if (uuid.equals(guild.getLeader())) {
-          continue;
-        }
-        Player p1 = Main.getInstance().getServer().getPlayer(uuid);
-        if (p1 != null) {
-          p1.sendMessage(Lang.GUILD_DISBANDED_MEMBER.toComponentWithPrefix());
-        }
-      }
+      guild.sendMessage(Lang.GUILD_DISBANDED_MEMBER.toComponentWithPrefix());
+      guild.delete();
     }
   }
   
   public void startAutoSave() {
-    if (!autoSave.isCancelled() || autoSave == null) {
+    if (autoSave == null || !autoSave.isCancelled()) {
       if (autoSave != null) {
         autoSave.cancel();
       }
       autoSave = new BukkitRunnable() {
         @Override
         public void run() {
-          saveAllGuilds();
+          GuildLoadSave.save();
         }
       };
     }
@@ -133,7 +90,9 @@ public class GuildHandler {
   }
   
   public void stopAutoSave() {
-    autoSave.cancel();
+    if (autoSave != null && !autoSave.isCancelled()) {
+      autoSave.cancel();
+    }
   }
   
 }

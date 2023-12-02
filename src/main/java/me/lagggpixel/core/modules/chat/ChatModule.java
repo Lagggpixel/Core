@@ -15,7 +15,7 @@ public class ChatModule extends Module {
   
   @Override
   public boolean isEnabled() {
-    return false;
+    return true;
   }
   
   @Override

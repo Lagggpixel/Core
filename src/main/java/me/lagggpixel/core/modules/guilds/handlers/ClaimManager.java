@@ -1,23 +1,25 @@
 package me.lagggpixel.core.modules.guilds.handlers;
 
 import lombok.Getter;
+import me.lagggpixel.core.Main;
 import me.lagggpixel.core.modules.guilds.data.Claim;
 import me.lagggpixel.core.modules.guilds.data.Guild;
 import me.lagggpixel.core.utils.ChatUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Getter
 public class ClaimManager {
   private final HashMap<UUID, Guild> claiming = new HashMap<>();
   private final HashSet<Claim> claims = new HashSet<>();
+  private final NamespacedKey wandNameSpacedKey = new NamespacedKey(Main.getInstance(), "claiming_wand");
+
 
   public Claim getClaimAt(Location location) {
     for (Claim claim : claims) {
@@ -43,6 +45,7 @@ public class ClaimManager {
         ChatUtils.stringToComponentCC("&aShift and left-click&7 to claim land after setting points."),
         ChatUtils.stringToComponentCC("&aRight-click the air twice&7 to clear your selection.")
     ));
+    meta.getPersistentDataContainer().set(wandNameSpacedKey, PersistentDataType.STRING, "CLAIMING_WAND");
 
     stack.setItemMeta(meta);
 
@@ -51,13 +54,11 @@ public class ClaimManager {
 
 
   public boolean isWand(ItemStack stack) {
-
-    return stack != null
-        && stack.getType() == getWand().getType() && getWand().getItemMeta() != null
-        && stack.getItemMeta() != null && stack.getItemMeta().hasDisplayName()
-        && stack.getItemMeta().displayName() == getWand().getItemMeta().displayName()
-        && stack.getItemMeta().lore() != null;
-
+    if (stack == null) {
+      return false;
+    }
+    String data = stack.getItemMeta().getPersistentDataContainer().get(wandNameSpacedKey, PersistentDataType.STRING);
+    return data != null && data.equals("CLAIMING_WAND");
   }
 
 }
