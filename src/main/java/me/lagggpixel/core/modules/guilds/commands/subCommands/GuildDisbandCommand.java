@@ -4,14 +4,14 @@ import me.lagggpixel.core.data.Lang;
 import me.lagggpixel.core.modules.guilds.GuildModule;
 import me.lagggpixel.core.modules.guilds.data.Guild;
 import me.lagggpixel.core.modules.guilds.handlers.GuildHandler;
-import me.lagggpixel.core.modules.guilds.commands.SubCommand;
+import me.lagggpixel.core.modules.guilds.commands.ISubCommand;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.Map;
 import java.util.UUID;
 
-public class GuildDisbandCommand implements SubCommand {
+public class GuildDisbandCommand implements ISubCommand {
   private final GuildModule guildModule;
   
   public GuildDisbandCommand(GuildModule guildModule) {

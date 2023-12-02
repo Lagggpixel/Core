@@ -16,7 +16,7 @@ import java.util.Map;
 public class GuildCommand extends CommandClass {
   
   private final GuildModule guildModule;
-  private final Map<String, SubCommand> subCommands;
+  private final Map<String, ISubCommand> subCommands;
   
   public GuildCommand(GuildModule guildModule) {
     this.guildModule = guildModule;

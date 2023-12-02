@@ -1,10 +1,10 @@
 package me.lagggpixel.core.modules.guilds.commands.subCommands;
 
 import me.lagggpixel.core.modules.guilds.GuildModule;
-import me.lagggpixel.core.modules.guilds.commands.SubCommand;
+import me.lagggpixel.core.modules.guilds.commands.ISubCommand;
 import org.bukkit.command.CommandSender;
 
-public class GuildKickCommand implements SubCommand {
+public class GuildKickCommand implements ISubCommand {
   private final GuildModule guildModule;
   
   public GuildKickCommand(GuildModule guildModule) {

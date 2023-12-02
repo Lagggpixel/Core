@@ -2,12 +2,12 @@ package me.lagggpixel.core.modules.guilds.commands.subCommands;
 
 import me.lagggpixel.core.data.Lang;
 import me.lagggpixel.core.modules.guilds.GuildModule;
-import me.lagggpixel.core.modules.guilds.commands.SubCommand;
+import me.lagggpixel.core.modules.guilds.commands.ISubCommand;
 import me.lagggpixel.core.modules.guilds.data.Guild;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class GuildClaimCommand implements SubCommand {
+public class GuildClaimCommand implements ISubCommand {
   private final GuildModule guildModule;
   
   public GuildClaimCommand(GuildModule guildModule) {
