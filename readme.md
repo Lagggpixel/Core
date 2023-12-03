@@ -44,9 +44,9 @@ build: change maven artifactId
 ## Modules
 - bazaar
 - chat
-- chat games
 - discord
 - economy
+- guild
 - homes
 - inventory
 - restart
@@ -76,16 +76,16 @@ Data for users are stored at `Main.getInstance.getDataFolder + "data/users"`
 **Chat Module**
 - None
 
-
-**Chatgames Module**
-- Add chatgames handling
-
-
+  
 **Discord Module**
-- Add console messages handling
+- None
 
 
 **Economy Module**
+- None
+
+
+**Guild Module**
 - None
 
 
