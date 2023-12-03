@@ -1,5 +1,7 @@
 package me.lagggpixel.core.data;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -23,24 +25,50 @@ import java.util.UUID;
 @AllArgsConstructor
 public class User implements ConfigurationSerializable {
   // Player data
+  @SerializedName("PlayerUUID")
+  @Expose
   private final @NotNull UUID playerUUID;
+  @SerializedName("PlayerName")
+  @Expose
   private @NotNull String playerName;
-  private boolean afk = false;
+  private transient boolean afk = false;
   // Player stats
+  @SerializedName("EntityKills")
+  @Expose
   private final @NotNull HashMap<EntityType, Long> entityKills;
+  @SerializedName("BlocksBroken")
+  @Expose
   private final @NotNull HashMap<Material, Long> blocksBroken;
+  @SerializedName("BlocksPlaced")
+  @Expose
   private final @NotNull HashMap<Material, Long> blocksPlaced;
+  @SerializedName("ItemsCrafted")
+  @Expose
   private final @NotNull HashMap<Material, Long> itemsCrafted;
   // Discord
+  @SerializedName("DiscordID")
+  @Expose
   private @Nullable Long discordId;
   // Economy
+  @SerializedName("PlayerBalance")
+  @Expose
   private double playerBalance;
   // Homes
+  @SerializedName("Homes")
+  @Expose
   private Map<String, Home> homes;
   // Staff configurations
+  @SerializedName("InstantPlayerData")
+  @Expose
   private InstantPlayerData instantPlayerData;
+  @SerializedName("StaffMode")
+  @Expose
   private boolean staffMode;
+  @SerializedName("IsVanished")
+  @Expose
   private boolean isVanished;
+  @SerializedName("StaffChatToggled")
+  @Expose
   private boolean staffChatToggled;
   
   /**
@@ -80,6 +108,7 @@ public class User implements ConfigurationSerializable {
     this.playerUUID = UUID.fromString(String.valueOf(map.get("uuid")));
     
     // Player stats configuration
+    map.get("entityKills");
     this.entityKills = (HashMap<EntityType, Long>) map.getOrDefault("entityKills", new HashMap<>());
     this.blocksBroken = (HashMap<Material, Long>) map.getOrDefault("blocksBroken", new HashMap<>());
     this.blocksPlaced = (HashMap<Material, Long>) map.getOrDefault("blocksPlaced", new HashMap<>());
@@ -112,10 +141,10 @@ public class User implements ConfigurationSerializable {
       put("uuid", playerUUID.toString());
       
       // Player stats
-      put("entityKills", entityKills);
-      put("blocksBroken", blocksBroken);
-      put("blocksPlaced", blocksPlaced);
-      put("itemsCrafted", itemsCrafted);
+      entityKills.forEach((key, value) -> put("entityKills." + key.toString(), value));
+      blocksBroken.forEach((key, value) -> put("blocksBroken." + key.toString(), value));
+      blocksPlaced.forEach((key, value) -> put("blocksPlaced." + key.toString(), value));
+      itemsCrafted.forEach((key, value) -> put("itemsCrafted." + key.toString(), value));
       
       // Discord
       put("discordId", discordId);

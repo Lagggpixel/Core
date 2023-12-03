@@ -19,6 +19,9 @@ public class StaffModeHandler {
     player.setFoodLevel(20);
     player.setFlying(true);
     player.setAffectsSpawning(false);
+
+    player.getInventory().clear();
+    player.getInventory().setArmorContents(null);
   }
   
   public void exitStaffMode(Player player) {
