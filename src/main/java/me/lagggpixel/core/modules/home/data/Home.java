@@ -1,11 +1,23 @@
 package me.lagggpixel.core.modules.home.data;
 
+import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
+import com.google.gson.TypeAdapterFactory;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 import lombok.Data;
 import lombok.Getter;
+import me.lagggpixel.core.utils.LocationUtils;
 import org.bukkit.Location;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -13,7 +25,12 @@ import java.util.Objects;
 @Data
 @Getter
 public final class Home implements ConfigurationSerializable {
+  @SerializedName("Name")
+  @Expose
   private final String name;
+  @SerializedName("Location")
+  @Expose
+  @JsonAdapter(Home.LocationTypeAdapterFactory.class)
   private final Location location;
   
   /**
@@ -67,5 +84,31 @@ public final class Home implements ConfigurationSerializable {
       put("name", name);
       put("location", location);
     }};
+  }
+
+  public static class LocationTypeAdapter extends TypeAdapter<Location> {
+
+    @Override
+    public void write(JsonWriter out, Location value) throws IOException {
+      out.value(LocationUtils.serializeLocation(value));
+    }
+
+    @Override
+    public Location read(JsonReader in) throws IOException {
+      String locationString = in.nextString();
+      return LocationUtils.deserializeLocation(locationString);
+    }
+  }
+
+  public static class LocationTypeAdapterFactory implements TypeAdapterFactory {
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+      if (type.getRawType() == ItemStack[].class) {
+        return (TypeAdapter<T>) new Home.LocationTypeAdapter();
+      }
+      return null;
+    }
   }
 }

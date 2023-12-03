@@ -1,7 +1,14 @@
 package me.lagggpixel.core.modules.staff.data;
 
+import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
+import com.google.gson.TypeAdapterFactory;
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 import lombok.*;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -19,7 +26,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Data
@@ -57,9 +63,11 @@ public class InstantPlayerData implements ConfigurationSerializable {
 
   @SerializedName("Inventory")
   @Expose
+  @JsonAdapter(InstantPlayerData.ItemStackArrayTypeAdapterFactory.class)
   ItemStack[] inventory;
   @SerializedName("Armour")
   @Expose
+  @JsonAdapter(InstantPlayerData.ItemStackArrayTypeAdapterFactory.class)
   ItemStack[] armour;
 
   public InstantPlayerData(Player player) {
@@ -78,7 +86,44 @@ public class InstantPlayerData implements ConfigurationSerializable {
     this.armour = player.getInventory().getArmorContents();
   }
 
-  // Add a static method for deserialization
+  public void restorePlayerData(Player player) {
+    player.setHealth(health);
+    player.setFoodLevel(foodLevel);
+    player.setSaturation(saturation);
+
+    player.setGameMode(gameMode);
+    player.setFlying(isFlying);
+    player.setSleepingIgnored(isSleepingIgnored);
+    player.setAffectsSpawning(affectsSpawning);
+
+    player.setTotalExperience(totalExperience);
+
+    player.getInventory().setArmorContents(armour);
+    player.getInventory().setContents(inventory);
+
+    player.getInventory().setArmorContents(armour);
+    player.getInventory().setContents(inventory);
+  }
+
+  @Override
+  public @NotNull Map<String, Object> serialize() {
+    Map<String, Object> data = new HashMap<>();
+
+    data.put("health", health);
+    data.put("foodLevel", foodLevel);
+    data.put("saturation", saturation);
+    data.put("gameMode", gameMode.toString());
+    data.put("isFlying", isFlying);
+    data.put("affectsSpawning", affectsSpawning);
+    data.put("isSleepingIgnored", isSleepingIgnored);
+    data.put("totalExperience", totalExperience);
+
+    data.put("inventory", itemStackArrayToBase64(inventory));
+    data.put("armour", itemStackArrayToBase64(armour));
+
+    return data;
+  }
+
   @SneakyThrows
   @NotNull
   public static InstantPlayerData deserialize(Map<String, Object> map) {
@@ -95,24 +140,10 @@ public class InstantPlayerData implements ConfigurationSerializable {
     instantPlayerData.isSleepingIgnored = Boolean.parseBoolean(String.valueOf(map.get("isSleepingIgnored")));
     instantPlayerData.totalExperience = Integer.parseInt(String.valueOf(map.get("totalExperience")));
 
-    instantPlayerData.inventory = itemStackArrayFromBase64((String) map.get("playerInventory"));
-    instantPlayerData.armour = itemStackArrayFromBase64((String) map.get("playerArmour"));
+    instantPlayerData.inventory = itemStackArrayFromBase64(String.valueOf(map.get("playerInventory")));
+    instantPlayerData.armour = itemStackArrayFromBase64(String.valueOf(map.get("playerArmour")));
 
     return instantPlayerData;
-  }
-
-  private static ItemStack[] deserializeItemStackArray(List<Map<String, Object>> serializedArray) {
-    ItemStack[] itemStacks = new ItemStack[serializedArray.size()];
-
-    for (int i = 0; i < serializedArray.size(); i++) {
-      if (serializedArray.get(i) != null) {
-        itemStacks[i] = ItemStack.deserialize(serializedArray.get(i));
-      } else {
-        itemStacks[i] = null;
-      }
-    }
-
-    return itemStacks;
   }
 
   /**
@@ -236,41 +267,30 @@ public class InstantPlayerData implements ConfigurationSerializable {
     }
   }
 
-  public void restorePlayerData(Player player) {
-    player.setHealth(health);
-    player.setFoodLevel(foodLevel);
-    player.setSaturation(saturation);
+  public static class ItemStackArrayTypeAdapter extends TypeAdapter<ItemStack[]> {
 
-    player.setGameMode(gameMode);
-    player.setFlying(isFlying);
-    player.setSleepingIgnored(isSleepingIgnored);
-    player.setAffectsSpawning(affectsSpawning);
+    @Override
+    public void write(JsonWriter out, ItemStack[] value) throws IOException {
+      out.value(InstantPlayerData.itemStackArrayToBase64(value));
+    }
 
-    player.setTotalExperience(totalExperience);
-
-    player.getInventory().setArmorContents(armour);
-    player.getInventory().setContents(inventory);
-
-    player.getInventory().setArmorContents(armour);
-    player.getInventory().setContents(inventory);
+    @Override
+    public ItemStack[] read(JsonReader in) throws IOException {
+      String base64String = in.nextString();
+      return InstantPlayerData.itemStackArrayFromBase64(base64String);
+    }
   }
 
-  @Override
-  public @NotNull Map<String, Object> serialize() {
-    Map<String, Object> data = new HashMap<>();
+  public static class ItemStackArrayTypeAdapterFactory implements TypeAdapterFactory {
 
-    data.put("health", health);
-    data.put("foodLevel", foodLevel);
-    data.put("saturation", saturation);
-    data.put("gameMode", gameMode.toString());
-    data.put("isFlying", isFlying);
-    data.put("affectsSpawning", affectsSpawning);
-    data.put("isSleepingIgnored", isSleepingIgnored);
-    data.put("totalExperience", totalExperience);
-
-    data.put("inventory", itemStackArrayToBase64(inventory));
-    data.put("armour", itemStackArrayToBase64(armour));
-
-    return data;
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+      if (type.getRawType() == ItemStack[].class) {
+        return (TypeAdapter<T>) new ItemStackArrayTypeAdapter();
+      }
+      return null;
+    }
   }
+
 }

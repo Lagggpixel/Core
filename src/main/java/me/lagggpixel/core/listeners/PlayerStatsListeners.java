@@ -4,14 +4,12 @@ import me.lagggpixel.core.Main;
 import me.lagggpixel.core.data.User;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.inventory.CraftItemEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.jetbrains.annotations.NotNull;
 
 public class PlayerStatsListeners implements Listener {
@@ -51,33 +49,16 @@ public class PlayerStatsListeners implements Listener {
       user.getBlocksPlaced().put(material, 1L);
     }
   }
-  
+
   @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
-  public void onItemCraft(@NotNull CraftItemEvent event) {
-    User user = Main.getUser(event.getWhoClicked().getUniqueId());
-    if (user == null) {
-      return;
-    }
-    Material material = event.getRecipe().getResult().getType();
-    int amount = event.getRecipe().getResult().getAmount();
-    
-    if (user.getItemsCrafted().containsKey(material)) {
-      user.getItemsCrafted().replace(material, user.getItemsCrafted().get(material) + amount);
-    }
-    else {
-      user.getItemsCrafted().put(material, 1L);
-    }
-  }
-  
-  @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
-  public void onEntityKill(@NotNull EntityDamageByEntityEvent event) {
-    
-    if (!(event.getDamager() instanceof Player player) || !event.getEntity().isDead()) {
+  public void onEntityKill(@NotNull EntityDeathEvent event) {
+    if ((event.getEntity().getKiller() == null) || !event.getEntity().isDead()) {
       return;
     }
     
-    User user = Main.getUser(player.getUniqueId());
+    User user = Main.getUser(event.getEntity().getKiller().getUniqueId());
     EntityType entityType = event.getEntity().getType();
+    event.getEntity().getKiller().sendMessage(user.getEntityKills().toString());
     
     if (user.getEntityKills().containsKey(entityType)) {
       user.getEntityKills().replace(entityType, user.getEntityKills().get(entityType) + 1);

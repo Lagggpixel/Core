@@ -46,7 +46,6 @@ public final class Main extends JavaPlugin {
   private static Map<UUID, User> userData;
 
   static {
-    ConfigurationSerialization.registerClass(User.class);
     ConfigurationSerialization.registerClass(InstantPlayerData.class);
     ConfigurationSerialization.registerClass(Home.class);
     ConfigurationSerialization.registerClass(CoreBazaarOffer.class);

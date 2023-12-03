@@ -150,6 +150,7 @@ public class HomeCommands extends CommandClass implements Listener {
       player.sendMessage(Lang.HOME_CREATED.toComponentWithPrefix(Map.of(
           "%home%", homeName
       )));
+      return;
     }
 
     List<Integer> perms = new ArrayList<>();

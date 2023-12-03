@@ -9,7 +9,6 @@ import lombok.Setter;
 import me.lagggpixel.core.modules.home.data.Home;
 import me.lagggpixel.core.modules.staff.data.InstantPlayerData;
 import org.bukkit.Material;
-import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -23,7 +22,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @AllArgsConstructor
-public class User implements ConfigurationSerializable {
+public class User {
   // Player data
   @SerializedName("PlayerUUID")
   @Expose
@@ -42,9 +41,6 @@ public class User implements ConfigurationSerializable {
   @SerializedName("BlocksPlaced")
   @Expose
   private final @NotNull HashMap<Material, Long> blocksPlaced;
-  @SerializedName("ItemsCrafted")
-  @Expose
-  private final @NotNull HashMap<Material, Long> itemsCrafted;
   // Discord
   @SerializedName("DiscordID")
   @Expose
@@ -85,7 +81,6 @@ public class User implements ConfigurationSerializable {
     this.entityKills = new HashMap<>();
     this.blocksBroken = new HashMap<>();
     this.blocksPlaced = new HashMap<>();
-    this.itemsCrafted = new HashMap<>();
     
     // Discord
     
@@ -102,72 +97,6 @@ public class User implements ConfigurationSerializable {
     this.staffChatToggled = false;
   }
   
-  public User(@NotNull Map<String, Object> map) {
-    // Player data configuration
-    this.playerName = String.valueOf(map.get("name"));
-    this.playerUUID = UUID.fromString(String.valueOf(map.get("uuid")));
-    
-    // Player stats configuration
-    map.get("entityKills");
-    this.entityKills = (HashMap<EntityType, Long>) map.getOrDefault("entityKills", new HashMap<>());
-    this.blocksBroken = (HashMap<Material, Long>) map.getOrDefault("blocksBroken", new HashMap<>());
-    this.blocksPlaced = (HashMap<Material, Long>) map.getOrDefault("blocksPlaced", new HashMap<>());
-    this.itemsCrafted = (HashMap<Material, Long>) map.getOrDefault("itemsCrafted", new HashMap<>());
-    
-    // Discord configuration
-    this.discordId = Long.getLong(String.valueOf(map.get("discordId")));
-    
-    // Economy configuration
-    this.playerBalance = Double.parseDouble(String.valueOf(map.getOrDefault("balance", "0.0")));
-    
-    // Homes configuration
-    // noinspection unchecked
-    this.homes = (Map<String, Home>) map.get("homes");
-    
-    // Staff configuration
-    if (map.containsKey("instantPlayerData") && map.get("instantPlayerData") != null) {
-      this.instantPlayerData = InstantPlayerData.deserialize((Map<String, Object>) map.get("instantPlayerData"));
-    }
-    this.staffMode = (boolean) map.getOrDefault("staffMode", false);
-    this.isVanished = (boolean) map.getOrDefault("vanished", false);
-    this.staffChatToggled = (boolean) map.getOrDefault("staffChatToggled", false);
-  }
-  
-  @Override
-  public @NotNull Map<String, Object> serialize() {
-    return new HashMap<>() {{
-      // Player data
-      put("name", playerName);
-      put("uuid", playerUUID.toString());
-      
-      // Player stats
-      entityKills.forEach((key, value) -> put("entityKills." + key.toString(), value));
-      blocksBroken.forEach((key, value) -> put("blocksBroken." + key.toString(), value));
-      blocksPlaced.forEach((key, value) -> put("blocksPlaced." + key.toString(), value));
-      itemsCrafted.forEach((key, value) -> put("itemsCrafted." + key.toString(), value));
-      
-      // Discord
-      put("discordId", discordId);
-      
-      // Economy
-      put("balance", playerBalance);
-      
-      // Homes
-      put("homes", homes);
-      
-      // Staff
-      if (instantPlayerData != null) {
-        put("instantPlayerData", instantPlayerData.serialize());
-      }
-      else {
-        put("instantPlayerData", null);
-      }
-      put("staffMode", staffMode);
-      put("vanished", isVanished);
-      put("staffChatToggled", staffChatToggled);
-    }};
-  }
-  
   public long getEntityKills(EntityType entityType) {
     return entityKills.getOrDefault(entityType, 0L);
   }
@@ -176,9 +105,6 @@ public class User implements ConfigurationSerializable {
   }
   public long getBlockPlaced(Material material) {
     return blocksPlaced.getOrDefault(material, 0L);
-  }
-  public long getItemCrafted(Material material) {
-    return itemsCrafted.getOrDefault(material, 0L);
   }
   
   public long getTotalEntityKills() {
@@ -198,13 +124,6 @@ public class User implements ConfigurationSerializable {
   public long getTotalBlocksPlaced() {
     long total = 0;
     for (Map.Entry<Material, Long> entry : blocksPlaced.entrySet()) {
-      total += entry.getValue();
-    }
-    return total;
-  }
-  public long getTotalItemsCrafted() {
-    long total = 0;
-    for (Map.Entry<Material, Long> entry : itemsCrafted.entrySet()) {
       total += entry.getValue();
     }
     return total;
