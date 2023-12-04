@@ -20,6 +20,8 @@ import java.util.Map;
 
 public class TeleportUtils {
   
+  public static final String TELEPORTATION_BYPASS_PERMISSION = "core.teleportation.bypass";
+  
   public static void startTeleportTask() {
     BukkitRunnable teleportRunnable = new BukkitRunnable() {
       @Override
@@ -60,6 +62,15 @@ public class TeleportUtils {
   private static final Map<Player, DelayTeleport> teleportTasks = new HashMap<>();
   
   public static void teleportWithDelay(Player player, Location location, String place_name) {
+
+    if (player.hasPermission(TELEPORTATION_BYPASS_PERMISSION)) {
+      player.teleport(location);
+      player.sendMessage(Lang.TELEPORTATION_SUCCESS.toComponentWithPrefix(Map.of(
+          "%name%", place_name
+      )));
+      return;
+    }
+
     if (!teleportTasks.containsKey(player)) teleportTasks.put(player, new DelayTeleport(player, location, place_name));
     else teleportTasks.replace(player, new DelayTeleport(player, location, place_name));
   }
