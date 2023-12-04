@@ -1,6 +1,7 @@
 package me.lagggpixel.core.modules.spawn.commands;
 
 import me.lagggpixel.core.data.CommandClass;
+import me.lagggpixel.core.data.Lang;
 import me.lagggpixel.core.modules.spawn.SpawnModule;
 import me.lagggpixel.core.modules.spawn.managers.SpawnManager;
 import me.lagggpixel.core.utils.CommandUtils;
@@ -50,14 +51,15 @@ public class SetSpawnCommand extends CommandClass {
   @Override
   public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
 
-    if (commandSender instanceof Player player) {
-      spawnManager.setSpawnLocation(player.getLocation());
-      spawnManager.saveSpawnLocation();
-
-      commandSender.sendMessage("Spawn location set successfully!");
-    } else {
-      commandSender.sendMessage("Only players can set the spawn location.");
+    if (!(commandSender instanceof Player sender)) {
+      commandSender.sendMessage(Lang.PLAYER_ONLY.toComponentWithPrefix());
+      return true;
     }
+
+    spawnManager.setSpawnLocation(sender.getLocation());
+    spawnManager.saveSpawnLocation();
+
+    commandSender.sendMessage(Lang.SPAWN_SUCCESSFULLY_SET.toComponentWithPrefix());
 
     return true;
 
