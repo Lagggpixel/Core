@@ -5,6 +5,7 @@ import me.lagggpixel.core.data.Lang;
 import me.lagggpixel.core.modules.skipnight.SkipNightModule;
 import me.lagggpixel.core.modules.skipnight.objects.SkipNightVoteType;
 import me.lagggpixel.core.modules.skipnight.objects.SkipNightVoter;
+import me.lagggpixel.core.utils.ChatUtils;
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -288,7 +289,7 @@ public class SkipNightVoteManager implements Runnable, Listener {
     
     
     if (!player.hasPermission(module.getSKIP_NIGHT_PERMISSION())) // If player doesn't have permission
-      player.sendMessage(Main.getInstance().getServer().permissionMessage());
+      player.sendMessage(ChatUtils.stringToComponentCC(ChatUtils.componentToString(Main.getInstance().getServer().permissionMessage())));
       // else if (config.getWorldBlacklist().contains(player.getWorld().getName())) // If world is blacklisted
       //     platform.player(player).sendMessage(messages.worldIsBlacklisted());
     else if (!isInOverworld(player)) // If player isn't in the overworld

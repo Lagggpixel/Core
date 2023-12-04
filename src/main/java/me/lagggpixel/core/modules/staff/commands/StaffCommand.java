@@ -51,7 +51,6 @@ public class StaffCommand extends CommandClass {
   @Override
   public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command cmd, @NotNull String label, String[] args) {
     if (!(commandSender instanceof Player sender)) {
-      // TODO - add console handling
       commandSender.sendMessage(Lang.PLAYER_ONLY.toComponentWithPrefix());
       return true;
     }

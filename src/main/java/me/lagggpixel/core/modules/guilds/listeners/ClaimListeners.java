@@ -35,7 +35,7 @@ public class ClaimListeners implements Listener {
   
   private final int CLAIM_PRICE_MULTIPLER = 100;
   private final int CLAIM_MINIMUM = 5;
-  private final List<String> worlds = List.of("world");
+  private final List<String> worlds = List.of("world", "world_nether");
   private final String ADMIN_NODE_CLAIM_INTERACTION_BYPASS = "core.guilds.claims.admin_interaction_bypass";
   private final String ADMIN_NODE_CLAIM_WORLD_BYPASS = "core.guilds.claims.admin_world_bypass";
   private final String ADMIN_NODE_CLAIM_MONEY_BYPASS = "core.guilds.claims.admin_money_bypass";

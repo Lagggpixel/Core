@@ -7,6 +7,7 @@ import me.lagggpixel.core.data.User;
 import me.lagggpixel.core.modules.Module;
 import me.lagggpixel.core.modules.home.data.Home;
 import me.lagggpixel.core.modules.home.handlers.HomeHandler;
+import me.lagggpixel.core.utils.ChatUtils;
 import me.lagggpixel.core.utils.CommandUtils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -161,7 +162,7 @@ public class HomeCommands extends CommandClass implements Listener {
       }
     }
     if (perms.isEmpty()) {
-      player.sendMessage(Main.getInstance().getServer().permissionMessage());
+      player.sendMessage(ChatUtils.stringToComponentCC(ChatUtils.componentToString(Main.getInstance().getServer().permissionMessage())));
       return;
     }
     Integer[] permArray = new Integer[perms.size()];

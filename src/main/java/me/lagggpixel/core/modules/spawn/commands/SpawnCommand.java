@@ -5,6 +5,7 @@ import me.lagggpixel.core.data.CommandClass;
 import me.lagggpixel.core.data.Lang;
 import me.lagggpixel.core.modules.spawn.SpawnModule;
 import me.lagggpixel.core.modules.spawn.managers.SpawnManager;
+import me.lagggpixel.core.utils.ChatUtils;
 import me.lagggpixel.core.utils.CommandUtils;
 import me.lagggpixel.core.utils.TeleportUtils;
 import org.bukkit.command.Command;
@@ -85,9 +86,8 @@ public class SpawnCommand extends CommandClass {
     }
 
     if (args.length == 1) {
-      // Todo - add permission
-      if (!sender.hasPermission("placeholder_permission")) {
-        sender.sendMessage(Main.getInstance().getServer().permissionMessage());
+      if (!sender.hasPermission("core.spawn.spawn.others")) {
+        sender.sendMessage(ChatUtils.stringToComponentCC(ChatUtils.componentToString(Main.getInstance().getServer().permissionMessage())));
         return true;
       }
       Player target = sender.getServer().getPlayer(args[0]);
@@ -113,7 +113,6 @@ public class SpawnCommand extends CommandClass {
   
   @Override
   public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, org.bukkit.command.@NotNull Command command, @NotNull String s, @NotNull String[] strings) {
-    // Todo - add tab completion
     return null;
   }
 }
