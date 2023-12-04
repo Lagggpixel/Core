@@ -7,7 +7,7 @@ import lombok.Setter;
 import me.lagggpixel.core.modules.guilds.GuildModule;
 import me.lagggpixel.core.modules.guilds.data.loadsave.GuildLoadSave;
 import me.lagggpixel.core.utils.ChatUtils;
-import me.lagggpixel.core.utils.LocationUtils;
+import me.lagggpixel.core.serializers.LocationSerializer;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -316,7 +316,7 @@ public class Guild {
       this.config.set("claims." + claim.getId() + ".value", claim.getValue());
     }
     if (getHome() != null) {
-      this.config.set("home", LocationUtils.serializeLocation(getHome()));
+      this.config.set("home", LocationSerializer.serializeLocation(getHome()));
     }
     this.config.save(this.file);
   }

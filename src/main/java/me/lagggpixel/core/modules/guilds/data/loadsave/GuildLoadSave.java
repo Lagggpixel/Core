@@ -5,7 +5,7 @@ import me.lagggpixel.core.Main;
 import me.lagggpixel.core.modules.guilds.GuildModule;
 import me.lagggpixel.core.modules.guilds.data.Claim;
 import me.lagggpixel.core.modules.guilds.data.Guild;
-import me.lagggpixel.core.utils.LocationUtils;
+import me.lagggpixel.core.serializers.LocationSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -93,7 +93,7 @@ public class GuildLoadSave {
 
       Location home = null;
       if (config.contains("home")) {
-        home = LocationUtils.deserializeLocation(Objects.requireNonNull(config.getString("home")));
+        home = LocationSerializer.deserializeLocation(Objects.requireNonNull(config.getString("home")));
       }
       final Guild guild = new Guild(name, leader);
       guild.setBalance(balance);

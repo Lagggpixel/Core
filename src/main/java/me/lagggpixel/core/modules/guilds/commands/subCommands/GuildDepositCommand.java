@@ -58,7 +58,7 @@ public class GuildDepositCommand implements ISubCommand {
         EconomyManager.getInstance().withdraw(sender, balance);
         return;
       }
-      sender.sendMessage(Lang.GUILD_DEPOSIT_INVALID_AMOUNT.toComponentWithPrefix());
+      sender.sendMessage(Lang.ECONOMY_INVALID_AMOUNT.toComponentWithPrefix());
 
       return;
     }
@@ -68,7 +68,7 @@ public class GuildDepositCommand implements ISubCommand {
       return;
     }
     if (EconomyManager.getInstance().getBalance(sender) < amount) {
-      sender.sendMessage(Lang.GUILD_DEPOSIT_NOT_ENOUGH_MONEY.toComponentWithPrefix());
+      sender.sendMessage(Lang.ECONOMY_NOT_ENOUGH_MONEY.toComponentWithPrefix());
       return;
     }
     EconomyManager.getInstance().withdraw(sender, amount);
