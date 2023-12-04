@@ -26,15 +26,15 @@ public class GuildWithdrawCommand implements ISubCommand {
       return;
     }
     
-    Guild faction = guildModule.getGuildHandler().getGuildFromPlayer(sender);
+    Guild guild = guildModule.getGuildHandler().getGuildFromPlayer(sender);
     
-    if (faction == null) {
+    if (guild == null) {
       sender.sendMessage(Lang.GUILD_NOT_IN_GUILD.toComponentWithPrefix());
       
       return;
     }
     
-    if (!faction.isOfficer(sender) && !faction.isLeader(sender.getUniqueId())) {
+    if (!guild.isOfficer(sender) && !guild.isLeader(sender.getUniqueId())) {
       sender.sendMessage(Lang.GUILD_MUST_BE_OFFICER.toComponentWithPrefix());
       
       return;
@@ -46,14 +46,14 @@ public class GuildWithdrawCommand implements ISubCommand {
     if (!NumberUtils.isNumber(args[0])) {
       if (args[0].equalsIgnoreCase("all")) {
         
-        if (faction.getBalance() <= 0) {
+        if (guild.getBalance() <= 0) {
           sender.sendMessage(Lang.GUILD_WITHDRAW_ECONOMY_BROKE.toComponentWithPrefix());
           return;
         }
-        sender.sendMessage(Lang.GUILD_WITHDRAW_SUCCESS_ACKNOWLEDGE.toComponentWithPrefix(Map.of("%amount%", faction.getBalance() + "")));
-        faction.sendMessage(Lang.GUILD_WITHDRAW_SUCCESS_BROADCAST.toComponentWithPrefix(Map.of("%player%", sender.getName(), "%amount%", faction.getBalance() + "")));
-        EconomyManager.getInstance().deposit(sender, faction.getBalance());
-        faction.setBalance(0);
+        sender.sendMessage(Lang.GUILD_WITHDRAW_SUCCESS_ACKNOWLEDGE.toComponentWithPrefix(Map.of("%amount%", guild.getBalance() + "")));
+        guild.sendMessage(Lang.GUILD_WITHDRAW_SUCCESS_BROADCAST.toComponentWithPrefix(Map.of("%player%", sender.getName(), "%amount%", guild.getBalance() + "")));
+        EconomyManager.getInstance().deposit(sender, guild.getBalance());
+        guild.setBalance(0);
         return;
       }
       sender.sendMessage(Lang.ECONOMY_INVALID_AMOUNT.toComponentWithPrefix());
@@ -65,15 +65,15 @@ public class GuildWithdrawCommand implements ISubCommand {
       
       return;
     }
-    if (faction.getBalance() < amount) {
+    if (guild.getBalance() < amount) {
       sender.sendMessage(Lang.GUILD_WITHDRAW_NOT_ENOUGH.toComponentWithPrefix());
       
       return;
     }
     EconomyManager.getInstance().deposit(sender, amount);
     sender.sendMessage(Lang.GUILD_WITHDRAW_SUCCESS_ACKNOWLEDGE.toComponentWithPrefix(Map.of("%amount%", amount + "")));
-    faction.sendMessage(Lang.GUILD_WITHDRAW_SUCCESS_BROADCAST.toComponentWithPrefix(Map.of("%player%", sender.getName(), "%amount%", amount + "")));
-    faction.setBalance(faction.getBalance() - amount);
+    guild.sendMessage(Lang.GUILD_WITHDRAW_SUCCESS_BROADCAST.toComponentWithPrefix(Map.of("%player%", sender.getName(), "%amount%", amount + "")));
+    guild.setBalance(guild.getBalance() - amount);
     
   }
   
