@@ -1,9 +1,15 @@
-package me.lagggpixel.core.utils;
+package me.lagggpixel.core.serializers;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
-public class LocationUtils {
+public class LocationSerializer {
+  /**
+   * Serializes a Location object into a String representation.
+   *
+   * @param  l  the Location object to be serialized
+   * @return    a String representation of the serialized Location
+   */
   public static String serializeLocation(Location l) {
     String s = "";
     s = s + "@w;" + l.getWorld().getName();
@@ -14,7 +20,13 @@ public class LocationUtils {
     s = s + ":@ya;" + l.getYaw();
     return s;
   }
-
+  
+  /**
+   * Deserialize a string representation of a Location object.
+   *
+   * @param  s  the string representation of the Location object
+   * @return    the deserialized Location object
+   */
   public static Location deserializeLocation(String s) {
     Location l = new Location(Bukkit.getWorlds().get(0), 0.0D, 0.0D, 0.0D);
     String[] att = s.split(":");

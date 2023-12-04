@@ -11,7 +11,7 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import lombok.Data;
 import lombok.Getter;
-import me.lagggpixel.core.utils.LocationUtils;
+import me.lagggpixel.core.serializers.LocationSerializer;
 import org.bukkit.Location;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.inventory.ItemStack;
@@ -90,13 +90,13 @@ public final class Home implements ConfigurationSerializable {
 
     @Override
     public void write(JsonWriter out, Location value) throws IOException {
-      out.value(LocationUtils.serializeLocation(value));
+      out.value(LocationSerializer.serializeLocation(value));
     }
 
     @Override
     public Location read(JsonReader in) throws IOException {
       String locationString = in.nextString();
-      return LocationUtils.deserializeLocation(locationString);
+      return LocationSerializer.deserializeLocation(locationString);
     }
   }
 

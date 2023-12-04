@@ -24,7 +24,7 @@ import me.lagggpixel.core.modules.staff.data.InstantPlayerData;
 import me.lagggpixel.core.modules.warp.WarpModule;
 import me.lagggpixel.core.utils.LangUtils;
 import me.lagggpixel.core.utils.TeleportUtils;
-import me.lagggpixel.core.utils.UserDataUtils;
+import me.lagggpixel.core.serializers.UserDataSerializer;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import org.apache.commons.lang3.StringUtils;
@@ -102,7 +102,7 @@ public final class Main extends JavaPlugin {
 
     LangUtils.loadLangConfig();
 
-    userData = UserDataUtils.loadData();
+    userData = UserDataSerializer.loadData();
 
     registerListeners();
 
@@ -149,7 +149,7 @@ public final class Main extends JavaPlugin {
       }
     });
     DiscordModule.discordManager.sendEmbed(DiscordModule.discordManager.LOGGING_CHANNEL, new EmbedBuilder().setTitle("**Core Plugin Disabled**").build());
-    UserDataUtils.saveData(userData);
+    UserDataSerializer.saveData(userData);
     DiscordModule.discordManager.getJda().shutdown();
   }
 

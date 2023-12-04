@@ -1,4 +1,4 @@
-package me.lagggpixel.core.utils;
+package me.lagggpixel.core.serializers;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -17,7 +17,7 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 
-public class UserDataUtils {
+public class UserDataSerializer {
 
   private final static Gson gson = new GsonBuilder()
       .setPrettyPrinting()
