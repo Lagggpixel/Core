@@ -13,7 +13,8 @@ import java.util.logging.Level;
 import java.util.stream.Stream;
 
 public class EconomyManager {
-  
+
+  private static EconomyManager INSTANCE;
   private final List<Map.Entry<UUID, Double>> balanceTop;
   
   public EconomyManager() {
@@ -181,5 +182,12 @@ public class EconomyManager {
     }
     
     return sortedMap;
+  }
+
+  public static EconomyManager getInstance() {
+    if (INSTANCE == null) {
+      INSTANCE = new EconomyManager();
+    }
+    return INSTANCE;
   }
 }

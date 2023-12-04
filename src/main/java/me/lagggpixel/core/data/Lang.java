@@ -117,6 +117,11 @@ public enum Lang {
   GUILD_MAP_DISPLAYED("guild.map.displayed", "&7%guild%&e being displayed with &6%block%&e."),
   GUILD_MAP_NO_NEARBY("guild.map.no_nearby", "&cThere are no nearby guild claims to display."),
   GUILD_MAP_HIDDEN("guild.map.hidden", "&ePillars are no longer being displayed."),
+  GUILD_DEPOSIT_NEGATIVE("guild.deposit.negative", "&cYou can't deposit a negative amount!"),
+  GUILD_DEPOSIT_INVALID_AMOUNT("guild.deposit.invalid_amount", "&cYou must specify a valid amount!"),
+  GUILD_DEPOSIT_NOT_ENOUGH_MONEY("guild.deposit.not_enough_money", "&cYou don't have enough money!"),
+  GUILD_DEPOSIT_SUCCESS_ACKNOWLEDGE("guild.deposit.success.acknowledge", "&aYou've successfully deposited &e$%amount%&a!"),
+  GUILD_DEPOSIT_SUCCESS_BROADCAST("guild.deposit.success.acknowledge", "&e%%player%% &ahas deposited &e$%amount%&a!"),
 
   // Home Module
   HOME_ALREADY_EXIST("home.already_exist", "&cA home named '&e%home%&c' already exists."),

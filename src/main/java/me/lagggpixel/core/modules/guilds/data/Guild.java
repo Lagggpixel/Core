@@ -48,7 +48,7 @@ public class Guild {
   @Getter
   private ArrayList<UUID> invitedPlayers;
   @Getter
-  private int balance;
+  private double balance;
   @Getter
   private HashSet<Guild> allies;
   @Getter
@@ -86,7 +86,7 @@ public class Guild {
     this.members = members;
   }
   
-  public void setBalance(int balance) {
+  public void setBalance(double balance) {
     this.balance = balance;
   }
   
