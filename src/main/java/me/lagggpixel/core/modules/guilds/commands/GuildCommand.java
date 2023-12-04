@@ -31,6 +31,7 @@ public class GuildCommand extends CommandClass {
     subCommands.put("sethome",  new GuildSetHomeCommand(guildModule));
     subCommands.put("join", new GuildJoinCommand(guildModule));
     subCommands.put("who", new GuildWhoCommand(guildModule));
+    subCommands.put("map", new GuildMapCommand(guildModule));
   }
 
   
