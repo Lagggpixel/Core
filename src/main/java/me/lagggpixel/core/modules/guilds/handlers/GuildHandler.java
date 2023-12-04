@@ -7,6 +7,7 @@ import me.lagggpixel.core.modules.guilds.data.Guild;
 import me.lagggpixel.core.modules.guilds.data.loadsave.GuildLoadSave;
 import me.lagggpixel.core.modules.guilds.events.GuildCreateEvent;
 import me.lagggpixel.core.modules.guilds.events.GuildDisbandEvent;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -100,5 +101,36 @@ public class GuildHandler {
 
   public int getMaxPlayers() {
     return MAX_PLAYERS;
+  }
+
+  public List<Material> getBlocks() {
+    List<Material> blocks = new ArrayList<>();
+    for (Material material : Material.values()) {
+      if (material != Material.DIAMOND_BLOCK
+          && !material.name().contains("SPAWNER")
+          && !material.name().contains("STEP")
+          && !material.name().contains("PLATE")
+          && material.isSolid()
+          && !material.name().contains("GLASS")
+          && !material.name().contains("STAIRS")
+          && !material.name().contains("FENCE")
+          && !material.name().contains("SOIL")
+          && !material.name().contains("BED")
+          && !material.name().contains("DOOR")
+          && !material.name().contains("PISTON")
+          && !material.name().contains("DETECTOR")
+          && !material.name().contains("FRAME")
+          && !material.name().contains("COMMAND")
+          && !material.name().contains("SIGN")
+          && !material.name().contains("CAKE")
+          && !material.name().contains("CACTUS")
+          && !material.name().contains("HOPPER")
+          && !material.name().contains("CHEST")
+          && !material.name().contains("LEAVES")
+          && !material.name().contains("EGG")) {
+        blocks.add(material);
+      }
+    }
+    return blocks;
   }
 }

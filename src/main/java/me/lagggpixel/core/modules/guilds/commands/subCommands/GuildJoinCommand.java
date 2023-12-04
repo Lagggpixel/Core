@@ -43,7 +43,7 @@ public class GuildJoinCommand implements ISubCommand {
     Guild guild = guildModule.getGuildHandler().getGuildByName(name);
 
     if (guild == null) {
-      sender.sendMessage(Lang.GUILD_JOIN_GUILD_NOT_FOUND.toComponentWithPrefix(Map.of("%guild%", name)));
+      sender.sendMessage(Lang.GUILD_GUILD_NOT_FOUND.toComponentWithPrefix(Map.of("%guild%", name)));
       return;
     }
 

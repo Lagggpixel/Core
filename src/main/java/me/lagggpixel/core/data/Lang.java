@@ -13,27 +13,27 @@ import java.util.Map;
 @SuppressWarnings("unused")
 @Getter
 public enum Lang {
-  
+
   PREFIX("prefix", "&#fb0000I&#f4011bn&#ec0335f&#e50450i&#de056bn&#d60685i&#cf08a0t&#c709bae &#c00ad5M&#b90bf0i&#b216fbn&#ac2bf7e&#a63ff3c&#a054efr&#9a68eba&#947de6f&#8e91e2t&#88a6dee&#82badar&#7ccfd6s &r&7» &r"),
   PLAYER_ONLY("player_only", "&cThis command is for players only."),
   INVALID_USAGE("invalid_usage", "&cInvalid usage. Type /help for more information."),
   PLAYER_NOT_FOUND("player_not_found", "&c%player% is not found."),
-  
+
   TELEPORTATION_IN_TIME("teleportation.time", "&aTeleporting in %time% seconds..."),
   TELEPORTATION_CANCELED("teleportation.canceled", "&cTeleportation canceled due to %reason%."),
   TELEPORTATION_SUCCESS("teleportation.success", "You have been teleported to %name%."),
-  
+
   // Bazaar Module
-  
+
   // Chat Module
   CHAT_STAFF_CHAT("chat.staffchat.format", "&c[Staff-Chat] &r&b%sender% &r&7» &r%message%"),
   CHAT_STAFF_CHAT_TOGGLE_ON("chat.staffchat.toggle.on", "&c[Staff-Chat] &aYou have toggled staff chat on."),
   CHAT_STAFF_CHAT_TOGGLE_OFF("chat.staffchat.toggle.off", "&c[Staff-Chat] &aYou have toggled staff chat off."),
-  
+
   // Chat-games Module
-  
+
   // Discord Module
-  
+
   // Economy Module
   ECONOMY_BALANCE_SELF("economy.balance.self", "&aYour balance is &e%balance%&a."),
   ECONOMY_BALANCE_OTHER("economy.balance.other", "&a%player%'s balance is &e%balance%&a."),
@@ -44,9 +44,10 @@ public enum Lang {
   ECONOMY_BALTOP_NO_PLAYER_FOUND("economy.baltop.no_player_found", "&cNo players found."),
   ECONOMY_BALTOP_HEADER("economy.baltop.header", "&aTop Players by Balance:"),
   ECONOMY_BALTOP_LISTING("economy.baltop.listing", "&a%position%. %player%: &e%balance%&a"),
-  
+
   // Guild module
   GUILD_FAILED_TO_CREATE("guild.failed_to_create", "&cFailed to create guild."),
+  GUILD_GUILD_NOT_FOUND("guild.not_found", "&cThe guild '&e%guild%&c' was not found."),
   GUILD_ALREADY_IN_GUILD("guild.already_in_guild", "&cYou are already in a guild!"),
   GUILD_NOT_IN_GUILD("guild.not_in_guild", "&cYou are not in a guild!"),
   GUILD_ALREADY_EXIST("guild.already_exist", "&cA guild named '&e%guild%&c' already exists."),
@@ -71,7 +72,6 @@ public enum Lang {
   GUILD_INVITED_PLAYER_BROADCAST("guild.invite.invited_player.broadcast", "&a%player% has have invited %target% to your guild!"),
   GUILD_INVITED_PLAYER_NOTIFY("guild.invite.invited_player.notify", "&a%player% has invited you to their guild %guild%!"),
   GUILD_INVITED_PLAYER_TOOLTIP("guild.invite.invited_player.tooltip", "&eClick to join the guild!"),
-  GUILD_JOIN_GUILD_NOT_FOUND("guild.join.not_found", "&cThe guild '&e%guild%&c' was not found."),
   GUILD_JOIN_TOO_MANY_PLAYERS("guild.join.too_many_players", "&cThe guild '&e%guild%&c' is full."),
   GUILD_JOIN_NOT_INVITED("guild.join.not_invited", "&cYou are not invited to the guild '&e%guild%&c'."),
   GUILD_JOIN_PLAYER_ACKNOWLEDGE("guild.join.player.acknowledge", "&aYou have joined the guild '&e%guild%&a'."),
@@ -104,6 +104,19 @@ public enum Lang {
   GUILD_PLACEHOLDER_COLOR_ALLY("guild.placeholders.color", "&6"),
   GUILD_PLACEHOLDER_SYSTEM("guild.placeholders.system", "&7Wilderness"),
   GUILD_PLACEHOLDER_NO_GUILD("guild.placeholders.no_guild", "&7None"),
+  GUILD_WHO_SEPARATOR("guild.who.separator", "&8&m-----------------------------------------------------"),
+  GUILD_WHO_GUILD_INFO("guild.who.guild_info", "&6%guild% &7[%online%/%total%] &3- &eHome: &f%home-coords%"),
+  GUILD_WHO_LEADER("guild.who.leader", "&eLeader: %leader%"),
+  GUILD_WHO_OFFICERS("guild.who.officers", "&eOfficers: %officers%"),
+  GUILD_WHO_MEMBERS("guild.who.members", "&eMembers: %members%"),
+  GUILD_WHO_BALANCE("guild.who.balance", "&eBalance: &9$%balance%"),
+  GUILD_WHO_ALLIES("guild.who.allies", "&eAllies: &d%allies%"),
+  GUILD_WHO_SPLITTER("guild.who.splitter", "&7,"),
+  GUILD_WHO_COLOR_ONLINE("guild.who.color.online", "&a"),
+  GUILD_WHO_COLOR_OFFLINE("guild.who.color.offline", "&7"),
+  GUILD_MAP_DISPLAYED("guild.map.displayed", "&7%guild%&e being displayed with &6%block%&e."),
+  GUILD_MAP_NO_NEARBY("guild.map.no_nearby", "&cThere are no nearby guild claims to display."),
+  GUILD_MAP_HIDDEN("guild.map.hidden", "&ePillars are no longer being displayed."),
 
   // Home Module
   HOME_ALREADY_EXIST("home.already_exist", "&cA home named '&e%home%&c' already exists."),
@@ -116,7 +129,7 @@ public enum Lang {
   HOME_DELETED_OTHER_PLAYER("home.admin.deleted_other_player", "&aYou have deleted %player%'s home, named '&e%home%&a'."),
   HOME_TELEPORTED_TO_HOME_OTHER_PLAYER("home.admin.teleported_to_home_other_player", "&aYou have teleported to %player%'s home, named '&e%home%&a'."),
   HOME_NO_HOMES_OTHER_PLAYER("home.admin.no_homes_other_player", "&a%player% does not have any homes."),
-  
+
   // Inventory Module
   INVENTORY_CLEARED_SELF("inventory.cleared.self", "&aYou have cleared your inventory."),
   INVENTORY_CLEARED_OTHER("inventory.cleared.other", "&aYou have cleared %player%'s inventory."),
@@ -124,13 +137,13 @@ public enum Lang {
   INVENTORY_OPENED_OTHER("inventory.opened.other", "&aYou have opened %player%'s inventory"),
   INVENTORY_CLONED_PUBLIC("inventory.cloned.public", "&cYou have cloned %player%'s inventory to your own."),
   INVENTORY_CLONED_SILENT("inventory.cloned.silent", "&cYou have silently cloned %player%'s inventory"),
-  
+
   // Restart Module
-  
+
   // Rtp Module
   RTP_NO_SAFE_LOCATION("rtp.no_safe_location", "&aNo safe location was found, please try again."),
   RTP_ATTEMPTING_TO_FIND_LOCATION("rtp.attempting_to_find_location", "&aAttempting to find a location. Attempt %num% out of %max%."),
-  
+
   // Skip-night Module
   SN_WORLD_NO_OVERWORLD("skipnight.world_not_overworld", "&cYou must be in the overworld to start a vote!"),
   SN_IN_BED_VOTED_YES("skipnight.in_bed_voted_yes", "&aYou are now in bed, automatically voting yes."),
@@ -149,13 +162,13 @@ public enum Lang {
   SN_VOTE_PASSED_BOSS_BAR("skipnight.boss_bar.vote_passed", "Vote passed!"),
   SN_VOTE_FAILED_BOSS_BAR("skipnight.boss_bar.vote_failed", "Vote failed!"),
   SN_ALL_PLAYERS_VOTED_BOSS_BAR("skipnight.boss_bar.all_players_voted", "All players have voted!"),
-  
+
   // Spawn module
   SPAWN_NAME("spawn.name", "spawn"),
   SPAWN_NO_SET_SPAWN("spawn.no_set_spawn", "&aNo spawn is set, therefore you cannot teleport to spawn."),
   SPAWN_SUCCESSFULLY_SET("spawn.successfully_set", "&aYou have successfully set the new spawn location to your current location."),
   SPAWN_TELEPORTED_OTHER("spawn.teleported_other", "&aYou have teleported %player% to spawn."),
-  
+
   // Staff Module
   STAFF_MODE_ENABLED("staff.mode.enabled", "&aStaff mode has been enabled."),
   STAFF_MODE_DISABLED("staff.mode.disabled", "&aStaff mode has been disabled."),
@@ -169,10 +182,10 @@ public enum Lang {
   STAFF_GAMEMODE_SELF("staff.gamemode.self", "&aYou are now in gamemode %gamemode%."),
   STAFF_GAMEMODE_OTHER("staff.gamemode.other", "&a%player% is now in gamemode %gamemode%."),
   STAFF_GAMEMODE_OTHER_NOTIFY("staff.gamemode.other_notify", "&aYou are now in gamemode %gamemode%. Action performed by %player%.");
-  
+
   // Warp Module
 
-  
+
   /**
    * -- GETTER --
    * Get the path to the string.
@@ -180,7 +193,7 @@ public enum Lang {
   private final String path;
   private final String def;
   public static YamlConfiguration LANG;
-  
+
   /**
    * Lang enum constructor.
    *
@@ -191,7 +204,7 @@ public enum Lang {
     this.path = path;
     this.def = start;
   }
-  
+
   /**
    * Set the {@code YamlConfiguration} to use.
    *
@@ -200,12 +213,12 @@ public enum Lang {
   public static void setFile(YamlConfiguration config) {
     LANG = config;
   }
-  
+
   @Contract(" -> new")
   public @NotNull Component toComponent() {
     return ChatUtils.stringToComponent(LANG.getString(this.path, def));
   }
-  
+
   public @NotNull Component toComponent(Map<String, String> placeholders) {
     String[] var1 = {LANG.getString(this.path, def)};
     if (placeholders != null) {
@@ -215,19 +228,19 @@ public enum Lang {
   }
 
   public @NotNull Component toComponentWithPrefix() {
-    
+
     String[] var1 = {Lang.LANG.getString(Lang.PREFIX.path, Lang.PREFIX.def) + LANG.getString(this.path, def)};
-    
+
     return ChatUtils.stringToComponentCC(var1[0]);
   }
-  
+
   public @NotNull Component toComponentWithPrefix(Map<String, String> placeholders) {
-    
+
     String[] var1 = {Lang.LANG.getString(Lang.PREFIX.path, Lang.PREFIX.def) + LANG.getString(this.path, def)};
     if (placeholders != null) {
       placeholders.forEach((k, v) -> var1[0] = var1[0].replace(k, v));
     }
-    
+
     return ChatUtils.stringToComponentCC(var1[0]);
   }
 
@@ -274,5 +287,5 @@ public enum Lang {
   public String getDefault() {
     return this.def;
   }
-  
+
 }
