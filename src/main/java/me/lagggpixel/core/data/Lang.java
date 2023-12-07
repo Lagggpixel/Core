@@ -231,7 +231,7 @@ public enum Lang {
 
   @Contract(" -> new")
   public @NotNull Component toComponent() {
-    return ChatUtils.stringToComponent(LANG.getString(this.path, def));
+    return ChatUtils.stringToComponentCC(LANG.getString(this.path, def));
   }
 
   public @NotNull Component toComponent(Map<String, String> placeholders) {
@@ -239,7 +239,7 @@ public enum Lang {
     if (placeholders != null) {
       placeholders.forEach((k, v) -> var1[0] = var1[0].replace(k, v));
     }
-    return ChatUtils.stringToComponent(LANG.getString(this.path, def));
+    return ChatUtils.stringToComponentCC(LANG.getString(this.path, def));
   }
 
   public @NotNull Component toComponentWithPrefix() {
@@ -261,7 +261,7 @@ public enum Lang {
 
   @Contract(" -> new")
   public @NotNull TextComponent toTextComponent() {
-    return ChatUtils.stringToTextComponent(LANG.getString(this.path, def));
+    return ChatUtils.stringToTextComponentCC(LANG.getString(this.path, def));
   }
 
   public @NotNull TextComponent toTextComponent(Map<String, String> placeholders) {
@@ -269,7 +269,7 @@ public enum Lang {
     if (placeholders != null) {
       placeholders.forEach((k, v) -> var1[0] = var1[0].replace(k, v));
     }
-    return ChatUtils.stringToTextComponent(LANG.getString(this.path, def));
+    return ChatUtils.stringToTextComponentCC(LANG.getString(this.path, def));
   }
 
   public @NotNull TextComponent toTextComponentWithPrefix() {

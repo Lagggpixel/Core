@@ -79,7 +79,7 @@
             <url>https://jitpack.io</url>
         </repository>
         <repository>
-            <id>placeholderapi</id>
+            <id>placeholder-api</id>
             <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
         </repository>
     </repositories>
