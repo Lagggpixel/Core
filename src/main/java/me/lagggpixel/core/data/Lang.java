@@ -132,6 +132,9 @@ public enum Lang {
   GUILD_KICK_SUCCESS_ACKNOWLEDGE("guild.kick.success.acknowledge", "&c%player% &ehas been kicked from the faction!"),
   GUILD_KICK_SUCCESS_BROADCAST("guild.kick.success.broadcast", "&c%player% &ehas been kicked from the faction!"),
   GUILD_KICK_SUCCESS_NOTIFY("guild.kick.success.notify", "&cYou were kicked from your guild!"),
+  GUILD_UNCLAIM_NOT_IN_GUILD_CLAIM("guild.unclaim.not_in_guild_claim", "&aYou are not in your guild's claim!"),
+  GUILD_UNCLAIM_SUCCESS_BROADCAST("guild.unclaim.success.broadcast", "&a%player% has unclaimed land!"),
+  GUILD_UNCLAIM_SUCCESS_NOTIFY("guild.unclaim.success.notify", "&aYou've successfully unclaimed land!"),
   
   // Home Module
   HOME_ALREADY_EXIST("home.already_exist", "&cA home named '&e%home%&c' already exists."),
