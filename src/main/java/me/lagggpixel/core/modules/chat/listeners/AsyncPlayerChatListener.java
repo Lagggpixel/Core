@@ -25,7 +25,11 @@ public class AsyncPlayerChatListener implements Listener {
       event.setCancelled(true);
       return;
     }
-    
+
+    // TODO: block report message (un-sign message)
+
+    // TODO: add pretty message printing with prefix
+
   }
   
 }
