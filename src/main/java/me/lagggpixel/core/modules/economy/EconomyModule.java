@@ -1,7 +1,7 @@
 package me.lagggpixel.core.modules.economy;
 
 import me.lagggpixel.core.Main;
-import me.lagggpixel.core.modules.Module;
+import me.lagggpixel.core.modules.IModule;
 import me.lagggpixel.core.modules.economy.commands.BalanceCommand;
 import me.lagggpixel.core.modules.economy.commands.BalanceTopCommand;
 import me.lagggpixel.core.modules.economy.commands.EconomyCommand;
@@ -12,7 +12,7 @@ import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.ServicesManager;
 import org.jetbrains.annotations.NotNull;
 
-public class EconomyModule extends Module {
+public class EconomyModule implements IModule {
   
   EconomyImpl economyImpl;
   EconomyManager economyManager;

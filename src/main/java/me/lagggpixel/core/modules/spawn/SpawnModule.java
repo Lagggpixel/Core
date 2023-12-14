@@ -1,7 +1,7 @@
 package me.lagggpixel.core.modules.spawn;
 
 import lombok.Getter;
-import me.lagggpixel.core.modules.Module;
+import me.lagggpixel.core.modules.IModule;
 import me.lagggpixel.core.modules.spawn.commands.SetSpawnCommand;
 import me.lagggpixel.core.modules.spawn.commands.SpawnCommand;
 import me.lagggpixel.core.modules.spawn.managers.SpawnManager;
@@ -9,7 +9,7 @@ import me.lagggpixel.core.utils.CommandUtils;
 import org.jetbrains.annotations.NotNull;
 
 @Getter
-public class SpawnModule extends Module {
+public class SpawnModule implements IModule {
 
   private SpawnManager spawnManager;
   

@@ -1,7 +1,7 @@
 package me.lagggpixel.core.modules.discord;
 
 import me.lagggpixel.core.Main;
-import me.lagggpixel.core.modules.Module;
+import me.lagggpixel.core.modules.IModule;
 import me.lagggpixel.core.modules.discord.handlers.CaptureAppender;
 import me.lagggpixel.core.modules.discord.listener.Listeners;
 import me.lagggpixel.core.modules.discord.managers.DiscordManager;
@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.logging.Level;
 
-public class DiscordModule extends Module {
+public class DiscordModule implements IModule {
   
   NMSManager nmsManager;
   public static DiscordManager discordManager;

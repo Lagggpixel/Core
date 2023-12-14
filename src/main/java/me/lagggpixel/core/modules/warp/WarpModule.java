@@ -1,9 +1,9 @@
 package me.lagggpixel.core.modules.warp;
 
-import me.lagggpixel.core.modules.Module;
+import me.lagggpixel.core.modules.IModule;
 import org.jetbrains.annotations.NotNull;
 
-public class WarpModule extends Module {
+public class WarpModule implements IModule {
   
   @Override
   public @NotNull String getId() {

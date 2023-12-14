@@ -1,9 +1,9 @@
 package me.lagggpixel.core.modules.skill;
 
-import me.lagggpixel.core.modules.Module;
+import me.lagggpixel.core.modules.IModule;
 import org.jetbrains.annotations.NotNull;
 
-public class SkillModule extends Module {
+public class SkillModule implements IModule {
   @NotNull
   @Override
   public String getId() {

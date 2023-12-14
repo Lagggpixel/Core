@@ -5,7 +5,7 @@ import lombok.Setter;
 import me.lagggpixel.core.data.User;
 import me.lagggpixel.core.listeners.PlayerStatsListeners;
 import me.lagggpixel.core.listeners.onPlayerJoin;
-import me.lagggpixel.core.modules.Module;
+import me.lagggpixel.core.modules.IModule;
 import me.lagggpixel.core.modules.bazaar.BazaarModule;
 import me.lagggpixel.core.modules.bazaar.impl.CoreBazaarOffer;
 import me.lagggpixel.core.modules.chat.ChatModule;
@@ -49,18 +49,18 @@ public final class Main extends JavaPlugin {
     ConfigurationSerialization.registerClass(CoreBazaarOffer.class);
   }
   
-  private final @NotNull HashMap<String, Module> modules = new HashMap<>();
-  private final @NotNull Module bazaarModule = new BazaarModule();
-  private final @NotNull Module chatModule = new ChatModule();
-  private final @NotNull Module discordModule = new DiscordModule();
-  private final @NotNull Module economyModule = new EconomyModule();
-  private final @NotNull Module guildModule = new GuildModule();
-  private final @NotNull Module homeModule = new HomeModule();
-  private final @NotNull Module skillModule = new SkillModule();
-  private final @NotNull Module skipnightModule = new SkipNightModule();
-  private final @NotNull Module spawnModule = new SpawnModule();
-  private final @NotNull Module staffModule = new StaffModule();
-  private final @NotNull Module warpModule = new WarpModule();
+  private final @NotNull HashMap<String, IModule> modules = new HashMap<>();
+  private final @NotNull IModule bazaarModule = new BazaarModule();
+  private final @NotNull IModule chatModule = new ChatModule();
+  private final @NotNull IModule discordModule = new DiscordModule();
+  private final @NotNull IModule economyModule = new EconomyModule();
+  private final @NotNull IModule guildModule = new GuildModule();
+  private final @NotNull IModule homeModule = new HomeModule();
+  private final @NotNull IModule skillModule = new SkillModule();
+  private final @NotNull IModule skipnightModule = new SkipNightModule();
+  private final @NotNull IModule spawnModule = new SpawnModule();
+  private final @NotNull IModule staffModule = new StaffModule();
+  private final @NotNull IModule warpModule = new WarpModule();
   @Setter
   @Getter
   private Logger log4jLogger;
@@ -121,14 +121,14 @@ public final class Main extends JavaPlugin {
 
     modules.forEach((k, v) -> {
       if (v.isEnabled()) {
-        log(Level.INFO, "Module " + v.getId() + " is enabled.");
+        log(Level.INFO, "IModule " + v.getId() + " is enabled.");
         startupLogEmbed.addField(new MessageEmbed.Field(StringUtils.capitalize(v.getId()) + " module", "Enabled", true));
         v.onEnable();
         v.registerCommands();
         v.registerListeners();
       } else {
         startupLogEmbed.addField(new MessageEmbed.Field(StringUtils.capitalize(v.getId()) + " module", "Disabled", true));
-        log(Level.INFO, "Module " + v.getId() + " is disabled.");
+        log(Level.INFO, "IModule " + v.getId() + " is disabled.");
       }
     });
 

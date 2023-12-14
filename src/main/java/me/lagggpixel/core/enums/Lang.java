@@ -23,18 +23,18 @@ public enum Lang {
   TELEPORTATION_CANCELED("teleportation.canceled", "&cTeleportation canceled due to %reason%."),
   TELEPORTATION_SUCCESS("teleportation.success", "You have been teleported to %name%."),
 
-  // Bazaar Module
+  // Bazaar IModule
 
-  // Chat Module
+  // Chat IModule
   CHAT_STAFF_CHAT("chat.staffchat.format", "&c[Staff-Chat] &r&b%sender% &r&7» &r%message%"),
   CHAT_STAFF_CHAT_TOGGLE_ON("chat.staffchat.toggle.on", "&c[Staff-Chat] &aYou have toggled staff chat on."),
   CHAT_STAFF_CHAT_TOGGLE_OFF("chat.staffchat.toggle.off", "&c[Staff-Chat] &aYou have toggled staff chat off."),
 
-  // Chat-games Module
+  // Chat-games IModule
 
-  // Discord Module
+  // Discord IModule
 
-  // Economy Module
+  // Economy IModule
   ECONOMY_BALANCE_SELF("economy.balance.self", "&aYour balance is &e%balance%&a."),
   ECONOMY_BALANCE_OTHER("economy.balance.other", "&a%player%'s balance is &e%balance%&a."),
   ECONOMY_INVALID_AMOUNT("economy.invalid_amount", "&cThat is not a valid amount. Please provide a valid number."),
@@ -136,7 +136,7 @@ public enum Lang {
   GUILD_UNCLAIM_SUCCESS_BROADCAST("guild.unclaim.success.broadcast", "&a%player% has unclaimed land!"),
   GUILD_UNCLAIM_SUCCESS_NOTIFY("guild.unclaim.success.notify", "&aYou've successfully unclaimed land!"),
   
-  // Home Module
+  // Home IModule
   HOME_ALREADY_EXIST("home.already_exist", "&cA home named '&e%home%&c' already exists."),
   HOME_DOES_NOT_EXIST("home.does_not_exist", "&cThe home '&e%home%&c' does not exist."),
   HOME_CREATED("home.created", "&aYou've successfully created a home called '&e%home%&a'."),
@@ -148,7 +148,7 @@ public enum Lang {
   HOME_TELEPORTED_TO_HOME_OTHER_PLAYER("home.admin.teleported_to_home_other_player", "&aYou have teleported to %player%'s home, named '&e%home%&a'."),
   HOME_NO_HOMES_OTHER_PLAYER("home.admin.no_homes_other_player", "&a%player% does not have any homes."),
 
-  // Inventory Module
+  // Inventory IModule
   INVENTORY_CLEARED_SELF("inventory.cleared.self", "&aYou have cleared your inventory."),
   INVENTORY_CLEARED_OTHER("inventory.cleared.other", "&aYou have cleared %player%'s inventory."),
   INVENTORY_OPENED_SELF("inventory.opened.self", "&aYou have opened your own inventory."),
@@ -156,13 +156,13 @@ public enum Lang {
   INVENTORY_CLONED_PUBLIC("inventory.cloned.public", "&cYou have cloned %player%'s inventory to your own."),
   INVENTORY_CLONED_SILENT("inventory.cloned.silent", "&cYou have silently cloned %player%'s inventory"),
 
-  // Restart Module
+  // Restart IModule
 
-  // Rtp Module
+  // Rtp IModule
   RTP_NO_SAFE_LOCATION("rtp.no_safe_location", "&aNo safe location was found, please try again."),
   RTP_ATTEMPTING_TO_FIND_LOCATION("rtp.attempting_to_find_location", "&aAttempting to find a location. Attempt %num% out of %max%."),
 
-  // Skip-night Module
+  // Skip-night IModule
   SN_WORLD_NO_OVERWORLD("skipnight.world_not_overworld", "&cYou must be in the overworld to start a vote!"),
   SN_IN_BED_VOTED_YES("skipnight.in_bed_voted_yes", "&aYou are now in bed, automatically voting yes."),
   SN_IN_BED_NO_VOTE_IN_PROGRESS("skipnight.in_bed_no_vote_in_progress", "&aStart a vote to skip the night?"),
@@ -187,7 +187,7 @@ public enum Lang {
   SPAWN_SUCCESSFULLY_SET("spawn.successfully_set", "&aYou have successfully set the new spawn location to your current location."),
   SPAWN_TELEPORTED_OTHER("spawn.teleported_other", "&aYou have teleported %player% to spawn."),
 
-  // Staff Module
+  // Staff IModule
   STAFF_MODE_ENABLED("staff.mode.enabled", "&aStaff mode has been enabled."),
   STAFF_MODE_DISABLED("staff.mode.disabled", "&aStaff mode has been disabled."),
   STAFF_VANISHED_SELF("staff.vanish.self.true", "&aYou are now in vanish mode."),
@@ -201,7 +201,7 @@ public enum Lang {
   STAFF_GAMEMODE_OTHER("staff.gamemode.other", "&a%player% is now in gamemode %gamemode%."),
   STAFF_GAMEMODE_OTHER_NOTIFY("staff.gamemode.other_notify", "&aYou are now in gamemode %gamemode%. Action performed by %player%.");
 
-  // Warp Module
+  // Warp IModule
 
 
   /**

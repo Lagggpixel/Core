@@ -4,7 +4,7 @@ import me.lagggpixel.core.Main;
 import me.lagggpixel.core.interfaces.ICommandClass;
 import me.lagggpixel.core.enums.Lang;
 import me.lagggpixel.core.data.User;
-import me.lagggpixel.core.modules.Module;
+import me.lagggpixel.core.modules.IModule;
 import me.lagggpixel.core.modules.home.data.Home;
 import me.lagggpixel.core.modules.home.handlers.HomeHandler;
 import me.lagggpixel.core.utils.ChatUtils;
@@ -24,10 +24,10 @@ import java.util.UUID;
 
 public class HomeCommands implements Listener, ICommandClass {
 
-  Module module;
+  IModule module;
   HomeHandler homeHandler;
 
-  public HomeCommands(Module module, HomeHandler homeHandler) {
+  public HomeCommands(IModule module, HomeHandler homeHandler) {
     this.module = module;
     this.homeHandler = homeHandler;
   }

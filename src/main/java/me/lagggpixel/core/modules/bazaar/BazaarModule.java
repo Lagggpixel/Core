@@ -2,7 +2,7 @@ package me.lagggpixel.core.modules.bazaar;
 
 import lombok.Getter;
 import me.lagggpixel.core.Main;
-import me.lagggpixel.core.modules.Module;
+import me.lagggpixel.core.modules.IModule;
 import me.lagggpixel.core.modules.bazaar.commands.BazaarCommand;
 import me.lagggpixel.core.modules.bazaar.impl.CoreBazaar;
 import me.lagggpixel.core.modules.bazaar.interfaces.Bazaar;
@@ -15,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.logging.Level;
 
-public class BazaarModule extends Module {
+public class BazaarModule implements IModule {
   
   @Getter
   private static Bazaar bazaar;

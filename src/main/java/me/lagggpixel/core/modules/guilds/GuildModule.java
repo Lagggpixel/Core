@@ -1,7 +1,7 @@
 package me.lagggpixel.core.modules.guilds;
 
 import lombok.Getter;
-import me.lagggpixel.core.modules.Module;
+import me.lagggpixel.core.modules.IModule;
 import me.lagggpixel.core.modules.guilds.commands.GuildCommand;
 import me.lagggpixel.core.modules.guilds.data.loadsave.GuildLoadSave;
 import me.lagggpixel.core.modules.guilds.handlers.ClaimManager;
@@ -14,7 +14,7 @@ import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
 
 @Getter
-public class GuildModule extends Module {
+public class GuildModule implements IModule {
   private static GuildModule INSTANCE;
   private GuildHandler guildHandler;
   private ClaimManager claimManager;

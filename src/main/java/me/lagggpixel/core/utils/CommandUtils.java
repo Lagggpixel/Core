@@ -2,7 +2,7 @@ package me.lagggpixel.core.utils;
 
 import me.lagggpixel.core.Main;
 import me.lagggpixel.core.interfaces.ICommandClass;
-import me.lagggpixel.core.modules.Module;
+import me.lagggpixel.core.modules.IModule;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.Plugin;
 
@@ -43,7 +43,7 @@ public class CommandUtils {
     }
   }
 
-  public static String generateCommandBasePermission(Module module, ICommandClass ICommandClass) {
+  public static String generateCommandBasePermission(IModule module, ICommandClass ICommandClass) {
     return "coreplugin." + module.getId() + ".command.player." + ICommandClass.getCommandName() + ".use";
   }
 }
