@@ -5,7 +5,7 @@ import lombok.Setter;
 import me.lagggpixel.core.data.User;
 import me.lagggpixel.core.listeners.PlayerStatsListeners;
 import me.lagggpixel.core.listeners.onPlayerJoin;
-import me.lagggpixel.core.modules.IModule;
+import me.lagggpixel.core.interfaces.IModule;
 import me.lagggpixel.core.modules.bazaar.BazaarModule;
 import me.lagggpixel.core.modules.bazaar.impl.CoreBazaarOffer;
 import me.lagggpixel.core.modules.chat.ChatModule;

@@ -1,7 +1,7 @@
 package me.lagggpixel.core.modules.discord;
 
 import me.lagggpixel.core.Main;
-import me.lagggpixel.core.modules.IModule;
+import me.lagggpixel.core.interfaces.IModule;
 import me.lagggpixel.core.modules.discord.handlers.CaptureAppender;
 import me.lagggpixel.core.modules.discord.listener.Listeners;
 import me.lagggpixel.core.modules.discord.managers.DiscordManager;

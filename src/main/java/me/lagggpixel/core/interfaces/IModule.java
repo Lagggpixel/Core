@@ -1,4 +1,4 @@
-package me.lagggpixel.core.modules;
+package me.lagggpixel.core.interfaces;
 
 import javax.annotation.Nonnull;
 

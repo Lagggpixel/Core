@@ -1,7 +1,7 @@
 package me.lagggpixel.core.modules.spawn;
 
 import lombok.Getter;
-import me.lagggpixel.core.modules.IModule;
+import me.lagggpixel.core.interfaces.IModule;
 import me.lagggpixel.core.modules.spawn.commands.SetSpawnCommand;
 import me.lagggpixel.core.modules.spawn.commands.SpawnCommand;
 import me.lagggpixel.core.modules.spawn.managers.SpawnManager;

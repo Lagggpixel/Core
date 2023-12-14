@@ -1,6 +1,6 @@
 package me.lagggpixel.core.modules.warp;
 
-import me.lagggpixel.core.modules.IModule;
+import me.lagggpixel.core.interfaces.IModule;
 import org.jetbrains.annotations.NotNull;
 
 public class WarpModule implements IModule {

@@ -4,7 +4,7 @@ import me.lagggpixel.core.Main;
 import me.lagggpixel.core.interfaces.ICommandClass;
 import me.lagggpixel.core.enums.Lang;
 import me.lagggpixel.core.data.User;
-import me.lagggpixel.core.modules.IModule;
+import me.lagggpixel.core.interfaces.IModule;
 import me.lagggpixel.core.modules.home.data.Home;
 import me.lagggpixel.core.modules.home.handlers.HomeHandler;
 import me.lagggpixel.core.utils.ChatUtils;

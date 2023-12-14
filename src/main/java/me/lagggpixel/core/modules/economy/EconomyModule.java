@@ -1,7 +1,7 @@
 package me.lagggpixel.core.modules.economy;
 
 import me.lagggpixel.core.Main;
-import me.lagggpixel.core.modules.IModule;
+import me.lagggpixel.core.interfaces.IModule;
 import me.lagggpixel.core.modules.economy.commands.BalanceCommand;
 import me.lagggpixel.core.modules.economy.commands.BalanceTopCommand;
 import me.lagggpixel.core.modules.economy.commands.EconomyCommand;

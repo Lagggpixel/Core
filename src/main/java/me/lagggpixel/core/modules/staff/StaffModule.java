@@ -1,6 +1,6 @@
 package me.lagggpixel.core.modules.staff;
 
-import me.lagggpixel.core.modules.IModule;
+import me.lagggpixel.core.interfaces.IModule;
 import me.lagggpixel.core.modules.staff.commands.GamemodeCommands;
 import me.lagggpixel.core.modules.staff.commands.StaffCommand;
 import me.lagggpixel.core.modules.staff.commands.VanishCommand;

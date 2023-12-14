@@ -1,7 +1,7 @@
 package me.lagggpixel.core.modules.guilds;
 
 import lombok.Getter;
-import me.lagggpixel.core.modules.IModule;
+import me.lagggpixel.core.interfaces.IModule;
 import me.lagggpixel.core.modules.guilds.commands.GuildCommand;
 import me.lagggpixel.core.modules.guilds.data.loadsave.GuildLoadSave;
 import me.lagggpixel.core.modules.guilds.handlers.ClaimManager;

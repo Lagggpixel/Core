@@ -2,7 +2,7 @@ package me.lagggpixel.core.modules.bazaar;
 
 import lombok.Getter;
 import me.lagggpixel.core.Main;
-import me.lagggpixel.core.modules.IModule;
+import me.lagggpixel.core.interfaces.IModule;
 import me.lagggpixel.core.modules.bazaar.commands.BazaarCommand;
 import me.lagggpixel.core.modules.bazaar.impl.CoreBazaar;
 import me.lagggpixel.core.modules.bazaar.interfaces.Bazaar;

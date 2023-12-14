@@ -1,6 +1,6 @@
 package me.lagggpixel.core.modules.skill;
 
-import me.lagggpixel.core.modules.IModule;
+import me.lagggpixel.core.interfaces.IModule;
 import org.jetbrains.annotations.NotNull;
 
 public class SkillModule implements IModule {

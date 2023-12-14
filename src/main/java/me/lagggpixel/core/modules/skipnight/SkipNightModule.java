@@ -1,7 +1,7 @@
 package me.lagggpixel.core.modules.skipnight;
 
 import me.lagggpixel.core.Main;
-import me.lagggpixel.core.modules.IModule;
+import me.lagggpixel.core.interfaces.IModule;
 import me.lagggpixel.core.modules.skipnight.commands.SkipNightCommand;
 import me.lagggpixel.core.modules.skipnight.managers.SkipNightVoteManager;
 import me.lagggpixel.core.utils.CommandUtils;

@@ -1,6 +1,6 @@
 package me.lagggpixel.core.modules.chat;
 
-import me.lagggpixel.core.modules.IModule;
+import me.lagggpixel.core.interfaces.IModule;
 import me.lagggpixel.core.modules.chat.commands.StaffChatCommand;
 import me.lagggpixel.core.modules.chat.listeners.AsyncPlayerChatListener;
 import me.lagggpixel.core.utils.CommandUtils;

@@ -2,7 +2,7 @@ package me.lagggpixel.core.utils;
 
 import me.lagggpixel.core.Main;
 import me.lagggpixel.core.interfaces.ICommandClass;
-import me.lagggpixel.core.modules.IModule;
+import me.lagggpixel.core.interfaces.IModule;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.Plugin;
 

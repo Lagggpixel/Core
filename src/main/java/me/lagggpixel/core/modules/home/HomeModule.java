@@ -1,6 +1,6 @@
 package me.lagggpixel.core.modules.home;
 
-import me.lagggpixel.core.modules.IModule;
+import me.lagggpixel.core.interfaces.IModule;
 import me.lagggpixel.core.modules.home.commands.HomeCommands;
 import me.lagggpixel.core.modules.home.listeners.HomeGuiListeners;
 import me.lagggpixel.core.modules.home.handlers.HomeHandler;
