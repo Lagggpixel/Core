@@ -7,9 +7,6 @@ import java.util.List;
 
 public interface Bazaar {
   
-  String ITEMS_PATH = "module_data/bazaar/items.json";
-  String FILE_NAME = "module_data/bazaar/bazaar.yml";
-  
   double BAZAAR_TAX = 1.1;
   
   class BazaarItemNotFoundException extends Exception {
