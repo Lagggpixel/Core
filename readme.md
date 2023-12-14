@@ -48,8 +48,6 @@ build: change maven artifactId
 - economy
 - guild
 - homes
-- restart
-- rtp
 - skipnight
 - spawn
 - staff
@@ -90,14 +88,6 @@ Data for users are stored at `Main.getInstance.getDataFolder + "data/users"`
 
 **Home Module**
 - None
-
-
-**Restart Module**
-- Add restart handling
-
-
-**Rtp Module**
-- Fix RtpCommand.java
 
 
 **Skipnight Module**
