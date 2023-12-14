@@ -32,11 +32,11 @@ public class CoreBazaar implements Bazaar {
   public CoreBazaar() throws BazaarIOException, BazaarItemNotFoundException {
     this.escrow = new SkyblockEscrow(this);
 
-    this.itemsFile = new File(dataFolder, Bazaar.ITEMS_PATH);
-    this.file = new File(dataFolder, Bazaar.FILE_NAME);
+    this.itemsFile = new File(dataFolder, "items.json");
+    this.file = new File(dataFolder,"bazaar.yml");
 
     if (!this.itemsFile.exists()) {
-      String resourcePath = ITEMS_PATH;
+      String resourcePath = "module_data/bazaar/items.json";
       boolean replace = false;
 
       resourcePath = resourcePath.replace('\\', '/');
@@ -68,7 +68,7 @@ public class CoreBazaar implements Bazaar {
           }
         } catch (IOException var10) {
           Main.log(Level.SEVERE, "Could not save " + outFile.getName() + " to " + outFile);
-          var10.printStackTrace();
+          throw new RuntimeException(var10);
         }
       }
     }
@@ -79,16 +79,6 @@ public class CoreBazaar implements Bazaar {
     this.config = YamlConfiguration.loadConfiguration(this.file);
 
     Pair<List<BazaarCategory>, List<BazaarSubItem>> indexed = new CoreBazaarConfigIndexer(this, this.itemsFile).index();
-//        temp: (fixed by above code line)
-//        this.rawItems.add(new SkyblockBazaarSubItem(BazaarModule.getItemHandler().getItem("ENCHANTED_PUMPKIN.json"), Rarity.UNCOMMON, 12, new ArrayList<BazaarOffer>() {{
-//            add(new SkyblockBazaarOffer(UUID.randomUUID(), 1349, 824.3));
-//        }}, new ArrayList<>()));
-//
-//        this.categories.add(new SkyblockBazaarCategory("Farming", Material.GOLD_HOE, ChatColor.YELLOW, (short) 4, new ArrayList<BazaarItem>() {{
-//            add(new SkyblockBazaarItem("Pumpkin", new ArrayList<BazaarSubItem>() {{
-//                add(rawItems.get(0));
-//            }}, 36));
-//        }}));
 
     this.categories = indexed.getFirst();
     this.rawItems = indexed.getSecond();

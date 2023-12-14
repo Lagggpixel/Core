@@ -14,7 +14,7 @@ import me.lagggpixel.core.modules.economy.EconomyModule;
 import me.lagggpixel.core.modules.guilds.GuildModule;
 import me.lagggpixel.core.modules.home.HomeModule;
 import me.lagggpixel.core.modules.home.data.Home;
-import me.lagggpixel.core.modules.skill.SkillModule;
+import me.lagggpixel.core.modules.skills.SkillsModule;
 import me.lagggpixel.core.modules.skipnight.SkipNightModule;
 import me.lagggpixel.core.modules.spawn.SpawnModule;
 import me.lagggpixel.core.modules.staff.StaffModule;
@@ -56,7 +56,7 @@ public final class Main extends JavaPlugin {
   private final @NotNull IModule economyModule = new EconomyModule();
   private final @NotNull IModule guildModule = new GuildModule();
   private final @NotNull IModule homeModule = new HomeModule();
-  private final @NotNull IModule skillModule = new SkillModule();
+  private final @NotNull IModule skillModule = new SkillsModule();
   private final @NotNull IModule skipnightModule = new SkipNightModule();
   private final @NotNull IModule spawnModule = new SpawnModule();
   private final @NotNull IModule staffModule = new StaffModule();
