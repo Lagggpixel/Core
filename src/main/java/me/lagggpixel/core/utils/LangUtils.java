@@ -11,13 +11,16 @@ import java.util.logging.Level;
 
 public class LangUtils {
   
-  @SuppressWarnings("ResultOfMethodCallIgnored")
   public static void loadLangConfig() {
     File langFile = new File(Main.getInstance().getDataFolder(), "lang.yml");
     if (!langFile.exists()) {
       try {
-        Main.getInstance().getDataFolder().mkdir();
-        langFile.createNewFile();
+        if (!Main.getInstance().getDataFolder().mkdir()) {
+          throw new RuntimeException("Could not create data folder for core-plugin.");
+        }
+        if (!langFile.createNewFile()) {
+          throw new RuntimeException("Could not create language file for core-plugin");
+        }
         InputStream defConfigStream = Main.getInstance().getResource("lang.yml");
         if (defConfigStream != null) {
           YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(langFile);

@@ -13,15 +13,14 @@ import org.jetbrains.annotations.Nullable;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.net.URLClassLoader;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.SortedSet;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+@SuppressWarnings("unused")
 public class HookUtils {
   
+  @SuppressWarnings("unchecked")
   public static void unloadPlugin(Plugin plugin) {
     String name = plugin.getName();
     PluginManager pluginManager = Bukkit.getPluginManager();
@@ -38,7 +37,7 @@ public class HookUtils {
       Field pluginsField = Bukkit.getPluginManager().getClass().getDeclaredField("plugins");
       pluginsField.setAccessible(true);
       plugins = (List<Plugin>) pluginsField.get(pluginManager);
-      
+
       Field lookupNamesField = Bukkit.getPluginManager().getClass().getDeclaredField("lookupNames");
       lookupNamesField.setAccessible(true);
       names = (Map<String, Plugin>) lookupNamesField.get(pluginManager);
@@ -63,8 +62,8 @@ public class HookUtils {
     }
     
     pluginManager.disablePlugin(plugin);
-    
-    if (plugins != null && plugins.contains(plugin))
+
+    if (plugins != null)
       plugins.remove(plugin);
     
     if (names != null)

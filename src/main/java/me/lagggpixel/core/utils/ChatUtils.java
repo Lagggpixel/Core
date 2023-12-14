@@ -7,6 +7,7 @@ import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
+@SuppressWarnings("unused")
 public class ChatUtils {
   
   public static @NotNull Component stringToComponentCC(String stringWithColorCodes) {

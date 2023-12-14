@@ -40,12 +40,11 @@ public class CommandUtils {
 
     } catch (SecurityException | InvocationTargetException | NoSuchMethodException | IllegalArgumentException |
              IllegalAccessException | InstantiationException e) {
-      e.printStackTrace();
-      return null;
+      throw new RuntimeException(e);
     }
   }
 
   public static String generateCommandBasePermission(Module module, ICommandClass ICommandClass) {
-    return "coreplugin." + module.getId() + "command.player." + ICommandClass.getCommandName() + ".use";
+    return "coreplugin." + module.getId() + ".command.player." + ICommandClass.getCommandName() + ".use";
   }
 }
