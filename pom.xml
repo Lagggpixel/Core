@@ -6,7 +6,7 @@
 
     <groupId>me.lagggpixel</groupId>
     <artifactId>core</artifactId>
-    <version>1.0.3</version>
+    <version>1.0.4</version>
     <packaging>jar</packaging>
 
     <name>Core</name>
@@ -79,7 +79,7 @@
             <url>https://jitpack.io</url>
         </repository>
         <repository>
-            <id>placeholderapi</id>
+            <id>placeholder-api</id>
             <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
         </repository>
     </repositories>

@@ -56,20 +56,20 @@ public class SkipNightCommand implements ICommandClass {
     if (args.length == 1) {
       if (args[0].equalsIgnoreCase("yes")) {
         if (!(sender instanceof Player)) {
-          getLogger().info("Vote not allowed from console.");
+          sender.sendMessage("Vote not allowed from console.");
         } else {
           this.skipNightVoteManager.addYes(((Player) sender).getUniqueId(), SkipNightVoteType.NIGHT);
         }
       } else if (args[0].equalsIgnoreCase("no")) {
         if (!(sender instanceof Player)) {
-          getLogger().info("Vote not allowed from console.");
+          sender.sendMessage("Vote not allowed from console.");
         } else {
           this.skipNightVoteManager.addNo(((Player) sender).getUniqueId(), SkipNightVoteType.NIGHT);
         }
       }
     } else {
       if (!(sender instanceof Player)) {
-        getLogger().info("Vote can't be started from console.");
+        sender.sendMessage("Vote can't be started from console.");
       } else {
         this.skipNightVoteManager.start((Player) sender, SkipNightVoteType.NIGHT);
       }

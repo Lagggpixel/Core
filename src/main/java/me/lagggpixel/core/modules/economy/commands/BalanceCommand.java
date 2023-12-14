@@ -5,6 +5,7 @@ import me.lagggpixel.core.interfaces.ICommandClass;
 import me.lagggpixel.core.enums.Lang;
 import me.lagggpixel.core.modules.economy.EconomyModule;
 import me.lagggpixel.core.modules.economy.managers.EconomyManager;
+import me.lagggpixel.core.utils.ChatUtils;
 import me.lagggpixel.core.utils.CommandUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -59,9 +60,8 @@ public class BalanceCommand implements ICommandClass {
     
     Player targetPlayer;
     if (args.length == 1) {
-      // TODO - Add permission
-      if (!sender.hasPermission("placeholder_permission")) {
-        sender.sendMessage(Main.getInstance().getServer().permissionMessage());
+      if (!sender.hasPermission("core.economy.balance.others")) {
+        sender.sendMessage(ChatUtils.stringToComponentCC(ChatUtils.componentToString(Main.getInstance().getServer().permissionMessage())));
         return true;
       }
       

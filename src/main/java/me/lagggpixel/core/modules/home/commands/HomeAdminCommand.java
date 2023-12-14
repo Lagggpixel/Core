@@ -84,9 +84,7 @@ public class HomeAdminCommand implements ICommandClass {
       commandSender.sendMessage(Lang.PLAYER_ONLY.toComponentWithPrefix());
       return;
     }
-
-    // TODO - add permission to check if the sender has the permission to create a home
-
+    
     if (args.length != 3) {
       sender.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
       return;
@@ -129,7 +127,6 @@ public class HomeAdminCommand implements ICommandClass {
 
 
   private void handleAdminDelete(CommandSender commandSender, String[] args) {
-    // TODO - add permission to check if the sender has the permission to delete a home
     if (args.length != 3) {
       commandSender.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
       return;
@@ -171,9 +168,7 @@ public class HomeAdminCommand implements ICommandClass {
       commandSender.sendMessage(Lang.PLAYER_ONLY.toComponentWithPrefix());
       return;
     }
-
-    // TODO - add permission to check if the sender has the permission to view homes
-
+    
     if (args.length != 2) {
       sender.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
       return;
@@ -208,9 +203,7 @@ public class HomeAdminCommand implements ICommandClass {
       commandSender.sendMessage(Lang.PLAYER_ONLY.toComponentWithPrefix());
       return;
     }
-
-    // TODO - add permission to check if the sender has the permission to teleport to a home
-
+    
     if (args.length != 3) {
       sender.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
       return;
