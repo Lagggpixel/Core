@@ -1,8 +1,8 @@
 package me.lagggpixel.core.modules.staff.commands;
 
 import me.lagggpixel.core.Main;
-import me.lagggpixel.core.data.CommandClass;
-import me.lagggpixel.core.data.Lang;
+import me.lagggpixel.core.interfaces.ICommandClass;
+import me.lagggpixel.core.enums.Lang;
 import me.lagggpixel.core.data.User;
 import me.lagggpixel.core.modules.staff.StaffModule;
 import me.lagggpixel.core.modules.staff.handlers.VanishHandler;
@@ -17,7 +17,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.Map;
 
-public class VanishCommand extends CommandClass {
+public class VanishCommand implements ICommandClass {
   
   private final StaffModule module;
   private final VanishHandler vanishHandler;

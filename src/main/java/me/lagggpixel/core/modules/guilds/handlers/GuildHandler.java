@@ -2,7 +2,7 @@ package me.lagggpixel.core.modules.guilds.handlers;
 
 import lombok.Getter;
 import me.lagggpixel.core.Main;
-import me.lagggpixel.core.data.Lang;
+import me.lagggpixel.core.enums.Lang;
 import me.lagggpixel.core.modules.guilds.data.Guild;
 import me.lagggpixel.core.modules.guilds.data.loadsave.GuildLoadSave;
 import me.lagggpixel.core.modules.guilds.events.GuildCreateEvent;

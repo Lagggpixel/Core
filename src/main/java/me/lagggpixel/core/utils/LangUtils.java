@@ -1,7 +1,7 @@
 package me.lagggpixel.core.utils;
 
 import me.lagggpixel.core.Main;
-import me.lagggpixel.core.data.Lang;
+import me.lagggpixel.core.enums.Lang;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;

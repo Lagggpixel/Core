@@ -1,6 +1,6 @@
 package me.lagggpixel.core.modules.rtp.managers;
 
-import me.lagggpixel.core.data.Lang;
+import me.lagggpixel.core.enums.Lang;
 import me.lagggpixel.core.utils.TeleportUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;

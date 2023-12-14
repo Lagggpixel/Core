@@ -1,8 +1,8 @@
 package me.lagggpixel.core.modules.spawn.commands;
 
 import me.lagggpixel.core.Main;
-import me.lagggpixel.core.data.CommandClass;
-import me.lagggpixel.core.data.Lang;
+import me.lagggpixel.core.interfaces.ICommandClass;
+import me.lagggpixel.core.enums.Lang;
 import me.lagggpixel.core.modules.spawn.SpawnModule;
 import me.lagggpixel.core.modules.spawn.managers.SpawnManager;
 import me.lagggpixel.core.utils.CommandUtils;
@@ -16,7 +16,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.Map;
 
-public class SpawnCommand extends CommandClass {
+public class SpawnCommand implements ICommandClass {
   
   private final SpawnModule spawnModule;
   private final SpawnManager spawnManager;

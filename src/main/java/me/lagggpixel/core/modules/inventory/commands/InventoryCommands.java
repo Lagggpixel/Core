@@ -1,8 +1,8 @@
 package me.lagggpixel.core.modules.inventory.commands;
 
 import me.lagggpixel.core.Main;
-import me.lagggpixel.core.data.CommandClass;
-import me.lagggpixel.core.data.Lang;
+import me.lagggpixel.core.interfaces.ICommandClass;
+import me.lagggpixel.core.enums.Lang;
 import me.lagggpixel.core.data.User;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -22,7 +22,7 @@ import java.util.UUID;
 // inventory clear [player] (-s) {silent}
 // inventory clone [player]
 // inventory clone [player] [target] (-s) {silent}
-public class InventoryCommands extends CommandClass {
+public class InventoryCommands implements ICommandClass {
   
   @Override
   public String getCommandName() {

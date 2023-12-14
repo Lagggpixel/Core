@@ -1,7 +1,7 @@
 package me.lagggpixel.core.utils;
 
 import me.lagggpixel.core.Main;
-import me.lagggpixel.core.data.CommandClass;
+import me.lagggpixel.core.interfaces.ICommandClass;
 import me.lagggpixel.core.modules.Module;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.Plugin;
@@ -12,17 +12,17 @@ import java.util.logging.Level;
 
 public class CommandUtils {
 
-  public static void registerCommand(CommandClass commandClass) {
-    PluginCommand command = getCommand(commandClass.getCommandName());
+  public static void registerCommand(ICommandClass ICommandClass) {
+    PluginCommand command = getCommand(ICommandClass.getCommandName());
 
     assert command != null;
-    command.setAliases(commandClass.getCommandAliases());
-    command.setPermission(commandClass.getCommandPermission());
-    command.setDescription(commandClass.getCommandDescription());
-    command.setUsage(commandClass.getUsage());
+    command.setAliases(ICommandClass.getCommandAliases());
+    command.setPermission(ICommandClass.getCommandPermission());
+    command.setDescription(ICommandClass.getCommandDescription());
+    command.setUsage(ICommandClass.getUsage());
 
-    command.setExecutor(commandClass);
-    command.setTabCompleter(commandClass);
+    command.setExecutor(ICommandClass);
+    command.setTabCompleter(ICommandClass);
 
     Main.getInstance().getServer().getCommandMap().register("minecraft", command);
     Main.log(Level.INFO, "Registered " + command.getName() + " command.");
@@ -45,7 +45,7 @@ public class CommandUtils {
     }
   }
 
-  public static String generateCommandBasePermission(Module module, CommandClass commandClass) {
-    return "coreplugin." + module.getId() + "command.player." + commandClass.getCommandName() + ".use";
+  public static String generateCommandBasePermission(Module module, ICommandClass ICommandClass) {
+    return "coreplugin." + module.getId() + "command.player." + ICommandClass.getCommandName() + ".use";
   }
 }

@@ -1,7 +1,7 @@
 package me.lagggpixel.core.modules.bazaar.commands;
 
-import me.lagggpixel.core.data.CommandClass;
-import me.lagggpixel.core.data.Lang;
+import me.lagggpixel.core.interfaces.ICommandClass;
+import me.lagggpixel.core.enums.Lang;
 import me.lagggpixel.core.modules.bazaar.BazaarModule;
 import me.lagggpixel.core.modules.bazaar.gui.BazaarCategoryBazaarGui;
 import me.lagggpixel.core.utils.ChatUtils;
@@ -15,7 +15,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class BazaarCommand extends CommandClass {
+public class BazaarCommand implements ICommandClass {
 
     BazaarModule bazaarModule;;
 

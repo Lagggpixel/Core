@@ -1,8 +1,8 @@
 package me.lagggpixel.core.modules.home.commands;
 
 import me.lagggpixel.core.Main;
-import me.lagggpixel.core.data.CommandClass;
-import me.lagggpixel.core.data.Lang;
+import me.lagggpixel.core.interfaces.ICommandClass;
+import me.lagggpixel.core.enums.Lang;
 import me.lagggpixel.core.data.User;
 import me.lagggpixel.core.modules.Module;
 import me.lagggpixel.core.modules.home.data.Home;
@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-public class HomeCommands extends CommandClass implements Listener {
+public class HomeCommands implements Listener, ICommandClass {
 
   Module module;
   HomeHandler homeHandler;

@@ -1,4 +1,4 @@
-package me.lagggpixel.core.data;
+package me.lagggpixel.core.enums;
 
 import lombok.Getter;
 import me.lagggpixel.core.utils.ChatUtils;

@@ -1,6 +1,6 @@
 package me.lagggpixel.core.modules.guilds.commands.subCommands;
 
-import me.lagggpixel.core.data.Lang;
+import me.lagggpixel.core.enums.Lang;
 import me.lagggpixel.core.modules.economy.managers.EconomyManager;
 import me.lagggpixel.core.modules.guilds.GuildModule;
 import me.lagggpixel.core.modules.guilds.commands.ISubCommand;

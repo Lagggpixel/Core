@@ -1,4 +1,4 @@
-package me.lagggpixel.core.data;
+package me.lagggpixel.core.interfaces;
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import me.lagggpixel.core.Main;

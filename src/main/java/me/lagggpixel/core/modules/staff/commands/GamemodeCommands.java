@@ -1,7 +1,7 @@
 package me.lagggpixel.core.modules.staff.commands;
 
-import me.lagggpixel.core.data.CommandClass;
-import me.lagggpixel.core.data.Lang;
+import me.lagggpixel.core.interfaces.ICommandClass;
+import me.lagggpixel.core.enums.Lang;
 import me.lagggpixel.core.modules.staff.StaffModule;
 import me.lagggpixel.core.modules.staff.handlers.GamemodeHandler;
 import me.lagggpixel.core.utils.CommandUtils;
@@ -15,7 +15,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.Map;
 
-public class GamemodeCommands extends CommandClass {
+public class GamemodeCommands implements ICommandClass {
   private final StaffModule module;
   private final GamemodeHandler gamemodeHandler;
   

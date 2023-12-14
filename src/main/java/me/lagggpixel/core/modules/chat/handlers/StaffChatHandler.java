@@ -1,6 +1,6 @@
 package me.lagggpixel.core.modules.chat.handlers;
 
-import me.lagggpixel.core.data.Lang;
+import me.lagggpixel.core.enums.Lang;
 import me.lagggpixel.core.utils.ChatUtils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;

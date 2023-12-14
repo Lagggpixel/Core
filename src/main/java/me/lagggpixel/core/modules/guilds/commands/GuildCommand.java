@@ -1,7 +1,7 @@
 package me.lagggpixel.core.modules.guilds.commands;
 
-import me.lagggpixel.core.data.CommandClass;
-import me.lagggpixel.core.data.Lang;
+import me.lagggpixel.core.interfaces.ICommandClass;
+import me.lagggpixel.core.enums.Lang;
 import me.lagggpixel.core.modules.guilds.GuildModule;
 import me.lagggpixel.core.modules.guilds.commands.subCommands.*;
 import me.lagggpixel.core.utils.CommandUtils;
@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GuildCommand extends CommandClass {
+public class GuildCommand implements ICommandClass {
 
   private final GuildModule guildModule;
   private final Map<String, ISubCommand> subCommands;

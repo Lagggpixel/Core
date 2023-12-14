@@ -1,8 +1,8 @@
 package me.lagggpixel.core.modules.staff.commands;
 
 import me.lagggpixel.core.Main;
-import me.lagggpixel.core.data.CommandClass;
-import me.lagggpixel.core.data.Lang;
+import me.lagggpixel.core.interfaces.ICommandClass;
+import me.lagggpixel.core.enums.Lang;
 import me.lagggpixel.core.data.User;
 import me.lagggpixel.core.modules.staff.StaffModule;
 import me.lagggpixel.core.modules.staff.handlers.StaffModeHandler;
@@ -15,7 +15,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class StaffCommand extends CommandClass {
+public class StaffCommand implements ICommandClass {
   private final StaffModule staffModule;
   private final StaffModeHandler staffModeHandler = new StaffModeHandler();
   

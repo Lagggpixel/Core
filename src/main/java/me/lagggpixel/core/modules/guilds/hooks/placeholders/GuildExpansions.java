@@ -1,7 +1,7 @@
 package me.lagggpixel.core.modules.guilds.hooks.placeholders;
 
-import me.lagggpixel.core.data.ICorePlaceholderExpansion;
-import me.lagggpixel.core.data.Lang;
+import me.lagggpixel.core.interfaces.ICorePlaceholderExpansion;
+import me.lagggpixel.core.enums.Lang;
 import me.lagggpixel.core.modules.guilds.GuildModule;
 import me.lagggpixel.core.modules.guilds.data.Claim;
 import me.lagggpixel.core.modules.guilds.data.Guild;

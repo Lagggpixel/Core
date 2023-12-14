@@ -1,7 +1,7 @@
 package me.lagggpixel.core.modules.rtp.commands;
 
-import me.lagggpixel.core.data.CommandClass;
-import me.lagggpixel.core.data.Lang;
+import me.lagggpixel.core.interfaces.ICommandClass;
+import me.lagggpixel.core.enums.Lang;
 import me.lagggpixel.core.modules.rtp.managers.RtpManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -11,7 +11,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class RtpCommand extends CommandClass {
+public class RtpCommand implements ICommandClass {
   @Override
   public String getCommandName() {
     return "rtp";

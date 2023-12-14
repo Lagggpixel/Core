@@ -1,8 +1,8 @@
 package me.lagggpixel.core.modules.home.commands;
 
 import me.lagggpixel.core.Main;
-import me.lagggpixel.core.data.CommandClass;
-import me.lagggpixel.core.data.Lang;
+import me.lagggpixel.core.interfaces.ICommandClass;
+import me.lagggpixel.core.enums.Lang;
 import me.lagggpixel.core.data.User;
 import me.lagggpixel.core.modules.home.HomeModule;
 import me.lagggpixel.core.modules.home.data.Home;
@@ -18,7 +18,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.Map;
 
-public class HomeAdminCommand extends CommandClass {
+public class HomeAdminCommand implements ICommandClass {
 
   private final HomeModule homeModule;
   private final HomeHandler homeHandler;

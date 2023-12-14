@@ -1,7 +1,7 @@
 package me.lagggpixel.core.modules.inventory.commands;
 
-import me.lagggpixel.core.data.CommandClass;
-import me.lagggpixel.core.data.Lang;
+import me.lagggpixel.core.interfaces.ICommandClass;
+import me.lagggpixel.core.enums.Lang;
 import me.lagggpixel.core.utils.ChatUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class EnderchestCommands extends CommandClass implements Listener {
+public class EnderchestCommands implements Listener, ICommandClass {
   
   private final Map<Player, Inventory> enderChestContents = new HashMap<>();
   

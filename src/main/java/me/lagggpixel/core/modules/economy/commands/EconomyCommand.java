@@ -1,8 +1,8 @@
 package me.lagggpixel.core.modules.economy.commands;
 
 import me.lagggpixel.core.Main;
-import me.lagggpixel.core.data.CommandClass;
-import me.lagggpixel.core.data.Lang;
+import me.lagggpixel.core.interfaces.ICommandClass;
+import me.lagggpixel.core.enums.Lang;
 import me.lagggpixel.core.data.User;
 import me.lagggpixel.core.modules.economy.EconomyModule;
 import me.lagggpixel.core.modules.economy.managers.EconomyManager;
@@ -17,7 +17,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.Map;
 
-public class EconomyCommand extends CommandClass {
+public class EconomyCommand implements ICommandClass {
   
   private final EconomyModule economyModule;
   private final EconomyManager economyManager;

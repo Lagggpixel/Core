@@ -1,6 +1,6 @@
 package me.lagggpixel.core.modules.skipnight.commands;
 
-import me.lagggpixel.core.data.CommandClass;
+import me.lagggpixel.core.interfaces.ICommandClass;
 import me.lagggpixel.core.modules.skipnight.SkipNightModule;
 import me.lagggpixel.core.modules.skipnight.managers.SkipNightVoteManager;
 import me.lagggpixel.core.modules.skipnight.objects.SkipNightVoteType;
@@ -15,7 +15,7 @@ import java.util.List;
 
 import static org.bukkit.Bukkit.getLogger;
 
-public class SkipNightCommand extends CommandClass {
+public class SkipNightCommand implements ICommandClass {
   
   SkipNightModule module;
   SkipNightVoteManager skipNightVoteManager;
