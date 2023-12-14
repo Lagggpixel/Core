@@ -22,9 +22,9 @@ public class SpawnCommand implements ICommandClass {
   private final SpawnModule spawnModule;
   private final SpawnManager spawnManager;
   
-  public SpawnCommand(SpawnModule spawnModule, SpawnManager spawnManager) {
+  public SpawnCommand(SpawnModule spawnModule) {
     this.spawnModule = spawnModule;
-    this.spawnManager = spawnManager;
+    this.spawnManager =  this.spawnModule.getSpawnManager();
   }
   
   @Override

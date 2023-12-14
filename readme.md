@@ -48,7 +48,6 @@ build: change maven artifactId
 - economy
 - guild
 - homes
-- inventory
 - restart
 - rtp
 - skipnight
@@ -91,10 +90,6 @@ Data for users are stored at `Main.getInstance.getDataFolder + "data/users"`
 
 **Home Module**
 - None
-
-
-**Inventory Module**
-- TBC
 
 
 **Restart Module**

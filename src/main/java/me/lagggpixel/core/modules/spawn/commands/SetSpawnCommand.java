@@ -18,9 +18,9 @@ public class SetSpawnCommand implements ICommandClass {
   private final SpawnModule spawnModule;
   private final SpawnManager spawnManager;
 
-  public SetSpawnCommand(SpawnModule spawnModule, SpawnManager spawnManager) {
+  public SetSpawnCommand(SpawnModule spawnModule) {
     this.spawnModule = spawnModule;
-    this.spawnManager = spawnManager;
+    this.spawnManager = this.spawnModule.getSpawnManager();
   }
 
   @Override
