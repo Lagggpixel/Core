@@ -14,8 +14,6 @@ import me.lagggpixel.core.modules.economy.EconomyModule;
 import me.lagggpixel.core.modules.guilds.GuildModule;
 import me.lagggpixel.core.modules.home.HomeModule;
 import me.lagggpixel.core.modules.home.data.Home;
-import me.lagggpixel.core.modules.restart.RestartModule;
-import me.lagggpixel.core.modules.rtp.RtpModule;
 import me.lagggpixel.core.modules.skipnight.SkipNightModule;
 import me.lagggpixel.core.modules.spawn.SpawnModule;
 import me.lagggpixel.core.modules.staff.StaffModule;
@@ -57,8 +55,6 @@ public final class Main extends JavaPlugin {
   private final @NotNull Module economyModule = new EconomyModule();
   private final @NotNull Module guildModule = new GuildModule();
   private final @NotNull Module homeModule = new HomeModule();
-  private final @NotNull Module restartModule = new RestartModule();
-  private final @NotNull Module rtpModule = new RtpModule();
   private final @NotNull Module skipnightModule = new SkipNightModule();
   private final @NotNull Module spawnModule = new SpawnModule();
   private final @NotNull Module staffModule = new StaffModule();
@@ -112,8 +108,6 @@ public final class Main extends JavaPlugin {
     modules.put(homeModule.getId(), homeModule);
     modules.put(economyModule.getId(), economyModule);
     modules.put(guildModule.getId(), guildModule);
-    modules.put(restartModule.getId(), restartModule);
-    modules.put(rtpModule.getId(), rtpModule);
     modules.put(skipnightModule.getId(), skipnightModule);
     modules.put(spawnModule.getId(), spawnModule);
     modules.put(staffModule.getId(), staffModule);
