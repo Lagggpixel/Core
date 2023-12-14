@@ -15,7 +15,6 @@ public class CommandUtils {
   public static void registerCommand(ICommandClass ICommandClass) {
     PluginCommand command = getCommand(ICommandClass.getCommandName());
 
-    assert command != null;
     command.setAliases(ICommandClass.getCommandAliases());
     command.setPermission(ICommandClass.getCommandPermission());
     command.setDescription(ICommandClass.getCommandDescription());
