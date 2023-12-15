@@ -4,6 +4,10 @@ import lombok.Getter;
 import me.lagggpixel.core.Main;
 import me.lagggpixel.core.interfaces.IModule;
 import me.lagggpixel.core.modules.skills.handlers.SkillHandler;
+import me.lagggpixel.core.modules.skills.listeners.BlockBreakListener;
+import me.lagggpixel.core.modules.skills.listeners.BlockGrowListener;
+import me.lagggpixel.core.modules.skills.listeners.BlockPlaceListener;
+import me.lagggpixel.core.modules.skills.listeners.EntityDeathListener;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
@@ -12,6 +16,10 @@ import java.util.logging.Level;
 public class SkillsModule implements IModule {
 
   private final File dataFolder = new File(Main.getInstance().getDataFolder(), "data/modules/skills");
+  @Getter
+  private final File skill_exp = new File(dataFolder, "skill_exp");
+  @Getter
+  private final File skill_level_up = new File(dataFolder, "skill_level_up");
 
   @Getter
   private SkillHandler skillHandler;
@@ -31,7 +39,7 @@ public class SkillsModule implements IModule {
   public void onEnable() {
     initConfig();
 
-    this.skillHandler = new SkillHandler();
+    this.skillHandler = new SkillHandler(this);
   }
 
   @Override
@@ -46,14 +54,13 @@ public class SkillsModule implements IModule {
 
   @Override
   public void registerListeners() {
-
+    new BlockBreakListener(this);
+    new BlockPlaceListener(this);
+    new BlockGrowListener(this);
+    new EntityDeathListener(this);
   }
 
   private void initConfig() {
-
-    File skill_exp = new File(dataFolder, "skill_exp");
-    File skill_level_up = new File(dataFolder, "skill_level_up");
-
     boolean replace = false;
 
     if (!skill_exp.exists()) {

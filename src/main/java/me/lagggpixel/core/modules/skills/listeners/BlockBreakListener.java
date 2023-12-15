@@ -19,13 +19,16 @@ public class BlockBreakListener implements Listener {
   public void BlockBreakEvent(BlockBreakEvent event) {
     Block block = event.getBlock();
     // TODO: check if the block is naturally spawned
-
     if (skillsModule.getSkillHandler().isBlockFarming(block)) {
-      // TODO: add farming handling
+      handleFarmingBlockBreak();
     }
 
     if (skillsModule.getSkillHandler().isBlockMining(block)) {
-      // TODO: add mining handling
+      handleMiningBlockBreak();
+    }
+
+    if (skillsModule.getSkillHandler().isBlockCombat(block)) {
+      handleCombatBlockBreak();
     }
   }
 
@@ -34,6 +37,10 @@ public class BlockBreakListener implements Listener {
   }
 
   private void handleMiningBlockBreak() {
+
+  }
+
+  private void handleCombatBlockBreak() {
 
   }
 }
