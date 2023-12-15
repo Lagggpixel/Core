@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import me.lagggpixel.core.modules.home.data.Home;
+import me.lagggpixel.core.modules.skills.data.Skills;
 import me.lagggpixel.core.modules.staff.data.InstantPlayerData;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
@@ -53,6 +54,10 @@ public class User {
   @SerializedName("Homes")
   @Expose
   private Map<String, Home> homes;
+  // Skills
+  @SerializedName("Skills")
+  @Expose
+  private Skills skills;
   // Staff configurations
   @SerializedName("InstantPlayerData")
   @Expose
@@ -89,6 +94,9 @@ public class User {
     
     // Homes
     this.homes = new HashMap<>();
+
+    // Skills
+    this.skills = new Skills();
     
     // Staff
     this.instantPlayerData = null;
