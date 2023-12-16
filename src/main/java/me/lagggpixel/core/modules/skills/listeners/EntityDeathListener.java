@@ -1,5 +1,7 @@
 package me.lagggpixel.core.modules.skills.listeners;
 
+import me.lagggpixel.core.Main;
+import me.lagggpixel.core.data.User;
 import me.lagggpixel.core.modules.skills.SkillsModule;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -22,26 +24,33 @@ public class EntityDeathListener implements Listener {
     if (player == null) {
       return;
     }
+    User user = Main.getUser(player.getUniqueId());
     Entity entity = event.getEntity();
     if (skillsModule.getSkillHandler().isMobFarming(entity)) {
-      handleFarmingMobKill();
+      handleFarmingMobKill(user, entity);
     }
 
     if (skillsModule.getSkillHandler().isMobMining(entity)) {
-      handleMiningMobKill();
+      handleMiningMobKill(user, entity);
     }
 
     if (skillsModule.getSkillHandler().isMobCombat(entity)) {
-      handleCombatMobKill();
+      handleCombatMobKill(user, entity);
     }
   }
 
-  private void handleFarmingMobKill() {
+  private void handleFarmingMobKill(User user, Entity entity) {
+    double exp = skillsModule.getSkillHandler().getFarmingEntities().get(entity.getType());
+    user.getSkills().getFarming().addExp(exp);
   }
 
-  private void handleMiningMobKill() {
+  private void handleMiningMobKill(User user, Entity entity) {
+    double exp = skillsModule.getSkillHandler().getMiningEntities().get(entity.getType());
+    user.getSkills().getMining().addExp(exp);
   }
 
-  private void handleCombatMobKill() {
+  private void handleCombatMobKill(User user, Entity entity) {
+    double exp = skillsModule.getSkillHandler().getCombatEntities().get(entity.getType());
+    user.getSkills().getCombat().addExp(exp);
   }
 }

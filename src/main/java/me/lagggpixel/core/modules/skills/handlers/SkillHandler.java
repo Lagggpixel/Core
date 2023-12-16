@@ -24,11 +24,17 @@ public class SkillHandler {
   @Getter
   private final List<Location> nonNaturalBlocks = new ArrayList<>();
 
+  @Getter
   private final Map<Material, Double> farmingBlocks = new HashMap<>();
+  @Getter
   private final Map<EntityType, Double> farmingEntities = new HashMap<>();
+  @Getter
   private final Map<Material, Double> miningBlocks = new HashMap<>();
+  @Getter
   private final Map<EntityType, Double> miningEntities = new HashMap<>();
+  @Getter
   private final Map<Material, Double> combatBlocks = new HashMap<>();
+  @Getter
   private final Map<EntityType, Double> combatEntities = new HashMap<>();
 
   public SkillHandler(SkillsModule skillsModule) {

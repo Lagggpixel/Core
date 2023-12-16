@@ -1,5 +1,7 @@
 package me.lagggpixel.core.modules.skills.listeners;
 
+import me.lagggpixel.core.Main;
+import me.lagggpixel.core.data.User;
 import me.lagggpixel.core.modules.skills.SkillsModule;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
@@ -19,28 +21,33 @@ public class BlockBreakListener implements Listener {
   public void BlockBreakEvent(BlockBreakEvent event) {
     Block block = event.getBlock();
     // TODO: check if the block is naturally spawned
+
+    User user = Main.getUser(event.getPlayer().getUniqueId());
     if (skillsModule.getSkillHandler().isBlockFarming(block)) {
-      handleFarmingBlockBreak();
+      handleFarmingBlockBreak(user, block);
     }
 
     if (skillsModule.getSkillHandler().isBlockMining(block)) {
-      handleMiningBlockBreak();
+      handleMiningBlockBreak(user, block);
     }
 
     if (skillsModule.getSkillHandler().isBlockCombat(block)) {
-      handleCombatBlockBreak();
+      handleCombatBlockBreak(user, block);
     }
   }
 
-  private void handleFarmingBlockBreak() {
-
+  private void handleFarmingBlockBreak(User user, Block block) {
+    double exp = skillsModule.getSkillHandler().getFarmingBlocks().get(block.getType());
+    user.getSkills().getFarming().addExp(exp);
   }
 
-  private void handleMiningBlockBreak() {
-
+  private void handleMiningBlockBreak(User user, Block block) {
+    double exp = skillsModule.getSkillHandler().getMiningBlocks().get(block.getType());
+    user.getSkills().getMining().addExp(exp);
   }
 
-  private void handleCombatBlockBreak() {
-
+  private void handleCombatBlockBreak(User user, Block block) {
+    double exp = skillsModule.getSkillHandler().getCombatBlocks().get(block.getType());
+    user.getSkills().getCombat().addExp(exp);
   }
 }
