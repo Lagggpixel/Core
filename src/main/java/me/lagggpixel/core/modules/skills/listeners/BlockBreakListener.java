@@ -20,8 +20,11 @@ public class BlockBreakListener implements Listener {
   @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
   public void BlockBreakEvent(BlockBreakEvent event) {
     Block block = event.getBlock();
-    // TODO: check if the block is naturally spawned
-
+    
+    if (skillsModule.getSkillHandler().getNonNaturalBlocks().contains(block.getLocation())) {
+      return;
+    }
+    
     User user = Main.getUser(event.getPlayer().getUniqueId());
     if (skillsModule.getSkillHandler().isBlockFarming(block)) {
       handleFarmingBlockBreak(user, block);
