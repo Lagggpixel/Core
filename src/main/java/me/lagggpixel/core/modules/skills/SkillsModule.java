@@ -5,9 +5,8 @@ import me.lagggpixel.core.Main;
 import me.lagggpixel.core.interfaces.IModule;
 import me.lagggpixel.core.modules.skills.handlers.SkillHandler;
 import me.lagggpixel.core.modules.skills.listeners.BlockBreakListener;
-import me.lagggpixel.core.modules.skills.listeners.BlockGrowListener;
-import me.lagggpixel.core.modules.skills.listeners.NaturalBlocksChangedListeners;
 import me.lagggpixel.core.modules.skills.listeners.EntityDeathListener;
+import me.lagggpixel.core.modules.skills.listeners.NaturalBlocksChangedListeners;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
@@ -56,7 +55,6 @@ public class SkillsModule implements IModule {
   public void registerListeners() {
     new BlockBreakListener(this);
     new NaturalBlocksChangedListeners(this);
-    new BlockGrowListener(this);
     new EntityDeathListener(this);
   }
 
