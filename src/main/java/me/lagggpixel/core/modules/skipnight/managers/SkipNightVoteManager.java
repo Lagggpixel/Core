@@ -5,7 +5,6 @@ import me.lagggpixel.core.enums.Lang;
 import me.lagggpixel.core.modules.skipnight.SkipNightModule;
 import me.lagggpixel.core.modules.skipnight.objects.SkipNightVoteType;
 import me.lagggpixel.core.modules.skipnight.objects.SkipNightVoter;
-import me.lagggpixel.core.utils.ChatUtils;
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -47,16 +46,16 @@ public class SkipNightVoteManager implements Runnable, Listener {
   public void onLogoff(PlayerQuitEvent event) {
     Player player = event.getPlayer();
     
-    if (timer != Timer.OFF && skipNightVoteType != null) // vote is running
-      if (player.hasPermission(module.getSKIP_NIGHT_PERMISSION())) { // player has permission
-        SkipNightVoter skipNightVoter = new SkipNightVoter(player.getUniqueId());
-        if (skipNightVoters.contains(skipNightVoter)) { // player is in voter list
-          skipNightVoter = skipNightVoters.get(skipNightVoters.lastIndexOf(skipNightVoter));
-          if (skipNightVoter.getVote() == 1) yes--;
-          if (skipNightVoter.getVote() == -1) no--;
-          skipNightVoters.remove(skipNightVoter);
-        }
+    if (timer != Timer.OFF && skipNightVoteType != null) {// vote is running
+      SkipNightVoter skipNightVoter = new SkipNightVoter(player.getUniqueId());
+      if (skipNightVoters.contains(skipNightVoter)) { // player is in voter list
+        skipNightVoter = skipNightVoters.get(skipNightVoters.lastIndexOf(skipNightVoter));
+        if (skipNightVoter.getVote() == 1) yes--;
+        if (skipNightVoter.getVote() == -1) no--;
+        skipNightVoters.remove(skipNightVoter);
       }
+      
+    }
   }
   
   @EventHandler
@@ -64,30 +63,28 @@ public class SkipNightVoteManager implements Runnable, Listener {
     Player player = event.getPlayer();
     
     if (timer != Timer.OFF && skipNightVoteType == SkipNightVoteType.NIGHT) { // vote is running at night
-      if (player.hasPermission(module.getSKIP_NIGHT_PERMISSION())) { // player has permission
-        SkipNightVoter skipNightVoter = new SkipNightVoter(player.getUniqueId());
-        if (skipNightVoters.contains(skipNightVoter)) { // Voter exists but hasn't voted
-          skipNightVoter = skipNightVoters.get(skipNightVoters.indexOf(skipNightVoter));
-          if (skipNightVoter.getVote() == 0) {
-            skipNightVoter.voteYes();
-            yes++;
-            
-            player.sendMessage(Lang.SN_IN_BED_VOTED_YES.toComponentWithPrefix());
-          }
-        } else { // Voter doesn't exist but hasn't voted
-          skipNightVoters.add(skipNightVoter);
+      SkipNightVoter skipNightVoter = new SkipNightVoter(player.getUniqueId());
+      if (skipNightVoters.contains(skipNightVoter)) { // Voter exists but hasn't voted
+        skipNightVoter = skipNightVoters.get(skipNightVoters.indexOf(skipNightVoter));
+        if (skipNightVoter.getVote() == 0) {
           skipNightVoter.voteYes();
           yes++;
+          
           player.sendMessage(Lang.SN_IN_BED_VOTED_YES.toComponentWithPrefix());
         }
+      } else { // Voter doesn't exist but hasn't voted
+        skipNightVoters.add(skipNightVoter);
+        skipNightVoter.voteYes();
+        yes++;
+        player.sendMessage(Lang.SN_IN_BED_VOTED_YES.toComponentWithPrefix());
       }
     } else {
-      if (player.hasPermission(module.getSKIP_NIGHT_PERMISSION()) && player.getWorld().getTime() >= 12516) { // player has permission
-        if (player.getWorld().getPlayers().size() > 1) // if player isn't only one in the world
-          player.sendMessage(Lang.SN_IN_BED_NO_VOTE_IN_PROGRESS.toComponentWithPrefix());
+      if (player.getWorld().getPlayers().size() > 1) { // if player isn't only one in the world
+        player.sendMessage(Lang.SN_IN_BED_NO_VOTE_IN_PROGRESS.toComponentWithPrefix());
       }
     }
   }
+  
   
   public void run() {
     switch (timer) {
@@ -287,12 +284,7 @@ public class SkipNightVoteManager implements Runnable, Listener {
     
     boolean isAfk = Main.getUser(player.getUniqueId()).isAfk();
     
-    
-    if (!player.hasPermission(module.getSKIP_NIGHT_PERMISSION())) // If player doesn't have permission
-      player.sendMessage(ChatUtils.stringToComponentCC(ChatUtils.componentToString(Main.getInstance().getServer().permissionMessage())));
-      // else if (config.getWorldBlacklist().contains(player.getWorld().getName())) // If world is blacklisted
-      //     platform.player(player).sendMessage(messages.worldIsBlacklisted());
-    else if (!isInOverworld(player)) // If player isn't in the overworld
+    if (!isInOverworld(player)) // If player isn't in the overworld
       player.sendMessage(Lang.SN_WORLD_NO_OVERWORLD.toComponentWithPrefix());
     else if (skipNightVoteType == SkipNightVoteType.NIGHT && player.getWorld().getTime() < 12516) // If it's day, trying to skip night
       player.sendMessage(Lang.SN_CAN_ONLY_VOTE_AT_NIGHT.toComponentWithPrefix());
@@ -330,7 +322,7 @@ public class SkipNightVoteManager implements Runnable, Listener {
       
       boolean isAfk = Main.getUser(player.getUniqueId()).isAfk();
       
-      if (isInOverworld(player) && player.hasPermission(module.getSKIP_NIGHT_PERMISSION())) {
+      if (isInOverworld(player)) {
         if (skipNightVoters.contains(skipNightVoter)) {
           skipNightVoter = skipNightVoters.get(skipNightVoters.indexOf(skipNightVoter));
           if (isAfk) { // in Active, change to Afk
@@ -386,7 +378,7 @@ public class SkipNightVoteManager implements Runnable, Listener {
       
       boolean isAfk = Main.getUser(player.getUniqueId()).isAfk();
       
-      if (isInOverworld(player) && player.hasPermission(module.getSKIP_NIGHT_PERMISSION())) {
+      if (isInOverworld(player)) {
         if (skipNightVoters.contains(skipNightVoter)) {
           skipNightVoter = skipNightVoters.get(skipNightVoters.indexOf(skipNightVoter));
           if (isAfk) { // in Active, change to Afk
@@ -444,7 +436,7 @@ public class SkipNightVoteManager implements Runnable, Listener {
       
       boolean isAfk = Main.getUser(player.getUniqueId()).isAfk();
       
-      if (isInOverworld(player) && player.hasPermission(module.getSKIP_NIGHT_PERMISSION())) {
+      if (isInOverworld(player)) {
         if (skipNightVoters.contains(skipNightVoter)) {
           skipNightVoter = skipNightVoters.get(skipNightVoters.indexOf(skipNightVoter));
           if (isAfk) { // in Active, change to Afk
@@ -507,7 +499,7 @@ public class SkipNightVoteManager implements Runnable, Listener {
     for (Player player : Main.getInstance().getServer().getOnlinePlayers()) {
       SkipNightVoter skipNightVoter = new SkipNightVoter(player.getUniqueId());
       
-      if (isInOverworld(player) && player.hasPermission(module.getSKIP_NIGHT_PERMISSION())) {
+      if (isInOverworld(player)) {
         if (skipNightVoters.contains(skipNightVoter)) {
           player.sendActionBar(message);
         }
