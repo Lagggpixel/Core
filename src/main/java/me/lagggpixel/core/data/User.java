@@ -96,7 +96,7 @@ public class User {
     this.homes = new HashMap<>();
 
     // Skills
-    this.skills = new Skills();
+    this.skills = new Skills(playerUUID);
     
     // Staff
     this.instantPlayerData = null;

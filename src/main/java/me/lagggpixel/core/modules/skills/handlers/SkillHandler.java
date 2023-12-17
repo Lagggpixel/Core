@@ -10,8 +10,8 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,10 +20,15 @@ import java.util.logging.Level;
 
 public class SkillHandler {
   private final SkillsModule skillsModule;
-
+  
+  @Getter
+  private static final Map<Integer, Long> skillExpPerLevel = new HashMap<>();
+  @Getter
+  private static final Map<Integer, Long> moneyPerLevel = new HashMap<>();
+  
   @Getter
   private final List<Location> nonNaturalBlocks = new ArrayList<>();
-
+  
   @Getter
   private final Map<Material, Double> farmingBlocks = new HashMap<>();
   @Getter
@@ -36,14 +41,12 @@ public class SkillHandler {
   private final Map<Material, Double> combatBlocks = new HashMap<>();
   @Getter
   private final Map<EntityType, Double> combatEntities = new HashMap<>();
-
-  public SkillHandler(SkillsModule skillsModule) {
+  
+  public SkillHandler(@NotNull SkillsModule skillsModule) {
     this.skillsModule = skillsModule;
-    File file = skillsModule.getSkill_exp();
-    YamlConfiguration yamlConfiguration = YamlConfiguration.loadConfiguration(file);
-
+    YamlConfiguration skillExpConfiguration = YamlConfiguration.loadConfiguration(skillsModule.getSkill_exp());
     //<editor-fold desc="Load Farming">
-    ConfigurationSection farmingSection = yamlConfiguration.getConfigurationSection("farming");
+    ConfigurationSection farmingSection = skillExpConfiguration.getConfigurationSection("farming");
     if (farmingSection != null) {
       ConfigurationSection farmingBlocksSection = farmingSection.getConfigurationSection("blocks");
       if (farmingBlocksSection != null) {
@@ -52,7 +55,7 @@ public class SkillHandler {
           checkMaterialToAppend(k, exp, farmingBlocks);
         });
       }
-
+      
       ConfigurationSection farmingMobsSection = farmingSection.getConfigurationSection("mobs");
       if (farmingMobsSection != null) {
         farmingMobsSection.getKeys(false).forEach((k) -> {
@@ -62,9 +65,8 @@ public class SkillHandler {
       }
     }
     //</editor-fold>
-
     //<editor-fold desc="Load Mining">
-    ConfigurationSection miningSection = yamlConfiguration.getConfigurationSection("mining");
+    ConfigurationSection miningSection = skillExpConfiguration.getConfigurationSection("mining");
     if (miningSection != null) {
       ConfigurationSection miningBlocksSection = miningSection.getConfigurationSection("blocks");
       if (miningBlocksSection != null) {
@@ -73,7 +75,7 @@ public class SkillHandler {
           checkMaterialToAppend(k, exp, miningBlocks);
         });
       }
-
+      
       ConfigurationSection miningMobsSection = miningSection.getConfigurationSection("mobs");
       if (miningMobsSection != null) {
         miningMobsSection.getKeys(false).forEach((k) -> {
@@ -83,9 +85,8 @@ public class SkillHandler {
       }
     }
     //</editor-fold>
-
     //<editor-fold desc="Load Combat">
-    ConfigurationSection combatSection = yamlConfiguration.getConfigurationSection("combat");
+    ConfigurationSection combatSection = skillExpConfiguration.getConfigurationSection("combat");
     if (combatSection != null) {
       ConfigurationSection combatBlocksSection = combatSection.getConfigurationSection("blocks");
       if (combatBlocksSection != null) {
@@ -94,7 +95,7 @@ public class SkillHandler {
           checkMaterialToAppend(k, exp, combatBlocks);
         });
       }
-
+      
       ConfigurationSection combatMobsSection = combatSection.getConfigurationSection("combat");
       if (combatMobsSection != null) {
         combatMobsSection.getKeys(false).forEach((k) -> {
@@ -104,14 +105,27 @@ public class SkillHandler {
       }
     }
     //</editor-fold>
+    
+    YamlConfiguration skillLevelUpConfiguration = YamlConfiguration.loadConfiguration(skillsModule.getSkill_exp());
+    skillLevelUpConfiguration.getKeys(false).forEach((k) -> {
+      try {
+        int level = Integer.parseInt(k);
+        ConfigurationSection section = skillLevelUpConfiguration.getConfigurationSection(k);
+        if (section != null) {
+          long exp = section.getLong("exp");
+          long reward = section.getLong("reward");
+          skillExpPerLevel.put(level, exp);
+          moneyPerLevel.put(level, reward);
+        }
+      } catch (NumberFormatException ignored) { }
+    });
   }
-
+  
   private void checkMaterialToAppend(String input, double exp, Map<Material, Double> list) {
     Material material;
     try {
       material = Material.valueOf(input);
-    }
-    catch (IllegalArgumentException exception) {
+    } catch (IllegalArgumentException exception) {
       Main.log(Level.WARNING, "skill_exp.yml is miss configured. The material " + input + " was not found.");
       return;
     }
@@ -121,7 +135,7 @@ public class SkillHandler {
     }
     list.put(material, exp);
   }
-
+  
   private void checkMobToAppend(String input, double exp, Map<EntityType, Double> list) {
     EntityType entityType;
     try {
@@ -136,28 +150,28 @@ public class SkillHandler {
     }
     list.put(entityType, exp);
   }
-
-  public boolean isBlockFarming(Block block) {
+  
+  public boolean isBlockFarming(@NotNull Block block) {
     return farmingBlocks.containsKey(block.getType());
   }
-
-  public boolean isMobFarming(Entity entity) {
+  
+  public boolean isMobFarming(@NotNull Entity entity) {
     return farmingEntities.containsKey(entity.getType());
   }
-
-  public boolean isBlockMining(Block block) {
+  
+  public boolean isBlockMining(@NotNull Block block) {
     return miningBlocks.containsKey(block.getType());
   }
-
-  public boolean isMobMining(Entity entity) {
+  
+  public boolean isMobMining(@NotNull Entity entity) {
     return miningEntities.containsKey(entity.getType());
   }
-
-  public boolean isBlockCombat(Block block) {
+  
+  public boolean isBlockCombat(@NotNull Block block) {
     return combatBlocks.containsKey(block.getType());
   }
-
-  public boolean isMobCombat(Entity entity) {
+  
+  public boolean isMobCombat(@NotNull Entity entity) {
     return combatEntities.containsKey(entity.getType());
   }
 }

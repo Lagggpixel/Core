@@ -59,23 +59,18 @@ public class SkillsModule implements IModule {
   }
 
   private void initConfig() {
-    boolean replace = false;
-
     if (!skill_exp.exists()) {
       String resourcePath = "module_data/skills/skill_exp.yml";
-
-      copyToDefault(replace, resourcePath);
+      copyToDefault(resourcePath);
     }
 
     if (!skill_level_up.exists()) {
       String resourcePath = "module_data/skills/skill_level_up.yml";
-
-      copyToDefault(replace, resourcePath);
+      copyToDefault(resourcePath);
     }
-
   }
 
-  private void copyToDefault(boolean replace, String resourcePath) {
+  private void copyToDefault(String resourcePath) {
     resourcePath = resourcePath.replace('\\', '/');
     InputStream in = Main.getInstance().getResource(resourcePath);
     if (in == null) {
@@ -89,7 +84,7 @@ public class SkillsModule implements IModule {
       }
 
       try {
-        if (outFile.exists() && !replace) {
+        if (outFile.exists()) {
           Main.log(Level.WARNING, "Could not save " + resourcePath + " to " + outFile + " because " + outFile.getName() + " already exists.");
         } else {
           OutputStream out = new FileOutputStream(outFile);

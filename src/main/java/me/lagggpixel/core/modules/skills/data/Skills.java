@@ -7,13 +7,19 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import me.lagggpixel.core.modules.skills.enums.SkillType;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.UUID;
 
 @Data
 @Getter
 @Setter
 @AllArgsConstructor
 public class Skills {
-
+  @SerializedName("PlayerUniqueID")
+  @Expose
+  @NotNull
+  private final UUID playerUuid;
   @SerializedName("Mining")
   @Expose
   private Skill mining;
@@ -24,9 +30,13 @@ public class Skills {
   @Expose
   private Skill combat;
 
-  public Skills() {
-    this.mining = new Skill(SkillType.MINING);
-    this.farming = new Skill(SkillType.FARMING);
-    this.combat = new Skill(SkillType.FARMING);
+  public Skills(@NotNull UUID playerUuid) {
+    this.playerUuid = playerUuid;
+    this.mining = new Skill(this.playerUuid, SkillType.MINING);
+    this.mining.initSkillLevel();
+    this.farming = new Skill(this.playerUuid, SkillType.FARMING);
+    this.farming.initSkillLevel();
+    this.combat = new Skill(this.playerUuid, SkillType.COMBAT);
+    this.combat.initSkillLevel();
   }
 }

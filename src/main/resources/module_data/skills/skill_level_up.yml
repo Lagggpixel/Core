@@ -1,0 +1,48 @@
+0:
+  exp: 0
+  reward: 0
+1:
+  exp: 50
+  reward: 100
+2:
+  exp: 125
+  reward: 250
+3:
+  exp: 200
+  reward: 500
+4:
+  exp: 300
+  reward: 750
+5:
+  exp: 500
+  reward: 1000
+6:
+  exp: 750
+  reward: 2000
+7:
+  exp: 1000
+  reward: 3000
+8:
+  exp: 1500
+  reward: 4000
+9:
+  exp: 2000
+  reward: 5000
+10:
+  exp: 3500
+  reward: 7500
+11:
+  exp: 5000
+  reward: 10000
+12:
+  exp: 7500
+  reward: 15000
+13:
+  exp: 10000
+  reward: 20000
+14:
+  exp: 15000
+  reward: 25000
+15:
+  exp: 20000
+  reward: 30000
