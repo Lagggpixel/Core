@@ -3,6 +3,7 @@ package me.lagggpixel.core.listeners;
 import me.lagggpixel.core.Main;
 import me.lagggpixel.core.data.User;
 import me.lagggpixel.core.modules.staff.handlers.VanishHandler;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -30,6 +31,12 @@ public class onPlayerJoin implements Listener {
     User user = Main.getUser(uuid);
     user.setPlayerName(player.getName());
     user.setAfk(false);
+    
+    if (user.getGetQueuedMessage() != null) {
+      for (Component component : user.getGetQueuedMessage()) {
+        user.sendMessage(component);
+      }
+    }
     
     handleVanishPlayers(event);
   }

@@ -9,13 +9,17 @@ import lombok.Setter;
 import me.lagggpixel.core.modules.home.data.Home;
 import me.lagggpixel.core.modules.skills.data.Skills;
 import me.lagggpixel.core.modules.staff.data.InstantPlayerData;
+import net.kyori.adventure.text.Component;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -31,6 +35,9 @@ public class User {
   @SerializedName("PlayerName")
   @Expose
   private @NotNull String playerName;
+  @SerializedName("QueuedMessages")
+  @Expose
+  private List<Component> getQueuedMessage;
   private transient boolean afk = false;
   // Player stats
   @SerializedName("EntityKills")
@@ -94,7 +101,7 @@ public class User {
     
     // Homes
     this.homes = new HashMap<>();
-
+    
     // Skills
     this.skills = new Skills(playerUUID);
     
@@ -108,9 +115,11 @@ public class User {
   public long getEntityKills(EntityType entityType) {
     return entityKills.getOrDefault(entityType, 0L);
   }
+  
   public long getBlockBroken(Material material) {
     return blocksBroken.getOrDefault(material, 0L);
   }
+  
   public long getBlockPlaced(Material material) {
     return blocksPlaced.getOrDefault(material, 0L);
   }
@@ -122,6 +131,7 @@ public class User {
     }
     return total;
   }
+  
   public long getTotalBlocksBroken() {
     long total = 0;
     for (Map.Entry<Material, Long> entry : blocksBroken.entrySet()) {
@@ -129,11 +139,32 @@ public class User {
     }
     return total;
   }
+  
   public long getTotalBlocksPlaced() {
     long total = 0;
     for (Map.Entry<Material, Long> entry : blocksPlaced.entrySet()) {
       total += entry.getValue();
     }
     return total;
+  }
+  
+  /**
+   * Sends a message using the given component.
+   * This will queue the message if the user is not online
+   *
+   * @param component the component used for sending the message
+   */
+  public boolean sendMessage(Component component) {
+    OfflinePlayer player = Bukkit.getOfflinePlayer(playerUUID);
+    if (player.isOnline() && player.getPlayer() != null) {
+      player.getPlayer().sendMessage(component);
+      return true;
+    }
+    queueMessage(component);
+    return false;
+  }
+  
+  private void queueMessage(Component component) {
+    this.getQueuedMessage.add(component);
   }
 }
