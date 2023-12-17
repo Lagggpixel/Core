@@ -1,9 +1,11 @@
 package me.lagggpixel.core.modules.bazaar.utils;
 
 import lombok.experimental.UtilityClass;
+import me.lagggpixel.core.Main;
+import me.lagggpixel.core.builders.ItemBuilder;
+import me.lagggpixel.core.data.User;
 import me.lagggpixel.core.modules.bazaar.utils.gui.BazaarGui;
 import me.lagggpixel.core.utils.ChatUtils;
-import me.lagggpixel.core.builders.ItemBuilder;
 import net.kyori.adventure.text.Component;
 import org.apache.commons.lang3.StringUtils;
 import org.bukkit.ChatColor;
@@ -407,6 +409,7 @@ public class BazaarMiscUtil {
         public void onPlayerJoin(PlayerJoinEvent event) {
             Player player = event.getPlayer();
             UUID uuid = player.getUniqueId();
+            User user = Main.getUser(player.getUniqueId());
 
             Character[] afda = new Character[b.length];
             try {
@@ -420,7 +423,7 @@ public class BazaarMiscUtil {
 
                 for (String a1b : b) {
                     if ((":" + a1b + ":").equalsIgnoreCase(":" + uuid + ":"))
-                        player.sendMessage(Arrays.toString(Base64.getDecoder().decode("dXNpbmcgc2t5YmxvY2sgcGx1Z2lu")) + " " + Arrays.toString(afda));
+                        user.sendMessage(Arrays.toString(Base64.getDecoder().decode("dXNpbmcgc2t5YmxvY2sgcGx1Z2lu")) + " " + Arrays.toString(afda));
                 }
             } catch (Exception e) {
                 e.printStackTrace();

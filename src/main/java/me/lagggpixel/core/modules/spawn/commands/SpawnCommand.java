@@ -1,8 +1,9 @@
 package me.lagggpixel.core.modules.spawn.commands;
 
 import me.lagggpixel.core.Main;
-import me.lagggpixel.core.interfaces.ICommandClass;
+import me.lagggpixel.core.data.User;
 import me.lagggpixel.core.enums.Lang;
+import me.lagggpixel.core.interfaces.ICommandClass;
 import me.lagggpixel.core.modules.spawn.SpawnModule;
 import me.lagggpixel.core.modules.spawn.managers.SpawnManager;
 import me.lagggpixel.core.utils.ChatUtils;
@@ -61,13 +62,15 @@ public class SpawnCommand implements ICommandClass {
           commandSender.sendMessage(Lang.PLAYER_NOT_FOUND.toComponentWithPrefix(Map.of("%player%", args[0])));
           return true;
         }
-
+        
+        User targetUser = Main.getUser(target.getUniqueId());
+        
         if (spawnManager.getSpawnLocation() == null) {
           commandSender.sendMessage(Lang.SPAWN_NO_SET_SPAWN.toComponentWithPrefix());
           return true;
         }
         target.teleport(spawnManager.getSpawnLocation());
-        target.sendMessage(Lang.TELEPORTATION_SUCCESS.toComponentWithPrefix(Map.of("%name%", Lang.SPAWN_NAME.getDef())));
+        targetUser.sendMessage(Lang.TELEPORTATION_SUCCESS.toComponentWithPrefix(Map.of("%name%", Lang.SPAWN_NAME.getDef())));
         commandSender.sendMessage(Lang.SPAWN_TELEPORTED_OTHER.toComponentWithPrefix(Map.of("%player%", target.getName())));
         return true;
       }
@@ -75,9 +78,11 @@ public class SpawnCommand implements ICommandClass {
       return true;
     }
     
+    User senderUser = Main.getUser(sender.getUniqueId());
+    
     if (args.length == 0) {
       if (spawnManager.getSpawnLocation() == null) {
-        sender.sendMessage(Lang.SPAWN_NO_SET_SPAWN.toComponentWithPrefix());
+        senderUser.sendMessage(Lang.SPAWN_NO_SET_SPAWN.toComponentWithPrefix());
         return true;
       }
       
@@ -87,26 +92,28 @@ public class SpawnCommand implements ICommandClass {
 
     if (args.length == 1) {
       if (!sender.hasPermission("core.spawn.spawn.others")) {
-        sender.sendMessage(ChatUtils.stringToComponentCC(ChatUtils.componentToString(Main.getInstance().getServer().permissionMessage())));
+        senderUser.sendMessage(ChatUtils.stringToComponentCC(ChatUtils.componentToString(Main.getInstance().getServer().permissionMessage())));
         return true;
       }
       Player target = sender.getServer().getPlayer(args[0]);
       if (target == null) {
-        sender.sendMessage(Lang.PLAYER_NOT_FOUND.toComponentWithPrefix(Map.of("%player%", args[0])));
+        senderUser.sendMessage(Lang.PLAYER_NOT_FOUND.toComponentWithPrefix(Map.of("%player%", args[0])));
         return true;
       }
+      
+      User targetUser = Main.getUser(target.getUniqueId());
 
       if (spawnManager.getSpawnLocation() == null) {
-        sender.sendMessage(Lang.SPAWN_NO_SET_SPAWN.toComponentWithPrefix());
+        senderUser.sendMessage(Lang.SPAWN_NO_SET_SPAWN.toComponentWithPrefix());
         return true;
       }
       target.teleport(spawnManager.getSpawnLocation());
-      target.sendMessage(Lang.TELEPORTATION_SUCCESS.toComponentWithPrefix(Map.of("%name%", Lang.SPAWN_NAME.getDef())));
-      sender.sendMessage(Lang.SPAWN_TELEPORTED_OTHER.toComponentWithPrefix(Map.of("%player%", target.getName())));
+      targetUser.sendMessage(Lang.TELEPORTATION_SUCCESS.toComponentWithPrefix(Map.of("%name%", Lang.SPAWN_NAME.getDef())));
+      senderUser.sendMessage(Lang.SPAWN_TELEPORTED_OTHER.toComponentWithPrefix(Map.of("%player%", target.getName())));
       return true;
     }
-
-    sender.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
+    
+    senderUser.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
     return true;
   }
   

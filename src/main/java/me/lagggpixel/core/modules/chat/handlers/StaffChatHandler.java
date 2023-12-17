@@ -1,5 +1,7 @@
 package me.lagggpixel.core.modules.chat.handlers;
 
+import me.lagggpixel.core.Main;
+import me.lagggpixel.core.data.User;
 import me.lagggpixel.core.enums.Lang;
 import me.lagggpixel.core.utils.ChatUtils;
 import net.kyori.adventure.text.Component;
@@ -11,12 +13,13 @@ import java.util.Map;
 public class StaffChatHandler {
   
   public static void sendStaffChatMessage(Player sender, Component message) {
+    User user = Main.getUser(sender.getUniqueId());
     Component messageToSend = Lang.CHAT_STAFF_CHAT.toComponent(Map.of(
         "%sender%", sender.getName(),
         "%message%", ChatUtils.componentToString(message)));
     Bukkit.getOnlinePlayers().forEach(player -> {
       if (player.hasPermission("coreplugin.chat.command.player.staffchat.view")) {
-        player.sendMessage(messageToSend);
+        user.sendMessage(messageToSend);
       }
     });
   }

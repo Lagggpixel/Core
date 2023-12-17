@@ -21,7 +21,7 @@ public class GuildDisbandCommand implements ISubCommand {
   @Override
   public void execute(CommandSender commandSender, String[] args) {
     if (!(commandSender instanceof Player sender)) {
-      commandSender.sendMessage("Only players can disband guilds!");
+      commandSender.sendMessage(Lang.PLAYER_ONLY.toComponentWithPrefix());
       return;
     }
     

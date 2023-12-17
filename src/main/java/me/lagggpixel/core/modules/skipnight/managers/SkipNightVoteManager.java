@@ -1,6 +1,7 @@
 package me.lagggpixel.core.modules.skipnight.managers;
 
 import me.lagggpixel.core.Main;
+import me.lagggpixel.core.data.User;
 import me.lagggpixel.core.enums.Lang;
 import me.lagggpixel.core.modules.skipnight.SkipNightModule;
 import me.lagggpixel.core.modules.skipnight.objects.SkipNightVoteType;
@@ -34,6 +35,7 @@ public class SkipNightVoteManager implements Runnable, Listener {
   private List<SkipNightVoter> skipNightVoters;
   private List<SkipNightVoter> afkSkipNightVoters;
   private Player player;
+  private User user;
   private World world;
   private SkipNightManager skipNightManager;
   
@@ -61,6 +63,7 @@ public class SkipNightVoteManager implements Runnable, Listener {
   @EventHandler
   public void onBedEnter(PlayerBedEnterEvent event) {
     Player player = event.getPlayer();
+    User user = Main.getUser(player);
     
     if (timer != Timer.OFF && skipNightVoteType == SkipNightVoteType.NIGHT) { // vote is running at night
       SkipNightVoter skipNightVoter = new SkipNightVoter(player.getUniqueId());
@@ -70,17 +73,17 @@ public class SkipNightVoteManager implements Runnable, Listener {
           skipNightVoter.voteYes();
           yes++;
           
-          player.sendMessage(Lang.SN_IN_BED_VOTED_YES.toComponentWithPrefix());
+          user.sendMessage(Lang.SN_IN_BED_VOTED_YES.toComponentWithPrefix());
         }
       } else { // Voter doesn't exist but hasn't voted
         skipNightVoters.add(skipNightVoter);
         skipNightVoter.voteYes();
         yes++;
-        player.sendMessage(Lang.SN_IN_BED_VOTED_YES.toComponentWithPrefix());
+        user.sendMessage(Lang.SN_IN_BED_VOTED_YES.toComponentWithPrefix());
       }
     } else {
       if (player.getWorld().getPlayers().size() > 1) { // if player isn't only one in the world
-        player.sendMessage(Lang.SN_IN_BED_NO_VOTE_IN_PROGRESS.toComponentWithPrefix());
+        user.sendMessage(Lang.SN_IN_BED_NO_VOTE_IN_PROGRESS.toComponentWithPrefix());
       }
     }
   }
@@ -250,6 +253,7 @@ public class SkipNightVoteManager implements Runnable, Listener {
   }
   
   public void addYes(UUID uuid, SkipNightVoteType skipNightVoteType) {
+    
     if (timer != Timer.OFF) {
       SkipNightVoter skipNightVoter = new SkipNightVoter(uuid);
       if (!skipNightVoters.isEmpty() && skipNightVoters.contains(skipNightVoter)) {
@@ -257,11 +261,11 @@ public class SkipNightVoteManager implements Runnable, Listener {
         if (skipNightVoter.getVote() == 0) {
           yes++;
           skipNightVoter.voteYes();
-          player.sendMessage(Lang.SN_VOTED_SELF.toComponentWithPrefix(Map.of("%status%", "yes")));
+          user.sendMessage(Lang.SN_VOTED_SELF.toComponentWithPrefix(Map.of("%status%", "yes")));
           // actionBarMessage(messages.playerHasVotedYes(Bukkit.getPlayer(uuid).getName()));
-        } else player.sendMessage(Lang.SN_ALREADY_VOTED.toComponentWithPrefix());
+        } else user.sendMessage(Lang.SN_ALREADY_VOTED.toComponentWithPrefix());
       }
-    } else player.sendMessage(noVoteInProgress());
+    } else user.sendMessage(noVoteInProgress());
   }
   
   public void addNo(UUID uuid, SkipNightVoteType skipNightVoteType) {
@@ -272,32 +276,33 @@ public class SkipNightVoteManager implements Runnable, Listener {
         if (skipNightVoter.getVote() == 0) {
           no++;
           skipNightVoter.voteNo();
-          player.sendMessage(Lang.SN_VOTED_SELF.toComponentWithPrefix(Map.of("%status%", "no")));
+          user.sendMessage(Lang.SN_VOTED_SELF.toComponentWithPrefix(Map.of("%status%", "no")));
           // actionBarMessage(messages.playerHasVotedNo(Bukkit.getPlayer(uuid).getName()));
-        } else player.sendMessage(Lang.SN_ALREADY_VOTED.toComponentWithPrefix());
+        } else user.sendMessage(Lang.SN_ALREADY_VOTED.toComponentWithPrefix());
       }
-    } else player.sendMessage(noVoteInProgress());
+    } else user.sendMessage(noVoteInProgress());
   }
   
   // Attempts to start a vote if all conditions are met, otherwise informs player why vote can't start
   public void start(Player player, SkipNightVoteType skipNightVoteType) {
-    
+    User user = Main.getUser(player);
     boolean isAfk = Main.getUser(player.getUniqueId()).isAfk();
     
     if (!isInOverworld(player)) // If player isn't in the overworld
-      player.sendMessage(Lang.SN_WORLD_NO_OVERWORLD.toComponentWithPrefix());
+      user.sendMessage(Lang.SN_WORLD_NO_OVERWORLD.toComponentWithPrefix());
     else if (skipNightVoteType == SkipNightVoteType.NIGHT && player.getWorld().getTime() < 12516) // If it's day, trying to skip night
-      player.sendMessage(Lang.SN_CAN_ONLY_VOTE_AT_NIGHT.toComponentWithPrefix());
+      user.sendMessage(Lang.SN_CAN_ONLY_VOTE_AT_NIGHT.toComponentWithPrefix());
     else if (isAfk)
-      player.sendMessage(Lang.SN_NO_VOTE_WHILE_AFK.toComponentWithPrefix());
+      user.sendMessage(Lang.SN_NO_VOTE_WHILE_AFK.toComponentWithPrefix());
       // else if (timer == Timer.COOLDOWN) // If the vote is in cooldown
       //    platform.player(player).sendMessage(messages.cooldown());
     else if (!(timer == Timer.OFF)) // If there's a vote happening
-      player.sendMessage(Lang.SN_VOTE_ALREADY_IN_PROGRESS.toComponentWithPrefix());
+      user.sendMessage(Lang.SN_VOTE_ALREADY_IN_PROGRESS.toComponentWithPrefix());
     else {
       timer = Timer.INIT;
       this.skipNightVoteType = skipNightVoteType;
       this.player = player;
+      this.user = user;
       world = player.getWorld();
       run();
     }
@@ -319,7 +324,7 @@ public class SkipNightVoteManager implements Runnable, Listener {
   private void updateAll(List<SkipNightVoter> skipNightVoters) {
     for (Player player : Main.getInstance().getServer().getOnlinePlayers()) {
       SkipNightVoter skipNightVoter = new SkipNightVoter(player.getUniqueId());
-      
+      User user = Main.getUser(player);
       boolean isAfk = Main.getUser(player.getUniqueId()).isAfk();
       
       if (isInOverworld(player)) {
@@ -331,25 +336,25 @@ public class SkipNightVoteManager implements Runnable, Listener {
             int vote = skipNightVoter.resetVote();
             if (vote == 1) yes--;
             if (vote == -1) no--;
-            player.sendMessage(Lang.SN_AFK.toComponentWithPrefix());
+            user.sendMessage(Lang.SN_AFK.toComponentWithPrefix());
           }
         } else if (afkSkipNightVoters.contains(skipNightVoter)) {
           if (!isAfk) { // in Afk, change to Active
             afkSkipNightVoters.remove(skipNightVoter);
             skipNightVoters.add(skipNightVoter);
-            player.sendMessage(Lang.SN_BACK_FROM_AFK.toComponentWithPrefix());
-            player.sendMessage(voteButtons());
+            user.sendMessage(Lang.SN_BACK_FROM_AFK.toComponentWithPrefix());
+            user.sendMessage(voteButtons());
           }
         } else {
           if (isAfk) { // not in Active & Afk, change to afk
             afkSkipNightVoters.add(skipNightVoter);
             player.showBossBar(bar);
-            player.sendMessage(Lang.SN_AFK.toComponentWithPrefix());
+            user.sendMessage(Lang.SN_AFK.toComponentWithPrefix());
           } else { // not in Active & Afk, change to active
             skipNightVoters.add(skipNightVoter);
             player.showBossBar(bar);
-            player.sendMessage(Lang.SN_VOTE_STARTED.toComponentWithPrefix(Map.of("%player%", player.getName())));
-            player.sendMessage(voteButtons());
+            user.sendMessage(Lang.SN_VOTE_STARTED.toComponentWithPrefix(Map.of("%player%", player.getName())));
+            user.sendMessage(voteButtons());
           }
         }
       } else {
@@ -359,12 +364,12 @@ public class SkipNightVoteManager implements Runnable, Listener {
           if (vote == 1) yes--;
           if (vote == -1) no--;
           player.hideBossBar(bar);
-          player.sendMessage(Lang.SN_LEFT_WORLD.toComponentWithPrefix());
+          user.sendMessage(Lang.SN_LEFT_WORLD.toComponentWithPrefix());
         }
         if (afkSkipNightVoters.contains(skipNightVoter)) { // not in world, in Afk
           afkSkipNightVoters.remove(skipNightVoter);
           player.hideBossBar(bar);
-          player.sendMessage(Lang.SN_LEFT_WORLD.toComponentWithPrefix());
+          user.sendMessage(Lang.SN_LEFT_WORLD.toComponentWithPrefix());
         }
       }
     }
@@ -375,7 +380,7 @@ public class SkipNightVoteManager implements Runnable, Listener {
   private List<SkipNightVoter> updateAll(List<SkipNightVoter> skipNightVoters, Component message) {
     for (Player player : Main.getInstance().getServer().getOnlinePlayers()) {
       SkipNightVoter skipNightVoter = new SkipNightVoter(player.getUniqueId());
-      
+      User user = Main.getUser(player);
       boolean isAfk = Main.getUser(player.getUniqueId()).isAfk();
       
       if (isInOverworld(player)) {
@@ -387,28 +392,28 @@ public class SkipNightVoteManager implements Runnable, Listener {
             int vote = skipNightVoter.resetVote();
             if (vote == 1) yes--;
             if (vote == -1) no--;
-            player.sendMessage(Lang.SN_AFK.toComponentWithPrefix());
+            user.sendMessage(Lang.SN_AFK.toComponentWithPrefix());
           }
         } else if (afkSkipNightVoters.contains(skipNightVoter)) {
           if (!isAfk) { // in Afk, change to Active
             afkSkipNightVoters.remove(skipNightVoter);
             skipNightVoters.add(skipNightVoter);
-            player.sendMessage(Lang.SN_BACK_FROM_AFK.toComponentWithPrefix());
-            player.sendMessage(voteButtons());
+            user.sendMessage(Lang.SN_BACK_FROM_AFK.toComponentWithPrefix());
+            user.sendMessage(voteButtons());
           }
         } else {
           if (isAfk) { // not in Active & Afk, change to afk
             afkSkipNightVoters.add(skipNightVoter);
             player.showBossBar(bar);
-            player.sendMessage(Lang.SN_AFK.toComponentWithPrefix());
+            user.sendMessage(Lang.SN_AFK.toComponentWithPrefix());
           } else { // not in Active & Afk, change to active
             skipNightVoters.add(skipNightVoter);
             player.showBossBar(bar);
-            player.sendMessage(Lang.SN_VOTE_STARTED.toComponentWithPrefix(Map.of("%player%", player.getName())));
-            player.sendMessage(voteButtons());
+            user.sendMessage(Lang.SN_VOTE_STARTED.toComponentWithPrefix(Map.of("%player%", player.getName())));
+            user.sendMessage(voteButtons());
           }
         }
-        player.sendMessage(message);
+        user.sendMessage(message);
       } else {
         if (skipNightVoters.contains(skipNightVoter)) { // not in world, in Active
           skipNightVoters.remove(skipNightVoter);
@@ -416,12 +421,12 @@ public class SkipNightVoteManager implements Runnable, Listener {
           if (vote == 1) yes--;
           if (vote == -1) no--;
           player.hideBossBar(bar);
-          player.sendMessage(Lang.SN_LEFT_WORLD.toComponentWithPrefix());
+          user.sendMessage(Lang.SN_LEFT_WORLD.toComponentWithPrefix());
         }
         if (afkSkipNightVoters.contains(skipNightVoter)) { // not in world, in Afk
           afkSkipNightVoters.remove(skipNightVoter);
           player.hideBossBar(bar);
-          player.sendMessage(Lang.SN_LEFT_WORLD.toComponentWithPrefix());
+          user.sendMessage(Lang.SN_LEFT_WORLD.toComponentWithPrefix());
         }
       }
     }
@@ -433,7 +438,7 @@ public class SkipNightVoteManager implements Runnable, Listener {
   private void updateAll(List<SkipNightVoter> skipNightVoters, Player sender) {
     for (Player player : Main.getInstance().getServer().getOnlinePlayers()) {
       SkipNightVoter skipNightVoter = new SkipNightVoter(player.getUniqueId());
-      
+      User user = Main.getUser(player);
       boolean isAfk = Main.getUser(player.getUniqueId()).isAfk();
       
       if (isInOverworld(player)) {
@@ -445,33 +450,33 @@ public class SkipNightVoteManager implements Runnable, Listener {
             int vote = skipNightVoter.resetVote();
             if (vote == 1) yes--;
             if (vote == -1) no--;
-            player.sendMessage(Lang.SN_AFK.toComponentWithPrefix());
+            user.sendMessage(Lang.SN_AFK.toComponentWithPrefix());
           }
         } else if (afkSkipNightVoters.contains(skipNightVoter)) {
           if (!isAfk) { // in Afk, change to Active
             afkSkipNightVoters.remove(skipNightVoter);
             skipNightVoters.add(skipNightVoter);
-            player.sendMessage(Lang.SN_BACK_FROM_AFK.toComponentWithPrefix());
-            player.sendMessage(voteButtons());
+            user.sendMessage(Lang.SN_BACK_FROM_AFK.toComponentWithPrefix());
+            user.sendMessage(voteButtons());
           }
         } else {
           if (isAfk) { // not in Active & Afk, change to afk
             afkSkipNightVoters.add(skipNightVoter);
             player.showBossBar(bar);
-            player.sendMessage(Lang.SN_VOTE_STARTED.toComponentWithPrefix(Map.of("%player%", player.getName())));
-            player.sendMessage(Lang.SN_AFK.toComponentWithPrefix());
+            user.sendMessage(Lang.SN_VOTE_STARTED.toComponentWithPrefix(Map.of("%player%", player.getName())));
+            user.sendMessage(Lang.SN_AFK.toComponentWithPrefix());
           } else { // not in Active & Afk, change to active
             skipNightVoters.add(skipNightVoter);
             player.showBossBar(bar);
-            player.sendMessage(Lang.SN_VOTE_STARTED.toComponentWithPrefix(Map.of("%player%", player.getName())));
+            user.sendMessage(Lang.SN_VOTE_STARTED.toComponentWithPrefix(Map.of("%player%", player.getName())));
             if (player == sender) {
               skipNightVoter.voteYes();
-              player.sendMessage(Lang.SN_VOTED_SELF.toComponentWithPrefix(Map.of("%status%", "yes")));
+              user.sendMessage(Lang.SN_VOTED_SELF.toComponentWithPrefix(Map.of("%status%", "yes")));
             } else if (player.isSleeping()) {
               skipNightVoter.voteYes();
-              player.sendMessage(Lang.SN_VOTED_SELF.toComponentWithPrefix(Map.of("%status%", "yes")));
+              user.sendMessage(Lang.SN_VOTED_SELF.toComponentWithPrefix(Map.of("%status%", "yes")));
             } else {
-              player.sendMessage(voteButtons());
+              user.sendMessage(voteButtons());
             }
           }
         }
@@ -482,12 +487,12 @@ public class SkipNightVoteManager implements Runnable, Listener {
           if (vote == 1) yes--;
           if (vote == -1) no--;
           player.hideBossBar(bar);
-          player.sendMessage(Lang.SN_LEFT_WORLD.toComponentWithPrefix());
+          user.sendMessage(Lang.SN_LEFT_WORLD.toComponentWithPrefix());
         }
         if (afkSkipNightVoters.contains(skipNightVoter)) { // not in world, in Afk
           afkSkipNightVoters.remove(skipNightVoter);
           player.hideBossBar(bar);
-          player.sendMessage(Lang.SN_LEFT_WORLD.toComponentWithPrefix());
+          user.sendMessage(Lang.SN_LEFT_WORLD.toComponentWithPrefix());
         }
       }
     }

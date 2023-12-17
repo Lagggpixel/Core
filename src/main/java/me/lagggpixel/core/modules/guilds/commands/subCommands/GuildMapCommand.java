@@ -1,5 +1,7 @@
 package me.lagggpixel.core.modules.guilds.commands.subCommands;
 
+import me.lagggpixel.core.Main;
+import me.lagggpixel.core.data.User;
 import me.lagggpixel.core.enums.Lang;
 import me.lagggpixel.core.modules.guilds.GuildModule;
 import me.lagggpixel.core.modules.guilds.commands.ISubCommand;
@@ -42,7 +44,9 @@ public class GuildMapCommand implements ISubCommand {
       commandSender.sendMessage(Lang.PLAYER_ONLY.toComponentWithPrefix());
       return;
     }
-
+    
+    User senderUser = Main.getUser(sender.getUniqueId());
+    
     if (!this.showing.contains(sender.getUniqueId())) {
       this.showing.add(sender.getUniqueId());
       int totalNearby = 0;
@@ -76,16 +80,16 @@ public class GuildMapCommand implements ISubCommand {
         }
 
         if (nearby < guild.getClaims().size() && !guild.getClaims().isEmpty()) {
-          sender.sendMessage(Lang.GUILD_MAP_DISPLAYED.toComponentWithPrefix(Map.of("%faction%", guild.getName(), "%block%", material.name())));
+          senderUser.sendMessage(Lang.GUILD_MAP_DISPLAYED.toComponentWithPrefix(Map.of("%faction%", guild.getName(), "%block%", material.name())));
         }
       }
       if (totalNearby >= guildModule.getClaimManager().getClaims().size()) {
-        sender.sendMessage(Lang.GUILD_MAP_NO_NEARBY.toComponentWithPrefix());
+        senderUser.sendMessage(Lang.GUILD_MAP_NO_NEARBY.toComponentWithPrefix());
         this.showing.remove(sender.getUniqueId());
       }
     } else {
       this.showing.remove(sender.getUniqueId());
-      sender.sendMessage(Lang.GUILD_MAP_HIDDEN.toComponentWithPrefix());
+      senderUser.sendMessage(Lang.GUILD_MAP_HIDDEN.toComponentWithPrefix());
       for (Pillar pillar : guildModule.getPillarManager().getPillars()) {
         for (Guild guild : guildModule.getGuildHandler().getGuilds()) {
           if (pillar.getID().contains(guild.getName()) && pillar.getID().contains(sender.getName()) && (pillar.getID().contains("c1") || pillar.getID().contains("c2") || pillar.getID().contains("c3") || pillar.getID().contains("c4")))

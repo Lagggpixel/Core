@@ -13,8 +13,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-import static org.bukkit.Bukkit.getLogger;
-
 public class SkipNightCommand implements ICommandClass {
   
   SkipNightModule module;
@@ -51,27 +49,27 @@ public class SkipNightCommand implements ICommandClass {
   }
   
   @Override
-  public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
+  public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
     
     if (args.length == 1) {
       if (args[0].equalsIgnoreCase("yes")) {
-        if (!(sender instanceof Player)) {
-          sender.sendMessage("Vote not allowed from console.");
+        if (!(commandSender instanceof Player)) {
+          commandSender.sendMessage("Vote not allowed from console.");
         } else {
-          this.skipNightVoteManager.addYes(((Player) sender).getUniqueId(), SkipNightVoteType.NIGHT);
+          this.skipNightVoteManager.addYes(((Player) commandSender).getUniqueId(), SkipNightVoteType.NIGHT);
         }
       } else if (args[0].equalsIgnoreCase("no")) {
-        if (!(sender instanceof Player)) {
-          sender.sendMessage("Vote not allowed from console.");
+        if (!(commandSender instanceof Player)) {
+          commandSender.sendMessage("Vote not allowed from console.");
         } else {
-          this.skipNightVoteManager.addNo(((Player) sender).getUniqueId(), SkipNightVoteType.NIGHT);
+          this.skipNightVoteManager.addNo(((Player) commandSender).getUniqueId(), SkipNightVoteType.NIGHT);
         }
       }
     } else {
-      if (!(sender instanceof Player)) {
-        sender.sendMessage("Vote can't be started from console.");
+      if (!(commandSender instanceof Player)) {
+        commandSender.sendMessage("Vote can't be started from console.");
       } else {
-        this.skipNightVoteManager.start((Player) sender, SkipNightVoteType.NIGHT);
+        this.skipNightVoteManager.start((Player) commandSender, SkipNightVoteType.NIGHT);
       }
     }
     

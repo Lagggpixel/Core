@@ -1,6 +1,7 @@
 package me.lagggpixel.core.modules.guilds.listeners;
 
 import me.lagggpixel.core.Main;
+import me.lagggpixel.core.data.User;
 import me.lagggpixel.core.enums.Lang;
 import me.lagggpixel.core.modules.guilds.GuildModule;
 import me.lagggpixel.core.modules.guilds.data.Claim;
@@ -67,6 +68,7 @@ public class ClaimListeners implements Listener {
   @EventHandler(priority = EventPriority.HIGHEST)
   public void onClaimInteract(PlayerInteractEvent event) {
     Player player = event.getPlayer();
+    User user = Main.getUser(player);
     if (event.getAction() == Action.PHYSICAL) {
       for (Claim claim : this.claimManager.getClaims()) {
         if (event.getClickedBlock() == null) {
@@ -91,7 +93,7 @@ public class ClaimListeners implements Listener {
           if (claim.isInside(event.getClickedBlock().getLocation(), false)) {
             Guild playerFaction = guildHandler.getGuildFromPlayer(player);
             if (handleClaimInteraction(event, claim, playerFaction)) return;
-            player.sendMessage(Lang.GUILD_CLAIM_NO_INTERACT.toComponentWithPrefix());
+            user.sendMessage(Lang.GUILD_CLAIM_NO_INTERACT.toComponentWithPrefix());
           }
         }
       }
@@ -101,7 +103,7 @@ public class ClaimListeners implements Listener {
           if (claim.isInside(event.getClickedBlock().getLocation(), false)) {
             Guild guild = guildHandler.getGuildFromPlayer(player);
             if (handleClaimInteraction(event, claim, guild)) return;
-            player.sendMessage(Lang.GUILD_CLAIM_NO_INTERACT.toComponentWithPrefix());
+            user.sendMessage(Lang.GUILD_CLAIM_NO_INTERACT.toComponentWithPrefix());
           }
         }
       }
@@ -410,9 +412,9 @@ public class ClaimListeners implements Listener {
   /**
    * Checks if a player can claim a specific block.
    *
-   * @param e       the PlayerInteractEvent triggered by the player
-   * @param p       the player who wants to claim the block
-   * @param guild   the guild the player belongs to
+   * @param e     the PlayerInteractEvent triggered by the player
+   * @param p     the player who wants to claim the block
+   * @param guild the guild the player belongs to
    * @return true   if the player can claim the block, false otherwise
    */
   private boolean checkIfPlayerCanClaim(PlayerInteractEvent e, Player p, Guild guild) {
@@ -485,6 +487,7 @@ public class ClaimListeners implements Listener {
   
   private void handleClaimInteract(BlockBreakEvent blockBreakEvent) {
     Player player = blockBreakEvent.getPlayer();
+    User user = Main.getUser(player);
     for (Claim claim : this.claimManager.getClaims()) {
       if (claim.isInside(blockBreakEvent.getBlock().getLocation(), false)) {
         Guild playerFaction = guildHandler.getGuildFromPlayer(player);
@@ -492,13 +495,14 @@ public class ClaimListeners implements Listener {
           return;
         }
         blockBreakEvent.setCancelled(true);
-        player.sendMessage(Lang.GUILD_CLAIM_NO_INTERACT.toComponentWithPrefix());
+        user.sendMessage(Lang.GUILD_CLAIM_NO_INTERACT.toComponentWithPrefix());
       }
     }
   }
   
   private void handleClaimInteract(BlockPlaceEvent blockPlaceEvent) {
     Player player = blockPlaceEvent.getPlayer();
+    User user = Main.getUser(player);
     for (Claim claim : this.claimManager.getClaims()) {
       if (claim.isInside(blockPlaceEvent.getBlock().getLocation(), false)) {
         Guild guild = guildHandler.getGuildFromPlayer(player);
@@ -506,7 +510,7 @@ public class ClaimListeners implements Listener {
           return;
         }
         blockPlaceEvent.setCancelled(true);
-        player.sendMessage(Lang.GUILD_CLAIM_NO_INTERACT.toComponentWithPrefix());
+        user.sendMessage(Lang.GUILD_CLAIM_NO_INTERACT.toComponentWithPrefix());
       }
     }
   }

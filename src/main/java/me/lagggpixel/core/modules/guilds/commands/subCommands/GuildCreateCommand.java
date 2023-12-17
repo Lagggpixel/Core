@@ -1,5 +1,7 @@
 package me.lagggpixel.core.modules.guilds.commands.subCommands;
 
+import me.lagggpixel.core.Main;
+import me.lagggpixel.core.data.User;
 import me.lagggpixel.core.enums.Lang;
 import me.lagggpixel.core.modules.guilds.GuildModule;
 import me.lagggpixel.core.modules.guilds.commands.ISubCommand;
@@ -26,7 +28,7 @@ public class GuildCreateCommand implements ISubCommand {
       commandSender.sendMessage(Lang.PLAYER_ONLY.toComponentWithPrefix());
       return;
     }
-
+    User user = Main.getUser(player);
     UUID playerUniqueId = player.getUniqueId();
 
     if (args.length != 2) {
@@ -48,8 +50,7 @@ public class GuildCreateCommand implements ISubCommand {
     
     for (Guild guild : guildHandler.getGuilds()) {
       if (guild.getName().equalsIgnoreCase(guildName)) {
-        player.sendMessage(Lang.GUILD_NAM_EXISTS.toComponentWithPrefix());
-        
+        user.sendMessage(Lang.GUILD_NAM_EXISTS.toComponentWithPrefix());
         return;
       }
     }

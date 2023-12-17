@@ -28,6 +28,7 @@ import net.dv8tion.jda.api.entities.MessageEmbed;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.Logger;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
@@ -39,10 +40,10 @@ import java.util.UUID;
 import java.util.logging.Level;
 
 public final class Main extends JavaPlugin {
-
+  
   private static Main INSTANCE;
   private static Map<UUID, User> userData;
-
+  
   static {
     ConfigurationSerialization.registerClass(InstantPlayerData.class);
     ConfigurationSerialization.registerClass(Home.class);
@@ -64,15 +65,15 @@ public final class Main extends JavaPlugin {
   @Setter
   @Getter
   private Logger log4jLogger;
-
+  
   public static @Nonnull Main getInstance() {
     return INSTANCE;
   }
-
+  
   public static void log(Level level, String message) {
     Main.getInstance().getLogger().log(level, "[Infinite Minecrafters Core]: " + message);
   }
-
+  
   public static @Nonnull Map<UUID, User> getUserData() {
     return userData;
   }
@@ -80,30 +81,40 @@ public final class Main extends JavaPlugin {
   /**
    * Retrieves the User object associated with the specified UUID.
    *
-   * @param  uuid  the UUID of the User to retrieve
-   * @return       the User object associated with the specified UUID
+   * @param uuid the UUID of the User to retrieve
+   * @return the User object associated with the specified UUID
    */
   public static User getUser(UUID uuid) {
     return userData.get(uuid);
   }
-
+  
+  /**
+   * Retrieves the User object associated with the specified Player Object.
+   *
+   * @param player the Player object of the User to retrieve
+   * @return the User object associated with the specified UUID
+   */
+  public static User getUser(Player player) {
+    return userData.get(player.getUniqueId());
+  }
+  
   public static @NotNull PluginManager getPluginManager() {
     return INSTANCE.getServer().getPluginManager();
   }
-
+  
   @Override
   public void onEnable() {
-
+    
     INSTANCE = this;
-
+    
     LangUtils.loadLangConfig();
-
+    
     userData = UserDataSerializer.loadData();
-
+    
     registerListeners();
-
+    
     TeleportUtils.startTeleportTask();
-
+    
     modules.put(bazaarModule.getId(), bazaarModule);
     modules.put(chatModule.getId(), chatModule);
     modules.put(discordModule.getId(), discordModule);
@@ -115,10 +126,10 @@ public final class Main extends JavaPlugin {
     modules.put(spawnModule.getId(), spawnModule);
     modules.put(staffModule.getId(), staffModule);
     modules.put(warpModule.getId(), warpModule);
-
+    
     EmbedBuilder startupLogEmbed = new EmbedBuilder();
     startupLogEmbed.setTitle("**Core Plugin Started**");
-
+    
     modules.forEach((k, v) -> {
       if (v.isEnabled()) {
         log(Level.INFO, "IModule " + v.getId() + " is enabled.");
@@ -131,10 +142,10 @@ public final class Main extends JavaPlugin {
         log(Level.INFO, "IModule " + v.getId() + " is disabled.");
       }
     });
-
+    
     DiscordModule.discordManager.sendEmbed(DiscordModule.discordManager.LOGGING_CHANNEL, startupLogEmbed.build());
   }
-
+  
   @Override
   public void onDisable() {
     modules.forEach((k, v) -> {
@@ -146,11 +157,11 @@ public final class Main extends JavaPlugin {
     UserDataSerializer.saveData(userData);
     DiscordModule.discordManager.getJda().shutdown();
   }
-
+  
   private void registerListeners() {
     new onPlayerJoin();
     new PlayerStatsListeners();
-
+    
     TeleportUtils.PlayerTeleportCancelListener listener = new TeleportUtils.PlayerTeleportCancelListener();
     this.getServer().getPluginManager().registerEvents(listener, Main.getInstance());
   }

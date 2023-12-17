@@ -54,18 +54,18 @@ public class StaffCommand implements ICommandClass {
       commandSender.sendMessage(Lang.PLAYER_ONLY.toComponentWithPrefix());
       return true;
     }
+    User senderUser = Main.getUser(sender.getUniqueId());
     if (args.length == 0) {
-      User user = Main.getUser(sender.getUniqueId());
-      boolean newStaffModeState = !user.isStaffMode();
-      user.setStaffMode(newStaffModeState);
+      boolean newStaffModeState = !senderUser.isStaffMode();
+      senderUser.setStaffMode(newStaffModeState);
       
       if (newStaffModeState) {
         // Player entered staff mode
-        sender.sendMessage(Lang.STAFF_MODE_ENABLED.toComponentWithPrefix());
+        senderUser.sendMessage(Lang.STAFF_MODE_ENABLED.toComponentWithPrefix());
         staffModeHandler.enterStaffMode(sender);
       } else {
         // Player exited staff mode
-        sender.sendMessage(Lang.STAFF_MODE_DISABLED.toComponentWithPrefix());
+        senderUser.sendMessage(Lang.STAFF_MODE_DISABLED.toComponentWithPrefix());
         staffModeHandler.exitStaffMode(sender);
       }
       return true;

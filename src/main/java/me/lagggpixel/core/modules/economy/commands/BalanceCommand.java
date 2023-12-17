@@ -52,41 +52,41 @@ public class BalanceCommand implements ICommandClass {
   }
   
   @Override
-  public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
+  public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String label, String[] args) {
     if (args.length > 1) {
-      sender.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
+      commandSender.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
       return true;
     }
     
     Player targetPlayer;
     if (args.length == 1) {
-      if (!sender.hasPermission("core.economy.balance.others")) {
-        sender.sendMessage(ChatUtils.stringToComponentCC(ChatUtils.componentToString(Main.getInstance().getServer().permissionMessage())));
+      if (!commandSender.hasPermission("core.economy.balance.others")) {
+        commandSender.sendMessage(ChatUtils.stringToComponentCC(ChatUtils.componentToString(Main.getInstance().getServer().permissionMessage())));
         return true;
       }
       
       targetPlayer = Bukkit.getPlayer(args[0]);
       if (targetPlayer == null) {
-        sender.sendMessage(Lang.PLAYER_NOT_FOUND.toComponentWithPrefix(Map.of("%player%", args[0])));
+        commandSender.sendMessage(Lang.PLAYER_NOT_FOUND.toComponentWithPrefix(Map.of("%player%", args[0])));
         return true;
       }
     } else {
-      if (!(sender instanceof Player)) {
-        sender.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
+      if (!(commandSender instanceof Player)) {
+        commandSender.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
         return true;
       }
       
-      targetPlayer = (Player) sender;
+      targetPlayer = (Player) commandSender;
     }
     
     double balance = economyManager.getBalance(targetPlayer);
     
-    if (targetPlayer.equals(sender)) {
-      sender.sendMessage(Lang.ECONOMY_BALANCE_SELF.toComponentWithPrefix(Map.of("%balance%", String.valueOf(balance))));
+    if (targetPlayer.equals(commandSender)) {
+      commandSender.sendMessage(Lang.ECONOMY_BALANCE_SELF.toComponentWithPrefix(Map.of("%balance%", String.valueOf(balance))));
       return true;
     }
     else{
-      sender.sendMessage(Lang.ECONOMY_BALANCE_OTHER.toComponentWithPrefix(Map.of("%player%", targetPlayer.getName(), "%balance%", String.valueOf(balance))));
+      commandSender.sendMessage(Lang.ECONOMY_BALANCE_OTHER.toComponentWithPrefix(Map.of("%player%", targetPlayer.getName(), "%balance%", String.valueOf(balance))));
     }
     return true;
   }

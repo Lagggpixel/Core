@@ -27,16 +27,17 @@ public class GuildDepositCommand implements ISubCommand {
       commandSender.sendMessage(Lang.PLAYER_ONLY.toComponentWithPrefix());
       return;
     }
-
+    
+    User senderUser = Main.getUser(sender.getUniqueId());
     Guild guild = guildModule.getGuildHandler().getGuildFromPlayer(sender);
 
     if (guild == null) {
-      sender.sendMessage(Lang.GUILD_NOT_IN_GUILD.toComponentWithPrefix());
+      senderUser.sendMessage(Lang.GUILD_NOT_IN_GUILD.toComponentWithPrefix());
       return;
     }
 
     if (args.length == 0) {
-      sender.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
+      senderUser.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
       return;
     }
 
@@ -48,32 +49,32 @@ public class GuildDepositCommand implements ISubCommand {
         double balance = user.getPlayerBalance();
 
         if (balance <= 0) {
-          sender.sendMessage(Lang.GUILD_DEPOSIT_NEGATIVE.toComponentWithPrefix());
+          senderUser.sendMessage(Lang.GUILD_DEPOSIT_NEGATIVE.toComponentWithPrefix());
           return;
         }
 
         guild.setBalance(guild.getBalance() + balance);
-        sender.sendMessage(Lang.GUILD_DEPOSIT_SUCCESS_ACKNOWLEDGE.toComponentWithPrefix(Map.of("%amount%", balance + "")));
+        senderUser.sendMessage(Lang.GUILD_DEPOSIT_SUCCESS_ACKNOWLEDGE.toComponentWithPrefix(Map.of("%amount%", balance + "")));
         guild.sendMessage(Lang.GUILD_DEPOSIT_SUCCESS_BROADCAST.toComponentWithPrefix(Map.of("%player%", sender.getName(), "%amount%", balance + "")));
         EconomyManager.getInstance().withdraw(sender, balance);
         return;
       }
-      sender.sendMessage(Lang.ECONOMY_INVALID_AMOUNT.toComponentWithPrefix());
+      senderUser.sendMessage(Lang.ECONOMY_INVALID_AMOUNT.toComponentWithPrefix());
 
       return;
     }
     double amount = Double.parseDouble(args[0]);
     if (amount <= 0) {
-      sender.sendMessage(Lang.GUILD_DEPOSIT_NEGATIVE.toComponentWithPrefix());
+      senderUser.sendMessage(Lang.GUILD_DEPOSIT_NEGATIVE.toComponentWithPrefix());
       return;
     }
     if (EconomyManager.getInstance().getBalance(sender) < amount) {
-      sender.sendMessage(Lang.ECONOMY_NOT_ENOUGH_MONEY.toComponentWithPrefix());
+      senderUser.sendMessage(Lang.ECONOMY_NOT_ENOUGH_MONEY.toComponentWithPrefix());
       return;
     }
     EconomyManager.getInstance().withdraw(sender, amount);
     guild.setBalance(guild.getBalance() + amount);
-    sender.sendMessage(Lang.GUILD_DEPOSIT_SUCCESS_ACKNOWLEDGE.toComponentWithPrefix(Map.of("%amount%", amount + "")));
+    senderUser.sendMessage(Lang.GUILD_DEPOSIT_SUCCESS_ACKNOWLEDGE.toComponentWithPrefix(Map.of("%amount%", amount + "")));
     guild.sendMessage(Lang.GUILD_DEPOSIT_SUCCESS_BROADCAST.toComponentWithPrefix(Map.of("%player%", sender.getName(), "%amount%", amount + "")));
   }
 

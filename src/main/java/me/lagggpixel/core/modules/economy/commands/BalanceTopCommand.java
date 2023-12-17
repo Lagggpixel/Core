@@ -51,29 +51,29 @@ public class BalanceTopCommand implements ICommandClass {
   }
 
   @Override
-  public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
+  public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String label, String[] args) {
     if (args.length > 0) {
-      sender.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
+      commandSender.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
       return true;
     }
 
     List<Map.Entry<UUID, Double>> balanceTop = economyManager.getBalanceTop();
 
     if (balanceTop.isEmpty()) {
-      sender.sendMessage(Lang.ECONOMY_BALTOP_NO_PLAYER_FOUND.toComponentWithPrefix());
+      commandSender.sendMessage(Lang.ECONOMY_BALTOP_NO_PLAYER_FOUND.toComponentWithPrefix());
       return true;
     }
 
-    sender.sendMessage(Lang.ECONOMY_BALTOP_HEADER.toComponent());
+    commandSender.sendMessage(Lang.ECONOMY_BALTOP_HEADER.toComponent());
 
     for (int i = 0; i < Math.min(10, balanceTop.size()); i++) {
       Map.Entry<UUID, Double> entry = balanceTop.get(i);
-      sender.sendMessage(Lang.ECONOMY_BALTOP_LISTING.toComponent(Map.of(
+      commandSender.sendMessage(Lang.ECONOMY_BALTOP_LISTING.toComponent(Map.of(
           "%position%", String.valueOf(i + 1),
           "%player%", Main.getUser(entry.getKey()).getPlayerName(),
           "%balance%", String.valueOf(entry.getValue())
       )));
-      sender.sendMessage((i + 1) + ". " + entry.getKey() + ": " + entry.getValue());
+      commandSender.sendMessage((i + 1) + ". " + entry.getKey() + ": " + entry.getValue());
     }
 
     return true;

@@ -1,7 +1,9 @@
 package me.lagggpixel.core.modules.staff.commands;
 
-import me.lagggpixel.core.interfaces.ICommandClass;
+import me.lagggpixel.core.Main;
+import me.lagggpixel.core.data.User;
 import me.lagggpixel.core.enums.Lang;
+import me.lagggpixel.core.interfaces.ICommandClass;
 import me.lagggpixel.core.modules.staff.StaffModule;
 import me.lagggpixel.core.modules.staff.handlers.GamemodeHandler;
 import me.lagggpixel.core.utils.CommandUtils;
@@ -59,6 +61,7 @@ public class GamemodeCommands implements ICommandClass {
   public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
     
     if (commandSender instanceof Player sender) {
+      User senderUser = Main.getUser(sender.getUniqueId());
       if (args.length == 0) {
         switch (s) {
           case "gma", "gamemodeadventure", "gmadventure", "gamemodea" ->
@@ -70,7 +73,7 @@ public class GamemodeCommands implements ICommandClass {
           case "gms", "gamemodesurvival", "gmsurvival", "gamemodes" ->
               gamemodeHandler.setGameMode(sender, GameMode.SURVIVAL);
           default -> {
-            sender.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix(Map.of("%gamemode%", s)));
+            senderUser.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix(Map.of("%gamemode%", s)));
           }
         }
         return true;
@@ -80,7 +83,7 @@ public class GamemodeCommands implements ICommandClass {
         if (!(s.equalsIgnoreCase("gamemode") || s.equalsIgnoreCase("gm"))) {
           Player target = sender.getServer().getPlayer(args[0]);
           if (target == null) {
-            sender.sendMessage(Lang.PLAYER_NOT_FOUND.toComponentWithPrefix(Map.of("%player%", args[0])));
+            senderUser.sendMessage(Lang.PLAYER_NOT_FOUND.toComponentWithPrefix(Map.of("%player%", args[0])));
             return true;
           }
           switch (s) {
@@ -92,7 +95,7 @@ public class GamemodeCommands implements ICommandClass {
                 gamemodeHandler.setGameMode(sender, target, GameMode.SPECTATOR);
             case "gms", "gamemodesurvival", "gmsurvival", "gamemodes" ->
                 gamemodeHandler.setGameMode(sender, target, GameMode.SURVIVAL);
-            default -> sender.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
+            default -> senderUser.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
           }
           return true;
         }
@@ -103,20 +106,20 @@ public class GamemodeCommands implements ICommandClass {
           case "a", "adventure", "2" -> gamemodeHandler.setGameMode(sender, GameMode.ADVENTURE);
           case "sp", "spectator", "3" -> gamemodeHandler.setGameMode(sender, GameMode.SPECTATOR);
           default ->
-              sender.sendMessage(Lang.STAFF_GAMEMODE_INVALID.toComponentWithPrefix(Map.of("%gamemode%", args[0])));
+              senderUser.sendMessage(Lang.STAFF_GAMEMODE_INVALID.toComponentWithPrefix(Map.of("%gamemode%", args[0])));
         }
         return true;
       }
       
       if (args.length == 2) {
         if (!(s.equalsIgnoreCase("gamemode") || s.equalsIgnoreCase("gm"))) {
-          sender.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
+          senderUser.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
           return true;
         }
         
         Player target = sender.getServer().getPlayer(args[1]);
         if (target == null) {
-          sender.sendMessage(Lang.PLAYER_NOT_FOUND.toComponentWithPrefix(Map.of("%player%", args[1])));
+          senderUser.sendMessage(Lang.PLAYER_NOT_FOUND.toComponentWithPrefix(Map.of("%player%", args[1])));
           return true;
         }
         
@@ -126,12 +129,12 @@ public class GamemodeCommands implements ICommandClass {
           case "a", "adventure", "2" -> gamemodeHandler.setGameMode(sender, target, GameMode.ADVENTURE);
           case "sp", "spectator", "3" -> gamemodeHandler.setGameMode(sender, target, GameMode.SPECTATOR);
           default ->
-              sender.sendMessage(Lang.STAFF_GAMEMODE_INVALID.toComponentWithPrefix(Map.of("%gamemode%", args[0])));
+              senderUser.sendMessage(Lang.STAFF_GAMEMODE_INVALID.toComponentWithPrefix(Map.of("%gamemode%", args[0])));
         }
         return true;
       }
       
-      sender.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
+      senderUser.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
       return true;
     }
     

@@ -1,5 +1,7 @@
 package me.lagggpixel.core.modules.guilds.commands.subCommands;
 
+import me.lagggpixel.core.Main;
+import me.lagggpixel.core.data.User;
 import me.lagggpixel.core.enums.Lang;
 import me.lagggpixel.core.modules.guilds.GuildModule;
 import me.lagggpixel.core.modules.guilds.commands.ISubCommand;
@@ -21,14 +23,14 @@ public class GuildClaimCommand implements ISubCommand {
       commandSender.sendMessage(Lang.PLAYER_ONLY.toComponentWithPrefix());
       return;
     }
-    
+    User senderUser = Main.getUser(sender.getUniqueId());
     Guild guild = guildModule.getGuildHandler().getGuildFromPlayerUUID(sender.getUniqueId());
     if (guild == null) {
-      sender.sendMessage(Lang.GUILD_NOT_IN_GUILD.toComponentWithPrefix());
+      senderUser.sendMessage(Lang.GUILD_NOT_IN_GUILD.toComponentWithPrefix());
       return;
     }
     if (guild.getMembers().contains(sender.getUniqueId())) {
-      sender.sendMessage(Lang.GUILD_MUST_BE_OFFICER.toComponentWithPrefix());
+      senderUser.sendMessage(Lang.GUILD_MUST_BE_OFFICER.toComponentWithPrefix());
       return;
     }
     

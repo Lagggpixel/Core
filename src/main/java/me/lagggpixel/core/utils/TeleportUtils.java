@@ -3,6 +3,7 @@ package me.lagggpixel.core.utils;
 import lombok.Getter;
 import me.lagggpixel.core.Main;
 import me.lagggpixel.core.data.DelayTeleport;
+import me.lagggpixel.core.data.User;
 import me.lagggpixel.core.enums.Lang;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -62,10 +63,10 @@ public class TeleportUtils {
   private static final Map<Player, DelayTeleport> teleportTasks = new HashMap<>();
   
   public static void teleportWithDelay(Player player, Location location, String place_name) {
-
+    User user = Main.getUser(player.getUniqueId());
     if (player.hasPermission(TELEPORTATION_BYPASS_PERMISSION)) {
       player.teleport(location);
-      player.sendMessage(Lang.TELEPORTATION_SUCCESS.toComponentWithPrefix(Map.of(
+      user.sendMessage(Lang.TELEPORTATION_SUCCESS.toComponentWithPrefix(Map.of(
           "%name%", place_name
       )));
       return;
@@ -77,10 +78,11 @@ public class TeleportUtils {
   
   
   public static void cancelTeleport(Player player, String reason) {
+    User user = Main.getUser(player.getUniqueId());
     DelayTeleport teleportTask = teleportTasks.get(player);
     teleportTasks.remove(player, teleportTask);
     
-    player.sendMessage(Lang.TELEPORTATION_CANCELED.toComponentWithPrefix(Map.of(
+    user.sendMessage(Lang.TELEPORTATION_CANCELED.toComponentWithPrefix(Map.of(
         "%reason%", reason
     )));
   }

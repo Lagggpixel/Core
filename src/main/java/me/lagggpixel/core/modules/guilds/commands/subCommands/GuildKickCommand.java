@@ -1,10 +1,11 @@
 package me.lagggpixel.core.modules.guilds.commands.subCommands;
 
+import me.lagggpixel.core.Main;
+import me.lagggpixel.core.data.User;
 import me.lagggpixel.core.enums.Lang;
 import me.lagggpixel.core.modules.guilds.GuildModule;
 import me.lagggpixel.core.modules.guilds.commands.ISubCommand;
 import me.lagggpixel.core.modules.guilds.data.Guild;
-import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -25,19 +26,19 @@ public class GuildKickCommand implements ISubCommand {
       commandSender.sendMessage(Lang.PLAYER_ONLY.toComponentWithPrefix());
       return;
     }
-    
+    User senderUser = Main.getUser(sender.getUniqueId());
     Guild guild = guildModule.getGuildHandler().getGuildFromPlayer(sender);
     
     
     if (args.length >= 1) {
       
       if (guild == null) {
-        sender.sendMessage(Lang.GUILD_NOT_IN_GUILD.toComponentWithPrefix());
+        senderUser.sendMessage(Lang.GUILD_NOT_IN_GUILD.toComponentWithPrefix());
         return;
       }
       
       if (!guild.isLeader(sender.getUniqueId()) && !guild.getOfficers().contains(sender.getUniqueId())) {
-        sender.sendMessage(Lang.GUILD_MUST_BE_OFFICER.toComponentWithPrefix());
+        senderUser.sendMessage(Lang.GUILD_MUST_BE_OFFICER.toComponentWithPrefix());
         return;
       }
       StringBuilder sb = new StringBuilder();
@@ -47,26 +48,24 @@ public class GuildKickCommand implements ISubCommand {
       String name = sb.toString().trim().replace(" ", "");
       
       if (guild.getPlayer(name) == null) {
-        sender.sendMessage(Lang.GUILD_KICK_NOT_PART_OF_GUILD.toComponentWithPrefix(Map.of("%player%", name)));
+        senderUser.sendMessage(Lang.GUILD_KICK_NOT_PART_OF_GUILD.toComponentWithPrefix(Map.of("%player%", name)));
         return;
       }
       UUID uuid = guild.getPlayer(name).getUniqueId();
       
       if (guild.getOfficers().contains(uuid) && guild.getOfficers().contains(sender.getUniqueId())) {
-        sender.sendMessage(Lang.GUILD_KICK_CANNOT_KICK_OFFICER.toComponentWithPrefix());
+        senderUser.sendMessage(Lang.GUILD_KICK_CANNOT_KICK_OFFICER.toComponentWithPrefix());
         return;
       }
       if (guild.isLeader(uuid)) {
-        sender.sendMessage(Lang.GUILD_KICK_CANNOT_KICK_LEADER.toComponentWithPrefix());
+        senderUser.sendMessage(Lang.GUILD_KICK_CANNOT_KICK_LEADER.toComponentWithPrefix());
         return;
       }
       
-      Player player = Bukkit.getPlayer(uuid);
-      if (player != null) {
-        player.sendMessage(Lang.GUILD_KICK_SUCCESS_NOTIFY.toComponentWithPrefix());
-      }
+      User playerUser = Main.getUser(uuid);
+      playerUser.sendMessage(Lang.GUILD_KICK_SUCCESS_NOTIFY.toComponentWithPrefix());
       
-      sender.sendMessage(Lang.GUILD_KICK_SUCCESS_ACKNOWLEDGE.toComponentWithPrefix(Map.of("%player%", name)));
+      senderUser.sendMessage(Lang.GUILD_KICK_SUCCESS_ACKNOWLEDGE.toComponentWithPrefix(Map.of("%player%", name)));
       guild.sendMessage(Lang.GUILD_KICK_SUCCESS_BROADCAST.toComponentWithPrefix(Map.of("%player%", name)));
       
       if (guild.getOfficers().contains(uuid)) {
@@ -76,6 +75,6 @@ public class GuildKickCommand implements ISubCommand {
       }
       return;
     }
-    sender.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
+    senderUser.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
   }
 }

@@ -73,14 +73,15 @@ public class VanishCommand implements ICommandClass {
       return true;
     }
     
+    User senderUser = Main.getUser(sender.getUniqueId());
     if (args.length == 0) {
-      User user = Main.getUser(sender.getUniqueId());
-      if (user.isVanished()) {
+      if (senderUser.isVanished()) {
         vanishHandler.showPlayer(sender);
       } else {
         vanishHandler.vanishPlayer(sender);
       }
     } else if (args.length == 1) {
+      
       Player target = Bukkit.getPlayer(args[0]);
       if (target != null) {
         User user = Main.getUser(target.getUniqueId());
@@ -90,10 +91,10 @@ public class VanishCommand implements ICommandClass {
           vanishHandler.vanishPlayer(sender, target);
         }
       } else {
-        sender.sendMessage(Lang.PLAYER_NOT_FOUND.toComponentWithPrefix(Map.of("%player%", args[0])));
+        senderUser.sendMessage(Lang.PLAYER_NOT_FOUND.toComponentWithPrefix(Map.of("%player%", args[0])));
       }
     } else {
-      sender.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
+      senderUser.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
     }
     return true;
   }

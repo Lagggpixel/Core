@@ -1,5 +1,7 @@
 package me.lagggpixel.core.modules.guilds.commands.subCommands;
 
+import me.lagggpixel.core.Main;
+import me.lagggpixel.core.data.User;
 import me.lagggpixel.core.enums.Lang;
 import me.lagggpixel.core.modules.guilds.GuildModule;
 import me.lagggpixel.core.modules.guilds.commands.ISubCommand;
@@ -26,13 +28,15 @@ public class GuildWhoCommand implements ISubCommand {
       commandSender.sendMessage(Lang.PLAYER_ONLY.toComponentWithPrefix());
       return;
     }
+    
+    User senderUser = Main.getUser(sender.getUniqueId());
 
     if (args.length == 0) {
       if (guildModule.getGuildHandler().getGuildFromPlayer(sender) == null) {
-        sender.sendMessage(Lang.GUILD_NOT_IN_GUILD.toComponentWithPrefix());
+        senderUser.sendMessage(Lang.GUILD_NOT_IN_GUILD.toComponentWithPrefix());
       } else {
         for (Component msg : getInformation(guildModule.getGuildHandler().getGuildFromPlayer(sender))) {
-          sender.sendMessage(msg);
+          senderUser.sendMessage(msg);
         }
       }
       return;
@@ -45,11 +49,11 @@ public class GuildWhoCommand implements ISubCommand {
     String name = sb.toString().trim().replace(" ", "");
 
     if (guildModule.getGuildHandler().getGuildByName(name) == null) {
-      sender.sendMessage(Lang.GUILD_GUILD_NOT_FOUND.toComponentWithPrefix(Map.of("%guild%", name)));
+      senderUser.sendMessage(Lang.GUILD_GUILD_NOT_FOUND.toComponentWithPrefix(Map.of("%guild%", name)));
       return;
     }
     for (Component msg : getInformation(guildModule.getGuildHandler().getGuildByName(name))) {
-      sender.sendMessage(msg);
+      senderUser.sendMessage(msg);
     }
 
   }

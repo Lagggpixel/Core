@@ -58,11 +58,11 @@ public class StaffChatCommand implements ICommandClass {
       User user = Main.getUser(sender.getUniqueId());
       if (user.isStaffChatToggled()) {
         user.setStaffChatToggled(false);
-        sender.sendMessage(Lang.CHAT_STAFF_CHAT_TOGGLE_OFF.toComponentWithPrefix());
+        user.sendMessage(Lang.CHAT_STAFF_CHAT_TOGGLE_OFF.toComponentWithPrefix());
         return true;
       }
       user.setStaffChatToggled(true);
-      sender.sendMessage(Lang.CHAT_STAFF_CHAT_TOGGLE_ON.toComponentWithPrefix());
+      user.sendMessage(Lang.CHAT_STAFF_CHAT_TOGGLE_ON.toComponentWithPrefix());
       return true;
     }
     

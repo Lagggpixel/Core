@@ -9,6 +9,7 @@ import lombok.Setter;
 import me.lagggpixel.core.modules.home.data.Home;
 import me.lagggpixel.core.modules.skills.data.Skills;
 import me.lagggpixel.core.modules.staff.data.InstantPlayerData;
+import me.lagggpixel.core.utils.ChatUtils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -146,6 +147,22 @@ public class User {
       total += entry.getValue();
     }
     return total;
+  }
+  
+  /**
+   * Sends a message using the given string.
+   * This will queue the message if the user is not online
+   *
+   * @param string the string used for sending the message
+   */
+  public boolean sendMessage(String string) {
+    OfflinePlayer player = Bukkit.getOfflinePlayer(playerUUID);
+    if (player.isOnline() && player.getPlayer() != null) {
+      player.getPlayer().sendMessage(string);
+      return true;
+    }
+    queueMessage(ChatUtils.stringToComponentCC(string));
+    return false;
   }
   
   /**

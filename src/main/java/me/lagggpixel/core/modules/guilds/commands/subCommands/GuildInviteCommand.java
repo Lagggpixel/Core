@@ -1,5 +1,7 @@
 package me.lagggpixel.core.modules.guilds.commands.subCommands;
 
+import me.lagggpixel.core.Main;
+import me.lagggpixel.core.data.User;
 import me.lagggpixel.core.enums.Lang;
 import me.lagggpixel.core.modules.guilds.GuildModule;
 import me.lagggpixel.core.modules.guilds.commands.ISubCommand;
@@ -26,14 +28,16 @@ public class GuildInviteCommand implements ISubCommand {
       commandSender.sendMessage(Lang.PLAYER_ONLY.toComponentWithPrefix());
       return;
     }
-
+    
+    User senderUser = Main.getUser(sender.getUniqueId());
+    
     if (args.length == 0) {
-      sender.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
+      senderUser.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
       return;
     }
 
     if (guildModule.getGuildHandler().getGuildFromPlayer(sender) == null) {
-      sender.sendMessage(Lang.GUILD_NOT_IN_GUILD.toComponentWithPrefix());
+      senderUser.sendMessage(Lang.GUILD_NOT_IN_GUILD.toComponentWithPrefix());
       return;
     }
 
@@ -41,7 +45,7 @@ public class GuildInviteCommand implements ISubCommand {
       Guild guild = guildModule.getGuildHandler().getGuildFromPlayer(sender);
 
       if (!(guild.getOfficers().contains(sender.getUniqueId()) || guild.isLeader(sender.getUniqueId()))) {
-        sender.sendMessage(Lang.GUILD_MUST_BE_OFFICER.toComponentWithPrefix());
+        senderUser.sendMessage(Lang.GUILD_MUST_BE_OFFICER.toComponentWithPrefix());
         return;
       }
 
@@ -54,18 +58,16 @@ public class GuildInviteCommand implements ISubCommand {
       Player inv = Bukkit.getPlayer(name);
 
       if (inv == null) {
-        sender.sendMessage(Lang.PLAYER_NOT_FOUND.toComponentWithPrefix(Map.of("%player%", name)));
+        senderUser.sendMessage(Lang.PLAYER_NOT_FOUND.toComponentWithPrefix(Map.of("%player%", name)));
         return;
       }
 
       if (guild.getPlayers().contains(Bukkit.getOfflinePlayer(inv.getUniqueId()))) {
-        sender.sendMessage(Lang.GUILD_INVITE_PLAYER_ALREADY_JOINED.toComponentWithPrefix(Map.of("%player%", inv.getName())));
+        senderUser.sendMessage(Lang.GUILD_INVITE_PLAYER_ALREADY_JOINED.toComponentWithPrefix(Map.of("%player%", inv.getName())));
         return;
       }
       if (guild.getInvitedPlayers().contains(inv.getUniqueId())) {
-        sender.sendMessage(Lang.GUILD_INVITE_PLAYER_ALREADY_INVITED.toComponentWithPrefix(Map.of("%player%", inv.getName())));
-
-
+        senderUser.sendMessage(Lang.GUILD_INVITE_PLAYER_ALREADY_INVITED.toComponentWithPrefix(Map.of("%player%", inv.getName())));
         return;
       }
       TextComponent component = Lang.GUILD_INVITED_PLAYER_NOTIFY.toTextComponentWithPrefix(Map.of("%player%", sender.getName(), "%guild%", guild.getName()));
@@ -75,8 +77,8 @@ public class GuildInviteCommand implements ISubCommand {
           .clickEvent(ClickEvent.runCommand("/guild join " + guild.getName()))
           .build();
       inv.sendMessage(component);
-
-      sender.sendMessage(Lang.GUILD_INVITED_PLAYER_ACKNOWLEDGE.toComponentWithPrefix(Map.of("%player%", inv.getName())));
+      
+      senderUser.sendMessage(Lang.GUILD_INVITED_PLAYER_ACKNOWLEDGE.toComponentWithPrefix(Map.of("%player%", inv.getName())));
       guild.sendMessage(Lang.GUILD_INVITED_PLAYER_BROADCAST.toComponentWithPrefix(Map.of("%player%", sender.getName(), "%target%", inv.getName())));
       guild.getInvitedPlayers().add(inv.getUniqueId());
     }

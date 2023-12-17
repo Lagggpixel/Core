@@ -53,9 +53,9 @@ public class EconomyCommand implements ICommandClass {
   }
   
   @Override
-  public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
+  public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String label, String[] args) {
     if (args.length != 3) {
-      sender.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
+      commandSender.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
       return true;
     }
     
@@ -66,7 +66,7 @@ public class EconomyCommand implements ICommandClass {
     try {
       amount = Double.parseDouble(args[2]);
     } catch (NumberFormatException e) {
-      sender.sendMessage(Lang.ECONOMY_INVALID_AMOUNT.toComponentWithPrefix());
+      commandSender.sendMessage(Lang.ECONOMY_INVALID_AMOUNT.toComponentWithPrefix());
       return true;
     }
     
@@ -76,18 +76,18 @@ public class EconomyCommand implements ICommandClass {
     switch (subcommand) {
       case "give":
         economyManager.deposit(offlinePlayer, amount);
-        sender.sendMessage(Lang.ECONOMY_GIVE.toComponentWithPrefix(Map.of("%player%", user.getPlayerName(), "%amount%", String.valueOf(amount))));
+        commandSender.sendMessage(Lang.ECONOMY_GIVE.toComponentWithPrefix(Map.of("%player%", user.getPlayerName(), "%amount%", String.valueOf(amount))));
         break;
       case "set":
         economyManager.setBalance(offlinePlayer, amount);
-        sender.sendMessage(Lang.ECONOMY_SET.toComponentWithPrefix(Map.of("%player%", user.getPlayerName())));
+        commandSender.sendMessage(Lang.ECONOMY_SET.toComponentWithPrefix(Map.of("%player%", user.getPlayerName())));
         break;
       case "remove":
         economyManager.withdraw(offlinePlayer, amount);
-        sender.sendMessage(Lang.ECONOMY_REMOVE.toComponentWithPrefix(Map.of("%player%", user.getPlayerName(), "%amount%", String.valueOf(amount))) );
+        commandSender.sendMessage(Lang.ECONOMY_REMOVE.toComponentWithPrefix(Map.of("%player%", user.getPlayerName(), "%amount%", String.valueOf(amount))) );
         break;
       default:
-        sender.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
+        commandSender.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
         break;
     }
     

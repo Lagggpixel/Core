@@ -65,7 +65,7 @@ public class HomeCommands implements Listener, ICommandClass {
     }
 
     // Todo - block commands in certain worlds
-
+    
     UUID playerUUID = player.getUniqueId();
     User user = Main.getUser(playerUUID);
 
@@ -84,7 +84,7 @@ public class HomeCommands implements Listener, ICommandClass {
       if (args[0].equalsIgnoreCase("set")) {
 
         if (args.length != 2) {
-          player.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
+          user.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
           return true;
         }
 
@@ -96,21 +96,21 @@ public class HomeCommands implements Listener, ICommandClass {
       if (args[0].equalsIgnoreCase("del") || args[0].equalsIgnoreCase("delete")) {
 
         if (args.length != 2) {
-          player.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
+          user.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
           return true;
         }
 
         handleDeleteHome(player, user, args[1]);
         return true;
       }
-
-      player.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
+      
+      user.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
 
       return true;
     }
     if (label.equals("sethome")) {
       if (args.length != 1) {
-        player.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
+        user.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
         return true;
       }
 
@@ -120,35 +120,35 @@ public class HomeCommands implements Listener, ICommandClass {
     }
     if (label.equals("delhome")) {
       if (args.length != 1) {
-        player.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
+        user.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
         return true;
       }
       handleDeleteHome(player, user, args[0]);
       return true;
     }
-
-    player.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
+    
+    user.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
     return true;
   }
 
   private void handleCreateHome(Player player, @NotNull User user, String homeName) {
     if (user.getHomes().containsKey(homeName)) {
-      player.sendMessage(Lang.HOME_ALREADY_EXIST.toComponentWithPrefix(Map.of(
+      user.sendMessage(Lang.HOME_ALREADY_EXIST.toComponentWithPrefix(Map.of(
           "%home%", homeName
       )));
       return;
     }
 
     if (homeHandler.homeNameInvalid(homeName)) {
-      player.sendMessage(Lang.HOME_NAME_INVALID.toComponentWithPrefix());
+      user.sendMessage(Lang.HOME_NAME_INVALID.toComponentWithPrefix());
       return;
     }
 
     if (player.hasPermission(homeHandler.HOME_PERMISSION_PREFIX + "unlimited")) {
       Home home = homeHandler.createHomeObject(homeName, player.getLocation());
       homeHandler.setHome(user, homeName, home);
-
-      player.sendMessage(Lang.HOME_CREATED.toComponentWithPrefix(Map.of(
+      
+      user.sendMessage(Lang.HOME_CREATED.toComponentWithPrefix(Map.of(
           "%home%", homeName
       )));
       return;
@@ -162,7 +162,7 @@ public class HomeCommands implements Listener, ICommandClass {
       }
     }
     if (perms.isEmpty()) {
-      player.sendMessage(ChatUtils.stringToComponentCC(ChatUtils.componentToString(Main.getInstance().getServer().permissionMessage())));
+      user.sendMessage(ChatUtils.stringToComponentCC(ChatUtils.componentToString(Main.getInstance().getServer().permissionMessage())));
       return;
     }
     Integer[] permArray = new Integer[perms.size()];
@@ -171,29 +171,29 @@ public class HomeCommands implements Listener, ICommandClass {
     int numberOfHomes = user.getHomes().size();
 
     if (numberOfHomes >= sethomeLimit) {
-      player.sendMessage(Lang.HOME_LIMIT_REACHED.toComponentWithPrefix());
+      user.sendMessage(Lang.HOME_LIMIT_REACHED.toComponentWithPrefix());
       return;
     }
 
     Home home = homeHandler.createHomeObject(homeName, player.getLocation());
     homeHandler.setHome(user, homeName, home);
-
-    player.sendMessage(Lang.HOME_CREATED.toComponentWithPrefix(Map.of(
+    
+    user.sendMessage(Lang.HOME_CREATED.toComponentWithPrefix(Map.of(
         "%home%", homeName
     )));
   }
 
   private void handleDeleteHome(Player player, @NotNull User user, String homeName) {
     if (!user.getHomes().containsKey(homeName)) {
-      player.sendMessage(Lang.HOME_DOES_NOT_EXIST.toComponentWithPrefix(Map.of(
+      user.sendMessage(Lang.HOME_DOES_NOT_EXIST.toComponentWithPrefix(Map.of(
           "%home%", homeName
       )));
       return;
     }
 
     homeHandler.deleteHome(user, homeName);
-
-    player.sendMessage(Lang.HOME_DELETED.toComponentWithPrefix(Map.of(
+    
+    user.sendMessage(Lang.HOME_DELETED.toComponentWithPrefix(Map.of(
         "%home%", homeName
     )));
   }
