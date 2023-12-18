@@ -148,6 +148,14 @@ public enum Lang {
   HOME_TELEPORTED_TO_HOME_OTHER_PLAYER("home.admin.teleported_to_home_other_player", "&aYou have teleported to %player%'s home, named '&e%home%&a'."),
   HOME_NO_HOMES_OTHER_PLAYER("home.admin.no_homes_other_player", "&a%player% does not have any homes."),
 
+  // Skills IModule
+  SKILL_LEVEL_UP("skills.level_up", "&3&l----------------------------------------------------------" +
+      "\n  &b&lSKILL LEVEL UP &3&l%skill% &8%original_level% -> &3%new_level%" +
+      "\n" +
+      "\n  &a&lREWARDS" +
+      "\n    &8+&6%coins% &7Coins" +
+      "\n&3&l----------------------------------------------------------"),
+  
   // Inventory IModule
   INVENTORY_CLEARED_SELF("inventory.cleared.self", "&aYou have cleared your inventory."),
   INVENTORY_CLEARED_OTHER("inventory.cleared.other", "&aYou have cleared %player%'s inventory."),
