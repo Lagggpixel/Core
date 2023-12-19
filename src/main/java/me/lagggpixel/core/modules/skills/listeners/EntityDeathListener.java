@@ -3,6 +3,7 @@ package me.lagggpixel.core.modules.skills.listeners;
 import me.lagggpixel.core.Main;
 import me.lagggpixel.core.data.User;
 import me.lagggpixel.core.modules.skills.SkillsModule;
+import me.lagggpixel.core.modules.skills.enums.SkillExpGainCause;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -41,16 +42,16 @@ public class EntityDeathListener implements Listener {
 
   private void handleFarmingMobKill(User user, Entity entity) {
     double exp = skillsModule.getSkillHandler().getFarmingEntities().get(entity.getType());
-    user.getSkills().getFarming().addExp(exp);
+    user.getSkills().getFarming().addExp(exp, SkillExpGainCause.MOB_KILL);
   }
 
   private void handleMiningMobKill(User user, Entity entity) {
     double exp = skillsModule.getSkillHandler().getMiningEntities().get(entity.getType());
-    user.getSkills().getMining().addExp(exp);
+    user.getSkills().getMining().addExp(exp, SkillExpGainCause.MOB_KILL);
   }
 
   private void handleCombatMobKill(User user, Entity entity) {
     double exp = skillsModule.getSkillHandler().getCombatEntities().get(entity.getType());
-    user.getSkills().getCombat().addExp(exp);
+    user.getSkills().getCombat().addExp(exp, SkillExpGainCause.MOB_KILL);
   }
 }

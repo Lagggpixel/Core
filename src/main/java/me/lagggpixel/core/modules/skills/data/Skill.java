@@ -7,7 +7,9 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import me.lagggpixel.core.modules.economy.managers.EconomyManager;
+import me.lagggpixel.core.modules.skills.enums.SkillExpGainCause;
 import me.lagggpixel.core.modules.skills.enums.SkillType;
+import me.lagggpixel.core.modules.skills.events.SkillExpGainEvent;
 import me.lagggpixel.core.modules.skills.events.SkillLevelUpEvent;
 import me.lagggpixel.core.modules.skills.handlers.SkillHandler;
 import org.bukkit.Bukkit;
@@ -45,8 +47,10 @@ public class Skill {
     this.levelExp = 0;
   }
   
-  public void addExp(double a) {
-    this.totalExp += totalExp + a;
+  public void addExp(double expGained, SkillExpGainCause cause) {
+    this.totalExp += totalExp + expGained;
+    SkillExpGainEvent skillExpGainEvent = new SkillExpGainEvent(playerUuid, this.skillType, expGained, cause);
+    Bukkit.getServer().getPluginManager().callEvent(skillExpGainEvent);
     updateSkillLevel();
   }
   

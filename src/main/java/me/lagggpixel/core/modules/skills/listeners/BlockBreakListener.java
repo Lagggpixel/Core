@@ -3,6 +3,7 @@ package me.lagggpixel.core.modules.skills.listeners;
 import me.lagggpixel.core.Main;
 import me.lagggpixel.core.data.User;
 import me.lagggpixel.core.modules.skills.SkillsModule;
+import me.lagggpixel.core.modules.skills.enums.SkillExpGainCause;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -41,16 +42,16 @@ public class BlockBreakListener implements Listener {
 
   private void handleFarmingBlockBreak(User user, Block block) {
     double exp = skillsModule.getSkillHandler().getFarmingBlocks().get(block.getType());
-    user.getSkills().getFarming().addExp(exp);
+    user.getSkills().getFarming().addExp(exp, SkillExpGainCause.BLOCK_BREAK);
   }
 
   private void handleMiningBlockBreak(User user, Block block) {
     double exp = skillsModule.getSkillHandler().getMiningBlocks().get(block.getType());
-    user.getSkills().getMining().addExp(exp);
+    user.getSkills().getMining().addExp(exp, SkillExpGainCause.BLOCK_BREAK);
   }
 
   private void handleCombatBlockBreak(User user, Block block) {
     double exp = skillsModule.getSkillHandler().getCombatBlocks().get(block.getType());
-    user.getSkills().getCombat().addExp(exp);
+    user.getSkills().getCombat().addExp(exp, SkillExpGainCause.BLOCK_BREAK);
   }
 }
