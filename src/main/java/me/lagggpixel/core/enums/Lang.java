@@ -156,11 +156,14 @@ public enum Lang {
   INVENTORY_CLONED_PUBLIC("inventory.cloned.public", "&cYou have cloned %player%'s inventory to your own."),
   INVENTORY_CLONED_SILENT("inventory.cloned.silent", "&cYou have silently cloned %player%'s inventory"),
 
-  // Restart IModule
-
-  // Rtp IModule
-  RTP_NO_SAFE_LOCATION("rtp.no_safe_location", "&aNo safe location was found, please try again."),
-  RTP_ATTEMPTING_TO_FIND_LOCATION("rtp.attempting_to_find_location", "&aAttempting to find a location. Attempt %num% out of %max%."),
+  // Skills Module
+  SKILL_LEVEL_UP("skill.level_up",
+      "&3---------------------------------------------------------------------------\n" +
+          "&b&lSKILL LEVEL UP &3%skill% &8%level_before% &l-> &3%level_after%\n" +
+          "  &a&lREWARDS\n" +
+          "    &8+&6%coins% &7Coins" +
+          "&3---------------------------------------------------------------------------\n"),
+  SKILL_EXP_GAIN("skill.exp_gain", "&8+&3%exp% %skill% experience"),
 
   // Skip-night IModule
   SN_WORLD_NO_OVERWORLD("skipnight.world_not_overworld", "&cYou must be in the overworld to start a vote!"),

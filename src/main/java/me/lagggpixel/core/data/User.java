@@ -33,13 +33,6 @@ public class User {
   @SerializedName("PlayerUUID")
   @Expose
   private final @NotNull UUID playerUUID;
-  @SerializedName("PlayerName")
-  @Expose
-  private @NotNull String playerName;
-  @SerializedName("QueuedMessages")
-  @Expose
-  private List<Component> getQueuedMessage;
-  private transient boolean afk = false;
   // Player stats
   @SerializedName("EntityKills")
   @Expose
@@ -50,6 +43,13 @@ public class User {
   @SerializedName("BlocksPlaced")
   @Expose
   private final @NotNull HashMap<Material, Long> blocksPlaced;
+  @SerializedName("PlayerName")
+  @Expose
+  private @NotNull String playerName;
+  @SerializedName("QueuedMessages")
+  @Expose
+  private List<Component> getQueuedMessage;
+  private transient boolean afk = false;
   // Discord
   @SerializedName("DiscordID")
   @Expose
@@ -79,7 +79,40 @@ public class User {
   @SerializedName("StaffChatToggled")
   @Expose
   private boolean staffChatToggled;
-  
+
+  /**
+   * Constructs a new user.
+   *
+   * @param uuid The uuid of the player.
+   */
+  public User(@NotNull UUID uuid) {
+    // Player data
+    this.playerUUID = uuid;
+    this.playerName = "Unknown";
+
+    // Player stats
+    this.entityKills = new HashMap<>();
+    this.blocksBroken = new HashMap<>();
+    this.blocksPlaced = new HashMap<>();
+
+    // Discord
+
+    // Economy
+    this.playerBalance = 0.00;
+
+    // Homes
+    this.homes = new HashMap<>();
+
+    // Skills
+    this.skills = new Skills(playerUUID);
+
+    // Staff
+    this.instantPlayerData = null;
+    this.staffMode = false;
+    this.isVanished = false;
+    this.staffChatToggled = false;
+  }
+
   /**
    * Constructs a new user.
    *
@@ -89,42 +122,42 @@ public class User {
     // Player data
     this.playerUUID = player.getUniqueId();
     this.playerName = player.getName();
-    
+
     // Player stats
     this.entityKills = new HashMap<>();
     this.blocksBroken = new HashMap<>();
     this.blocksPlaced = new HashMap<>();
-    
+
     // Discord
-    
+
     // Economy
     this.playerBalance = 0.00;
-    
+
     // Homes
     this.homes = new HashMap<>();
-    
+
     // Skills
     this.skills = new Skills(playerUUID);
-    
+
     // Staff
     this.instantPlayerData = null;
     this.staffMode = false;
     this.isVanished = false;
     this.staffChatToggled = false;
   }
-  
+
   public long getEntityKills(EntityType entityType) {
     return entityKills.getOrDefault(entityType, 0L);
   }
-  
+
   public long getBlockBroken(Material material) {
     return blocksBroken.getOrDefault(material, 0L);
   }
-  
+
   public long getBlockPlaced(Material material) {
     return blocksPlaced.getOrDefault(material, 0L);
   }
-  
+
   public long getTotalEntityKills() {
     long total = 0;
     for (Map.Entry<EntityType, Long> entry : entityKills.entrySet()) {
@@ -132,7 +165,7 @@ public class User {
     }
     return total;
   }
-  
+
   public long getTotalBlocksBroken() {
     long total = 0;
     for (Map.Entry<Material, Long> entry : blocksBroken.entrySet()) {
@@ -140,7 +173,7 @@ public class User {
     }
     return total;
   }
-  
+
   public long getTotalBlocksPlaced() {
     long total = 0;
     for (Map.Entry<Material, Long> entry : blocksPlaced.entrySet()) {
@@ -148,7 +181,7 @@ public class User {
     }
     return total;
   }
-  
+
   /**
    * Sends a message using the given string.
    * This will queue the message if the user is not online
@@ -164,14 +197,14 @@ public class User {
     queueMessage(ChatUtils.stringToComponentCC(string));
     return false;
   }
-  
+
   /**
    * Sends a message using the given component.
    * This will queue the message if the user is not online
    *
    * @param component the component used for sending the message
    */
-  public boolean sendMessage(Component component) {
+  public boolean sendMessage(@NotNull Component component) {
     OfflinePlayer player = Bukkit.getOfflinePlayer(playerUUID);
     if (player.isOnline() && player.getPlayer() != null) {
       player.getPlayer().sendMessage(component);
@@ -180,7 +213,7 @@ public class User {
     queueMessage(component);
     return false;
   }
-  
+
   private void queueMessage(Component component) {
     this.getQueuedMessage.add(component);
   }

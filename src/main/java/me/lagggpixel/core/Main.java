@@ -84,7 +84,10 @@ public final class Main extends JavaPlugin {
    * @param uuid the UUID of the User to retrieve
    * @return the User object associated with the specified UUID
    */
-  public static User getUser(UUID uuid) {
+  public static @NotNull User getUser(@NotNull UUID uuid) {
+    if (!userData.containsKey(uuid)) {
+      userData.put(uuid, new User(uuid));
+    }
     return userData.get(uuid);
   }
   
