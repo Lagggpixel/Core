@@ -1,17 +1,20 @@
 package me.lagggpixel.core.modules.guilds;
 
 import lombok.Getter;
+import me.lagggpixel.core.Main;
 import me.lagggpixel.core.interfaces.IModule;
 import me.lagggpixel.core.modules.guilds.commands.GuildCommand;
 import me.lagggpixel.core.modules.guilds.data.loadsave.GuildLoadSave;
 import me.lagggpixel.core.modules.guilds.handlers.ClaimManager;
 import me.lagggpixel.core.modules.guilds.handlers.GuildHandler;
 import me.lagggpixel.core.modules.guilds.handlers.PillarManager;
-import me.lagggpixel.core.modules.guilds.hooks.placeholders.GuildExpansions;
+import me.lagggpixel.core.modules.guilds.hooks.placeholders.GuildExpansion;
 import me.lagggpixel.core.modules.guilds.listeners.ClaimListeners;
 import me.lagggpixel.core.utils.CommandUtils;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.logging.Level;
 
 @Getter
 public class GuildModule implements IModule {
@@ -42,7 +45,8 @@ public class GuildModule implements IModule {
     guildHandler.startAutoSave();
     // Register guild placeholders
     if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
-      new GuildExpansions().register();
+      Main.log(Level.INFO,"Registering guild placeholders");
+      new GuildExpansion().register();
     }
   }
   

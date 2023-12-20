@@ -9,6 +9,7 @@ import lombok.Setter;
 import me.lagggpixel.core.modules.skills.enums.SkillType;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Map;
 import java.util.UUID;
 
 @Data
@@ -29,6 +30,11 @@ public class Skills {
   @SerializedName("Combat")
   @Expose
   private Skill combat;
+
+  private Map<SkillType, Skill> skills = Map.of(
+      SkillType.MINING, mining,
+      SkillType.FARMING, farming,
+      SkillType.COMBAT, combat);
 
   public Skills(@NotNull UUID playerUuid) {
     this.playerUuid = playerUuid;
