@@ -12,11 +12,13 @@ import java.util.logging.Level;
 
 public class SkillsModule implements IModule {
 
-  private final File dataFolder = new File(Main.getInstance().getDataFolder(), "data/modules/skills");
+  private File dataFolder;
+
   @Getter
-  private final File skill_exp = new File(dataFolder, "skill_exp");
+  private File skill_exp;
+
   @Getter
-  private final File skill_level_up = new File(dataFolder, "skill_level_up");
+  private File skill_level_up;
 
   @Getter
   private SkillHandler skillHandler;
@@ -34,6 +36,10 @@ public class SkillsModule implements IModule {
 
   @Override
   public void onEnable() {
+    dataFolder = new File(Main.getInstance().getDataFolder(), "data/modules/skills");
+    skill_exp = new File(dataFolder, "skill_exp");
+    skill_level_up = new File(dataFolder, "skill_level_up");
+
     initConfig();
 
     this.skillHandler = new SkillHandler(this);
