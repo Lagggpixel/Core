@@ -45,7 +45,6 @@ public class GuildModule implements IModule {
     guildHandler.startAutoSave();
     // Register guild placeholders
     if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
-      Main.log(Level.INFO,"Registering guild placeholders");
       new GuildExpansion().register();
     }
   }

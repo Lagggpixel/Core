@@ -4,7 +4,9 @@ import lombok.Getter;
 import me.lagggpixel.core.Main;
 import me.lagggpixel.core.interfaces.IModule;
 import me.lagggpixel.core.modules.skills.handlers.SkillHandler;
+import me.lagggpixel.core.modules.skills.hooks.placeholders.SkillsExpansion;
 import me.lagggpixel.core.modules.skills.listeners.*;
+import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
@@ -43,6 +45,10 @@ public class SkillsModule implements IModule {
     initConfig();
 
     this.skillHandler = new SkillHandler(this);
+
+    if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+      new SkillsExpansion().register();
+    }
   }
 
   @Override
