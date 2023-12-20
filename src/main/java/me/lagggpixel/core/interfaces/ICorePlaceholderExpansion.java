@@ -11,7 +11,9 @@ public abstract class ICorePlaceholderExpansion extends PlaceholderExpansion {
   protected String version = Main.getInstance().getPluginMeta().getVersion();
   
   @Override
-  public abstract @NotNull String getIdentifier();
+  public @NotNull String getIdentifier() {
+    return "core";
+  }
 
   @Override
   public @NotNull String getAuthor() {

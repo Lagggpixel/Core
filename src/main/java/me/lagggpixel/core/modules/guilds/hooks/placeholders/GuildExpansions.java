@@ -20,16 +20,11 @@ public class GuildExpansions extends ICorePlaceholderExpansion {
   private final ClaimManager claimManager = guildModule.getClaimManager();
 
   @Override
-  public @NotNull String getIdentifier() {
-    return "guild";
-  }
-
-  @Override
   public String onRequest(OfflinePlayer offlinePlayer, @NotNull String params) {
     UUID uuid = offlinePlayer.getUniqueId();
 
     // placeholder - guild_current_location
-    if (params.equalsIgnoreCase("current_location")) {
+    if (params.equalsIgnoreCase("guild:currentLocation")) {
       if (!offlinePlayer.isOnline()) {
         return Lang.GUILD_PLACEHOLDER_SYSTEM.getDef();
       }
