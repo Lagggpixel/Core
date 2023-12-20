@@ -45,4 +45,16 @@ public class Skills {
     this.combat = new Skill(this.playerUuid, SkillType.COMBAT);
     this.combat.initSkillLevel();
   }
+
+  public double getSkillAverage() {
+    int totalSkillLevel = 0;
+
+    for (Skill skill : skills.values()) {
+      totalSkillLevel += skill.getLevel();
+    }
+
+    int totalSkillCount = skills.keySet().size();
+
+    return (float) totalSkillLevel / totalSkillCount;
+  }
 }
