@@ -6,7 +6,7 @@
 
     <groupId>me.lagggpixel</groupId>
     <artifactId>core</artifactId>
-    <version>1.0.4</version>
+    <version>1.0.4-SNAPSHOT1</version>
     <packaging>jar</packaging>
 
     <name>Core</name>
@@ -51,6 +51,26 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.amashchenko.maven.plugin</groupId>
+                <artifactId>gitflow-maven-plugin</artifactId>
+                <version>1.20.0</version>
+                <configuration>
+                    <pushRemote>true</pushRemote>
+                    <allowSnapshots>true</allowSnapshots>
+                    <!-- Set to true to immediately bump the development version when creating a release branch -->
+                    <commitDevelopmentVersionAtStart>false</commitDevelopmentVersionAtStart>
+                    <!-- Execute mvn verify before release -->
+                    <preReleaseGoals>verify</preReleaseGoals>
+                    <preHotfixGoals>verify</preHotfixGoals>
+                    <!-- Configure branches -->
+                    <gitFlowConfig>
+                        <productionBranch>master</productionBranch>
+                        <!-- default is develop, but we use development -->
+                        <developmentBranch>development</developmentBranch>
+                    </gitFlowConfig>
+                </configuration>
             </plugin>
         </plugins>
         <resources>
