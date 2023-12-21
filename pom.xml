@@ -6,7 +6,7 @@
 
     <groupId>me.lagggpixel</groupId>
     <artifactId>core</artifactId>
-    <version>1.0.4-SNAPSHOT3</version>
+    <version>1.0.5-SNAPSHOT1</version>
     <packaging>jar</packaging>
 
     <name>Core</name>
@@ -60,7 +60,7 @@
                     <pushRemote>true</pushRemote>
                     <allowSnapshots>true</allowSnapshots>
                     <!-- Set to true to immediately bump the development version when creating a release branch -->
-                    <commitDevelopmentVersionAtStart>false</commitDevelopmentVersionAtStart>
+                    <commitDevelopmentVersionAtStart>true</commitDevelopmentVersionAtStart>
                     <!-- Execute mvn verify before release -->
                     <preReleaseGoals>verify</preReleaseGoals>
                     <preHotfixGoals>verify</preHotfixGoals>
