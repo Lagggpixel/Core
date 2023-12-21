@@ -78,11 +78,16 @@ public class Skill {
     this.levelExp = this.totalExp;
     boolean hasUpdated = true;
     while (hasUpdated) {
-      long levelUpExp = SkillHandler.getSkillExpPerLevel().get(this.level + 1);
-      if (this.levelExp >= levelUpExp) {
-        this.level++;
-        this.levelExp -= levelUpExp;
-      } else {
+      if (SkillHandler.getSkillExpPerLevel().containsKey(this.level + 1)) {
+        long levelUpExp = SkillHandler.getSkillExpPerLevel().get(this.level + 1);
+        if (this.levelExp >= levelUpExp) {
+          this.level++;
+          this.levelExp -= levelUpExp;
+        } else {
+          hasUpdated = false;
+        }
+      }
+      else {
         hasUpdated = false;
       }
     }
