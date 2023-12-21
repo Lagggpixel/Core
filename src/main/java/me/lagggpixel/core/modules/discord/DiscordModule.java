@@ -4,6 +4,7 @@ import me.lagggpixel.core.Main;
 import me.lagggpixel.core.interfaces.IModule;
 import me.lagggpixel.core.modules.discord.handlers.CaptureAppender;
 import me.lagggpixel.core.modules.discord.listener.Listeners;
+import me.lagggpixel.core.modules.discord.listener.LoggingListeners;
 import me.lagggpixel.core.modules.discord.managers.DiscordManager;
 import me.lagggpixel.core.modules.discord.managers.NMSManager;
 import org.apache.logging.log4j.LogManager;
@@ -70,5 +71,6 @@ public class DiscordModule implements IModule {
   @Override
   public void registerListeners() {
     new Listeners(discordManager);
+    new LoggingListeners();
   }
 }

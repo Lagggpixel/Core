@@ -49,6 +49,9 @@ public class DiscordManager {
   private final Guild guild;
   
   public DiscordManager(@NotNull NMSManager nmsManager) {
+    if (instance != null) {
+      throw new RuntimeException("DiscordManager is already initialized! DiscordManager is a singleton!");
+    }
     instance = this;
     this.nmsManager = nmsManager;
     try {
@@ -75,7 +78,6 @@ public class DiscordManager {
   
   // <editor-fold defaultstate="collapsed" desc="Join/Quit embeds">
   public @NotNull MessageEmbed createJoinMessageEmbed(@NotNull PlayerJoinEvent event) {
-    
     Player player = event.getPlayer();
     String message = player.getName() + " joined the server";
     
@@ -154,13 +156,13 @@ public class DiscordManager {
   // </editor-fold>
   
   // <editor-fold defaultstate="collapsed" desc="Avatar URL">
-  private String getAvatarUrl(String username, UUID uuid) {
+  public String getAvatarUrl(String username, UUID uuid) {
     String avatarUrl = constructAvatarUrl(username, uuid, "");
     avatarUrl = replacePlaceholdersToDiscord(avatarUrl);
     return avatarUrl;
   }
   
-  private String getAvatarUrl(@NotNull OfflinePlayer player) {
+  public String getAvatarUrl(@NotNull OfflinePlayer player) {
     if (player.isOnline() && player.getPlayer() != null) {
       return getAvatarUrl(player.getPlayer());
     } else {
@@ -169,13 +171,13 @@ public class DiscordManager {
       return avatarUrl;
     }
   }
-  
-  private String getAvatarUrl(@NotNull Player player) {
+
+  public String getAvatarUrl(@NotNull Player player) {
     String avatarUrl = constructAvatarUrl(player.getName(), player.getUniqueId(), nmsManager.getTexture(player));
     avatarUrl = replacePlaceholdersToDiscord(avatarUrl, player);
     return avatarUrl;
   }
-  
+
   private @NotNull String constructAvatarUrl(String username, UUID uuid, String texture) {
     OfflinePlayer player = null;
     if (StringUtils.isBlank(username) && uuid != null) {
