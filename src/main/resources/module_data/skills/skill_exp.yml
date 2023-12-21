@@ -1,0 +1,23 @@
+farming:
+  blocks:
+    WHEAT: 5.0
+    CARROT: 3.0
+    POTATOE: 3.0
+  mobs:
+    COW: 10.0
+    CHICKEN: 8.0
+
+mining:
+  blocks:
+    COAL_ORE: 2.0
+    IRON_ORE: 5.0
+    DIAMOND_ORE: 10.0
+  mobs:
+    ZOMBIE: 8.0
+    SKELETON: 10.0
+
+combat:
+  blocks: []
+  mobs:
+    CREEPER: 12.0
+    ENDERMAN: 15.0
