@@ -59,6 +59,7 @@
                 <configuration>
                     <mvnExecutable>./mvnw</mvnExecutable>
                     <pushRemote>true</pushRemote>
+                    <allowSnapshots>true</allowSnapshots>
                     <!-- Set to true to immediately bump the development version when creating a release branch -->
                     <commitDevelopmentVersionAtStart>false</commitDevelopmentVersionAtStart>
                     <!-- Execute mvn verify before release -->
