@@ -34,39 +34,39 @@ import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "deprecation", "DataFlowIssue"})
 @UtilityClass
 public class BazaarMiscUtil {
 
     private final static String EMPTY = "PLACEHOLDER STRING";
 
-    private static final NavigableMap<Long, String> suffixes = new TreeMap<Long, String>() {{
-        put(1_000L, "k");
-        put(1_000_000L, "M");
-        put(1_000_000_000L, "G");
-        put(1_000_000_000_000L, "T");
-        put(1_000_000_000_000_000L, "P");
-        put(1_000_000_000_000_000_000L, "E");
+    private static final NavigableMap<Long, String> suffixes = new TreeMap<>() {{
+      put(1_000L, "k");
+      put(1_000_000L, "M");
+      put(1_000_000_000L, "G");
+      put(1_000_000_000_000L, "T");
+      put(1_000_000_000_000_000L, "P");
+      put(1_000_000_000_000_000_000L, "E");
     }};
 
     public List<String> listOf(String... strings) {
         return Arrays.asList(strings);
     }
 
-    private final static TreeMap<Integer, String> romanMap = new TreeMap<Integer, String>() {{
-        put(1000, "M");
-        put(900, "CM");
-        put(500, "D");
-        put(400, "CD");
-        put(100, "C");
-        put(90, "XC");
-        put(50, "L");
-        put(40, "XL");
-        put(10, "X");
-        put(9, "IX");
-        put(5, "V");
-        put(4, "IV");
-        put(1, "I");
+    private final static TreeMap<Integer, String> romanMap = new TreeMap<>() {{
+      put(1000, "M");
+      put(900, "CM");
+      put(500, "D");
+      put(400, "CD");
+      put(100, "C");
+      put(90, "XC");
+      put(50, "L");
+      put(40, "XL");
+      put(10, "X");
+      put(9, "IX");
+      put(5, "V");
+      put(4, "IV");
+      put(1, "I");
     }};
 
     public String toRoman(int number) {
@@ -367,38 +367,22 @@ public class BazaarMiscUtil {
     }
 
     public short getPaneColor(ChatColor color) {
-        switch (color) {
-            case BLACK:
-                return 15;
-            case DARK_BLUE:
-                return 11;
-            case DARK_GREEN:
-                return 13;
-            case DARK_AQUA:
-                return 9;
-            case DARK_RED:
-            case RED:
-                return 14;
-            case DARK_PURPLE:
-                return 10;
-            case GOLD:
-                return 1;
-            case GRAY:
-                return 8;
-            case DARK_GRAY:
-                return 7;
-            case BLUE:
-            case AQUA:
-                return 3;
-            case GREEN:
-                return 5;
-            case LIGHT_PURPLE:
-                return 2;
-            case YELLOW:
-                return 4;
-            default:
-                return 0;
-        }
+      return switch (color) {
+        case BLACK -> 15;
+        case DARK_BLUE -> 11;
+        case DARK_GREEN -> 13;
+        case DARK_AQUA -> 9;
+        case DARK_RED, RED -> 14;
+        case DARK_PURPLE -> 10;
+        case GOLD -> 1;
+        case GRAY -> 8;
+        case DARK_GRAY -> 7;
+        case BLUE, AQUA -> 3;
+        case GREEN -> 5;
+        case LIGHT_PURPLE -> 2;
+        case YELLOW -> 4;
+        default -> 0;
+      };
     }
 
     public final class UL implements Listener {
