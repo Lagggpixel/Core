@@ -57,7 +57,6 @@
                 <artifactId>gitflow-maven-plugin</artifactId>
                 <version>1.20.0</version>
                 <configuration>
-                    <mvnExecutable>./mvnw</mvnExecutable>
                     <pushRemote>true</pushRemote>
                     <allowSnapshots>true</allowSnapshots>
                     <!-- Set to true to immediately bump the development version when creating a release branch -->
