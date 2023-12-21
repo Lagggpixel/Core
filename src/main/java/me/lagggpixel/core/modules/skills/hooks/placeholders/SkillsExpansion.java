@@ -11,19 +11,25 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Arrays;
 
 public class SkillsExpansion extends ICorePlaceholderExpansion {
+
+  @Override
+  public @NotNull String getIdentifier() {
+    return "coreSkill";
+  }
+
   @Override
   public String onRequest(OfflinePlayer player, @NotNull String params) {
     User user = Main.getUser(player.getUniqueId());
-    if (params.equalsIgnoreCase("skillAverage")) {
+    if (params.equalsIgnoreCase("average")) {
       return String.format("%.1f", user.getSkills().getSkillAverage());
     }
 
-    String strSkillType = params.split("(?=[A-Z])")[1];
+    String strSkillType = params.split("(?=[A-Z])")[0];
     try {
       SkillType skillType = SkillType.valueOf(strSkillType.toUpperCase());
       String[] paramArr = params.split("(?=[A-Z])");
       StringBuilder requestStrBuilder = new StringBuilder();
-      String[] requestArr = Arrays.copyOfRange(paramArr, 2, paramArr.length);
+      String[] requestArr = Arrays.copyOfRange(paramArr, 1, paramArr.length);
       for (String s : requestArr) {
         requestStrBuilder.append(s);
       }
@@ -38,7 +44,7 @@ public class SkillsExpansion extends ICorePlaceholderExpansion {
       } else if (request.equalsIgnoreCase("progress")) {
         double xp = user.getSkills().getSkills().get(skillType).getLevelExp();
         long levelUpExp = SkillHandler.getSkillExpPerLevel().get(user.getSkills().getSkills().get(skillType).getLevel() + 1);
-        double percentage = (float) ((float) xp / (float) levelUpExp) * 100;
+        double percentage = ((float) xp / (float) levelUpExp) * 100;
         return String.format("%.1f", percentage);
       }
     } catch (NullPointerException | IllegalArgumentException | ArrayIndexOutOfBoundsException e) {

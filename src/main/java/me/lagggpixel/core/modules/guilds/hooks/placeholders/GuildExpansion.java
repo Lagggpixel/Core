@@ -20,11 +20,16 @@ public class GuildExpansion extends ICorePlaceholderExpansion {
   private final ClaimManager claimManager = guildModule.getClaimManager();
 
   @Override
+  public @NotNull String getIdentifier() {
+    return "coreGuild";
+  }
+
+  @Override
   public String onRequest(OfflinePlayer offlinePlayer, @NotNull String params) {
     UUID uuid = offlinePlayer.getUniqueId();
 
     switch (params) {
-      case "guild_current_location" -> {
+      case "currentLocation" -> {
         if (!offlinePlayer.isOnline()) {
           return Lang.GUILD_PLACEHOLDER_SYSTEM.getDef();
         }
@@ -59,7 +64,7 @@ public class GuildExpansion extends ICorePlaceholderExpansion {
         return Lang.GUILD_PLACEHOLDER_COLOR_ENEMY.getDef() + guild.getName();
       }
 
-      case "guildName" -> {
+        case "name" -> {
         Guild playerGuild = guildHandler.getGuildFromPlayerUUID(uuid);
         if (playerGuild == null) {
           return Lang.GUILD_PLACEHOLDER_NO_GUILD.getDef();
