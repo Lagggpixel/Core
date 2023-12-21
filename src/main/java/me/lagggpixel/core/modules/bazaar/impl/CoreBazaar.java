@@ -6,6 +6,7 @@ import me.lagggpixel.core.modules.bazaar.escrow.Escrow;
 import me.lagggpixel.core.modules.bazaar.impl.escrow.SkyblockEscrow;
 import me.lagggpixel.core.modules.bazaar.interfaces.*;
 import me.lagggpixel.core.utils.ChatUtils;
+import me.lagggpixel.core.utils.ExceptionUtils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -111,7 +112,7 @@ public class CoreBazaar implements Bazaar {
           this.set("items." + name + ".sellVolume.orders", 0);
           this.set("items." + name + ".last7dInstantSellVolume", 0);
         } catch (BazaarIOException ex) {
-          ex.printStackTrace();
+          ExceptionUtils.handleException(ex);
         }
       });
 
@@ -132,7 +133,7 @@ public class CoreBazaar implements Bazaar {
             }
           }
         } catch (BazaarIOException ex) {
-          ex.printStackTrace();
+          ExceptionUtils.handleException(ex);
         }
       });
     }

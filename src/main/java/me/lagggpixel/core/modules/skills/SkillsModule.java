@@ -6,6 +6,7 @@ import me.lagggpixel.core.interfaces.IModule;
 import me.lagggpixel.core.modules.skills.handlers.SkillHandler;
 import me.lagggpixel.core.modules.skills.hooks.placeholders.SkillsExpansion;
 import me.lagggpixel.core.modules.skills.listeners.*;
+import me.lagggpixel.core.utils.ExceptionUtils;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
 
@@ -112,7 +113,7 @@ public class SkillsModule implements IModule {
         }
       } catch (IOException var10) {
         Main.log(Level.SEVERE, "Could not save " + outFile.getName() + " to " + outFile);
-        var10.printStackTrace();
+        ExceptionUtils.handleException(var10);
       }
     }
   }

@@ -6,6 +6,7 @@ import me.lagggpixel.core.Main;
 import me.lagggpixel.core.data.User;
 import me.lagggpixel.core.modules.home.data.Home;
 import me.lagggpixel.core.modules.staff.data.InstantPlayerData;
+import me.lagggpixel.core.utils.ExceptionUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -53,7 +54,7 @@ public class UserDataSerializer {
           map.put(loadedUser.getPlayerUUID(), loadedUser);
         }
       } catch (IOException e) {
-        e.printStackTrace();
+        ExceptionUtils.handleException(e);
       }
     }
 
@@ -65,7 +66,7 @@ public class UserDataSerializer {
       try (FileWriter writer = new FileWriter(parentFolder + "/" + k + ".json")) {
         gson.toJson(v, writer);
       } catch (IOException e) {
-        e.printStackTrace();
+        ExceptionUtils.handleException(e);
       }
     });
   }

@@ -6,6 +6,7 @@ import me.lagggpixel.core.modules.guilds.GuildModule;
 import me.lagggpixel.core.modules.guilds.data.Claim;
 import me.lagggpixel.core.modules.guilds.data.Guild;
 import me.lagggpixel.core.serializers.LocationSerializer;
+import me.lagggpixel.core.utils.ExceptionUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -65,7 +66,7 @@ public class GuildLoadSave {
             config.save(file);
           } catch (IOException e) {
             Main.log(Level.WARNING, "Failed to save guild file: " + file.getName());
-            e.printStackTrace();
+            ExceptionUtils.handleException(e);
           }
         }
       }

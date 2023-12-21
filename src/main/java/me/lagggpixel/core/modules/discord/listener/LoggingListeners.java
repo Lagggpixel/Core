@@ -33,7 +33,7 @@ public class LoggingListeners implements Listener {
 
     OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(event.getPlayer().getUniqueId());
 
-    EmbedBuilder embedBuilder = new EmbedBuilder().setTimestamp(java.time.Instant.now()).setColor(Color.RED);
+    EmbedBuilder embedBuilder = new EmbedBuilder().setTimestamp(java.time.Instant.now()).setColor(Color.ORANGE);
     String message = "";
     if (event.getResult() == PlayerLoginEvent.Result.KICK_BANNED) {
       message = offlinePlayer.getName() + " failed to login as they are banned.";

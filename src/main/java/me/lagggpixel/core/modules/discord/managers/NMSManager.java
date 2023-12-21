@@ -1,5 +1,6 @@
 package me.lagggpixel.core.modules.discord.managers;
 
+import me.lagggpixel.core.utils.ExceptionUtils;
 import org.apache.commons.codec.binary.Base64;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -63,7 +64,7 @@ public class NMSManager {
       field_PropertyMap_properties = method_GameProfile_getProperties.getReturnType().getDeclaredField("properties");
       field_PropertyMap_properties.setAccessible(true);
     } catch (Throwable e) {
-      e.printStackTrace();
+      ExceptionUtils.handleException(e);
       failed = true;
     }
   }
@@ -107,7 +108,7 @@ public class NMSManager {
     try {
       return method_CraftPlayer_getHandle.invoke(player);
     } catch (Throwable e) {
-      e.printStackTrace();
+      ExceptionUtils.handleException(e);
     }
     return null;
   }
@@ -120,7 +121,7 @@ public class NMSManager {
       try {
         return method_EntityPlayer_getGameProfile.invoke(handle);
       } catch (Throwable e) {
-        e.printStackTrace();
+        ExceptionUtils.handleException(e);
       }
     }
     return null;
@@ -139,7 +140,7 @@ public class NMSManager {
         return it.next();
       }
     } catch (Throwable e) {
-      e.printStackTrace();
+      ExceptionUtils.handleException(e);
     }
     return null;
   }
@@ -159,7 +160,7 @@ public class NMSManager {
         if (matcher.find()) return matcher.group("texture");
       }
     } catch (Throwable e) {
-      e.printStackTrace();
+      ExceptionUtils.handleException(e);
     }
     return null;
   }
