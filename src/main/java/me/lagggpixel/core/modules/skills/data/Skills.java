@@ -31,10 +31,7 @@ public class Skills {
   @Expose
   private Skill combat;
 
-  private Map<SkillType, Skill> skills = Map.of(
-      SkillType.MINING, mining,
-      SkillType.FARMING, farming,
-      SkillType.COMBAT, combat);
+  private Map<SkillType, Skill> skills;
 
   public Skills(@NotNull UUID playerUuid) {
     this.playerUuid = playerUuid;
@@ -44,6 +41,16 @@ public class Skills {
     this.farming.initSkillLevel();
     this.combat = new Skill(this.playerUuid, SkillType.COMBAT);
     this.combat.initSkillLevel();
+  }
+
+  public Map<SkillType, Skill> getSkills() {
+    if (skills == null) {
+      skills = Map.of(
+          SkillType.MINING, mining,
+          SkillType.FARMING, farming,
+          SkillType.COMBAT, combat);
+    }
+    return skills;
   }
 
   public double getSkillAverage() {
