@@ -56,11 +56,11 @@ public class Skills {
   public double getSkillAverage() {
     int totalSkillLevel = 0;
 
-    for (Skill skill : skills.values()) {
+    for (Skill skill : getSkills().values()) {
       totalSkillLevel += skill.getLevel();
     }
 
-    int totalSkillCount = skills.keySet().size();
+    int totalSkillCount = getSkills().keySet().size();
 
     return (float) totalSkillLevel / totalSkillCount;
   }
