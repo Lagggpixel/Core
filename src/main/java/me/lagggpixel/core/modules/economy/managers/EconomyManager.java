@@ -2,6 +2,7 @@ package me.lagggpixel.core.modules.economy.managers;
 
 import me.lagggpixel.core.Main;
 import me.lagggpixel.core.data.User;
+import me.lagggpixel.core.modules.economy.events.BalanceTopUpdateEvent;
 import org.apache.commons.collections4.map.HashedMap;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -9,7 +10,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
-import java.util.logging.Level;
 import java.util.stream.Stream;
 
 public class EconomyManager {
@@ -147,8 +147,7 @@ public class EconomyManager {
   }
   
   public void updateBalanceTop() {
-    Main.log(Level.INFO, "Updating balance top...");
-    long ms = System.currentTimeMillis();
+    long timeStarted = System.currentTimeMillis();
     
     Map<UUID, User> userMap = Main.getUserData();
     Map<UUID, Double> tempBalanceMap = new HashedMap<>();
@@ -160,9 +159,9 @@ public class EconomyManager {
     
     tempBalanceMap = sortBalanceMap(tempBalanceMap);
     setBalanceTop(tempBalanceMap);
-    
-    ms = System.currentTimeMillis() - ms;
-    Main.log(Level.INFO, "Balance top updated in " + ms + " ms!");
+
+    BalanceTopUpdateEvent event = new BalanceTopUpdateEvent(timeStarted, System.currentTimeMillis());
+    Bukkit.getPluginManager().callEvent(event);
   }
   
   private Map<UUID, Double> sortBalanceMap(Map<UUID, Double> unsortedMap) {
