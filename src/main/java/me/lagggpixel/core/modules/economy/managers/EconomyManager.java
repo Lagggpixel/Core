@@ -2,6 +2,7 @@ package me.lagggpixel.core.modules.economy.managers;
 
 import me.lagggpixel.core.Main;
 import me.lagggpixel.core.data.User;
+import me.lagggpixel.core.modules.economy.events.BalanceTopUpdateEvent;
 import org.apache.commons.collections4.map.HashedMap;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -9,7 +10,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
-import java.util.logging.Level;
 import java.util.stream.Stream;
 
 public class EconomyManager {
@@ -78,9 +78,8 @@ public class EconomyManager {
   
   @Deprecated
   public void setBalance(String name, double amount) {
-    User user = Main.getUser(Bukkit.getPlayerUniqueId(name));
-    if (user == null) return;
-    
+    User user = Main.getUser(Objects.requireNonNull(Bukkit.getPlayerUniqueId(name)));
+
     this.setBalance(user, Math.max(0, amount));
   }
   
@@ -90,8 +89,7 @@ public class EconomyManager {
   
   public void setBalance(@NotNull UUID uuid, double amount) {
     User user = Main.getUser(uuid);
-    if (user == null) return;
-    
+
     this.setBalance(user, Math.max(0, amount));
   }
   
@@ -101,8 +99,8 @@ public class EconomyManager {
   
   @Deprecated
   public double getBalance(String name) {
-    User user = Main.getUser(Bukkit.getPlayerUniqueId(name));
-    return user == null ? 0 : this.getBalance(user);
+    User user = Main.getUser(Objects.requireNonNull(Bukkit.getPlayerUniqueId(name)));
+    return this.getBalance(user);
   }
   
   public double getBalance(@NotNull OfflinePlayer player) {
@@ -111,7 +109,7 @@ public class EconomyManager {
   
   public double getBalance(@NotNull UUID uuid) {
     User user = Main.getUser(uuid);
-    return user == null ? 0 : this.getBalance(user);
+    return this.getBalance(user);
   }
   
   public double getBalance(@NotNull User user) {
@@ -120,9 +118,8 @@ public class EconomyManager {
   
   @Deprecated
   public boolean hasEnough(String name, double amount) {
-    User user = Main.getUser(Bukkit.getPlayerUniqueId(name));
-    if (user == null) return false;
-    
+    User user = Main.getUser(Objects.requireNonNull(Bukkit.getPlayerUniqueId(name)));
+
     return amount < this.getBalance(user);
   }
   
@@ -132,14 +129,13 @@ public class EconomyManager {
   
   public boolean hasEnough(@NotNull UUID uuid, double amount) {
     User user = Main.getUser(uuid);
-    if (user == null) return false;
-    
+
     return amount < this.getBalance(user);
   }
   
   @Deprecated
   public boolean hasAccount(String name) {
-    return Main.getUser(Bukkit.getPlayerUniqueId(name)) != null;
+    return true;
   }
   
   public boolean hasAccount(@NotNull OfflinePlayer player) {
@@ -147,12 +143,11 @@ public class EconomyManager {
   }
   
   public boolean hasAccount(@NotNull UUID uuid) {
-    return Main.getUser(uuid) != null;
+    return true;
   }
   
   public void updateBalanceTop() {
-    Main.log(Level.INFO, "Updating balance top...");
-    long ms = System.currentTimeMillis();
+    long timeStarted = System.currentTimeMillis();
     
     Map<UUID, User> userMap = Main.getUserData();
     Map<UUID, Double> tempBalanceMap = new HashedMap<>();
@@ -164,9 +159,9 @@ public class EconomyManager {
     
     tempBalanceMap = sortBalanceMap(tempBalanceMap);
     setBalanceTop(tempBalanceMap);
-    
-    ms = System.currentTimeMillis() - ms;
-    Main.log(Level.INFO, "Balance top updated in " + ms + " ms!");
+
+    BalanceTopUpdateEvent event = new BalanceTopUpdateEvent(timeStarted, System.currentTimeMillis());
+    Bukkit.getPluginManager().callEvent(event);
   }
   
   private Map<UUID, Double> sortBalanceMap(Map<UUID, Double> unsortedMap) {
