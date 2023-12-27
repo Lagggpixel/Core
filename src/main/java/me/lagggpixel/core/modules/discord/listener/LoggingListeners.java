@@ -3,9 +3,11 @@ package me.lagggpixel.core.modules.discord.listener;
 import me.lagggpixel.core.Main;
 import me.lagggpixel.core.modules.discord.managers.DiscordManager;
 import me.lagggpixel.core.modules.economy.events.BalanceTopUpdateEvent;
+import me.lagggpixel.core.modules.skills.events.SkillLevelUpEvent;
 import me.lagggpixel.core.utils.ChatUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -54,6 +56,22 @@ public class LoggingListeners implements Listener {
   public void BalanceTopUpdateEvent(@NotNull BalanceTopUpdateEvent event) {
     EmbedBuilder embedBuilder = new EmbedBuilder().setTimestamp(java.time.Instant.now()).setColor(Color.ORANGE);
     embedBuilder.setAuthor("Balance top updated in " + event.getTimeTaken() + "ms", null, null);
+    embedBuilder.setFooter("BalanceTopUpdateEvent");
+    DiscordManager.getInstance().sendEmbed(loggingChannel, embedBuilder.build());
+  }
+  
+  @EventHandler(priority = EventPriority.MONITOR)
+  public void SkillLevelUpEvent(@NotNull SkillLevelUpEvent event) {
+    EmbedBuilder embedBuilder = new EmbedBuilder().setTimestamp(java.time.Instant.now()).setColor(Color.GREEN);
+    String playerName = Bukkit.getOfflinePlayer(event.getUuid()).getName();
+    embedBuilder.setAuthor("Skill level up.", null, DiscordManager.getInstance().getAvatarUrl(Bukkit.getOfflinePlayer(event.getUuid())));
+    
+    embedBuilder.addField("Player", String.valueOf(playerName), false);
+    embedBuilder.addField("Skill", event.getSkillType().getName(), false);
+    embedBuilder.addField("New level", String.valueOf(event.getLevel()), false);
+    
+    embedBuilder.setFooter("SkillLevelUpEvent");
+    
     DiscordManager.getInstance().sendEmbed(loggingChannel, embedBuilder.build());
   }
   
