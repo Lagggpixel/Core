@@ -2,6 +2,7 @@ package me.lagggpixel.core.modules.discord.listener;
 
 import me.lagggpixel.core.Main;
 import me.lagggpixel.core.modules.discord.managers.DiscordManager;
+import me.lagggpixel.core.modules.economy.events.BalanceTopUpdateEvent;
 import me.lagggpixel.core.utils.ChatUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
@@ -48,4 +49,12 @@ public class LoggingListeners implements Listener {
     embedBuilder.setFooter("AsyncPlayerPreLoginEvent result: " + event.getResult());
     DiscordManager.getInstance().sendEmbed(loggingChannel, embedBuilder.build());
   }
+  
+  @EventHandler(priority = EventPriority.MONITOR)
+  public void BalanceTopUpdateEvent(@NotNull BalanceTopUpdateEvent event) {
+    EmbedBuilder embedBuilder = new EmbedBuilder().setTimestamp(java.time.Instant.now()).setColor(Color.ORANGE);
+    embedBuilder.setAuthor("Balance top updated in " + event.getTimeTaken() + "ms", null, null);
+    DiscordManager.getInstance().sendEmbed(loggingChannel, embedBuilder.build());
+  }
+  
 }
