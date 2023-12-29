@@ -1,8 +1,5 @@
 # Core plugin for Infinite Minecrafters server
 
-[![verify](https://github.com/InfiniteMinecrafters/Core/gitflow-maven-plugin/workflows/verify/badge.svg)](https://github.com/InfiniteMinecrafters/Core/gitflow-maven-plugin/actions)
-
-
 ## Making changes
 ### Commits
 
