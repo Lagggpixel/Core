@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch: # Triggered manually from GitHub Actions UI
 
 jobs:
   build:
