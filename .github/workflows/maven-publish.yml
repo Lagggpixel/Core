@@ -1,4 +1,4 @@
-name: Maven Build and Deploy
+name: Maven Build and Publish to GitHub Packages
 
 on:
   push:
@@ -32,9 +32,12 @@ jobs:
         export JAVA_HOME="${{ env.JAVA_HOME }}"
         mvn -B package --file pom.xml
 
-    - name: Publish to GitHub Packages Apache Maven
+    - name: Set up Maven for GitHub Packages
+      run: echo "//registry.npmjs.org/:_authToken=\${NODE_AUTH_TOKEN}" > ~/.npmrc
+
+    - name: Publish to GitHub Packages
       run: |
         export JAVA_HOME="${{ env.JAVA_HOME }}"
-        mvn deploy -s $GITHUB_WORKSPACE/settings.xml
+        mvn deploy --file pom.xml
       env:
         GITHUB_TOKEN: ${{ github.token }}
