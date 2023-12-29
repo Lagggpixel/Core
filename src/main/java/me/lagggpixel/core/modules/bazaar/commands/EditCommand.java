@@ -3,6 +3,7 @@ package me.lagggpixel.core.modules.bazaar.commands;
 import me.lagggpixel.core.enums.Lang;
 import me.lagggpixel.core.interfaces.ICommandClass;
 import me.lagggpixel.core.modules.bazaar.BazaarModule;
+import me.lagggpixel.core.modules.bazaar.messageinput.MessageInputManager;
 import me.lagggpixel.core.utils.CommandUtils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -12,17 +13,16 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class BazaarCommand implements ICommandClass {
+public class EditCommand implements ICommandClass {
   private final BazaarModule module;
 
-  public BazaarCommand(BazaarModule module) {
+  public EditCommand(BazaarModule module) {
     this.module = module;
   }
 
-
   @Override
   public String getCommandName() {
-    return "bazaar";
+    return "bazaaredit";
   }
 
   @Override
@@ -49,10 +49,36 @@ public class BazaarCommand implements ICommandClass {
   public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, String[] args) {
     if (!(commandSender instanceof Player player)) {
       commandSender.sendMessage(Lang.PLAYER_ONLY.toComponentWithPrefix());
+      return false;
+    }
+
+    if (args.length == 0) {
+      module.getBazaar().openEdit(player, module.getBazaar().getCategories().get(0));
       return true;
     }
 
-    module.getBazaar().open(player);
+    if (args.length >= 2 && args[0].equals("lore")) {
+      MessageInputManager messageInputManager = module.getMessageInputManager();
+      int lineIndex = args.length >= 3 ? Integer.parseInt(args[2]) : -1;
+      switch (args[1]) {
+        case "remove":
+          if (lineIndex < 0) break;
+          messageInputManager.removeLine(player, lineIndex);
+          break;
+        case "edit":
+          if (lineIndex < 0) break;
+          messageInputManager.editLine(player, lineIndex);
+          break;
+        case "add":
+          messageInputManager.addLine(player);
+          break;
+        case "confirm":
+          messageInputManager.confirmMultiLineInput(player);
+          break;
+      }
+    }
+
+    //bazaaredit lore edit/remove/add/confirm lineindex
 
     return true;
   }

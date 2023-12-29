@@ -24,6 +24,21 @@ public enum Lang {
   TELEPORTATION_SUCCESS("teleportation.success", "You have been teleported to %name%."),
 
   // Bazaar IModule
+  BAZAAR_ORDER_REJECT("bazaar.order.reject", "&cThe order was rejected"),
+  BAZAAR_ORDER_BUY_SUCCESS("bazaar.order.buy.success", "&7The buy order &6%amount%x %product% &7for &6%coins% coins &7was placed to the bazaar"),
+  BAZAAR_ORDER_BUY_NOT_ENOUGH("bazaar.order.buy.not-enough", "&cYou don't have enough coins for this buy order &7[&6%amount%x %product% &7for &6%coins% coins&7]"),
+  BAZAAR_ORDER_SELL_SUCCESS("bazaar.order.sell.success", "&7The sell offer &6%amount%x %product% &7for &6%coins% coins &7was placed to the bazaar"),
+  BAZAAR_ORDER_SELL_NOT_ENOUGH("bazaar.order.sell.not-enough", "&cYou don't have enough items for this sell offer &7[&6%amount%x %product% &7for &6%coins% coins&7]"),
+  BAZAAR_CLAIM_BUY("bazaar.claim.buy", "&7Claimed &a%amount%&7x &f%product% &7worth &6%total-coins% coins &7bought for &6%unit-coins% &7each"),
+  BAZAAR_CLAIM_SELL("bazaar.claim.sell", "&7Claimed &6%total-coins% coins &7from selling &a%amount%&7x &f%product% &7at &6%unit-coins% &7each"),
+  BAZAAR_INSTANT_REJECT("bazaar.instant.reject", "&cThe instant order was rejected"),
+  BAZAAR_INSTANT_BUY_SUCCESS("bazaar.instant.buy.success", "&7Bought &6%amount%x %product% &7for &6%coins% coins"),
+  BAZAAR_INSTANT_BUY_NOT_ENOUGH("bazaar.instant.buy.not_enough", "&cYou don't have enough coins for this buy order &7[&6%amount%x %product% &7for &6%coins% coins&7]"),
+  BAZAAR_INSTANT_BUY_NOT_ENOUGH_STOCK("bazaar.instant.buy.not_enough_stock", "&cThere is not enough stock in the bazaar to fulfill your order"),
+  BAZAAR_INSTANT_SELL_SUCCESS("bazaar.instant.sell.success", "&7Sold &6%amount%x %product% &7for &6%coins% coins"),
+  BAZAAR_INSTANT_SELL_NOT_ENOUGH("bazaar.instant.sell.not_enough", "&cYou don't have enough items for this sell offer &7[&6%amount%x %product% &7for &6%coins% coins&7]"),
+  BAZAAR_INSTANT_SELL_NOT_ENOUGH_STOCK("bazaar.instant.sell.not_enough_stock", "&cThere is not enough stock in the bazaar to fulfill your order"),
+
 
   // Chat IModule
   CHAT_STAFF_CHAT("chat.staffchat.format", "&c[Staff-Chat] &r&b%sender% &r&7» &r%message%"),
