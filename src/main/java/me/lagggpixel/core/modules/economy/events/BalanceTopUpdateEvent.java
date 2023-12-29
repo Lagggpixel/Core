@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 public class BalanceTopUpdateEvent extends Event {
 
   @Getter
-  private static HandlerList handlerList = new HandlerList();
+  private static final HandlerList handlerList = new HandlerList();
 
   private final long timeStarted;
   private final long timeEnded;

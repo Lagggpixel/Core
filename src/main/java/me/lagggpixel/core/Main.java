@@ -7,7 +7,11 @@ import me.lagggpixel.core.listeners.PlayerStatsListeners;
 import me.lagggpixel.core.listeners.onPlayerJoin;
 import me.lagggpixel.core.interfaces.IModule;
 import me.lagggpixel.core.modules.bazaar.BazaarModule;
-import me.lagggpixel.core.modules.bazaar.impl.CoreBazaarOffer;
+import me.lagggpixel.core.modules.bazaar.bz.category.CategoryConfiguration;
+import me.lagggpixel.core.modules.bazaar.bz.product.ProductConfiguration;
+import me.lagggpixel.core.modules.bazaar.bz.productcategory.ProductCategoryConfiguration;
+import me.lagggpixel.core.modules.bazaar.menu.DefaultConfigurableMenuItem;
+import me.lagggpixel.core.modules.bazaar.menu.configurations.*;
 import me.lagggpixel.core.modules.chat.ChatModule;
 import me.lagggpixel.core.modules.discord.DiscordModule;
 import me.lagggpixel.core.modules.economy.EconomyModule;
@@ -47,7 +51,18 @@ public final class Main extends JavaPlugin {
   static {
     ConfigurationSerialization.registerClass(InstantPlayerData.class);
     ConfigurationSerialization.registerClass(Home.class);
-    ConfigurationSerialization.registerClass(CoreBazaarOffer.class);
+
+    // Bazaar
+    ConfigurationSerialization.registerClass(ProductConfiguration.class);
+    ConfigurationSerialization.registerClass(ProductCategoryConfiguration.class);
+    ConfigurationSerialization.registerClass(CategoryConfiguration.class);
+    ConfigurationSerialization.registerClass(DefaultConfigurableMenuItem.class);
+    ConfigurationSerialization.registerClass(CategoryMenuConfiguration.class);
+    ConfigurationSerialization.registerClass(ProductCategoryMenuConfiguration.class);
+    ConfigurationSerialization.registerClass(SearchMenuConfiguration.class);
+    ConfigurationSerialization.registerClass(ProductMenuConfiguration.class);
+    ConfigurationSerialization.registerClass(ConfirmationMenuConfiguration.class);
+    ConfigurationSerialization.registerClass(OrdersMenuConfiguration.class);
   }
   
   private final @NotNull HashMap<String, IModule> modules = new HashMap<>();
