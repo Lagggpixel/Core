@@ -67,7 +67,7 @@ Data for users are stored at `Main.getInstance.getDataFolder + "data/users"`
 ### Note this omits all the item marked in the code
 
 **Bazaar Module**
-- Fix items.json
+- None
 
 
 **Chat Module**
