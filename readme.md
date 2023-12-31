@@ -51,6 +51,7 @@ build: change maven artifactId
 - skipnight
 - spawn
 - staff
+- survival
 - warp
 
 ## Permission
@@ -102,6 +103,10 @@ Data for users are stored at `Main.getInstance.getDataFolder + "data/users"`
 - Add staff mode
 - Add staff action messages
 - Add `broadcast`
+
+
+**Staff Module**
+- Add 9th slot item
 
 
 **Warps Module**
