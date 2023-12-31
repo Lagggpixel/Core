@@ -23,6 +23,20 @@ public enum Lang {
   TELEPORTATION_CANCELED("teleportation.canceled", "&cTeleportation canceled due to %reason%."),
   TELEPORTATION_SUCCESS("teleportation.success", "You have been teleported to %name%."),
 
+  TPA_REQUEST_SENT("tpa.request.sent", "&aYou have sent a teleport request to %player%."),
+  TPA_REQUEST_RECEIVED("tpa.request.received", "&a%player% has sent you a teleport request, you have 1 minute to accept."),
+  TPA_REQUEST_TIMEOUT_REQUESTER("tpa.request.expired", "&cYour teleport request to %player% has expired."),
+  TPA_REQUEST_TIMEOUT_RECEIVER("tpa.request.expired", "&cThe teleport request from %player% has expired."),
+  TPA_REQUEST_CANCELLED_REQUESTER("tpa.request.cancelled", "&cYour teleport request to %player% has been cancelled."),
+  TPA_REQUEST_CANCELLED_RECEIVER("tpa.request.cancelled", "&cThe teleport request from %player% has been cancelled."),
+  TPA_REQUEST_ALREADY_OUTGOING("tpa.request.already_outgoing", "&cYou already have an outgoing teleport request."),
+  TPA_NO_REQUEST_OUTGOING("tpa.request.no_outgoing", "&cYou don't have an outgoing teleport request."),
+  TPA_REQUEST_NOT_FOUND("tpa.request.not_found", "&cNo teleport request found from %player%."),
+  TPA_REQUEST_ACCEPTED_REQUESTER("tpa.request.accepted.requester", "&aYour teleport request to %player% has been accepted."),
+  TPA_REQUEST_ACCEPTED_RECEIVER("tpa.request.accepted.receiver", "&aYou have accepted the teleport request from %player%."),
+  TPA_REQUEST_DENIED_REQUESTER("tpa.request.denied.requester", "&cYour teleport request to %player% has been denied."),
+  TPA_REQUEST_DENIED_RECEIVER("tpa.request.denied.receiver", "&cYou have denied the teleport request from %player%."),
+  
   // Bazaar IModule
   BAZAAR_ORDER_REJECT("bazaar.order.reject", "&cThe order was rejected"),
   BAZAAR_ORDER_BUY_SUCCESS("bazaar.order.buy.success", "&7The buy order &6%amount%x %product% &7for &6%coins% coins &7was placed to the bazaar"),
@@ -173,11 +187,13 @@ public enum Lang {
 
   // Skills Module
   SKILL_LEVEL_UP("skill.level_up",
-      "&3---------------------------------------------------------------------------\n" +
-          "&b&lSKILL LEVEL UP &3%skill% &8%level_before% &l-> &3%level_after%\n" +
-          "  &a&lREWARDS\n" +
-          "    &8+&6%coins% &7Coins" +
-          "&3---------------------------------------------------------------------------\n"),
+      """
+          &3---------------------------------------------------------------------------
+          &b&lSKILL LEVEL UP &3%skill% &8%level_before% &l-> &3%level_after%
+            &a&lREWARDS
+              &8+&6%coins% &7Coins
+          &3---------------------------------------------------------------------------
+          """),
   SKILL_EXP_GAIN("skill.exp_gain", "&8+&3%exp% %skill% experience"),
 
   // Skip-night IModule
