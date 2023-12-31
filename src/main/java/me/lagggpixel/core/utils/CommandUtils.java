@@ -44,6 +44,14 @@ public class CommandUtils {
   }
 
   public static String generateCommandBasePermission(IModule module, ICommandClass ICommandClass) {
-    return "coreplugin." + module.getId() + ".command.player." + ICommandClass.getCommandName() + ".use";
+    String moduleId;
+    
+    if (module == null) {
+      return "coreplugin.command.player." + ICommandClass.getCommandName() + ".use";
+    }
+    else {
+      return "coreplugin." + module.getId() + ".command.player." + ICommandClass.getCommandName() + ".use";
+    }
+    
   }
 }
