@@ -1,8 +1,8 @@
-package me.lagggpixel.core.data;
+package me.lagggpixel.core.modules.survival.data;
 
 import lombok.Getter;
 import me.lagggpixel.core.Main;
-import me.lagggpixel.core.commands.Tpa;
+import me.lagggpixel.core.modules.survival.handlers.TpaHandler;
 import me.lagggpixel.core.enums.Lang;
 import me.lagggpixel.core.utils.TeleportUtils;
 import org.bukkit.entity.Player;
@@ -30,7 +30,7 @@ public class TpaRequest {
     target.sendMessage(Lang.TPA_REQUEST_RECEIVED.toComponentWithPrefix(Map.of("%player%", requester.getName())));
     startCountDown();
     
-    Tpa.getTpaRequestMap().put(requester, this);
+    TpaHandler.getTpaRequestMap().put(requester, this);
   }
   
   private void startCountDown() {
@@ -59,7 +59,7 @@ public class TpaRequest {
       }
       
       public void cancelRequest() {
-        Tpa.getTpaRequestMap().remove(requester);
+        TpaHandler.getTpaRequestMap().remove(requester);
         cancel();
       }
     };
@@ -71,12 +71,12 @@ public class TpaRequest {
   public void cancelTpa() {
     requester.sendMessage(Lang.TPA_REQUEST_CANCELLED_REQUESTER.toComponentWithPrefix(Map.of("%player%", target.getName())));
     target.sendMessage(Lang.TPA_REQUEST_CANCELLED_RECEIVER.toComponentWithPrefix(Map.of("%player%", requester.getName())));
-    Tpa.getTpaRequestMap().remove(requester);
+    TpaHandler.getTpaRequestMap().remove(requester);
     runnable.cancel();
   }
   
   public void acceptTpa() {
-    Tpa.getTpaRequestMap().remove(requester);
+    TpaHandler.getTpaRequestMap().remove(requester);
     runnable.cancel();
     requester.sendMessage(Lang.TPA_REQUEST_ACCEPTED_REQUESTER.toComponentWithPrefix(Map.of("%player%", target.getName())));
     target.sendMessage(Lang.TPA_REQUEST_ACCEPTED_RECEIVER.toComponentWithPrefix(Map.of("%player%", requester.getName())));
@@ -84,7 +84,7 @@ public class TpaRequest {
   }
   
   public void denyTpa() {
-    Tpa.getTpaRequestMap().remove(requester);
+    TpaHandler.getTpaRequestMap().remove(requester);
     runnable.cancel();
     requester.sendMessage(Lang.TPA_REQUEST_DENIED_REQUESTER.toComponentWithPrefix(Map.of("%player%", target.getName())));
     target.sendMessage(Lang.TPA_REQUEST_DENIED_RECEIVER.toComponentWithPrefix(Map.of("%player%", requester.getName())));

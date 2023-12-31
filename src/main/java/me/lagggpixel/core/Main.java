@@ -2,7 +2,6 @@ package me.lagggpixel.core;
 
 import lombok.Getter;
 import lombok.Setter;
-import me.lagggpixel.core.commands.Tpa;
 import me.lagggpixel.core.data.User;
 import me.lagggpixel.core.listeners.PlayerStatsListeners;
 import me.lagggpixel.core.listeners.onPlayerJoin;
@@ -190,6 +189,5 @@ public final class Main extends JavaPlugin {
   }
   
   private void registerCommands() {
-    new Tpa();
   }
 }
