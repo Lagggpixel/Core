@@ -76,7 +76,7 @@ public class TpaCommand implements ICommandClass {
       return true;
     }
     
-    new TpaRequest(sender, target);
+    new TpaRequest(sender, target, tpaHandler);
     
     return true;
   }

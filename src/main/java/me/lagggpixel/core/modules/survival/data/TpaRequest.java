@@ -20,9 +20,13 @@ public class TpaRequest {
   
   private BukkitRunnable runnable;
   
-  public TpaRequest(Player requester, Player target) {
+  private final TpaHandler tpaHandler;
+  
+  public TpaRequest(Player requester, Player target, TpaHandler tpaHandler) {
     this.requester = requester;
     this.target = target;
+    
+    this.tpaHandler = tpaHandler;
     
     this.timeStarted = System.currentTimeMillis();
     
@@ -30,7 +34,7 @@ public class TpaRequest {
     target.sendMessage(Lang.TPA_REQUEST_RECEIVED.toComponentWithPrefix(Map.of("%player%", requester.getName())));
     startCountDown();
     
-    TpaHandler.getTpaRequestMap().put(requester, this);
+    tpaHandler.getTpaRequestMap().put(requester, this);
   }
   
   private void startCountDown() {
@@ -59,7 +63,7 @@ public class TpaRequest {
       }
       
       public void cancelRequest() {
-        TpaHandler.getTpaRequestMap().remove(requester);
+        tpaHandler.getTpaRequestMap().remove(requester);
         cancel();
       }
     };
@@ -71,12 +75,12 @@ public class TpaRequest {
   public void cancelTpa() {
     requester.sendMessage(Lang.TPA_REQUEST_CANCELLED_REQUESTER.toComponentWithPrefix(Map.of("%player%", target.getName())));
     target.sendMessage(Lang.TPA_REQUEST_CANCELLED_RECEIVER.toComponentWithPrefix(Map.of("%player%", requester.getName())));
-    TpaHandler.getTpaRequestMap().remove(requester);
+    tpaHandler.getTpaRequestMap().remove(requester);
     runnable.cancel();
   }
   
   public void acceptTpa() {
-    TpaHandler.getTpaRequestMap().remove(requester);
+    tpaHandler.getTpaRequestMap().remove(requester);
     runnable.cancel();
     requester.sendMessage(Lang.TPA_REQUEST_ACCEPTED_REQUESTER.toComponentWithPrefix(Map.of("%player%", target.getName())));
     target.sendMessage(Lang.TPA_REQUEST_ACCEPTED_RECEIVER.toComponentWithPrefix(Map.of("%player%", requester.getName())));
@@ -84,7 +88,7 @@ public class TpaRequest {
   }
   
   public void denyTpa() {
-    TpaHandler.getTpaRequestMap().remove(requester);
+    tpaHandler.getTpaRequestMap().remove(requester);
     runnable.cancel();
     requester.sendMessage(Lang.TPA_REQUEST_DENIED_REQUESTER.toComponentWithPrefix(Map.of("%player%", target.getName())));
     target.sendMessage(Lang.TPA_REQUEST_DENIED_RECEIVER.toComponentWithPrefix(Map.of("%player%", requester.getName())));
