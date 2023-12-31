@@ -24,6 +24,7 @@ import me.lagggpixel.core.modules.skipnight.SkipNightModule;
 import me.lagggpixel.core.modules.spawn.SpawnModule;
 import me.lagggpixel.core.modules.staff.StaffModule;
 import me.lagggpixel.core.modules.staff.data.InstantPlayerData;
+import me.lagggpixel.core.modules.survival.SurvivalModule;
 import me.lagggpixel.core.modules.warp.WarpModule;
 import me.lagggpixel.core.serializers.UserDataSerializer;
 import me.lagggpixel.core.utils.LangUtils;
@@ -78,6 +79,7 @@ public final class Main extends JavaPlugin {
   private final @NotNull IModule spawnModule = new SpawnModule();
   private final @NotNull IModule staffModule = new StaffModule();
   private final @NotNull IModule warpModule = new WarpModule();
+  private final @NotNull IModule survivalModule = new SurvivalModule();
   @Setter
   @Getter
   private Logger log4jLogger;
@@ -146,6 +148,7 @@ public final class Main extends JavaPlugin {
     modules.put(spawnModule.getId(), spawnModule);
     modules.put(staffModule.getId(), staffModule);
     modules.put(warpModule.getId(), warpModule);
+    modules.put(survivalModule.getId(), survivalModule);
     
     EmbedBuilder startupLogEmbed = new EmbedBuilder();
     startupLogEmbed.setTitle("**Core Plugin Started**");
