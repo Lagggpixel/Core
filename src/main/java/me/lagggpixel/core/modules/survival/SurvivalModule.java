@@ -5,13 +5,16 @@ import me.lagggpixel.core.modules.survival.commands.TpaAcceptCommand;
 import me.lagggpixel.core.modules.survival.commands.TpaCancelCommand;
 import me.lagggpixel.core.modules.survival.commands.TpaCommand;
 import me.lagggpixel.core.modules.survival.commands.TpaDenyCommand;
+import me.lagggpixel.core.modules.survival.handlers.SurvivalItemHandler;
 import me.lagggpixel.core.modules.survival.handlers.TpaHandler;
+import me.lagggpixel.core.modules.survival.listeners.SurvivalItemListeners;
 import me.lagggpixel.core.utils.CommandUtils;
 import org.jetbrains.annotations.NotNull;
 
 public class SurvivalModule implements IModule {
   
   private TpaHandler tpaHandler;
+  private SurvivalItemHandler survivalItemHandler;
   
   @NotNull
   @Override
@@ -27,6 +30,7 @@ public class SurvivalModule implements IModule {
   @Override
   public void onEnable() {
     tpaHandler = new TpaHandler();
+    survivalItemHandler = new SurvivalItemHandler();
   }
   
   @Override
@@ -41,7 +45,7 @@ public class SurvivalModule implements IModule {
   
   @Override
   public void registerListeners() {
-  
+    new SurvivalItemListeners(survivalItemHandler);
   }
   
   private void registerTpaCommands() {
