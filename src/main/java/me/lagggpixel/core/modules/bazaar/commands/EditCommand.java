@@ -32,7 +32,7 @@ public class EditCommand implements ICommandClass {
 
   @Override
   public List<String> getCommandAliases() {
-    return null;
+    return List.of("bazaaredit", "bze");
   }
 
   @Override

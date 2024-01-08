@@ -32,7 +32,7 @@ public class BazaarCommand implements ICommandClass {
 
   @Override
   public List<String> getCommandAliases() {
-    return null;
+    return List.of("bz", "bazaar");
   }
 
   @Override
