@@ -27,7 +27,7 @@ public class EconomyManager {
       }
     };
     
-    runnable.runTaskTimerAsynchronously(Main.getInstance(), 0L, 12000L);
+    runnable.runTaskTimer(Main.getInstance(), 0L, 12000L);
   }
   
   public void setBalanceTop(@NotNull Map<UUID, Double> map) {
