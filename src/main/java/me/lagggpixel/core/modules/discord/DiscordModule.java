@@ -1,5 +1,6 @@
 package me.lagggpixel.core.modules.discord;
 
+import lombok.Getter;
 import me.lagggpixel.core.Main;
 import me.lagggpixel.core.interfaces.IModule;
 import me.lagggpixel.core.modules.discord.handlers.CaptureAppender;
@@ -14,6 +15,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.logging.Level;
 
+@Getter
 public class DiscordModule implements IModule {
   
   NMSHandler nmsHandler;
