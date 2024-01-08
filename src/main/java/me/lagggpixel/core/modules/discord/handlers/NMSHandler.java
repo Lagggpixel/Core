@@ -1,4 +1,4 @@
-package me.lagggpixel.core.modules.discord.managers;
+package me.lagggpixel.core.modules.discord.handlers;
 
 import me.lagggpixel.core.utils.ExceptionUtils;
 import org.apache.commons.codec.binary.Base64;
@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class NMSManager {
+public class NMSHandler {
   protected String versionPrefix = "";
   protected boolean failed = false;
   
@@ -72,7 +72,7 @@ public class NMSManager {
   public Class<?> getClass(String className) {
     Class<?> result = null;
     try {
-      result = NMSManager.class.getClassLoader().loadClass(className);
+      result = NMSHandler.class.getClassLoader().loadClass(className);
     } catch (Exception ignored) {
     }
     return result;
@@ -85,7 +85,7 @@ public class NMSManager {
     
     for (String name : classNames) {
       try {
-        return NMSManager.class.getClassLoader().loadClass(name);
+        return NMSHandler.class.getClassLoader().loadClass(name);
       } catch (ClassNotFoundException ignored) {
       }
       
@@ -95,7 +95,7 @@ public class NMSManager {
       }
       
       try {
-        return NMSManager.class.getClassLoader().loadClass(name);
+        return NMSHandler.class.getClassLoader().loadClass(name);
       } catch (ClassNotFoundException ignored) {
       }
     }

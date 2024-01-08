@@ -1,4 +1,4 @@
-package me.lagggpixel.core.modules.discord.managers;
+package me.lagggpixel.core.modules.discord.handlers;
 
 import io.papermc.paper.event.player.AsyncChatEvent;
 import lombok.Getter;
@@ -29,12 +29,12 @@ import java.util.Objects;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
-public class DiscordManager {
+public class DiscordHandler {
   
   @Getter
-  private static DiscordManager instance;
+  private static DiscordHandler instance;
   @NotNull
-  private final NMSManager nmsManager;
+  private final NMSHandler nmsHandler;
   @NotNull
   public final TextChannel CONSOLE_CHANNEL;
   @NotNull
@@ -48,12 +48,12 @@ public class DiscordManager {
   @Getter
   private final Guild guild;
   
-  public DiscordManager(@NotNull NMSManager nmsManager) {
+  public DiscordHandler(@NotNull NMSHandler nmsHandler) {
     if (instance != null) {
-      throw new RuntimeException("DiscordManager is already initialized! DiscordManager is a singleton!");
+      throw new RuntimeException("DiscordHandler is already initialized! DiscordHandler is a singleton!");
     }
     instance = this;
-    this.nmsManager = nmsManager;
+    this.nmsHandler = nmsHandler;
     try {
       jda = JDABuilder.createDefault("MTAwMTU4MDA4NjE4Njc1NDIwOQ.GCSQD2.xpfFptXlfirUex4nO9DOx4gLJXClbLjYUvTvyk").build().awaitReady();
     } catch (InterruptedException e) {
@@ -173,7 +173,7 @@ public class DiscordManager {
   }
 
   public String getAvatarUrl(@NotNull Player player) {
-    String avatarUrl = constructAvatarUrl(player.getName(), player.getUniqueId(), nmsManager.getTexture(player));
+    String avatarUrl = constructAvatarUrl(player.getName(), player.getUniqueId(), nmsHandler.getTexture(player));
     avatarUrl = replacePlaceholdersToDiscord(avatarUrl, player);
     return avatarUrl;
   }
@@ -184,7 +184,7 @@ public class DiscordManager {
       player = Bukkit.getOfflinePlayer(uuid);
     }
     if (StringUtils.isBlank(texture) && player != null && player.isOnline()) {
-      texture = nmsManager.getTexture(player.getPlayer());
+      texture = nmsHandler.getTexture(player.getPlayer());
     }
     
     String avatarUrl = "https://crafatar.com/avatars/{uuid-nodashes}.png?size={size}&overlay#{texture}";

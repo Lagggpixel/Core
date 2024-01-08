@@ -165,7 +165,7 @@ public final class Main extends JavaPlugin {
       }
     });
     
-    DiscordModule.discordManager.sendEmbed(DiscordModule.discordManager.LOGGING_CHANNEL, startupLogEmbed.build());
+    DiscordModule.discordHandler.sendEmbed(DiscordModule.discordHandler.LOGGING_CHANNEL, startupLogEmbed.build());
   }
   
   @Override
@@ -175,9 +175,9 @@ public final class Main extends JavaPlugin {
         v.onDisable();
       }
     });
-    DiscordModule.discordManager.sendEmbed(DiscordModule.discordManager.LOGGING_CHANNEL, new EmbedBuilder().setTitle("**Core Plugin Disabled**").build());
+    DiscordModule.discordHandler.sendEmbed(DiscordModule.discordHandler.LOGGING_CHANNEL, new EmbedBuilder().setTitle("**Core Plugin Disabled**").build());
     UserDataSerializer.saveData(userData);
-    DiscordModule.discordManager.getJda().shutdown();
+    DiscordModule.discordHandler.getJda().shutdown();
   }
   
   private void registerListeners() {

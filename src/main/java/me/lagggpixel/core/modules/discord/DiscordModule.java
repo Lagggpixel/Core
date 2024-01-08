@@ -3,10 +3,11 @@ package me.lagggpixel.core.modules.discord;
 import me.lagggpixel.core.Main;
 import me.lagggpixel.core.interfaces.IModule;
 import me.lagggpixel.core.modules.discord.handlers.CaptureAppender;
+import me.lagggpixel.core.modules.discord.handlers.DiscordHandler;
+import me.lagggpixel.core.modules.discord.handlers.ServerStatusHandler;
 import me.lagggpixel.core.modules.discord.listener.Listeners;
 import me.lagggpixel.core.modules.discord.listener.LoggingListeners;
-import me.lagggpixel.core.modules.discord.managers.DiscordManager;
-import me.lagggpixel.core.modules.discord.managers.NMSManager;
+import me.lagggpixel.core.modules.discord.handlers.NMSHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.LoggerContext;
 import org.jetbrains.annotations.NotNull;
@@ -15,8 +16,9 @@ import java.util.logging.Level;
 
 public class DiscordModule implements IModule {
   
-  NMSManager nmsManager;
-  public static DiscordManager discordManager;
+  NMSHandler nmsHandler;
+  public static DiscordHandler discordHandler;
+  private ServerStatusHandler serverStatusHandler;
   
   @NotNull
   @Override
@@ -31,9 +33,9 @@ public class DiscordModule implements IModule {
   
   @Override
   public void onEnable() {
-    nmsManager = new NMSManager();
-    discordManager = new DiscordManager(nmsManager);
-
+    nmsHandler = new NMSHandler();
+    discordHandler = new DiscordHandler(nmsHandler);
+    serverStatusHandler = new ServerStatusHandler();
     // Log4j Appender implementation
     Main.getInstance().setLog4jLogger(LogManager.getRootLogger());
     boolean serverIsLog4jCapable = false;
@@ -70,7 +72,7 @@ public class DiscordModule implements IModule {
   
   @Override
   public void registerListeners() {
-    new Listeners(discordManager);
+    new Listeners(discordHandler);
     new LoggingListeners();
   }
 }

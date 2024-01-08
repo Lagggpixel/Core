@@ -1,6 +1,5 @@
 package me.lagggpixel.core.modules.discord.handlers;
 
-import me.lagggpixel.core.modules.discord.managers.DiscordManager;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.utils.messages.MessageCreateBuilder;
@@ -23,10 +22,10 @@ public class ConsoleHandler {
     MessageCreateBuilder builder = new MessageCreateBuilder();
     builder.setContent(formatLoggingMessage(logEvent));
     builder.setEmbeds(Collections.emptyList());
-    if (!(DiscordManager.getInstance().getJda().getStatus() == JDA.Status.SHUTDOWN
-        || DiscordManager.getInstance().getJda().getStatus() == JDA.Status.SHUTTING_DOWN)
-        || DiscordManager.getInstance().getJda().getStatus() == JDA.Status.DISCONNECTED) {
-      DiscordManager.getInstance().CONSOLE_CHANNEL.sendMessage(builder.build()).queue();
+    if (!(DiscordHandler.getInstance().getJda().getStatus() == JDA.Status.SHUTDOWN
+        || DiscordHandler.getInstance().getJda().getStatus() == JDA.Status.SHUTTING_DOWN)
+        || DiscordHandler.getInstance().getJda().getStatus() == JDA.Status.DISCONNECTED) {
+      DiscordHandler.getInstance().CONSOLE_CHANNEL.sendMessage(builder.build()).queue();
     }
   }
 

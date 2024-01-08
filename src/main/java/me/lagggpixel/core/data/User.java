@@ -217,4 +217,8 @@ public class User {
   private void queueMessage(Component component) {
     this.getQueuedMessage.add(component);
   }
+  
+  public boolean isOnline() {
+    return Bukkit.getPlayer(playerUUID) != null;
+  }
 }
