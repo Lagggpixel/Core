@@ -1,6 +1,5 @@
 package me.lagggpixel.core.modules.survival.listeners;
 
-import me.lagggpixel.core.modules.survival.data.survivalItem.SurvivalItemInventoryHolder;
 import me.lagggpixel.core.modules.survival.handlers.SurvivalItemHandler;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
@@ -12,7 +11,6 @@ import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
@@ -44,12 +42,6 @@ public class SurvivalItemListeners implements Listener {
       if (inventoryAction != InventoryAction.HOTBAR_SWAP) {
         survivalItemHandler.openInventory((Player) event.getWhoClicked());
       }
-    }
-    
-    Inventory inventory = event.getInventory();
-    if (inventory.getHolder(false) instanceof SurvivalItemInventoryHolder myInventory) {
-      event.setCancelled(true);
-      handleSurvivalItemClickEvent(event);
     }
   }
   
