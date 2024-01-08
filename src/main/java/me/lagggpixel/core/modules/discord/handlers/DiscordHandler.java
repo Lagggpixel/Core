@@ -156,29 +156,43 @@ public class DiscordHandler {
   // </editor-fold>
   
   // <editor-fold defaultstate="collapsed" desc="Avatar URL">
-  public String getAvatarUrl(String username, UUID uuid) {
-    String avatarUrl = constructAvatarUrl(username, uuid, "");
+  @Deprecated
+  public String getAvatarUrlDeprecated(String username, UUID uuid) {
+    String avatarUrl = constructAvatarUrlDeprecated(username, uuid, "");
     avatarUrl = replacePlaceholdersToDiscord(avatarUrl);
     return avatarUrl;
   }
   
   public String getAvatarUrl(@NotNull OfflinePlayer player) {
+    UUID uuid = player.getUniqueId();
+    return "https://mc-heads.net/avatar/" + uuid + "/100/noHelm";
+  }
+  
+  @Deprecated
+  public String getAvatarUrlDeprecated(@NotNull OfflinePlayer player) {
     if (player.isOnline() && player.getPlayer() != null) {
       return getAvatarUrl(player.getPlayer());
     } else {
-      String avatarUrl = constructAvatarUrl(player.getName(), player.getUniqueId(), "");
+      String avatarUrl = constructAvatarUrlDeprecated(player.getName(), player.getUniqueId(), "");
       avatarUrl = replacePlaceholdersToDiscord(avatarUrl, player);
       return avatarUrl;
     }
   }
 
   public String getAvatarUrl(@NotNull Player player) {
-    String avatarUrl = constructAvatarUrl(player.getName(), player.getUniqueId(), nmsHandler.getTexture(player));
+    UUID uuid = player.getUniqueId();
+    return "https://mc-heads.net/avatar/" + uuid + "/100/noHelm";
+  }
+  
+  @Deprecated
+  public String getAvatarUrlDeprecated(@NotNull Player player) {
+    String avatarUrl = constructAvatarUrlDeprecated(player.getName(), player.getUniqueId(), nmsHandler.getTexture(player));
     avatarUrl = replacePlaceholdersToDiscord(avatarUrl, player);
     return avatarUrl;
   }
 
-  private @NotNull String constructAvatarUrl(String username, UUID uuid, String texture) {
+  @Deprecated
+  private @NotNull String constructAvatarUrlDeprecated(String username, UUID uuid, String texture) {
     OfflinePlayer player = null;
     if (StringUtils.isBlank(username) && uuid != null) {
       player = Bukkit.getOfflinePlayer(uuid);
