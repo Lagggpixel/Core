@@ -6,6 +6,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.ClickType;
+import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
@@ -29,10 +31,16 @@ public class SurvivalItemListeners implements Listener {
   
   @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
   public void InventoryClickEvent(InventoryClickEvent event) {
-    ItemStack itemClicked = event.getCurrentItem();
-    if (survivalItemHandler.isSurvivalItem(itemClicked)) {
+    InventoryAction inventoryAction = event.getAction();
+    ItemStack currentItem = event.getClick() ==
+        ClickType.NUMBER_KEY
+        ? event.getWhoClicked().getInventory().getItem(event.getHotbarButton())
+        : event.getCurrentItem();
+    if (survivalItemHandler.isSurvivalItem(currentItem)) {
       event.setCancelled(true);
-      survivalItemHandler.openInventory((Player) event.getWhoClicked());
+      if (inventoryAction != InventoryAction.HOTBAR_SWAP) {
+        survivalItemHandler.openInventory((Player) event.getWhoClicked());
+      }
     }
   }
   

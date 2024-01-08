@@ -1,5 +1,6 @@
 package me.lagggpixel.core.builders;
 
+import me.lagggpixel.core.utils.ChatUtils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Color;
 import org.bukkit.Material;
@@ -60,6 +61,12 @@ public class ItemBuilder {
 
     public ItemBuilder setAmount(int amount) {
         item.setAmount(amount);
+        return this;
+    }
+    
+    public ItemBuilder setDisplayName(String name) {
+        meta.displayName(ChatUtils.stringToComponentCC(name));
+        item.setItemMeta(meta);
         return this;
     }
 
