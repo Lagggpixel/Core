@@ -3,7 +3,6 @@ package me.lagggpixel.core.data;
 import lombok.Getter;
 import me.lagggpixel.core.Main;
 import me.lagggpixel.core.builders.ItemBuilder;
-import me.lagggpixel.core.data.User;
 import me.lagggpixel.core.utils.ChatUtils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
@@ -12,6 +11,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 @Getter
 public abstract class CoreInventoryHolder implements InventoryHolder {
@@ -57,7 +57,7 @@ public abstract class CoreInventoryHolder implements InventoryHolder {
     }
   }
   
-  public abstract void openInventory(Player player);
+  public abstract void openInventory(@NotNull Player player);
   
-  public abstract void handleInventoryClick(InventoryClickEvent event);
+  public abstract void handleInventoryClick(@NotNull InventoryClickEvent event);
 }
