@@ -170,8 +170,8 @@
         <!-- Bazaar Module -->
         <dependency>
             <groupId>com.github.ZorTik</groupId>
-            <artifactId>ContainrGUI</artifactId>
-            <version>0.7-pre2</version>
+            <artifactId>core</artifactId>
+            <version>1.0</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
