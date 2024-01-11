@@ -9,7 +9,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -20,6 +22,18 @@ public class SurvivalItemListeners implements Listener {
   
   public SurvivalItemListeners(SurvivalItemHandler survivalItemHandler) {
     this.survivalItemHandler = survivalItemHandler;
+  }
+  
+  @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+  public void onPlayerJoin(@NotNull PlayerJoinEvent event) {
+    Player player = event.getPlayer();
+    player.getInventory().setItem(8, survivalItemHandler.getSurvivalItem());
+  }
+  
+  @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+  public void onWorldChange(PlayerChangedWorldEvent event) {
+    Player player = event.getPlayer();
+    player.getInventory().setItem(8, survivalItemHandler.getSurvivalItem());
   }
   
   @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)

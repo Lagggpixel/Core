@@ -18,7 +18,7 @@ import java.util.List;
 public class ItemBuilder {
 
     private final ItemStack item;
-    private final ItemMeta meta;
+    private ItemMeta meta;
 
     public ItemBuilder() {
         item = new ItemStack(Material.DIRT);
@@ -192,7 +192,7 @@ public class ItemBuilder {
         item.setItemMeta(leather);
         return this;
     }
-
+    
     public ItemStack toItemStack(){
         return item;
     }
