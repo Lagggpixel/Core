@@ -32,8 +32,6 @@ public class SurvivalItemInventoryHolder extends SurvivalCoreInventoryHolder {
             ChatUtils.stringToComponentCC("&7View your Skill progression and"),
             ChatUtils.stringToComponentCC("&7rewards."),
             ChatUtils.stringToComponentCC(" "),
-            ChatUtils.stringToComponentCC(" "),
-            ChatUtils.stringToComponentCC(" "),
             ChatUtils.stringToComponentCC("&eClick to view!")
         ))
         .addItemFlag(ItemFlag.HIDE_ATTRIBUTES)
