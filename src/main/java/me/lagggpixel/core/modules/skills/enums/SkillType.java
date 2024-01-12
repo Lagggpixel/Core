@@ -6,7 +6,9 @@ public enum SkillType {
 
   FARMING,
   MINING,
-  COMBAT;
+  COMBAT,
+  FISHING,
+  WOODCUTTING;
 
   public String getName() {
     return StringUtils.capitalize(name().toLowerCase());

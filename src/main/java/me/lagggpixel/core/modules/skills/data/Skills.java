@@ -30,6 +30,12 @@ public class Skills {
   @SerializedName("Combat")
   @Expose
   private Skill combat;
+  @SerializedName("Fishing")
+  @Expose
+  private Skill fishing;
+  @SerializedName("Woodcutting")
+  @Expose
+  private Skill woodcutting;
 
   private Map<SkillType, Skill> skills;
 
@@ -41,6 +47,10 @@ public class Skills {
     this.farming.initSkillLevel();
     this.combat = new Skill(this.playerUuid, SkillType.COMBAT);
     this.combat.initSkillLevel();
+    this.fishing = new Skill(this.playerUuid, SkillType.FISHING);
+    this.fishing.initSkillLevel();
+    this.woodcutting = new Skill(this.playerUuid, SkillType.WOODCUTTING);
+    this.woodcutting.initSkillLevel();
   }
 
   public Map<SkillType, Skill> getSkills() {
@@ -48,7 +58,9 @@ public class Skills {
       skills = Map.of(
           SkillType.MINING, mining,
           SkillType.FARMING, farming,
-          SkillType.COMBAT, combat);
+          SkillType.COMBAT, combat,
+          SkillType.FISHING, fishing,
+          SkillType.WOODCUTTING, woodcutting);
     }
     return skills;
   }
