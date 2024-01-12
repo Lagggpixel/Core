@@ -11,6 +11,9 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 
 @Getter
@@ -60,4 +63,15 @@ public abstract class CoreInventoryHolder implements InventoryHolder {
   public abstract void openInventory(@NotNull Player player);
   
   public abstract void handleInventoryClick(@NotNull InventoryClickEvent event);
+  
+  protected String getItemTag(ItemStack itemStack) {
+    if (itemStack.hasItemMeta()) {
+      ItemMeta itemMeta = itemStack.getItemMeta();
+      PersistentDataContainer container = itemMeta.getPersistentDataContainer();
+      if (container.get(Main.getInstance().itemTag, PersistentDataType.STRING) != null) {
+        return container.get(Main.getInstance().itemTag, PersistentDataType.STRING);
+      }
+    }
+    return null;
+  }
 }

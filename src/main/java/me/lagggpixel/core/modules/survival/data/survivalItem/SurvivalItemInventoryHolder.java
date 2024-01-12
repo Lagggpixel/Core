@@ -1,11 +1,18 @@
 package me.lagggpixel.core.modules.survival.data.survivalItem;
 
 import lombok.Getter;
+import me.lagggpixel.core.builders.ItemBuilder;
 import me.lagggpixel.core.enums.Lang;
 import me.lagggpixel.core.modules.survival.data.SurvivalCoreInventoryHolder;
+import me.lagggpixel.core.utils.ChatUtils;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.ItemFlag;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 
 /**
  * This class represents the survival item inventory holder.
@@ -20,6 +27,20 @@ public class SurvivalItemInventoryHolder extends SurvivalCoreInventoryHolder {
   
   @Override
   public void initializeInventoryItems() {
+    inventory.setItem(19, new ItemBuilder(Material.DIAMOND_SWORD)
+        .setDisplayName("&aYour Skills")
+        .setLore(List.of(
+            ChatUtils.stringToComponentCC("&7View your Skill progression and"),
+            ChatUtils.stringToComponentCC("&7rewards."),
+            ChatUtils.stringToComponentCC(" "),
+            ChatUtils.stringToComponentCC(" "),
+            ChatUtils.stringToComponentCC(" "),
+            ChatUtils.stringToComponentCC("&eClick to view!")
+        ))
+        .addItemFlag(ItemFlag.HIDE_ATTRIBUTES)
+        .setTag("skillItem")
+        .toItemStack());
+    
     this.fillEmptySlots();
   }
   
@@ -30,7 +51,18 @@ public class SurvivalItemInventoryHolder extends SurvivalCoreInventoryHolder {
   
   @Override
   public void handleInventoryClick(@NotNull InventoryClickEvent event) {
-  
+    event.setCancelled(true);
+    if (event.getCurrentItem() == null) {
+      return;
+    }
+    ItemStack clickedItem = event.getCurrentItem();
+    String tag = getItemTag(clickedItem);
+    if (tag == null) {
+      return;
+    }
+    if (tag.equals("skillItem")) {
+      new SkillsInventoryHolder(player).openInventory(player);
+    }
   }
   
 }
