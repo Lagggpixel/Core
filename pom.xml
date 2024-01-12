@@ -141,7 +141,7 @@
         <dependency>
             <groupId>net.dv8tion</groupId>
             <artifactId>JDA</artifactId>
-            <version>5.0.0-beta.18</version>
+            <version>5.0.0-beta.19</version>
         </dependency>
         <dependency>
             <groupId>commons-codec</groupId>
@@ -175,10 +175,9 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>com.github.Rapha149.SignGUI</groupId>
+            <groupId>io.github.rapha149.signgui</groupId>
             <artifactId>signgui</artifactId>
-            <version>v1.9.3</version>
-            <scope>compile</scope>
+            <version>2.2.2</version>
         </dependency>
         <!-- XMaterial Module -->
         <dependency>
