@@ -76,15 +76,15 @@ public class EconomyCommand implements ICommandClass {
     switch (subcommand) {
       case "give":
         economyManager.deposit(offlinePlayer, amount);
-        commandSender.sendMessage(Lang.ECONOMY_GIVE.toComponentWithPrefix(Map.of("%player%", user.getPlayerName(), "%amount%", String.valueOf(amount))));
+        commandSender.sendMessage(Lang.ECONOMY_GIVE.toComponentWithPrefix(Map.of("%player%", user.getPlayerName(), "%amount%", String.valueOf(amount), "%balance%", String.valueOf(economyManager.getBalance(offlinePlayer)))));
         break;
       case "set":
         economyManager.setBalance(offlinePlayer, amount);
-        commandSender.sendMessage(Lang.ECONOMY_SET.toComponentWithPrefix(Map.of("%player%", user.getPlayerName())));
+        commandSender.sendMessage(Lang.ECONOMY_SET.toComponentWithPrefix(Map.of("%player%", user.getPlayerName(), "%balance%", String.valueOf(amount))));
         break;
       case "remove":
         economyManager.withdraw(offlinePlayer, amount);
-        commandSender.sendMessage(Lang.ECONOMY_REMOVE.toComponentWithPrefix(Map.of("%player%", user.getPlayerName(), "%amount%", String.valueOf(amount))) );
+        commandSender.sendMessage(Lang.ECONOMY_REMOVE.toComponentWithPrefix(Map.of("%player%", user.getPlayerName(), "%amount%", String.valueOf(amount), "%balance%", String.valueOf(economyManager.getBalance(offlinePlayer)))));
         break;
       default:
         commandSender.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
