@@ -34,17 +34,17 @@ public class TeleportUtils {
             if (k == null || !k.isOnline()) {
               playersToRemove.add(k);
             } else {
-              if (v.getCurrent_delay() == 0) {
+              if (v.getCurrentDelay() == 0) {
                 k.teleport(v.getLocation());
                 k.sendMessage(Lang.TELEPORTATION_SUCCESS.toComponentWithPrefix(Map.of(
-                    "%name%", v.getPlace_name()
+                    "%name%", v.getPlaceName()
                 )));
                 playersToRemove.add(k);
-              } else if (v.getCurrent_delay() < 0) {
+              } else if (v.getCurrentDelay() < 0) {
                 playersToRemove.add(k);
               } else {
                 k.sendMessage(Lang.TELEPORTATION_IN_TIME.toComponentWithPrefix(Map.of(
-                    "%time%", String.valueOf(v.getCurrent_delay())
+                    "%time%", String.valueOf(v.getCurrentDelay())
                 )));
                 v.minus_delay();
               }
@@ -71,7 +71,7 @@ public class TeleportUtils {
       )));
       return;
     }
-
+    
     if (!teleportTasks.containsKey(player)) teleportTasks.put(player, new DelayTeleport(player, location, place_name));
     else teleportTasks.replace(player, new DelayTeleport(player, location, place_name));
   }
@@ -93,9 +93,10 @@ public class TeleportUtils {
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
       if (teleportTasks.containsKey(event.getPlayer())) {
-        if (event.getFrom().getX() != event.getTo().getX() ||
-            event.getFrom().getY() != event.getTo().getY() ||
-            event.getFrom().getZ() != event.getTo().getZ()) {
+        DelayTeleport teleportTask = teleportTasks.get(event.getPlayer());
+        if (Math.abs(Math.round(teleportTask.getLocation().getX() - event.getFrom().getX())) > 0.5
+            || Math.abs(Math.round(teleportTask.getLocation().getZ() - event.getFrom().getZ())) > 0.5
+            || Math.abs(Math.round(teleportTask.getLocation().getY() - event.getFrom().getY())) > 0.5) {
           cancelTeleport(event.getPlayer(), "moving");
         }
       }
