@@ -39,6 +39,8 @@ public abstract class CoreInventoryHolder implements InventoryHolder {
     
     this.title = title;
     this.inventory = Main.getInstance().getServer().createInventory(this, slots, this.title);
+  
+    this.initializeInventoryItems();
   }
   
   protected CoreInventoryHolder(Player player, String title, int slots) {
@@ -47,6 +49,8 @@ public abstract class CoreInventoryHolder implements InventoryHolder {
     
     this.title = ChatUtils.stringToComponentCC(title);
     this.inventory = Main.getInstance().getServer().createInventory(this, slots, this.title);
+  
+    this.initializeInventoryItems();
   }
   
   public abstract void initializeInventoryItems();
