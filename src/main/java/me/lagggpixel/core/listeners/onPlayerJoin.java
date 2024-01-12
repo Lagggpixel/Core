@@ -24,9 +24,6 @@ public class onPlayerJoin implements Listener {
   public void PlayerJoinEvent(@NotNull PlayerJoinEvent event) {
     Player player = event.getPlayer();
     UUID uuid = player.getUniqueId();
-    if (Main.getUser(uuid) == null) {
-      Main.getUserData().put(uuid, new User(player));
-    }
     
     User user = Main.getUser(uuid);
     user.setPlayerName(player.getName());
