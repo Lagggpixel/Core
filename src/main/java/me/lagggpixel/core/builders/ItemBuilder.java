@@ -1,5 +1,6 @@
 package me.lagggpixel.core.builders;
 
+import me.lagggpixel.core.Main;
 import me.lagggpixel.core.utils.ChatUtils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Color;
@@ -9,6 +10,7 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -190,6 +192,12 @@ public class ItemBuilder {
         LeatherArmorMeta leather = (LeatherArmorMeta) meta;
         leather.setColor(color);
         item.setItemMeta(leather);
+        return this;
+    }
+    
+    public ItemBuilder setTag(String value) {
+        meta.getPersistentDataContainer().set(Main.getInstance().itemTag, PersistentDataType.STRING, value);
+        item.setItemMeta(meta);
         return this;
     }
     

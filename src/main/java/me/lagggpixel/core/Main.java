@@ -32,6 +32,7 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.Logger;
+import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
@@ -47,6 +48,7 @@ import java.util.logging.Level;
 public final class Main extends JavaPlugin {
   
   private static Main INSTANCE;
+  public NamespacedKey itemTag = new NamespacedKey(Main.getInstance(), "itemTag");
   private static Map<UUID, User> userData;
   
   static {
