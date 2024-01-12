@@ -76,4 +76,44 @@ public class Skills {
 
     return (float) totalSkillLevel / totalSkillCount;
   }
+  
+  public Skill getMining() {
+    if (this.mining == null) {
+      this.mining = new Skill(this.playerUuid, SkillType.MINING);
+      this.mining.initSkillLevel();
+    }
+    return mining;
+  }
+  
+  public Skill getFarming() {
+    if (this.farming == null) {
+      this.farming = new Skill(this.playerUuid, SkillType.FARMING);
+      this.farming.initSkillLevel();
+    }
+    return farming;
+  }
+  
+  public Skill getCombat() {
+    if (this.combat == null) {
+      this.combat = new Skill(this.playerUuid, SkillType.COMBAT);
+      this.combat.initSkillLevel();
+    }
+    return combat;
+  }
+  
+  public Skill getFishing() {
+    if (this.fishing == null) {
+      this.fishing = new Skill(this.playerUuid, SkillType.FISHING);
+      this.fishing.initSkillLevel();
+    }
+    return fishing;
+  }
+  
+  public Skill getWoodcutting() {
+    if (this.woodcutting == null) {
+      this.woodcutting = new Skill(this.playerUuid, SkillType.WOODCUTTING);
+      this.woodcutting.initSkillLevel();
+    }
+    return woodcutting;
+  }
 }
