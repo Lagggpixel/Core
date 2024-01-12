@@ -48,6 +48,7 @@ import java.util.logging.Level;
 public final class Main extends JavaPlugin {
   
   private static Main INSTANCE;
+  public boolean whitelisted;
   public NamespacedKey itemTag;
   private static Map<UUID, User> userData;
   
@@ -128,6 +129,9 @@ public final class Main extends JavaPlugin {
   public void onEnable() {
     
     INSTANCE = this;
+    this.saveDefaultConfig();
+    this.saveConfig();
+    this.whitelisted = getConfig().getBoolean("whitelisted", true);
     itemTag = new NamespacedKey(Main.getInstance(), "itemTag");
     
     LangUtils.loadLangConfig();

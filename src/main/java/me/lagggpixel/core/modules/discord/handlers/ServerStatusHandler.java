@@ -30,7 +30,7 @@ public class ServerStatusHandler {
   }
   
   private void updateServerPlayersVcChannel() {
-    boolean isWhiteListed = Main.getInstance().getServer().isWhitelistEnforced();
+    boolean isWhiteListed = Main.getInstance().getServer().isWhitelistEnforced() || Main.getInstance().whitelisted;
     VoiceChannel voiceChannel = DiscordModule.discordHandler.getJda().getVoiceChannelById(SERVER_PLAYERS_VC);
     if (voiceChannel == null) {
       return;
