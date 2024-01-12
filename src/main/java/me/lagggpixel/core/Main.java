@@ -48,13 +48,13 @@ import java.util.logging.Level;
 public final class Main extends JavaPlugin {
   
   private static Main INSTANCE;
-  public NamespacedKey itemTag = new NamespacedKey(Main.getInstance(), "itemTag");
+  public NamespacedKey itemTag;
   private static Map<UUID, User> userData;
   
   static {
     ConfigurationSerialization.registerClass(InstantPlayerData.class);
     ConfigurationSerialization.registerClass(Home.class);
-
+    
     // Bazaar
     ConfigurationSerialization.registerClass(ProductConfiguration.class);
     ConfigurationSerialization.registerClass(ProductCategoryConfiguration.class);
@@ -128,6 +128,7 @@ public final class Main extends JavaPlugin {
   public void onEnable() {
     
     INSTANCE = this;
+    itemTag = new NamespacedKey(Main.getInstance(), "itemTag");
     
     LangUtils.loadLangConfig();
     
