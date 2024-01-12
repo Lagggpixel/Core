@@ -1,7 +1,9 @@
 package me.lagggpixel.core.modules.survival.handlers;
 
+import me.lagggpixel.core.Main;
 import me.lagggpixel.core.builders.ItemBuilder;
 import me.lagggpixel.core.enums.Lang;
+import me.lagggpixel.core.modules.survival.data.survivalItem.SurvivalItemInventoryHolder;
 import me.lagggpixel.core.utils.ChatUtils;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -15,7 +17,7 @@ import java.util.Objects;
 
 public class SurvivalItemHandler {
   
-  private final NamespacedKey nameSpacedKey = new NamespacedKey("core", "survival");
+  private final NamespacedKey nameSpacedKey = new NamespacedKey(Main.getInstance(), "survival");
   
   public ItemStack getSurvivalItem() {
     ItemBuilder itemBuilder = new ItemBuilder(Material.NETHER_STAR)
@@ -40,13 +42,16 @@ public class SurvivalItemHandler {
     if (item == null) {
       return false;
     }
-    if (item.getItemMeta().getPersistentDataContainer().get(nameSpacedKey, PersistentDataType.STRING) == null) {
+    if (item.getItemMeta() == null) {
       return false;
     }
-    return Objects.equals(item.getItemMeta().getPersistentDataContainer().get(nameSpacedKey, PersistentDataType.STRING), "survival_item");
+    if (!item.getItemMeta().getPersistentDataContainer().has(nameSpacedKey, PersistentDataType.STRING)) {
+      return false;
+    }
+    return (Objects.requireNonNull(item.getItemMeta().getPersistentDataContainer().get(nameSpacedKey, PersistentDataType.STRING)).equals("survival_item"));
   }
   
   public void openInventory(Player player) {
-  
+    new SurvivalItemInventoryHolder(player).openInventory(player);
   }
 }
