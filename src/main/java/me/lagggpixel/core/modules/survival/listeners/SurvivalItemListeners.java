@@ -24,6 +24,7 @@ public class SurvivalItemListeners implements Listener {
   
   public SurvivalItemListeners(SurvivalItemHandler survivalItemHandler) {
     this.survivalItemHandler = survivalItemHandler;
+    Main.getPluginManager().registerEvents(this, Main.getInstance());
   }
   
   @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
@@ -31,8 +32,8 @@ public class SurvivalItemListeners implements Listener {
     Player player = event.getPlayer();
     new BukkitRunnable() {
       @Override
-      public void run() {player.getInventory().setItem(8, survivalItemHandler.getSurvivalItem());
-      
+      public void run() {
+        player.getInventory().setItem(8, survivalItemHandler.getSurvivalItem());
       }
     }.runTaskLater(Main.getInstance(), 20);
   }
@@ -42,8 +43,8 @@ public class SurvivalItemListeners implements Listener {
     Player player = event.getPlayer();
     new BukkitRunnable() {
       @Override
-      public void run() {player.getInventory().setItem(8, survivalItemHandler.getSurvivalItem());
-      
+      public void run() {
+        player.getInventory().setItem(8, survivalItemHandler.getSurvivalItem());
       }
     }.runTaskLater(Main.getInstance(), 20);
   }
