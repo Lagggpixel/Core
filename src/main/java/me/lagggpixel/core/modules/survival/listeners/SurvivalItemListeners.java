@@ -80,7 +80,7 @@ public class SurvivalItemListeners implements Listener {
   @EventHandler
   public void onPlayerClick(@NotNull PlayerInteractEvent event) {
     Player player = event.getPlayer();
-    if (survivalItemHandler.isSurvivalItem(player.getInventory().getItem(8))) {
+    if (survivalItemHandler.isSurvivalItem(event.getPlayer().getInventory().getItemInMainHand())) {
       event.setCancelled(true);
       survivalItemHandler.openInventory(player);
     }
