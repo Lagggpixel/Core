@@ -1,5 +1,6 @@
 package me.lagggpixel.core.modules.survival.listeners;
 
+import me.lagggpixel.core.Main;
 import me.lagggpixel.core.modules.survival.handlers.SurvivalItemHandler;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
@@ -14,6 +15,7 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
 public class SurvivalItemListeners implements Listener {
@@ -27,13 +29,23 @@ public class SurvivalItemListeners implements Listener {
   @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
   public void onPlayerJoin(@NotNull PlayerJoinEvent event) {
     Player player = event.getPlayer();
-    player.getInventory().setItem(8, survivalItemHandler.getSurvivalItem());
+    new BukkitRunnable() {
+      @Override
+      public void run() {player.getInventory().setItem(8, survivalItemHandler.getSurvivalItem());
+      
+      }
+    }.runTaskLater(Main.getInstance(), 20);
   }
   
   @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
   public void onWorldChange(PlayerChangedWorldEvent event) {
     Player player = event.getPlayer();
-    player.getInventory().setItem(8, survivalItemHandler.getSurvivalItem());
+    new BukkitRunnable() {
+      @Override
+      public void run() {player.getInventory().setItem(8, survivalItemHandler.getSurvivalItem());
+      
+      }
+    }.runTaskLater(Main.getInstance(), 20);
   }
   
   @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
