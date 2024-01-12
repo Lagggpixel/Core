@@ -24,13 +24,13 @@ public class SurvivalItemListeners implements Listener {
     this.survivalItemHandler = survivalItemHandler;
   }
   
-  @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+  @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
   public void onPlayerJoin(@NotNull PlayerJoinEvent event) {
     Player player = event.getPlayer();
     player.getInventory().setItem(8, survivalItemHandler.getSurvivalItem());
   }
   
-  @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+  @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
   public void onWorldChange(PlayerChangedWorldEvent event) {
     Player player = event.getPlayer();
     player.getInventory().setItem(8, survivalItemHandler.getSurvivalItem());
