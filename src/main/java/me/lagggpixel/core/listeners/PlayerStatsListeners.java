@@ -21,9 +21,6 @@ public class PlayerStatsListeners implements Listener {
   @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
   public void onBlockBreak(@NotNull BlockBreakEvent event) {
     User user = Main.getUser(event.getPlayer().getUniqueId());
-    if (user == null) {
-      return;
-    }
     Material material = event.getBlock().getType();
     
     if (user.getBlocksBroken().containsKey(material)) {
@@ -37,9 +34,6 @@ public class PlayerStatsListeners implements Listener {
   @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
   public void onBlockPlace(@NotNull BlockPlaceEvent event) {
     User user = Main.getUser(event.getPlayer().getUniqueId());
-    if (user == null) {
-      return;
-    }
     Material material = event.getBlock().getType();
     
     if (user.getBlocksPlaced().containsKey(material)) {
@@ -58,7 +52,6 @@ public class PlayerStatsListeners implements Listener {
     
     User user = Main.getUser(event.getEntity().getKiller().getUniqueId());
     EntityType entityType = event.getEntity().getType();
-    event.getEntity().getKiller().sendMessage(user.getEntityKills().toString());
     
     if (user.getEntityKills().containsKey(entityType)) {
       user.getEntityKills().replace(entityType, user.getEntityKills().get(entityType) + 1);
