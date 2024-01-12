@@ -3,6 +3,7 @@ package me.lagggpixel.core.modules.survival.listeners;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import me.lagggpixel.core.Main;
 import me.lagggpixel.core.enums.Lang;
+import me.lagggpixel.core.modules.spawn.SpawnModule;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -15,9 +16,14 @@ import org.jetbrains.annotations.NotNull;
 
 public class WhitelistedListener implements Listener {
   
+  public WhitelistedListener() {
+    Main.getInstance().getServer().getPluginManager().registerEvents(this, Main.getInstance());
+  }
+  
   @EventHandler
   public void onPlayerJoin(@NotNull PlayerJoinEvent event) {
     if (Main.getInstance().whitelisted && !event.getPlayer().isOp()) {
+      event.getPlayer().teleport(SpawnModule.getInstance().getSpawnManager().getSpawnLocation());
       event.getPlayer().sendMessage(Lang.SURVIVAL_WHITELISTED_INFORM.toComponentWithPrefix());
     }
   }
