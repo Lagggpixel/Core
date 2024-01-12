@@ -10,10 +10,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.player.PlayerChangedWorldEvent;
-import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerSwapHandItemsEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
@@ -72,9 +69,6 @@ public class SurvivalItemListeners implements Listener {
     }
   }
   
-  private void handleSurvivalItemClickEvent(InventoryClickEvent event) {
-  }
-  
   @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
   public void PlayerSwapHandItemsEvent(@NotNull PlayerSwapHandItemsEvent event) {
     ItemStack itemSwapped = event.getOffHandItem();
@@ -82,5 +76,16 @@ public class SurvivalItemListeners implements Listener {
       event.setCancelled(true);
     }
   }
+  
+  @EventHandler
+  public void onPlayerClick(@NotNull PlayerInteractEvent event) {
+    Player player = event.getPlayer();
+    if (survivalItemHandler.isSurvivalItem(player.getInventory().getItem(8))) {
+      event.setCancelled(true);
+      survivalItemHandler.openInventory(player);
+    }
+  }
+  
+  
   
 }
