@@ -4,6 +4,8 @@ import lombok.Getter;
 import me.lagggpixel.core.interfaces.IModule;
 import me.lagggpixel.core.modules.spawn.commands.SetSpawnCommand;
 import me.lagggpixel.core.modules.spawn.commands.SpawnCommand;
+import me.lagggpixel.core.modules.spawn.listeners.PlayerJoinListener;
+import me.lagggpixel.core.modules.spawn.listeners.PlayerMoveListener;
 import me.lagggpixel.core.modules.spawn.managers.SpawnManager;
 import me.lagggpixel.core.utils.CommandUtils;
 import org.jetbrains.annotations.NotNull;
@@ -46,7 +48,8 @@ public class SpawnModule implements IModule {
   
   @Override
   public void registerListeners() {
-  
+   new PlayerJoinListener(this);
+   new PlayerMoveListener(this);
   }
   
 }

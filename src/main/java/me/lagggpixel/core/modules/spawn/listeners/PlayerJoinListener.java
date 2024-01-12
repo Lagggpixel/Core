@@ -9,12 +9,12 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-public class onPlayerJoin implements Listener {
+public class PlayerJoinListener implements Listener {
 
   private final SpawnModule spawnModule;
   private final SpawnManager spawnManager;
 
-  public onPlayerJoin(SpawnModule spawnModule) {
+  public PlayerJoinListener(SpawnModule spawnModule) {
     this.spawnModule = spawnModule;
     this.spawnManager = this.spawnModule.getSpawnManager();
 
