@@ -11,7 +11,10 @@ import org.jetbrains.annotations.NotNull;
 @Getter
 public class SpawnModule implements IModule {
 
+  @Getter
+  private static SpawnModule instance;
   private SpawnManager spawnManager;
+  
   
   @Override
   public @NotNull String getId() {
@@ -25,6 +28,7 @@ public class SpawnModule implements IModule {
   
   @Override
   public void onEnable() {
+    instance = this;
     spawnManager = new SpawnManager();
     spawnManager.loadSpawnLocation();
   }
@@ -44,4 +48,5 @@ public class SpawnModule implements IModule {
   public void registerListeners() {
   
   }
+  
 }
