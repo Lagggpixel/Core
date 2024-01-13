@@ -1,0 +1,52 @@
+package me.lagggpixel.core.modules.guilds.commands.subCommands;
+
+import me.lagggpixel.core.enums.Lang;
+import me.lagggpixel.core.modules.guilds.GuildModule;
+import me.lagggpixel.core.modules.guilds.commands.ISubCommand;
+import me.lagggpixel.core.modules.guilds.data.Guild;
+import me.lagggpixel.core.modules.guilds.handlers.GuildHandler;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+
+import java.util.Map;
+
+public class GuildLeaveCommand implements ISubCommand {
+
+  private final GuildModule guildModule;
+  private final GuildHandler guildHandler;
+
+  public GuildLeaveCommand(GuildModule guildModule) {
+    this.guildModule = guildModule;
+    guildHandler = this.guildModule.getGuildHandler();
+  }
+
+  @Override
+  public void execute(CommandSender commandSender, String[] args) {
+    if (!(commandSender instanceof Player sender)) {
+      commandSender.sendMessage(Lang.PLAYER_ONLY.toComponentWithPrefix());
+      return;
+    }
+
+    Guild guild = this.guildHandler.getGuildFromPlayer(sender);
+
+    if (guild == null) {
+      sender.sendMessage(Lang.GUILD_NOT_IN_GUILD.toComponentWithPrefix());
+      return;
+    }
+
+    if (guild.isLeader(sender.getUniqueId())) {
+      sender.sendMessage(Lang.GUILD_LEAVE_LEADER_CANT_LEAVE.toComponentWithPrefix());
+      return;
+    }
+
+    if (guild.getOfficers().contains(sender.getUniqueId())) {
+      guild.getOfficers().remove(sender.getUniqueId());
+    } else {
+
+      guild.getMembers().remove(sender.getUniqueId());
+    }
+    guild.sendMessage(Lang.GUILD_LEAVE_SUCCESS_BROADCAST.toComponentWithPrefix(Map.of("%player%", sender.getName())));
+    sender.sendMessage(Lang.GUILD_LEAVE_SUCCESS_NOTIFY.toComponentWithPrefix());
+    return;
+  }
+}

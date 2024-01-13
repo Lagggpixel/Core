@@ -23,17 +23,18 @@ public class GuildCommand implements ICommandClass {
     this.guildModule = guildModule;
     this.subCommands = new HashMap<>();
 
-    subCommands.put("create", new GuildCreateCommand(guildModule));
-    subCommands.put("invite", new GuildInviteCommand(guildModule));
     subCommands.put("claim", new GuildClaimCommand(guildModule));
-    subCommands.put("disband", new GuildDisbandCommand(guildModule));
-    subCommands.put("kick", new GuildKickCommand(guildModule));
-    subCommands.put("help", new GuildHelpCommand(guildModule));
-    subCommands.put("sethome", new GuildSetHomeCommand(guildModule));
-    subCommands.put("join", new GuildJoinCommand(guildModule));
-    subCommands.put("who", new GuildWhoCommand(guildModule));
-    subCommands.put("map", new GuildMapCommand(guildModule));
+    subCommands.put("create", new GuildCreateCommand(guildModule));
     subCommands.put("deposit", new GuildDepositCommand(guildModule));
+    subCommands.put("disband", new GuildDisbandCommand(guildModule));
+    subCommands.put("help", new GuildHelpCommand(guildModule));
+    subCommands.put("invite", new GuildInviteCommand(guildModule));
+    subCommands.put("join", new GuildJoinCommand(guildModule));
+    subCommands.put("kick", new GuildKickCommand(guildModule));
+    subCommands.put("leave", new GuildLeaveCommand(guildModule));
+    subCommands.put("map", new GuildMapCommand(guildModule));
+    subCommands.put("sethome", new GuildSetHomeCommand(guildModule));
+    subCommands.put("who", new GuildWhoCommand(guildModule));
     subCommands.put("withdraw", new GuildWithdrawCommand(guildModule));
   }
 

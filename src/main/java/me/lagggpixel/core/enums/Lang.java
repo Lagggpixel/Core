@@ -164,7 +164,10 @@ public enum Lang {
   GUILD_UNCLAIM_NOT_IN_GUILD_CLAIM("guild.unclaim.not_in_guild_claim", "&aYou are not in your guild's claim!"),
   GUILD_UNCLAIM_SUCCESS_BROADCAST("guild.unclaim.success.broadcast", "&a%player% has unclaimed land!"),
   GUILD_UNCLAIM_SUCCESS_NOTIFY("guild.unclaim.success.notify", "&aYou've successfully unclaimed land!"),
-  
+  GUILD_LEAVE_LEADER_CANT_LEAVE("guild.leave.leader_cant_leave", "&cYou cannot leave your guild as the leader."),
+  GUILD_LEAVE_SUCCESS_NOTIFY("guild.leave.success", "&aYou've left your guild."),
+  GUILD_LEAVE_SUCCESS_BROADCAST("guild.leave.success", "&a%player% has left your guild."),
+
   // Home IModule
   HOME_ALREADY_EXIST("home.already_exist", "&cA home named '&e%home%&c' already exists."),
   HOME_DOES_NOT_EXIST("home.does_not_exist", "&cThe home '&e%home%&c' does not exist."),
