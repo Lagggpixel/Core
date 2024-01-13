@@ -3,7 +3,6 @@ package me.lagggpixel.core.modules.survival.commands;
 import me.lagggpixel.core.enums.Lang;
 import me.lagggpixel.core.interfaces.ICommandClass;
 import me.lagggpixel.core.modules.survival.SurvivalModule;
-import me.lagggpixel.core.modules.survival.handlers.TpaHandler;
 import me.lagggpixel.core.utils.CommandUtils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -13,59 +12,49 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class TpaCancelCommand implements ICommandClass {
-  
-  private final SurvivalModule module;
-  private final TpaHandler tpaHandler;
-  
-  public TpaCancelCommand(SurvivalModule module, TpaHandler tpaHandler) {
-    this.module = module;
-    this.tpaHandler = tpaHandler;
+public class EnchantingTableCommand implements ICommandClass {
+
+  private final SurvivalModule survivalModule;
+
+  public EnchantingTableCommand(SurvivalModule survivalModule) {
+    this.survivalModule = survivalModule;
   }
-  
+
   @Override
   public String getCommandName() {
-    return "tpacancel";
+    return "enchantingtable";
   }
-  
+
   @Override
   public String getCommandDescription() {
     return null;
   }
-  
+
   @Override
   public List<String> getCommandAliases() {
-    return List.of("tpacancel", "tpcancel", "teleportcancel", "teleportaskcancel");
+    return List.of("et", "enchantingtable");
   }
-  
+
   @Override
   public String getCommandPermission() {
-    return CommandUtils.generateCommandBasePermission(module, this);
+    return CommandUtils.generateCommandBasePermission(survivalModule, this);
   }
-  
+
   @Override
   public String getUsage() {
     return null;
   }
-  
+
   @Override
   public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
-    
     if (!(commandSender instanceof Player sender)) {
       commandSender.sendMessage(Lang.PLAYER_ONLY.toComponentWithPrefix());
       return true;
     }
-    
-    if (!tpaHandler.getTpaRequestMap().containsKey(sender)) {
-      sender.sendMessage(Lang.TPA_NO_REQUEST_OUTGOING.toComponentWithPrefix());
-      return true;
-    }
-    
-    tpaHandler.getTpaRequestMap().get(sender).cancelTpa();
-    
+    sender.openEnchanting(null, true);
     return true;
   }
-  
+
   @Override
   public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
     return null;

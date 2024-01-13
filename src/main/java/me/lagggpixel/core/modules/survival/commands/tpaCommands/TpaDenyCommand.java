@@ -1,4 +1,4 @@
-package me.lagggpixel.core.modules.survival.commands;
+package me.lagggpixel.core.modules.survival.commands.tpaCommands;
 
 import me.lagggpixel.core.enums.Lang;
 import me.lagggpixel.core.interfaces.ICommandClass;

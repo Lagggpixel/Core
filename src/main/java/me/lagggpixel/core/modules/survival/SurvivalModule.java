@@ -1,10 +1,13 @@
 package me.lagggpixel.core.modules.survival;
 
 import me.lagggpixel.core.interfaces.IModule;
-import me.lagggpixel.core.modules.survival.commands.TpaAcceptCommand;
-import me.lagggpixel.core.modules.survival.commands.TpaCancelCommand;
-import me.lagggpixel.core.modules.survival.commands.TpaCommand;
-import me.lagggpixel.core.modules.survival.commands.TpaDenyCommand;
+import me.lagggpixel.core.modules.survival.commands.AnvilCommand;
+import me.lagggpixel.core.modules.survival.commands.CraftCommand;
+import me.lagggpixel.core.modules.survival.commands.EnchantingTableCommand;
+import me.lagggpixel.core.modules.survival.commands.tpaCommands.TpaAcceptCommand;
+import me.lagggpixel.core.modules.survival.commands.tpaCommands.TpaCancelCommand;
+import me.lagggpixel.core.modules.survival.commands.tpaCommands.TpaCommand;
+import me.lagggpixel.core.modules.survival.commands.tpaCommands.TpaDenyCommand;
 import me.lagggpixel.core.modules.survival.handlers.SurvivalItemHandler;
 import me.lagggpixel.core.modules.survival.handlers.TpaHandler;
 import me.lagggpixel.core.modules.survival.listeners.InventoryClickListener;
@@ -42,6 +45,7 @@ public class SurvivalModule implements IModule {
   @Override
   public void registerCommands() {
    registerTpaCommands();
+    registerInventoryCommands();
   }
   
   @Override
@@ -50,7 +54,13 @@ public class SurvivalModule implements IModule {
     new InventoryClickListener();
     new WhitelistedListener();
   }
-  
+
+  private void registerInventoryCommands() {
+    CommandUtils.registerCommand(new AnvilCommand(this));
+    CommandUtils.registerCommand(new EnchantingTableCommand(this));
+    CommandUtils.registerCommand(new CraftCommand(this));
+  }
+
   private void registerTpaCommands() {
     CommandUtils.registerCommand(new TpaCommand(this, tpaHandler));
     CommandUtils.registerCommand(new TpaAcceptCommand(this, tpaHandler));

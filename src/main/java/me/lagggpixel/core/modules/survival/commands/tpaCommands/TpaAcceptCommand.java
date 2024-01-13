@@ -1,8 +1,5 @@
-package me.lagggpixel.core.modules.survival.commands;
+package me.lagggpixel.core.modules.survival.commands.tpaCommands;
 
-import me.lagggpixel.core.Main;
-import me.lagggpixel.core.modules.survival.data.TpaRequest;
-import me.lagggpixel.core.data.User;
 import me.lagggpixel.core.enums.Lang;
 import me.lagggpixel.core.interfaces.ICommandClass;
 import me.lagggpixel.core.modules.survival.SurvivalModule;
@@ -16,20 +13,21 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.Map;
 
-public class TpaCommand implements ICommandClass {
+public class TpaAcceptCommand implements ICommandClass {
   
   private final SurvivalModule module;
   private final TpaHandler tpaHandler;
   
-  public TpaCommand(SurvivalModule module, TpaHandler tpaHandler) {
+  public TpaAcceptCommand(SurvivalModule module, TpaHandler tpaHandler) {
     this.module = module;
     this.tpaHandler = tpaHandler;
   }
   
   @Override
   public String getCommandName() {
-    return "teleportrequest";
+    return "tpaccept";
   }
   
   @Override
@@ -39,7 +37,7 @@ public class TpaCommand implements ICommandClass {
   
   @Override
   public List<String> getCommandAliases() {
-    return List.of("tpr", "tpa", "tprequest", "tpask", "teleportask", "teleportrequest");
+    return List.of("tpaccept", "tpaaccept", "teleportaccept", "teleportaskaccept");
   }
   
   @Override
@@ -59,24 +57,19 @@ public class TpaCommand implements ICommandClass {
       commandSender.sendMessage(Lang.PLAYER_ONLY.toComponentWithPrefix());
       return true;
     }
-    User user = Main.getUser(sender);
-    if (strings.length != 1) {
-      user.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
-      return true;
-    }
     
-    if (tpaHandler.getTpaRequestMap().containsKey(sender)) {
-      user.sendMessage(Lang.TPA_REQUEST_ALREADY_OUTGOING.toComponentWithPrefix());
+    if (strings.length != 1) {
+      sender.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
       return true;
     }
     
     Player target = Bukkit.getPlayer(strings[0]);
-    if (target == null) {
-      user.sendMessage(Lang.PLAYER_NOT_FOUND.toComponentWithPrefix());
+    if (target == null || !tpaHandler.getTpaRequestMap().containsKey(target) || !tpaHandler.getTpaRequestMap().get(target).getTarget().equals(sender)) {
+      sender.sendMessage(Lang.TPA_REQUEST_NOT_FOUND.toComponentWithPrefix(Map.of("%player%", strings[0])));
       return true;
     }
     
-    new TpaRequest(sender, target, tpaHandler);
+    tpaHandler.getTpaRequestMap().get(target).acceptTpa();
     
     return true;
   }
