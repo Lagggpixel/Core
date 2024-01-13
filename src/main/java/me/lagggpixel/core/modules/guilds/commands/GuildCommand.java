@@ -15,14 +15,14 @@ import java.util.List;
 import java.util.Map;
 
 public class GuildCommand implements ICommandClass {
-
+  
   private final GuildModule guildModule;
   private final Map<String, ISubCommand> subCommands;
-
+  
   public GuildCommand(GuildModule guildModule) {
     this.guildModule = guildModule;
     this.subCommands = new HashMap<>();
-
+    
     subCommands.put("claim", new GuildClaimCommand(guildModule));
     subCommands.put("create", new GuildCreateCommand(guildModule));
     subCommands.put("deposit", new GuildDepositCommand(guildModule));
@@ -37,51 +37,51 @@ public class GuildCommand implements ICommandClass {
     subCommands.put("who", new GuildWhoCommand(guildModule));
     subCommands.put("withdraw", new GuildWithdrawCommand(guildModule));
   }
-
-
+  
+  
   @Override
   public String getCommandName() {
     return "guild";
   }
-
+  
   @Override
   public String getCommandDescription() {
     return null;
   }
-
+  
   @Override
   public List<String> getCommandAliases() {
     return List.of("guilds", "guild", "g");
   }
-
+  
   @Override
   public String getCommandPermission() {
     return CommandUtils.generateCommandBasePermission(guildModule, this);
   }
-
+  
   @Override
   public String getUsage() {
     return null;
   }
-
+  
   @Override
   public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
     if (args.length == 0) {
       commandSender.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
       return true;
     }
-
+    
     String subCommand = args[0].toLowerCase();
-
+    
     if (subCommands.containsKey(subCommand)) {
       subCommands.get(subCommand).execute(commandSender, args);
       return true;
     }
-
+    
     commandSender.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
     return true;
   }
-
+  
   @Override
   public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
     if (args.length == 1) {
