@@ -39,9 +39,9 @@ public class SkillsModule implements IModule {
 
   @Override
   public void onEnable() {
-    dataFolder = new File(Main.getInstance().getDataFolder(), "data/modules/skills");
-    skill_exp = new File(dataFolder, "skill_exp");
-    skill_level_up = new File(dataFolder, "skill_level_up");
+    dataFolder = new File(Main.getInstance().getDataFolder(), "module_data/skills");
+    skill_exp = new File(dataFolder, "skill_exp.yml");
+    skill_level_up = new File(dataFolder, "skill_level_up.yml");
 
     initConfig();
 
