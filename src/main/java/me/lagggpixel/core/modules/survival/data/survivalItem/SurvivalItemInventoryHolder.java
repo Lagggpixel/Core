@@ -16,6 +16,7 @@ import java.util.List;
 
 /**
  * This class represents the survival item inventory holder.
+ *
  * @see SkillsInventoryHolder
  */
 @Getter
@@ -23,7 +24,7 @@ public class SurvivalItemInventoryHolder extends SurvivalCoreInventoryHolder {
   public SurvivalItemInventoryHolder(Player player) {
     super(player, Lang.SURVIVAL_ITEM_INVENTORY_TITLE.toComponent(), 54);
   }
-  
+
   @Override
   public void initializeInventoryItems() {
     inventory.setItem(19, new ItemBuilder(Material.DIAMOND_SWORD)
@@ -37,15 +38,30 @@ public class SurvivalItemInventoryHolder extends SurvivalCoreInventoryHolder {
         .addItemFlag(ItemFlag.HIDE_ATTRIBUTES)
         .setTag("skillItem")
         .toItemStack());
-    
+
+    ItemStack comingSoon = new ItemBuilder(Material.RED_STAINED_GLASS_PANE)
+        .setDisplayName("&cComing Soon!")
+        .toItemStack();
+    inventory.setItem(20, comingSoon);
+    inventory.setItem(21, comingSoon);
+    inventory.setItem(22, comingSoon);
+    inventory.setItem(23, comingSoon);
+    inventory.setItem(24, comingSoon);
+    inventory.setItem(25, comingSoon);
+    inventory.setItem(29, comingSoon);
+    inventory.setItem(30, comingSoon);
+    inventory.setItem(31, comingSoon);
+    inventory.setItem(32, comingSoon);
+    inventory.setItem(33, comingSoon);
+
     this.fillEmptySlots();
   }
-  
+
   @Override
   public void openInventory(@NotNull Player player) {
     player.openInventory(this.getInventory());
   }
-  
+
   @Override
   public void handleInventoryClick(@NotNull InventoryClickEvent event) {
     event.setCancelled(true);
@@ -61,5 +77,5 @@ public class SurvivalItemInventoryHolder extends SurvivalCoreInventoryHolder {
       new SkillsInventoryHolder(player).openInventory(player);
     }
   }
-  
+
 }
