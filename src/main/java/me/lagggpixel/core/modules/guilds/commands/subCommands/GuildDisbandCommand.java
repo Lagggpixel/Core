@@ -4,7 +4,7 @@ import me.lagggpixel.core.enums.Lang;
 import me.lagggpixel.core.modules.guilds.GuildModule;
 import me.lagggpixel.core.modules.guilds.data.Guild;
 import me.lagggpixel.core.modules.guilds.handlers.GuildHandler;
-import me.lagggpixel.core.modules.guilds.commands.ISubCommand;
+import me.lagggpixel.core.interfaces.ISubCommand;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 

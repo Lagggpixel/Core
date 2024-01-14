@@ -1,4 +1,4 @@
-package me.lagggpixel.core.modules.guilds.commands;
+package me.lagggpixel.core.interfaces;
 
 import org.bukkit.command.CommandSender;
 

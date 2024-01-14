@@ -5,7 +5,7 @@ import me.lagggpixel.core.data.User;
 import me.lagggpixel.core.enums.Lang;
 import me.lagggpixel.core.modules.economy.managers.EconomyManager;
 import me.lagggpixel.core.modules.guilds.GuildModule;
-import me.lagggpixel.core.modules.guilds.commands.ISubCommand;
+import me.lagggpixel.core.interfaces.ISubCommand;
 import me.lagggpixel.core.modules.guilds.data.Guild;
 import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.command.CommandSender;
