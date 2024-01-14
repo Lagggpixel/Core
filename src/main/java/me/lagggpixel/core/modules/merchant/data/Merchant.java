@@ -19,10 +19,10 @@ import net.citizensnpcs.trait.LookClose;
 import net.citizensnpcs.trait.SkinTrait;
 import net.kyori.adventure.text.Component;
 import org.bukkit.*;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -30,6 +30,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.FixedMetadataValue;
+import org.jetbrains.annotations.NotNull;
 
 import java.text.DecimalFormat;
 import java.util.*;
@@ -37,7 +38,8 @@ import java.util.*;
 @Data
 public class Merchant implements Listener {
   
-  private final Component name;
+  private final String id;
+  private final String name;
   
   private final String skinSignature;
   private final String skinValue;
@@ -49,26 +51,12 @@ public class Merchant implements Listener {
   private ArmorStand click;
   
   private final List<MerchantItem> items;
-  private final Location location;
+  private Location location;
   
-  private final boolean villager;
-  private final Villager.Profession profession;
+  private ConfigurationSection configurationSection;
   
-  public Merchant(String name, String skinValue, String skinSignature, List<MerchantItem> items, Location location, boolean villager, Villager.Profession profession) {
-    this.name = ChatUtils.stringToComponentCC(name);
-    
-    this.skinSignature = skinSignature;
-    this.skinValue = skinValue;
-    
-    this.items = items;
-    
-    this.location = location;
-    
-    this.villager = villager;
-    this.profession = profession;
-  }
-  
-  public Merchant(Component name, String skinValue, String skinSignature, List<MerchantItem> items, Location location, boolean villager, Villager.Profession profession) {
+  public Merchant(String id, String name, String skinValue, String skinSignature, List<MerchantItem> items, Location location) {
+    this.id = id;
     this.name = name;
     
     this.skinSignature = skinSignature;
@@ -77,9 +65,17 @@ public class Merchant implements Listener {
     this.items = items;
     
     this.location = location;
-    
-    this.villager = villager;
-    this.profession = profession;
+  }
+  
+  public void setName(String name) {
+    this.getNpc().setName(name);
+    getConfigurationSection().set("name", name);
+  }
+  
+  public void setLocation(Location location) {
+    this.getNpc().getEntity().teleport(location);
+    this.location = location;
+    getConfigurationSection().set("location", location);
   }
   
   private List<ItemStack> getSold(User user) {
@@ -111,12 +107,68 @@ public class Merchant implements Listener {
   }
   
   public void createNpc() {
-    List<Object> npcData = spawnNpc(this.location, ChatUtils.componentToString(this.name), this.skinValue, this.skinSignature, true, true, this.villager, this.profession);
+    List<Object> npcData = spawnNpc(this.location, this.name, this.skinValue, this.skinSignature, true, true);
     
     this.npc = (NPC) npcData.get(0);
     
     npc.getEntity().setMetadata("merchant", new FixedMetadataValue(Main.getInstance(), true));
     npc.getEntity().setMetadata("merchantName", new FixedMetadataValue(Main.getInstance(), name));
+  }
+  
+  public ArrayList<Object> spawnNpc(Location location, String name, String skinValue, String skinSignature, boolean skin, boolean look) {
+    NPC npc = CitizensAPI.getNPCRegistry().createNPC(EntityType.PLAYER, "");
+    
+    npc.spawn(location);
+    
+    npc.getEntity().setCustomNameVisible(false);
+    
+    npc.getEntity().setMetadata("createdAt", new FixedMetadataValue(Main.getInstance(), System.currentTimeMillis()));
+    
+    npc.getEntity().getLocation().setDirection(location.getWorld().getSpawnLocation().toVector().subtract(location.toVector()).normalize());
+    
+    NPC standNPC = CitizensAPI.getNPCRegistry().createNPC(EntityType.ARMOR_STAND, name, npc.getEntity().getLocation().add(0, 1.95, 0));
+    standNPC.spawn(npc.getEntity().getLocation().add(0, 1.95, 0));
+    
+    ArmorStandTrait stand = standNPC.getOrAddTrait(ArmorStandTrait.class);
+    stand.setGravity(false);
+    stand.setVisible(false);
+    stand.setMarker(true);
+    
+    standNPC.getEntity().teleport(npc.getEntity().getLocation().add(0, 1.95, 0));
+    standNPC.getEntity().setMetadata("merchant", new FixedMetadataValue(Main.getInstance(), true));
+    standNPC.getEntity().setMetadata("merchantName", new FixedMetadataValue(Main.getInstance(), name));
+    standNPC.getEntity().setMetadata("NPC", new FixedMetadataValue(Main.getInstance(), true));
+    
+    NPC clickNPC = CitizensAPI.getNPCRegistry().createNPC(EntityType.ARMOR_STAND, "§e§bCLICK", npc.getEntity().getLocation().add(0, 1.6, 0));
+    clickNPC.spawn(npc.getEntity().getLocation().add(0, 1.6, 0));
+    
+    ArmorStandTrait click = clickNPC.getOrAddTrait(ArmorStandTrait.class);
+    click.setGravity(false);
+    click.setVisible(false);
+    click.setMarker(true);
+    
+    clickNPC.getEntity().teleport(npc.getEntity().getLocation().add(0, 1.7, 0));
+    
+    if (skin) {
+      SkinTrait skinTrait = npc.getOrAddTrait(SkinTrait.class);
+      skinTrait.setSkinPersistent("npc", skinSignature, skinValue);
+      
+      npc.addTrait(skinTrait);
+    }
+    
+    npc.data().set(NPC.NAMEPLATE_VISIBLE_METADATA, false);
+    
+    if (look) {
+      LookClose lookClose = npc.getOrAddTrait(LookClose.class);
+      lookClose.lookClose(true);
+      
+      npc.addTrait(lookClose);
+    }
+    
+    Chunk chunk = npc.getEntity().getLocation().getChunk();
+    chunk.load();
+    
+    return new ArrayList<>(Arrays.asList(npc, stand, click));
   }
   
   @EventHandler
@@ -163,10 +215,10 @@ public class Merchant implements Listener {
       NBTItem nbt = new NBTItem(stack);
       
       nbt.setBoolean("merchantItem", true);
-      nbt.setString("merchantName", ChatUtils.componentToString(this.name));
+      nbt.setString("merchantName", this.name);
       nbt.setInteger("merchantCost", item.getCost());
       
-      inventory.addItem(nbt.getItem());
+      inventory.setItem(item.getSlot(), nbt.getItem());
     }
     
     inventory.setItem(49, createBuyBack(user));
@@ -205,9 +257,9 @@ public class Merchant implements Listener {
         gui.addItem(23, buildShopOption(nbt.getItem(), 32, player, gui));
         gui.addItem(24, buildShopOption(nbt.getItem(), 64, player, gui));
         
-        gui.getClickEvents().put(ChatUtils.stringToComponentCC("&aGo Back"), () -> {
-          player.openInventory(event.getInventory());
-        });
+        gui.getClickEvents()
+            .put(ChatUtils.stringToComponentCC("&aGo Back"),
+                () -> player.openInventory(event.getInventory()));
         
         gui.show(player);
         
@@ -237,7 +289,7 @@ public class Merchant implements Listener {
       } else {
         nbt = new NBTItem(getSold(user).get(getSold(user).size() - 1));
         nbt.setBoolean("merchantSold", null);
-        player.getInventory().addItem(nbt.getItem());
+        XItemStack.giveOrDrop(player, nbt.getItem());
         Component displayName = item.getItemMeta().displayName();
         Component message;
         if (displayName == null) {
@@ -283,7 +335,7 @@ public class Merchant implements Listener {
     }
   }
   
-  private ItemStack buildShopOption(ItemStack item, int amount, Player player, Gui gui) {
+  private @NotNull ItemStack buildShopOption(ItemStack item, int amount, Player player, Gui gui) {
     ItemStack clone = item.clone();
     ItemMeta meta = clone.getItemMeta();
     List<Component> lore = meta.lore();
@@ -339,66 +391,6 @@ public class Merchant implements Listener {
     return clone;
   }
   
-  // Utility methods
-  
-  public ArrayList<Object> spawnNpc(Location location, String name, String skinValue, String skinSignature, boolean skin, boolean look, boolean villager, Villager.Profession profession) {
-    NPC npc = CitizensAPI.getNPCRegistry().createNPC(villager ? EntityType.VILLAGER : EntityType.PLAYER, "");
-    
-    npc.spawn(location);
-    
-    npc.getEntity().setCustomNameVisible(false);
-    
-    npc.getEntity().setMetadata("createdAt", new FixedMetadataValue(Main.getInstance(), System.currentTimeMillis()));
-    
-    if (villager) ((Villager) npc.getEntity()).setProfession(profession);
-    
-    npc.getEntity().getLocation().setDirection(location.getWorld().getSpawnLocation().toVector().subtract(location.toVector()).normalize());
-    
-    NPC standNPC = CitizensAPI.getNPCRegistry().createNPC(EntityType.ARMOR_STAND, name, npc.getEntity().getLocation().add(0, !villager ? 1.95 : 2.15, 0));
-    standNPC.spawn(npc.getEntity().getLocation().add(0, !villager ? 1.95 : 2.15, 0));
-    
-    ArmorStandTrait stand = standNPC.getOrAddTrait(ArmorStandTrait.class);
-    stand.setGravity(false);
-    stand.setVisible(false);
-    stand.setMarker(true);
-    
-    standNPC.getEntity().teleport(npc.getEntity().getLocation().add(0, !villager ? 1.95 : 2.15, 0));
-    standNPC.getEntity().setMetadata("merchant", new FixedMetadataValue(Main.getInstance(), true));
-    standNPC.getEntity().setMetadata("merchantName", new FixedMetadataValue(Main.getInstance(), name));
-    standNPC.getEntity().setMetadata("NPC", new FixedMetadataValue(Main.getInstance(), true));
-    
-    NPC clickNPC = CitizensAPI.getNPCRegistry().createNPC(EntityType.ARMOR_STAND, ChatColor.YELLOW + "" + ChatColor.BOLD + "CLICK", npc.getEntity().getLocation().add(0, !villager ? 1.6 : 1.8, 0));
-    clickNPC.spawn(npc.getEntity().getLocation().add(0, !villager ? 1.6 : 1.8, 0));
-    
-    ArmorStandTrait click = clickNPC.getOrAddTrait(ArmorStandTrait.class);
-    click.setGravity(false);
-    click.setVisible(false);
-    click.setMarker(true);
-    
-    clickNPC.getEntity().teleport(npc.getEntity().getLocation().add(0, !villager ? 1.7 : 1.8, 0));
-    
-    if (skin) {
-      SkinTrait skinTrait = npc.getOrAddTrait(SkinTrait.class);
-      skinTrait.setSkinPersistent("npc", skinSignature, skinValue);
-      
-      npc.addTrait(skinTrait);
-    }
-    
-    npc.data().set(NPC.NAMEPLATE_VISIBLE_METADATA, false);
-    
-    if (look) {
-      LookClose lookClose = npc.getOrAddTrait(LookClose.class);
-      lookClose.lookClose(true);
-      
-      npc.addTrait(lookClose);
-    }
-    
-    Chunk chunk = npc.getEntity().getLocation().getChunk();
-    chunk.load();
-    
-    return new ArrayList<>(Arrays.asList(npc, stand, click));
-  }
-  
   private ItemStack buildCloseButton() {
     NBTItem item = new NBTItem(new ItemBuilder(Material.BARRIER).setDisplayName("&cClose").toItemStack());
     
@@ -415,5 +407,12 @@ public class Merchant implements Listener {
     item.setBoolean("back", true);
     
     return item.getItem();
+  }
+  
+  private ConfigurationSection getConfigurationSection() {
+    if (configurationSection == null) {
+      configurationSection = MerchantModule.getInstance().getMerchantHandler().getMerchantConfiguration().getConfigurationSection(getId());
+    }
+    return configurationSection;
   }
 }
