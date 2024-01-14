@@ -15,8 +15,10 @@ public class LangUtils {
     File langFile = new File(Main.getInstance().getDataFolder(), "lang.yml");
     if (!langFile.exists()) {
       try {
-        if (!Main.getInstance().getDataFolder().mkdir()) {
-          throw new RuntimeException("Could not create data folder for core-plugin.");
+        if (!langFile.getParentFile().exists()) {
+          if (!Main.getInstance().getDataFolder().mkdir()) {
+            throw new RuntimeException("Could not create data folder for core-plugin.");
+          }
         }
         if (!langFile.createNewFile()) {
           throw new RuntimeException("Could not create language file for core-plugin");
