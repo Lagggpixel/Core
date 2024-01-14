@@ -185,6 +185,8 @@ public enum Lang {
   MERCHANT_NONE_SELECTED("merchant.admin.no_merchant_selected", "&cYou don't have a merchant selected."),
   MERCHANT_NOT_FOUND("merchant.admin.not_found", "&cThe merchant with the unique id '&e%merchant%&c' was not found."),
   MERCHANT_SELECTED("merchant.admin.selected", "&aYou have selected merchant with the unique id '&e%merchant%&a'."),
+  MERCHANT_RENAMED("merchant.admin.renamed", "&aYou have successfully renamed the merchant to '&e%name%&a'."),
+  MERCHANT_DELETED("merchant.admin.deleted", "&aYou have successfully deleted the merchant with the unique id '&e%merchant%&a'."),
   
   // Inventory IModule
   INVENTORY_CLEARED_SELF("inventory.cleared.self", "&aYou have cleared your inventory."),

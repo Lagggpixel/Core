@@ -1,10 +1,11 @@
-package me.lagggpixel.core.modules.guilds.commands;
+package me.lagggpixel.core.modules.merchant.commands;
 
 import me.lagggpixel.core.enums.Lang;
 import me.lagggpixel.core.interfaces.ICommandClass;
 import me.lagggpixel.core.interfaces.ISubCommand;
 import me.lagggpixel.core.modules.merchant.MerchantModule;
 import me.lagggpixel.core.modules.merchant.commands.subCommands.MerchantCreateSubCommand;
+import me.lagggpixel.core.modules.merchant.commands.subCommands.MerchantRenameSubCommand;
 import me.lagggpixel.core.modules.merchant.commands.subCommands.MerchantSelectSubCommand;
 import me.lagggpixel.core.modules.merchant.commands.subCommands.MerchantTphereSubCommand;
 import me.lagggpixel.core.utils.CommandUtils;
@@ -29,6 +30,7 @@ public class MerchantCommand implements ICommandClass {
     subCommands.put("create", new MerchantCreateSubCommand(merchantModule));
     subCommands.put("select", new MerchantSelectSubCommand(merchantModule));
     subCommands.put("tphere", new MerchantTphereSubCommand(merchantModule));
+    subCommands.put("rename", new MerchantRenameSubCommand(merchantModule));
   }
   
   

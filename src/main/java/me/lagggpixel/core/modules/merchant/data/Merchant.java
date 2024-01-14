@@ -27,7 +27,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -85,8 +84,8 @@ public class Merchant implements Listener {
   public void setLocation(Location location) {
     this.location = location;
     this.npc.getEntity().teleport(location);
-    this.stand.teleport(this.npc.getEntity().getLocation().add(0, 1.95, 0), PlayerTeleportEvent.TeleportCause.PLUGIN);
-    this.click.teleport(this.location.add(0, 1.6, 0), PlayerTeleportEvent.TeleportCause.PLUGIN);
+    this.stand.getEntity().teleport(this.npc.getEntity().getLocation().add(0, 1.95, 0));
+    this.click.getEntity().teleport(this.location.add(0, 1.6, 0));
     getConfigurationSection().set("location", location);
     saveConfigurationFile();
   }

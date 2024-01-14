@@ -23,7 +23,9 @@ public class WhitelistedListener implements Listener {
   @EventHandler
   public void onPlayerJoin(@NotNull PlayerJoinEvent event) {
     if (Main.getInstance().whitelisted && !event.getPlayer().isOp()) {
-      event.getPlayer().teleport(SpawnModule.getInstance().getSpawnManager().getSpawnLocation());
+      if (SpawnModule.getInstance().getSpawnManager().getSpawnLocation() != null) {
+        event.getPlayer().teleport(SpawnModule.getInstance().getSpawnManager().getSpawnLocation());
+      }
       event.getPlayer().sendMessage(Lang.SURVIVAL_WHITELISTED_INFORM.toComponentWithPrefix());
     }
   }

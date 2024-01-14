@@ -3,7 +3,7 @@ package me.lagggpixel.core.modules.merchant;
 import lombok.Getter;
 import me.lagggpixel.core.Main;
 import me.lagggpixel.core.interfaces.IModule;
-import me.lagggpixel.core.modules.guilds.commands.MerchantCommand;
+import me.lagggpixel.core.modules.merchant.commands.MerchantCommand;
 import me.lagggpixel.core.modules.merchant.data.Merchant;
 import me.lagggpixel.core.modules.merchant.handler.MerchantHandler;
 import me.lagggpixel.core.modules.merchant.handler.MerchantSellPriceHandler;

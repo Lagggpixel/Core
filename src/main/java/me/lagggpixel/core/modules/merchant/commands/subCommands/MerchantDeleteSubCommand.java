@@ -10,11 +10,11 @@ import org.bukkit.entity.Player;
 
 import java.util.Map;
 
-public class MerchantRenameSubCommand implements ISubCommand {
+public class MerchantDeleteSubCommand implements ISubCommand {
   
   private final MerchantModule merchantModule;
   
-  public MerchantRenameSubCommand(MerchantModule merchantModule) {
+  public MerchantDeleteSubCommand(MerchantModule merchantModule) {
     this.merchantModule = merchantModule;
   }
   
@@ -25,21 +25,15 @@ public class MerchantRenameSubCommand implements ISubCommand {
       return;
     }
     
-    if (args.length != 2) {
-      commandSender.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
-      return;
-    }
-    
     User user = Main.getUser(sender);
-    
-    String name = args[1];
     
     if (user.getCurrentMerchant() == null) {
       sender.sendMessage(Lang.MERCHANT_NONE_SELECTED.toComponentWithPrefix());
       return;
     }
     
-    user.getCurrentMerchant().setName(name);
-    sender.sendMessage(Lang.MERCHANT_RENAMED.toComponentWithPrefix(Map.of("%name%", user.getCurrentMerchant().getName())));
+    sender.sendMessage(Lang.MERCHANT_DELETED.toComponentWithPrefix(Map.of("%merchant%", user.getCurrentMerchant().getId())));
+    user.getCurrentMerchant().delete();
+    user.setCurrentMerchant(null);
   }
 }
