@@ -9,6 +9,7 @@ import me.lagggpixel.core.data.User;
 import me.lagggpixel.core.modules.economy.managers.EconomyManager;
 import me.lagggpixel.core.modules.merchant.MerchantModule;
 import me.lagggpixel.core.utils.ChatUtils;
+import me.lagggpixel.core.utils.ExceptionUtils;
 import me.lagggpixel.core.utils.InventoryUtils;
 import me.lagggpixel.core.utils.NumberUtil;
 import net.citizensnpcs.api.CitizensAPI;
@@ -20,6 +21,7 @@ import net.citizensnpcs.trait.SkinTrait;
 import net.kyori.adventure.text.Component;
 import org.bukkit.*;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -32,6 +34,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.*;
 
@@ -53,6 +57,8 @@ public class Merchant implements Listener {
   private final List<MerchantItem> items;
   private Location location;
   
+  private File file;
+  private YamlConfiguration yamlConfiguration;
   private ConfigurationSection configurationSection;
   
   public Merchant(String id, String name, String skinValue, String skinSignature, List<MerchantItem> items, Location location) {
@@ -70,12 +76,14 @@ public class Merchant implements Listener {
   public void setName(String name) {
     this.getNpc().setName(name);
     getConfigurationSection().set("name", name);
+    saveConfigurationFile();
   }
   
   public void setLocation(Location location) {
     this.getNpc().getEntity().teleport(location);
     this.location = location;
     getConfigurationSection().set("location", location);
+    saveConfigurationFile();
   }
   
   private List<ItemStack> getSold(User user) {
@@ -279,8 +287,7 @@ public class Merchant implements Listener {
         Component message;
         if (displayName == null) {
           message = ChatUtils.stringToComponentCC("&aYou have purchased null &afor &6" + formatter.format(nbt.getInteger("merchantCost")) + " coins&a!");
-        }
-        else {
+        } else {
           message = ChatUtils.stringToComponentCC("&aYou have purchased ")
               .append(displayName)
               .append(ChatUtils.stringToComponentCC(" &afor &6" + formatter.format(nbt.getInteger("merchantCost")) + " coins&a!"));
@@ -295,8 +302,7 @@ public class Merchant implements Listener {
         if (displayName == null) {
           message =
               ChatUtils.stringToComponentCC("&aYou have bought back null &afor " + "&6" + formatter.format(nbt.getInteger("merchantCost")) + " coins&a!");
-        }
-        else {
+        } else {
           message =
               ChatUtils.stringToComponentCC("&aYou have bought back ")
                   .append(displayName)
@@ -315,8 +321,7 @@ public class Merchant implements Listener {
       if (displayName == null) {
         message =
             ChatUtils.stringToComponentCC("&aYou have sold null &afor &6" + NumberUtil.formatInt((int) price) + " coins&a!");
-      }
-      else {
+      } else {
         message =
             ChatUtils.stringToComponentCC("&aYou have sold ")
                 .append(displayName)
@@ -376,8 +381,7 @@ public class Merchant implements Listener {
         Component message1;
         if (displayName1 == null) {
           message1 = ChatUtils.stringToComponentCC("&aYou have purchased null &afor " + formatter.format((long) costForOne * amount) + " coins&a!");
-        }
-        else {
+        } else {
           message1 =
               ChatUtils.stringToComponentCC("&aYou have purchased ")
                   .append(displayName1)
@@ -400,7 +404,7 @@ public class Merchant implements Listener {
   }
   
   public ItemStack buildBackButton(List<Component> lore) {
-    NBTItem item = new NBTItem(new ItemBuilder( Material.ARROW)
+    NBTItem item = new NBTItem(new ItemBuilder(Material.ARROW)
         .setDisplayName("&aGo Back")
         .addLore(lore).toItemStack());
     
@@ -409,10 +413,32 @@ public class Merchant implements Listener {
     return item.getItem();
   }
   
+  private File getFile() {
+    if (file == null) {
+      file = MerchantModule.getInstance().getMerchantHandler().getMerchantFile();
+    }
+    return file;
+  }
+  
+  private YamlConfiguration getYamlConfiguration() {
+    if (yamlConfiguration == null) {
+      yamlConfiguration = YamlConfiguration.loadConfiguration(getFile());
+    }
+    return yamlConfiguration;
+  }
+  
   private ConfigurationSection getConfigurationSection() {
     if (configurationSection == null) {
-      configurationSection = MerchantModule.getInstance().getMerchantHandler().getMerchantConfiguration().getConfigurationSection(getId());
+      configurationSection = getYamlConfiguration().getConfigurationSection(getId());
     }
     return configurationSection;
+  }
+  
+  private void saveConfigurationFile() {
+    try {
+      getYamlConfiguration().save(getFile());
+    } catch (IOException e) {
+      ExceptionUtils.handleException(e);
+    }
   }
 }

@@ -4,6 +4,7 @@ import lombok.Getter;
 import me.lagggpixel.core.Main;
 import me.lagggpixel.core.modules.merchant.data.Merchant;
 import me.lagggpixel.core.modules.merchant.data.MerchantItem;
+import me.lagggpixel.core.utils.ExceptionUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -12,6 +13,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -67,6 +69,11 @@ public class MerchantHandler {
     }
     
     section.set("location", merchant.getLocation());
+    try {
+      merchantConfiguration.save(merchantFile);
+    } catch (IOException e) {
+      ExceptionUtils.handleException(e);
+    }
   }
   
   public void registerMerchants() {

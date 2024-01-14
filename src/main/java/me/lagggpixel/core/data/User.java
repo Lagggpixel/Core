@@ -22,10 +22,7 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Data
 @Getter
@@ -237,5 +234,12 @@ public class User {
       return null;
     }
     return MerchantModule.getInstance().getMerchantHandler().getMerchant(currentMerchant);
+  }
+  
+  public List<ItemStack> getMerchantSold() {
+    if (merchantSold == null) {
+      merchantSold = new ArrayList<>();
+    }
+    return merchantSold;
   }
 }

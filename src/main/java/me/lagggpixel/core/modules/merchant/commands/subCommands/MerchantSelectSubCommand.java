@@ -39,11 +39,11 @@ public class MerchantSelectSubCommand implements ISubCommand {
     }
     
     if (!merchantModule.getMerchantHandler().hasMerchant(id)) {
-      sender.sendMessage(Lang.MERCHANT_NOT_FOUND.toComponentWithPrefix(Map.of("merchant", id)));
+      sender.sendMessage(Lang.MERCHANT_NOT_FOUND.toComponentWithPrefix(Map.of("%merchant%", id)));
       return;
     }
     
     user.setCurrentMerchant(id);
-    sender.sendMessage(Lang.MERCHANT_SELECTED.toComponentWithPrefix(Map.of("merchant", id)));
+    sender.sendMessage(Lang.MERCHANT_SELECTED.toComponentWithPrefix(Map.of("%merchant%", id)));
   }
 }
