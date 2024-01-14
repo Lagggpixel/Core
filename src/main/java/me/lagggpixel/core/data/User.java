@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import me.lagggpixel.core.modules.home.data.Home;
+import me.lagggpixel.core.modules.merchant.MerchantModule;
+import me.lagggpixel.core.modules.merchant.data.Merchant;
 import me.lagggpixel.core.modules.skills.data.Skills;
 import me.lagggpixel.core.modules.staff.data.InstantPlayerData;
 import me.lagggpixel.core.utils.ChatUtils;
@@ -63,8 +65,9 @@ public class User {
   @SerializedName("Homes")
   @Expose
   private Map<String, Home> homes;
-  // Shop
+  // Merchant
   private List<ItemStack> merchantSold = List.of();
+  private String currentMerchant = null;
   // Skills
   @SerializedName("Skills")
   @Expose
@@ -223,5 +226,16 @@ public class User {
   
   public boolean isOnline() {
     return Bukkit.getPlayer(playerUUID) != null;
+  }
+  
+  public Merchant getCurrentMerchant() {
+    if (currentMerchant == null) {
+      return null;
+    }
+    if (!MerchantModule.getInstance().getMerchantHandler().hasMerchant(currentMerchant)) {
+      currentMerchant = null;
+      return null;
+    }
+    return MerchantModule.getInstance().getMerchantHandler().getMerchant(currentMerchant);
   }
 }

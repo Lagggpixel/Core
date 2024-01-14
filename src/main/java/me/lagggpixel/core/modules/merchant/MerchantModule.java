@@ -2,8 +2,11 @@ package me.lagggpixel.core.modules.merchant;
 
 import lombok.Getter;
 import me.lagggpixel.core.interfaces.IModule;
+import me.lagggpixel.core.modules.guilds.commands.MerchantCommand;
+import me.lagggpixel.core.modules.merchant.data.Merchant;
 import me.lagggpixel.core.modules.merchant.handler.MerchantHandler;
-import me.lagggpixel.core.modules.merchant.handler.PriceHandler;
+import me.lagggpixel.core.modules.merchant.handler.MerchantSellPriceHandler;
+import me.lagggpixel.core.utils.CommandUtils;
 import org.jetbrains.annotations.NotNull;
 
 public class MerchantModule implements IModule {
@@ -13,7 +16,7 @@ public class MerchantModule implements IModule {
   @Getter
   private MerchantHandler merchantHandler;
   @Getter
-  private PriceHandler priceHandler;
+  private MerchantSellPriceHandler priceHandler;
   
   @NotNull
   @Override
@@ -31,7 +34,11 @@ public class MerchantModule implements IModule {
     instance = this;
     
     merchantHandler = new MerchantHandler();
-    priceHandler = new PriceHandler();
+    priceHandler = new MerchantSellPriceHandler();
+    
+    for (Merchant merchant : this.merchantHandler.getMerchants().values()) {
+      merchant.createNpc();
+    }
   }
   
   @Override
@@ -41,7 +48,7 @@ public class MerchantModule implements IModule {
   
   @Override
   public void registerCommands() {
-  
+    CommandUtils.registerCommand(new MerchantCommand(this));
   }
   
   @Override

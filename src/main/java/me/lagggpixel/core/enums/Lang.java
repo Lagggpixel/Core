@@ -180,6 +180,12 @@ public enum Lang {
   HOME_TELEPORTED_TO_HOME_OTHER_PLAYER("home.admin.teleported_to_home_other_player", "&aYou have teleported to %player%'s home, named '&e%home%&a'."),
   HOME_NO_HOMES_OTHER_PLAYER("home.admin.no_homes_other_player", "&a%player% does not have any homes."),
   
+  // Merchant Module
+  MERCHANT_ALREADY_EXISTS("merchant.admin.already_exists", "&cA merchant with the unique id '&e%merchant%&c' already exists."),
+  MERCHANT_NONE_SELECTED("merchant.admin.no_merchant_selected", "&cYou don't have a merchant selected."),
+  MERCHANT_NOT_FOUND("merchant.admin.not_found", "&cThe merchant with the unique id '&e%merchant%&c' was not found."),
+  MERCHANT_SELECTED("merchant.admin.selected", "&aYou have selected merchant with the unique id '&e%merchant%&a'."),
+  
   // Inventory IModule
   INVENTORY_CLEARED_SELF("inventory.cleared.self", "&aYou have cleared your inventory."),
   INVENTORY_CLEARED_OTHER("inventory.cleared.other", "&aYou have cleared %player%'s inventory."),
