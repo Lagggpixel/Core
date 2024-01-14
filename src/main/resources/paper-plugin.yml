@@ -10,6 +10,9 @@ dependencies:
     Vault:
       load: BEFORE
       required: true
+    Citizens:
+      load: BEFORE
+      required: true
     EzChestShop:
       load: AFTER
       required: false
