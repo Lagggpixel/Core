@@ -13,6 +13,9 @@ dependencies:
     Citizens:
       load: BEFORE
       required: true
+    NBTAPI:
+      load: BEFORE
+      required: true
     EzChestShop:
       load: AFTER
       required: false
