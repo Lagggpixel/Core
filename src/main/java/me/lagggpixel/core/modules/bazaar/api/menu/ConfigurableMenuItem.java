@@ -2,7 +2,7 @@ package me.lagggpixel.core.modules.bazaar.api.menu;
 
 import me.lagggpixel.core.modules.bazaar.api.BazaarAPI;
 import me.lagggpixel.core.modules.bazaar.api.bazaar.Bazaar;
-import me.zort.containr.ContainerComponent;
+import me.lagggpixel.core.libs.containr.ContainerComponent;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;

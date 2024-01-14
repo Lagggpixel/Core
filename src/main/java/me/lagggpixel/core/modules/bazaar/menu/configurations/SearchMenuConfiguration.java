@@ -7,9 +7,9 @@ import me.lagggpixel.core.modules.bazaar.api.bazaar.Product;
 import me.lagggpixel.core.modules.bazaar.menu.DefaultConfigurableMenuItem;
 import me.lagggpixel.core.modules.bazaar.menu.MenuConfiguration;
 import me.lagggpixel.core.modules.bazaar.utils.MenuUtils;
-import me.zort.containr.Component;
-import me.zort.containr.GUI;
-import me.zort.containr.PagedContainer;
+import me.lagggpixel.core.libs.containr.Component;
+import me.lagggpixel.core.libs.containr.GUI;
+import me.lagggpixel.core.libs.containr.PagedContainer;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;

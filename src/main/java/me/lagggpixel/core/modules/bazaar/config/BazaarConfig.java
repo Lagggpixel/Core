@@ -7,7 +7,7 @@ import me.lagggpixel.core.modules.bazaar.bz.category.CategoryConfiguration;
 import me.lagggpixel.core.modules.bazaar.bz.product.ProductConfiguration;
 import me.lagggpixel.core.modules.bazaar.bz.productcategory.ProductCategoryConfiguration;
 import me.lagggpixel.core.modules.bazaar.utils.Utils;
-import me.zort.containr.internal.util.ItemBuilder;
+import me.lagggpixel.core.libs.containr.internal.util.ItemBuilder;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;

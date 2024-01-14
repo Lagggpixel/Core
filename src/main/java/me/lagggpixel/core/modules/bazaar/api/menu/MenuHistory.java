@@ -1,6 +1,6 @@
 package me.lagggpixel.core.modules.bazaar.api.menu;
 
-import me.zort.containr.GUI;
+import me.lagggpixel.core.libs.containr.GUI;
 import org.bukkit.entity.Player;
 
 import java.util.Optional;

@@ -22,12 +22,12 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.*;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -51,8 +51,8 @@ public class Merchant implements Listener {
   private int interactionIteration = 0;
   
   private NPC npc;
-  private ArmorStand stand;
-  private ArmorStand click;
+  private NPC stand;
+  private NPC click;
   
   private final List<MerchantItem> items;
   private Location location;
@@ -74,16 +74,29 @@ public class Merchant implements Listener {
   }
   
   public void setName(String name) {
-    this.getNpc().setName(name);
+    this.npc.setName(name);
     getConfigurationSection().set("name", name);
     saveConfigurationFile();
   }
   
   public void setLocation(Location location) {
-    this.getNpc().getEntity().teleport(location);
     this.location = location;
+    this.npc.getEntity().teleport(location);
+    this.stand.teleport(this.npc.getEntity().getLocation().add(0, 1.95, 0), PlayerTeleportEvent.TeleportCause.PLUGIN);
+    this.click.teleport(this.location.add(0, 1.6, 0), PlayerTeleportEvent.TeleportCause.PLUGIN);
     getConfigurationSection().set("location", location);
     saveConfigurationFile();
+  }
+  
+  public void delete() {
+    getYamlConfiguration().set(id, null);
+    unregister();
+  }
+  
+  public void unregister() {
+    this.npc.destroy();
+    this.stand.destroy();
+    this.click.destroy();
   }
   
   private List<ItemStack> getSold(User user) {
@@ -115,47 +128,45 @@ public class Merchant implements Listener {
   }
   
   public void createNpc() {
-    List<Object> npcData = spawnNpc(this.location, this.name, this.skinValue, this.skinSignature, true, true);
-    
-    this.npc = (NPC) npcData.get(0);
+    spawnNpc(this.location, this.name, this.skinValue, this.skinSignature, true, true);
     
     npc.getEntity().setMetadata("merchant", new FixedMetadataValue(Main.getInstance(), true));
     npc.getEntity().setMetadata("merchantName", new FixedMetadataValue(Main.getInstance(), name));
   }
   
-  public ArrayList<Object> spawnNpc(Location location, String name, String skinValue, String skinSignature, boolean skin, boolean look) {
-    NPC npc = CitizensAPI.getNPCRegistry().createNPC(EntityType.PLAYER, "");
+  public void spawnNpc(Location location, String name, String skinValue, String skinSignature, boolean skin, boolean look) {
+    this.npc = CitizensAPI.getNPCRegistry().createNPC(EntityType.PLAYER, "");
     
-    npc.spawn(location);
+    this.npc.spawn(location);
     
-    npc.getEntity().setCustomNameVisible(false);
+    this.npc.getEntity().setCustomNameVisible(false);
     
-    npc.getEntity().setMetadata("createdAt", new FixedMetadataValue(Main.getInstance(), System.currentTimeMillis()));
+    this.npc.getEntity().setMetadata("createdAt", new FixedMetadataValue(Main.getInstance(), System.currentTimeMillis()));
     
-    npc.getEntity().getLocation().setDirection(location.getWorld().getSpawnLocation().toVector().subtract(location.toVector()).normalize());
+    this.npc.getEntity().getLocation().setDirection(location.getWorld().getSpawnLocation().toVector().subtract(location.toVector()).normalize());
     
-    NPC standNPC = CitizensAPI.getNPCRegistry().createNPC(EntityType.ARMOR_STAND, name, npc.getEntity().getLocation().add(0, 1.95, 0));
-    standNPC.spawn(npc.getEntity().getLocation().add(0, 1.95, 0));
+    this.stand = CitizensAPI.getNPCRegistry().createNPC(EntityType.ARMOR_STAND, name, npc.getEntity().getLocation().add(0, 1.95, 0));
+    this.stand.spawn(npc.getEntity().getLocation().add(0, 1.95, 0));
     
-    ArmorStandTrait stand = standNPC.getOrAddTrait(ArmorStandTrait.class);
-    stand.setGravity(false);
-    stand.setVisible(false);
-    stand.setMarker(true);
+    ArmorStandTrait standTrait = this.stand.getOrAddTrait(ArmorStandTrait.class);
+    standTrait.setGravity(false);
+    standTrait.setVisible(false);
+    standTrait.setMarker(true);
     
-    standNPC.getEntity().teleport(npc.getEntity().getLocation().add(0, 1.95, 0));
-    standNPC.getEntity().setMetadata("merchant", new FixedMetadataValue(Main.getInstance(), true));
-    standNPC.getEntity().setMetadata("merchantName", new FixedMetadataValue(Main.getInstance(), name));
-    standNPC.getEntity().setMetadata("NPC", new FixedMetadataValue(Main.getInstance(), true));
+    this.stand.getEntity().teleport(npc.getEntity().getLocation().add(0, 1.95, 0));
+    this.stand.getEntity().setMetadata("merchant", new FixedMetadataValue(Main.getInstance(), true));
+    this.stand.getEntity().setMetadata("merchantName", new FixedMetadataValue(Main.getInstance(), name));
+    this.stand.getEntity().setMetadata("NPC", new FixedMetadataValue(Main.getInstance(), true));
     
-    NPC clickNPC = CitizensAPI.getNPCRegistry().createNPC(EntityType.ARMOR_STAND, "§e§bCLICK", npc.getEntity().getLocation().add(0, 1.6, 0));
-    clickNPC.spawn(npc.getEntity().getLocation().add(0, 1.6, 0));
+    this.click = CitizensAPI.getNPCRegistry().createNPC(EntityType.ARMOR_STAND, "§e§bCLICK", npc.getEntity().getLocation().add(0, 1.6, 0));
+    this.click.spawn(npc.getEntity().getLocation().add(0, 1.6, 0));
     
-    ArmorStandTrait click = clickNPC.getOrAddTrait(ArmorStandTrait.class);
-    click.setGravity(false);
-    click.setVisible(false);
-    click.setMarker(true);
+    ArmorStandTrait clickTrait = this.click.getOrAddTrait(ArmorStandTrait.class);
+    clickTrait.setGravity(false);
+    clickTrait.setVisible(false);
+    clickTrait.setMarker(true);
     
-    clickNPC.getEntity().teleport(npc.getEntity().getLocation().add(0, 1.7, 0));
+    this.click.getEntity().teleport(npc.getEntity().getLocation().add(0, 1.7, 0));
     
     if (skin) {
       SkinTrait skinTrait = npc.getOrAddTrait(SkinTrait.class);
@@ -175,8 +186,6 @@ public class Merchant implements Listener {
     
     Chunk chunk = npc.getEntity().getLocation().getChunk();
     chunk.load();
-    
-    return new ArrayList<>(Arrays.asList(npc, stand, click));
   }
   
   @EventHandler
@@ -186,7 +195,7 @@ public class Merchant implements Listener {
     Player player = event.getClicker();
     User user = Main.getUser(player);
     
-    Inventory inventory = Bukkit.createInventory(null, 54, this.name);
+    Inventory inventory = Bukkit.createInventory(null, 54, ChatUtils.stringToComponentCC(this.name));
     
     InventoryUtils.fillBorder(inventory);
     
@@ -235,7 +244,7 @@ public class Merchant implements Listener {
   
   @EventHandler
   public void onInventoryClick(InventoryClickEvent event) {
-    if (!event.getView().title().equals(this.name)) return;
+    if (!event.getView().title().equals(ChatUtils.stringToComponentCC(this.name))) return;
     
     if (event.getCurrentItem() == null || event.getCurrentItem().getType().equals(Material.AIR)) return;
     

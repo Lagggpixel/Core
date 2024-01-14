@@ -4,7 +4,7 @@ import me.lagggpixel.core.modules.bazaar.api.bazaar.Category;
 import me.lagggpixel.core.modules.bazaar.api.bazaar.Product;
 import me.lagggpixel.core.modules.bazaar.api.bazaar.ProductCategory;
 import me.lagggpixel.core.modules.bazaar.api.menu.ConfigurableMenuItem;
-import me.zort.containr.ContextClickInfo;
+import me.lagggpixel.core.libs.containr.ContextClickInfo;
 import org.bukkit.entity.Player;
 
 import java.util.function.Consumer;

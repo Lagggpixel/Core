@@ -11,8 +11,8 @@ import me.lagggpixel.core.modules.bazaar.api.bazaar.orders.OrderType;
 import me.lagggpixel.core.modules.bazaar.api.menu.ClickActionManager;
 import me.lagggpixel.core.modules.bazaar.api.menu.ConfigurableMenuItem;
 import me.lagggpixel.core.modules.bazaar.api.menu.MenuInfo;
-import me.zort.containr.ContextClickInfo;
-import me.zort.containr.GUI;
+import me.lagggpixel.core.libs.containr.ContextClickInfo;
+import me.lagggpixel.core.libs.containr.GUI;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 

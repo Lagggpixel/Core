@@ -1,6 +1,6 @@
 package me.lagggpixel.core.modules.bazaar.api.menu;
 
-import me.zort.containr.ContainerComponent;
+import me.lagggpixel.core.libs.containr.ContainerComponent;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 

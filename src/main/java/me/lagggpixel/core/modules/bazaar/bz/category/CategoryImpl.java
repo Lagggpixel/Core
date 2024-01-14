@@ -6,7 +6,7 @@ import me.lagggpixel.core.modules.bazaar.api.bazaar.ProductCategory;
 import me.lagggpixel.core.modules.bazaar.bz.BazaarImpl;
 import me.lagggpixel.core.modules.bazaar.bz.productcategory.ProductCategoryImpl;
 import me.lagggpixel.core.modules.bazaar.utils.Utils;
-import me.zort.containr.GUI;
+import me.lagggpixel.core.libs.containr.GUI;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;

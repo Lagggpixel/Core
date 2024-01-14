@@ -8,9 +8,9 @@ import me.lagggpixel.core.modules.bazaar.api.bazaar.orders.OrderType;
 import me.lagggpixel.core.modules.bazaar.api.config.MessagePlaceholder;
 import me.lagggpixel.core.modules.bazaar.menu.LazyLorePlaceholder;
 import me.lagggpixel.core.modules.bazaar.utils.Utils;
-import me.zort.containr.ContainerComponent;
-import me.zort.containr.internal.util.ItemBuilder;
-import me.zort.containr.internal.util.Pair;
+import me.lagggpixel.core.libs.containr.ContainerComponent;
+import me.lagggpixel.core.libs.containr.internal.util.ItemBuilder;
+import me.lagggpixel.core.libs.containr.internal.util.Pair;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 

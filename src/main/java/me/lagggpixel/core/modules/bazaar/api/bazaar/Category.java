@@ -1,7 +1,7 @@
 package me.lagggpixel.core.modules.bazaar.api.bazaar;
 
 import me.lagggpixel.core.modules.bazaar.api.menu.MenuInfo;
-import me.zort.containr.GUI;
+import me.lagggpixel.core.libs.containr.GUI;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;

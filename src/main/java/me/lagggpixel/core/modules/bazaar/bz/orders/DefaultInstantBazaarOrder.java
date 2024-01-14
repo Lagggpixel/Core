@@ -7,7 +7,7 @@ import me.lagggpixel.core.modules.bazaar.api.bazaar.orders.OrderType;
 import me.lagggpixel.core.modules.bazaar.api.config.MenuConfig;
 import me.lagggpixel.core.modules.bazaar.api.config.MessagePlaceholder;
 import me.lagggpixel.core.modules.bazaar.utils.Utils;
-import me.zort.containr.internal.util.ItemBuilder;
+import me.lagggpixel.core.libs.containr.internal.util.ItemBuilder;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.UUID;

@@ -1,6 +1,6 @@
 package me.lagggpixel.core.modules.bazaar.api.menu;
 
-import me.zort.containr.ContextClickInfo;
+import me.lagggpixel.core.libs.containr.ContextClickInfo;
 
 import java.util.Set;
 import java.util.function.BiFunction;

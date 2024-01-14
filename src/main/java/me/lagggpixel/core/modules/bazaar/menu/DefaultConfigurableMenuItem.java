@@ -5,8 +5,8 @@ import me.lagggpixel.core.modules.bazaar.api.bazaar.Bazaar;
 import me.lagggpixel.core.modules.bazaar.api.menu.ConfigurableMenuItem;
 import me.lagggpixel.core.modules.bazaar.api.menu.MenuInfo;
 import me.lagggpixel.core.modules.bazaar.utils.MenuUtils;
-import me.zort.containr.Component;
-import me.zort.containr.ContainerComponent;
+import me.lagggpixel.core.libs.containr.Component;
+import me.lagggpixel.core.libs.containr.ContainerComponent;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 

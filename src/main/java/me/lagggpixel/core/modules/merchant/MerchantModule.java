@@ -1,12 +1,14 @@
 package me.lagggpixel.core.modules.merchant;
 
 import lombok.Getter;
+import me.lagggpixel.core.Main;
 import me.lagggpixel.core.interfaces.IModule;
 import me.lagggpixel.core.modules.guilds.commands.MerchantCommand;
 import me.lagggpixel.core.modules.merchant.data.Merchant;
 import me.lagggpixel.core.modules.merchant.handler.MerchantHandler;
 import me.lagggpixel.core.modules.merchant.handler.MerchantSellPriceHandler;
 import me.lagggpixel.core.utils.CommandUtils;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
 public class MerchantModule implements IModule {
@@ -36,14 +38,21 @@ public class MerchantModule implements IModule {
     merchantHandler = new MerchantHandler();
     priceHandler = new MerchantSellPriceHandler();
     
-    for (Merchant merchant : this.merchantHandler.getMerchants().values()) {
-      merchant.createNpc();
-    }
+    new BukkitRunnable() {
+      @Override
+      public void run() {
+        for (Merchant merchant : merchantHandler.getMerchants().values()) {
+          merchant.createNpc();
+        }
+      }
+    }.runTaskLater(Main.getInstance(), 1L);
   }
   
   @Override
   public void onDisable() {
-  
+    for (Merchant merchant : this.merchantHandler.getMerchants().values()) {
+      merchant.unregister();
+    }
   }
   
   @Override

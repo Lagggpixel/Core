@@ -1,8 +1,8 @@
 package me.lagggpixel.core.modules.bazaar.api.bazaar;
 
 import me.lagggpixel.core.modules.bazaar.api.menu.MenuInfo;
-import me.zort.containr.ContainerComponent;
-import me.zort.containr.internal.util.Pair;
+import me.lagggpixel.core.libs.containr.ContainerComponent;
+import me.lagggpixel.core.libs.containr.internal.util.Pair;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 

@@ -6,7 +6,7 @@
 
     <groupId>me.lagggpixel</groupId>
     <artifactId>core</artifactId>
-    <version>1.0.28-SNAPSHOT</version>
+    <version>1.0.32-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>Core</name>
@@ -50,23 +50,13 @@
                 <version>3.2.4</version>
                 <executions>
                     <execution>
+                        <id>shade</id>
                         <phase>package</phase>
                         <goals>
                             <goal>shade</goal>
                         </goals>
-                        <configuration>
-                            <createDependencyReducedPom>false</createDependencyReducedPom>
-                        </configuration>
                     </execution>
                 </executions>
-                <configuration>
-                    <relocations>
-                        <relocation>
-                            <pattern>de.tr7zw.changeme.nbtapi</pattern>
-                            <shadedPattern>me.lagggpixel.core.libs.nbtapi</shadedPattern>
-                        </relocation>
-                    </relocations>
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>com.amashchenko.maven.plugin</groupId>
@@ -187,9 +177,9 @@
         </dependency>
         <!-- Bazaar Module -->
         <dependency>
-            <groupId>com.github.ZorTik</groupId>
-            <artifactId>ContainrGUI</artifactId>
-            <version>1.1</version>
+            <groupId>io.projectreactor</groupId>
+            <artifactId>reactor-core</artifactId>
+            <version>3.5.2</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -217,6 +207,7 @@
             <groupId>de.tr7zw</groupId>
             <artifactId>item-nbt-api</artifactId>
             <version>2.12.2</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>

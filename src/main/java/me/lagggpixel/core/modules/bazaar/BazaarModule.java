@@ -24,7 +24,7 @@ import me.lagggpixel.core.modules.bazaar.menu.DefaultMenuHistory;
 import me.lagggpixel.core.modules.bazaar.menu.MenuListeners;
 import me.lagggpixel.core.modules.bazaar.messageinput.MessageInputManager;
 import me.lagggpixel.core.utils.CommandUtils;
-import me.zort.containr.Containr;
+import me.lagggpixel.core.libs.containr.Containr;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.RegisteredServiceProvider;
