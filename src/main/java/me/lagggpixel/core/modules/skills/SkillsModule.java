@@ -6,12 +6,11 @@ import me.lagggpixel.core.interfaces.IModule;
 import me.lagggpixel.core.modules.skills.handlers.SkillHandler;
 import me.lagggpixel.core.modules.skills.hooks.placeholders.SkillsExpansion;
 import me.lagggpixel.core.modules.skills.listeners.*;
-import me.lagggpixel.core.utils.ExceptionUtils;
+import me.lagggpixel.core.utils.FileUtil;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.*;
-import java.util.logging.Level;
+import java.io.File;
 
 public class SkillsModule implements IModule {
 
@@ -74,48 +73,13 @@ public class SkillsModule implements IModule {
   private void initConfig() {
     if (!skill_exp.exists()) {
       String resourcePath = "module_data/skills/skill_exp.yml";
-      copyToDefault(resourcePath);
+      FileUtil.copyToDefault(resourcePath);
     }
 
     if (!skill_level_up.exists()) {
       String resourcePath = "module_data/skills/skill_level_up.yml";
-      copyToDefault(resourcePath);
+      FileUtil.copyToDefault(resourcePath);
     }
   }
-
-  private void copyToDefault(String resourcePath) {
-    resourcePath = resourcePath.replace('\\', '/');
-    InputStream in = Main.getInstance().getResource(resourcePath);
-    if (in == null) {
-      throw new IllegalArgumentException("The embedded resource '" + resourcePath + "' cannot be found");
-    } else {
-      File outFile = new File(dataFolder, resourcePath);
-      int lastIndex = resourcePath.lastIndexOf(47);
-      File outDir = new File(dataFolder, resourcePath.substring(0, Math.max(lastIndex, 0)));
-      if (!outDir.exists()) {
-        outDir.mkdirs();
-      }
-
-      try {
-        if (outFile.exists()) {
-          Main.log(Level.WARNING, "Could not save " + resourcePath + " to " + outFile + " because " + outFile.getName() + " already exists.");
-        } else {
-          OutputStream out = new FileOutputStream(outFile);
-          byte[] buf = new byte[1024];
-
-          int len;
-          while ((len = in.read(buf)) > 0) {
-            out.write(buf, 0, len);
-          }
-
-          out.close();
-          in.close();
-        }
-      } catch (IOException var10) {
-        Main.log(Level.SEVERE, "Could not save " + outFile.getName() + " to " + outFile);
-        ExceptionUtils.handleException(var10);
-      }
-    }
-  }
-
+  
 }
