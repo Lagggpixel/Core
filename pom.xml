@@ -205,7 +205,7 @@
         <!-- NPT API -->
         <dependency>
             <groupId>de.tr7zw</groupId>
-            <artifactId>item-nbt-api</artifactId>
+            <artifactId>item-nbt-api-plugin</artifactId>
             <version>2.12.2</version>
             <scope>provided</scope>
         </dependency>
