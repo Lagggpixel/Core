@@ -1,7 +1,7 @@
 package me.lagggpixel.core.libs.containr;
 
 import com.google.common.collect.Maps;
-import de.tr7zw.changeme.nbtapi.NBTItem;
+import de.tr7zw.nbtapi.NBTItem;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,6 +9,7 @@ import lombok.SneakyThrows;
 import me.lagggpixel.core.libs.containr.builder.PatternGUIBuilder;
 import me.lagggpixel.core.libs.containr.factory.BasicInventoryFactory;
 import me.lagggpixel.core.libs.containr.internal.util.Containers;
+import me.lagggpixel.core.libs.containr.internal.util.NBT;
 import me.lagggpixel.core.libs.containr.internal.util.Pair;
 import me.lagggpixel.core.libs.containr.util.Util;
 import org.bukkit.Bukkit;
@@ -212,9 +213,7 @@ public abstract class GUI extends ContainerHolder implements InventoryHolder, Cl
                 Element element = (Element) content.get(slot);
                 ItemStack item = element.item(p);
                 if(item != null && !item.getType().equals(Material.AIR)) {
-                    NBTItem nbtItem = new NBTItem(item);
-                    nbtItem.setString(Constants.ELEMENT_ID_KEY, element.getId());
-                    item = nbtItem.getItem();
+                    item = NBT.modifyNBT(item, nbtItem -> nbtItem.setString(Constants.ELEMENT_ID_KEY, element.getId()));
                 }
                 if(slot < inventory.getSize() && slot >= 0) {
                     inventory.setItem(slot, item);

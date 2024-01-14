@@ -1,6 +1,6 @@
 package me.lagggpixel.core.modules.merchant.data;
 
-import de.tr7zw.changeme.nbtapi.NBTItem;
+import de.tr7zw.nbtapi.NBTItem;
 import lombok.Getter;
 import me.lagggpixel.core.Main;
 import me.lagggpixel.core.builders.ItemBuilder;
