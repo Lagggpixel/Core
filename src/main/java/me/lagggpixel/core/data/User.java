@@ -16,6 +16,7 @@ import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -62,6 +63,8 @@ public class User {
   @SerializedName("Homes")
   @Expose
   private Map<String, Home> homes;
+  // Shop
+  private List<ItemStack> merchantSold = List.of();
   // Skills
   @SerializedName("Skills")
   @Expose
