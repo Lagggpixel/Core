@@ -25,6 +25,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
@@ -256,7 +257,7 @@ public class Merchant implements Listener {
     player.openInventory(inventory);
   }
   
-  @EventHandler
+  @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
   public void onInventoryClick(InventoryClickEvent event) {
     if (!event.getView().title().equals(ChatUtils.stringToComponentCC(this.name))) return;
     
