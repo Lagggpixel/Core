@@ -17,6 +17,7 @@ public enum Lang {
   PREFIX("prefix", "&#fb0000I&#f4011bn&#ec0335f&#e50450i&#de056bn&#d60685i&#cf08a0t&#c709bae &#c00ad5M&#b90bf0i&#b216fbn&#ac2bf7e&#a63ff3c&#a054efr&#9a68eba&#947de6f&#8e91e2t&#88a6dee&#82badar&#7ccfd6s &r&7» &r"),
   PLAYER_ONLY("player_only", "&cThis command is for players only."),
   INVALID_USAGE("invalid_usage", "&cInvalid usage. Type /help for more information."),
+  INVALID_NUMBER("invalid_number", "&cInvalid number inputted."),
   PLAYER_NOT_FOUND("player_not_found", "&c%player% is not found."),
 
   TELEPORTATION_IN_TIME("teleportation.time", "&aTeleporting in %time% seconds..."),
@@ -187,6 +188,11 @@ public enum Lang {
   MERCHANT_SELECTED("merchant.admin.selected", "&aYou have selected merchant with the unique id '&e%merchant%&a'."),
   MERCHANT_RENAMED("merchant.admin.renamed", "&aYou have successfully renamed the merchant to '&e%name%&a'."),
   MERCHANT_DELETED("merchant.admin.deleted", "&aYou have successfully deleted the merchant with the unique id '&e%merchant%&a'."),
+  MERCHANT_ITEM_INVALID_SLOT("merchant.admin.item.invalid_slot", "&cInvalid slot. Please select a valid slot between 1-28."),
+  MERCHANT_ITEM_REPLACED("merchant.admin.item.replaced", "&aYou have successfully replaced the merchant item in slot &e%slot%&a from &e%old%&a to &e%new%&a form an old price of &e%old_price%&a to a new price of &e%new_price%&a."),
+  MERCHANT_ITEM_SET("merchant.admin.item.set", "&aYou have successfully set the merchant item in slot &e%slot%&a to &e%material%&a at a price of &e%price%&a."),
+  MERCHANT_ITEM_NOT_FOUND("merchant.admin.item.not_found", "&cThe merchant item in slot &e%slot%&c was not found."),
+  MERCHANT_ITEM_REMOVED("merchant.admin.item.removed", "&aYou have successfully removed the merchant item in slot &e%slot%&a, material &e%material%&a at a price of &e%price%&a."),
   
   // Inventory IModule
   INVENTORY_CLEARED_SELF("inventory.cleared.self", "&aYou have cleared your inventory."),
