@@ -28,7 +28,9 @@ public class GuildLoadSave {
   public static void load() throws NullPointerException {
     File folder = new File(GuildLoadSave.folder);
     if (!folder.exists()) {
-      Main.log(Level.WARNING, "Guild data folder not found: " + folder.getName());
+      if (!folder.mkdir()) {
+        Main.log(Level.WARNING, "Guild data folder didn't create successfully: " + folder.getName());
+      }
       return;
     }
 
@@ -43,12 +45,10 @@ public class GuildLoadSave {
     }
 
     if (folder.list() == null) {
-      Main.log(Level.WARNING, "Guild data folder is empty: " + folder.getName());
       return;
     }
 
     if (folder.listFiles() == null) {
-      Main.log(Level.WARNING, "Guild data folder is empty: " + folder.getName());
       return;
     }
 
