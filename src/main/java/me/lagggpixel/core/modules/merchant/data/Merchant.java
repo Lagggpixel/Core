@@ -41,6 +41,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
+@SuppressWarnings("StatementWithEmptyBody")
 @Data
 public class Merchant implements Listener {
   
@@ -99,6 +100,9 @@ public class Merchant implements Listener {
     this.npc.destroy();
     this.stand.destroy();
     this.click.destroy();
+    this.npc.getOwningRegistry().deregister(this.npc);
+    this.stand.getOwningRegistry().deregister(this.stand);
+    this.click.getOwningRegistry().deregister(this.click);
   }
   
   private List<ItemStack> getSold(User user) {
@@ -141,6 +145,10 @@ public class Merchant implements Listener {
     
     this.npc.spawn(location);
     
+    while (!npc.isSpawned()) {
+      // Wait for npc to spawn
+    }
+    
     this.npc.getEntity().setCustomNameVisible(false);
     
     this.npc.getEntity().setMetadata("createdAt", new FixedMetadataValue(Main.getInstance(), System.currentTimeMillis()));
@@ -149,7 +157,9 @@ public class Merchant implements Listener {
     
     this.stand = CitizensAPI.getNPCRegistry().createNPC(EntityType.ARMOR_STAND, name, npc.getEntity().getLocation().add(0, 1.95, 0));
     this.stand.spawn(npc.getEntity().getLocation().add(0, 1.95, 0));
-    
+    while (!stand.isSpawned()) {
+      // Wait for npc to spawn
+    }
     ArmorStandTrait standTrait = this.stand.getOrAddTrait(ArmorStandTrait.class);
     standTrait.setGravity(false);
     standTrait.setVisible(false);
@@ -162,7 +172,9 @@ public class Merchant implements Listener {
     
     this.click = CitizensAPI.getNPCRegistry().createNPC(EntityType.ARMOR_STAND, "§e§bCLICK", npc.getEntity().getLocation().add(0, 1.6, 0));
     this.click.spawn(npc.getEntity().getLocation().add(0, 1.6, 0));
-    
+    while (!click.isSpawned()) {
+      // Wait for npc to spawn
+    }
     ArmorStandTrait clickTrait = this.click.getOrAddTrait(ArmorStandTrait.class);
     clickTrait.setGravity(false);
     clickTrait.setVisible(false);
@@ -327,6 +339,14 @@ public class Merchant implements Listener {
       player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10, 2);
     } else if (event.getClickedInventory() != null && event.getClickedInventory().equals(event.getWhoClicked().getInventory())) {
       double price = MerchantModule.getInstance().getPriceHandler().getPrice(item);
+      if (price == 0) {
+        player.sendMessage(ChatUtils.stringToComponentCC("&cThis item cannot be sold!"));
+        player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_NO, 10, 2);
+        return;
+      }
+      EconomyManager.getInstance().withdraw(player, price);
+      
+      XItemStack.giveOrDrop(player, new ItemStack(item.getType()));
       Component displayName = item.getItemMeta().displayName();
       Component message;
       if (displayName == null) {

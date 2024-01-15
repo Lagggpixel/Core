@@ -4,10 +4,7 @@ import me.lagggpixel.core.enums.Lang;
 import me.lagggpixel.core.interfaces.ICommandClass;
 import me.lagggpixel.core.interfaces.ISubCommand;
 import me.lagggpixel.core.modules.merchant.MerchantModule;
-import me.lagggpixel.core.modules.merchant.commands.subCommands.MerchantCreateSubCommand;
-import me.lagggpixel.core.modules.merchant.commands.subCommands.MerchantRenameSubCommand;
-import me.lagggpixel.core.modules.merchant.commands.subCommands.MerchantSelectSubCommand;
-import me.lagggpixel.core.modules.merchant.commands.subCommands.MerchantTphereSubCommand;
+import me.lagggpixel.core.modules.merchant.commands.subCommands.*;
 import me.lagggpixel.core.utils.CommandUtils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -28,9 +25,10 @@ public class MerchantCommand implements ICommandClass {
     this.subCommands = new HashMap<>();
     
     subCommands.put("create", new MerchantCreateSubCommand(merchantModule));
+    subCommands.put("delete", new MerchantDeleteSubCommand(merchantModule));
+    subCommands.put("rename", new MerchantRenameSubCommand(merchantModule));
     subCommands.put("select", new MerchantSelectSubCommand(merchantModule));
     subCommands.put("tphere", new MerchantTphereSubCommand(merchantModule));
-    subCommands.put("rename", new MerchantRenameSubCommand(merchantModule));
   }
   
   

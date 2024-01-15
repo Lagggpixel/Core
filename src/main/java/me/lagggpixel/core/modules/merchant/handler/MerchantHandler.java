@@ -18,12 +18,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+@SuppressWarnings("FieldCanBeLocal")
 public class MerchantHandler {
   @Getter
   private final File merchantFile;
   @Getter
   private final YamlConfiguration merchantConfiguration;
-  private final MerchantSellPriceHandler merchantSellPriceHandler;
   
   @Getter
   private final HashMap<String, Merchant> merchants;
@@ -38,8 +38,6 @@ public class MerchantHandler {
     }
     this.merchantConfiguration = YamlConfiguration.loadConfiguration(merchantFile);
     this.merchants = new HashMap<>();
-    
-    this.merchantSellPriceHandler = new MerchantSellPriceHandler();
     
     this.registerMerchants();
   }
@@ -126,10 +124,6 @@ public class MerchantHandler {
       return null;
     }
     return this.merchants.get(name);
-  }
-  
-  public MerchantSellPriceHandler getPriceHandler() {
-    return merchantSellPriceHandler;
   }
   
   public boolean hasMerchant(String currentMerchant) {
