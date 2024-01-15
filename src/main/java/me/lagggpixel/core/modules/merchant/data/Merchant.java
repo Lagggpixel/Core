@@ -5,6 +5,7 @@ import de.tr7zw.nbtapi.NBTItem;
 import lombok.Data;
 import me.lagggpixel.core.Main;
 import me.lagggpixel.core.builders.ItemBuilder;
+import me.lagggpixel.core.data.Hologram;
 import me.lagggpixel.core.data.User;
 import me.lagggpixel.core.modules.economy.managers.EconomyManager;
 import me.lagggpixel.core.modules.merchant.MerchantModule;
@@ -16,7 +17,6 @@ import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.event.DespawnReason;
 import net.citizensnpcs.api.event.NPCRightClickEvent;
 import net.citizensnpcs.api.npc.NPC;
-import net.citizensnpcs.trait.ArmorStandTrait;
 import net.citizensnpcs.trait.LookClose;
 import net.citizensnpcs.trait.SkinTrait;
 import net.kyori.adventure.text.Component;
@@ -56,8 +56,8 @@ public class Merchant implements Listener {
   private int interactionIteration = 0;
   
   private NPC npc;
-  private NPC stand;
-  private NPC click;
+  private Hologram stand;
+  private Hologram click;
   
   private final List<MerchantItem> items;
   private Location location;
@@ -80,6 +80,7 @@ public class Merchant implements Listener {
   
   public void setName(String name) {
     this.npc.setName(name);
+    this.stand.setName(ChatUtils.stringToComponentCC(name));
     getConfigurationSection().set("name", name);
     saveConfigurationFile();
   }
@@ -87,8 +88,8 @@ public class Merchant implements Listener {
   public void setLocation(Location location) {
     this.location = location;
     this.npc.getEntity().teleport(location);
-    this.stand.getEntity().teleport(this.npc.getEntity().getLocation().add(0, 1.95, 0));
-    this.click.getEntity().teleport(this.location.add(0, 1.6, 0));
+    this.stand.setLocation(this.npc.getEntity().getLocation().add(0, 1.95, 0));
+    this.click.setLocation(this.location.add(0, 1.6, 0));
     getConfigurationSection().set("location", location);
     saveConfigurationFile();
   }
@@ -117,8 +118,8 @@ public class Merchant implements Listener {
     this.stand.destroy();
     this.click.destroy();
     this.npc.getOwningRegistry().deregister(this.npc);
-    this.stand.getOwningRegistry().deregister(this.stand);
-    this.click.getOwningRegistry().deregister(this.click);
+    this.stand.destroy();
+    this.click.destroy();
   }
   
   private List<ItemStack> getSold(User user) {
@@ -157,46 +158,34 @@ public class Merchant implements Listener {
   }
   
   public void spawnNpc(Location location, String name, String skinValue, String skinSignature, boolean skin, boolean look) {
-    this.npc = CitizensAPI.getNPCRegistry().createNPC(EntityType.PLAYER, "");
     
-    this.npc.spawn(location);
+    location.getChunk().addPluginChunkTicket(Main.getInstance());
     
-    while (!npc.isSpawned()) {
-      // Wait for npc to spawn
+    this.npc = CitizensAPI.getNPCRegistry().createNPC(EntityType.PLAYER, "****");
+    boolean isChunkLoaded = location.getChunk().isLoaded();
+    if (!isChunkLoaded) {
+      Main.getInstance().getLogger().info("Force loading chunk " + location.getChunk().getX() + " " + location.getChunk().getZ() + " to spawn merchant " + name);
+      location.getChunk().setForceLoaded(true);
+      if (location.getChunk().isLoaded()) {
+        Main.getInstance().getLogger().info("Chunk " + location.getChunk().getX() + " " + location.getChunk().getZ() + " loaded");
+      }
+      else {
+        Main.getInstance().getLogger().info("Chunk " + location.getChunk().getX() + " " + location.getChunk().getZ() + " not loaded");
+      }
+    }
+    if (!this.npc.spawn(location)) {
+      ExceptionUtils.handleException(new RuntimeException("Failed to spawn npc, " + name + " at " + location));
     }
     
-    this.npc.getEntity().setCustomNameVisible(false);
+    assert npc.getEntity() != null;
+    npc.getEntity().setCustomNameVisible(false);
     
-    this.npc.getEntity().setMetadata("createdAt", new FixedMetadataValue(Main.getInstance(), System.currentTimeMillis()));
+    npc.getEntity().setMetadata("createdAt", new FixedMetadataValue(Main.getInstance(), System.currentTimeMillis()));
     
-    this.npc.getEntity().getLocation().setDirection(location.getWorld().getSpawnLocation().toVector().subtract(location.toVector()).normalize());
+    npc.getEntity().getLocation().setDirection(location.getWorld().getSpawnLocation().toVector().subtract(location.toVector()).normalize());
     
-    this.stand = CitizensAPI.getNPCRegistry().createNPC(EntityType.ARMOR_STAND, name, npc.getEntity().getLocation().add(0, 1.95, 0));
-    this.stand.spawn(npc.getEntity().getLocation().add(0, 1.95, 0));
-    while (!stand.isSpawned()) {
-      // Wait for npc to spawn
-    }
-    ArmorStandTrait standTrait = this.stand.getOrAddTrait(ArmorStandTrait.class);
-    standTrait.setGravity(false);
-    standTrait.setVisible(false);
-    standTrait.setMarker(true);
-    
-    this.stand.getEntity().teleport(npc.getEntity().getLocation().add(0, 1.95, 0));
-    this.stand.getEntity().setMetadata("merchant", new FixedMetadataValue(Main.getInstance(), true));
-    this.stand.getEntity().setMetadata("merchantName", new FixedMetadataValue(Main.getInstance(), name));
-    this.stand.getEntity().setMetadata("NPC", new FixedMetadataValue(Main.getInstance(), true));
-    
-    this.click = CitizensAPI.getNPCRegistry().createNPC(EntityType.ARMOR_STAND, "§e§bCLICK", npc.getEntity().getLocation().add(0, 1.6, 0));
-    this.click.spawn(npc.getEntity().getLocation().add(0, 1.6, 0));
-    while (!click.isSpawned()) {
-      // Wait for npc to spawn
-    }
-    ArmorStandTrait clickTrait = this.click.getOrAddTrait(ArmorStandTrait.class);
-    clickTrait.setGravity(false);
-    clickTrait.setVisible(false);
-    clickTrait.setMarker(true);
-    
-    this.click.getEntity().teleport(npc.getEntity().getLocation().add(0, 1.7, 0));
+    this.stand = new Hologram(name + "_name_tag", ChatUtils.stringToComponentCC(name), npc.getEntity().getLocation().add(0, 1.95, 0));
+    this.click = new Hologram(name + "_click_tag", ChatUtils.stringToComponentCC(name), npc.getEntity().getLocation().add(0, 1.6, 0));
     
     if (skin) {
       SkinTrait skinTrait = npc.getOrAddTrait(SkinTrait.class);
@@ -213,9 +202,6 @@ public class Merchant implements Listener {
       
       npc.addTrait(lookClose);
     }
-    
-    Chunk chunk = npc.getEntity().getLocation().getChunk();
-    chunk.load();
   }
   
   @EventHandler

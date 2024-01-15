@@ -50,11 +50,15 @@ public class MerchantModule implements IModule {
     new BukkitRunnable() {
       @Override
       public void run() {
+        Main.getInstance().getLogger().info("Loading merchants...");
+        long timeStarted = System.currentTimeMillis();
         for (Merchant merchant : merchantHandler.getMerchants().values()) {
           merchant.createNpc();
         }
+        long timeTaken = System.currentTimeMillis() - timeStarted;
+        Main.getInstance().getLogger().info("Loaded " + merchantHandler.getMerchants().size() + " merchants in " + timeTaken + "ms");
       }
-    }.runTaskLater(Main.getInstance(), 1L);
+    }.runTaskLater(Main.getInstance(), 20L*5);
   }
   
   @Override

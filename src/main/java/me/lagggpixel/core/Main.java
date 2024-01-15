@@ -27,6 +27,7 @@ import me.lagggpixel.core.modules.staff.data.InstantPlayerData;
 import me.lagggpixel.core.modules.survival.SurvivalModule;
 import me.lagggpixel.core.modules.warp.WarpModule;
 import me.lagggpixel.core.serializers.UserDataSerializer;
+import me.lagggpixel.core.utils.HologramUtils;
 import me.lagggpixel.core.utils.LangUtils;
 import me.lagggpixel.core.utils.TeleportUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -188,6 +189,7 @@ public final class Main extends JavaPlugin {
     DiscordModule.discordHandler.sendEmbed(DiscordModule.discordHandler.LOGGING_CHANNEL, new EmbedBuilder().setTitle("**Core Plugin Disabled**").build());
     UserDataSerializer.saveData(userData);
     DiscordModule.discordHandler.getJda().shutdown();
+    HologramUtils.despawnAll();
   }
   
   private void registerListeners() {
