@@ -251,7 +251,11 @@ public enum Lang {
   STAFF_GAMEMODE_SELF("staff.gamemode.self", "&aYou are now in gamemode %gamemode%."),
   STAFF_GAMEMODE_OTHER("staff.gamemode.other", "&a%player% is now in gamemode %gamemode%."),
   STAFF_GAMEMODE_OTHER_NOTIFY("staff.gamemode.other_notify", "&aYou are now in gamemode %gamemode%. Action performed by %player%."),
-
+  STAFF_SUDO_MUST_SPECIFY_PLAYER("staff.sudo.must_specify_player", "&cYou must specify a player to sudo."),
+  STAFF_SUDO_USAGE("staff.sudo.usage", "&cUsage: /sudo <name, *> <message, /command>"),
+  STAFF_SUDO_COMMAND_SUCCESS("staff.sudo.command", "&aYou have made &e%player% &arun the command &e%command%&a."),
+  STAFF_SUDO_CHAT_SUCCESS("staff.sudo.chat", "&aYou have made &e%player% &asend chat message &e%message%&a."),
+  
   // Survival Module
   SURVIVAL_WHITELISTED_INFORM("survival.whitelisted.inform", "&cNote that the server is currently whitelisted, which means you can not do anything such as moving, sending commands, etc."),
   SURVIVAL_WHITELISTED_ERROR("survival.whitelisted.error", "&aThe server is currently whitelisted, you can not do that."),
