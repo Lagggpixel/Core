@@ -13,6 +13,7 @@ import me.lagggpixel.core.utils.ExceptionUtils;
 import me.lagggpixel.core.utils.InventoryUtils;
 import me.lagggpixel.core.utils.NumberUtil;
 import net.citizensnpcs.api.CitizensAPI;
+import net.citizensnpcs.api.event.DespawnReason;
 import net.citizensnpcs.api.event.NPCRightClickEvent;
 import net.citizensnpcs.api.npc.NPC;
 import net.citizensnpcs.trait.ArmorStandTrait;
@@ -49,8 +50,8 @@ public class Merchant implements Listener {
   private final String id;
   private final String name;
   
-  private final String skinSignature;
-  private final String skinValue;
+  private String skinSignature;
+  private String skinValue;
   
   private int interactionIteration = 0;
   
@@ -90,6 +91,20 @@ public class Merchant implements Listener {
     this.click.getEntity().teleport(this.location.add(0, 1.6, 0));
     getConfigurationSection().set("location", location);
     saveConfigurationFile();
+  }
+  
+  public void setSkin(OfflinePlayer offlinePlayer) {
+    MerchantModule.getInstance().getMineskinClient().generateUser(offlinePlayer.getUniqueId())
+        .thenAccept(user -> {
+          this.skinValue = user.data.texture.value;
+          this.skinSignature = user.data.texture.signature;
+          getConfigurationSection().set("skinValue", user.data.texture.value);
+          getConfigurationSection().set("skinSignature", user.data.texture.signature);
+          saveConfigurationFile();
+          this.npc.despawn(DespawnReason.RELOAD);
+          unregister();
+          createNpc();
+        });
   }
   
   public void delete() {

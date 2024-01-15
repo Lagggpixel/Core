@@ -28,6 +28,7 @@ public class MerchantCommand implements ICommandClass {
     subCommands.put("delete", new MerchantDeleteSubCommand(merchantModule));
     subCommands.put("rename", new MerchantRenameSubCommand(merchantModule));
     subCommands.put("select", new MerchantSelectSubCommand(merchantModule));
+    subCommands.put("skin", new MerchantSkinSubCommand(merchantModule));
     subCommands.put("tphere", new MerchantTphereSubCommand(merchantModule));
   }
   
