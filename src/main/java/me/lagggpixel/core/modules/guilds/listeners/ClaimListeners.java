@@ -186,7 +186,6 @@ public class ClaimListeners implements Listener {
             profile.setLastInside(claim);
             p.sendMessage(Lang.GUILD_CLAIM_MESSAGES_LEAVING_SYSTEM.toComponentWithPrefix());
             sendClaimChange(p, claim.getOwner(), true);
-            
             return;
           }
           if (profile.getLastInside().getOwner() != claim.getOwner()) {
