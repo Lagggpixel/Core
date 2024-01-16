@@ -2,6 +2,11 @@ name: Core
 version: '${project.version}'
 main: me.lagggpixel.core.Main
 api-version: '1.20'
+authors:
+  - Lagggpixel (Main developer)
+  - Exortions (Merchant Module original author)
+  - Rapha149 (SignGUI Library)
+  - ZorTik (Containr Library)
 dependencies:
   server:
     PlaceholderAPI:
