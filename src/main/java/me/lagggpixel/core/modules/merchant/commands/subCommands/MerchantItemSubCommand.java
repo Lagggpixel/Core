@@ -12,6 +12,7 @@ import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.List;
 import java.util.Map;
 
 public class MerchantItemSubCommand implements ISubCommand {
@@ -67,10 +68,10 @@ public class MerchantItemSubCommand implements ISubCommand {
         }
         Material material = sender.getInventory().getItemInMainHand().getType();
         
-        if (merchant.getItems().stream().map(MerchantItem::getSlot).toList().contains(slot)) {
+        if (merchant.getItems().stream().map(MerchantItem::getRawSlot).toList().contains(slot)) {
           MerchantItem oldItem = null;
           for (MerchantItem item : merchant.getItems()) {
-            if (item.getSlot() == slot) {
+            if (item.getRawSlot() == slot) {
               oldItem = item;
               merchant.getItems().remove(item);
               break;
@@ -84,7 +85,7 @@ public class MerchantItemSubCommand implements ISubCommand {
               "%new%", merchantItem.getMaterial().name(),
               "%old_price%", NumberUtil.formatInt(oldItem.getCost()),
               "%new_price%", NumberUtil.formatInt(merchantItem.getCost()),
-              "%slot%", String.valueOf(oldItem.getSlot())
+              "%slot%", String.valueOf(oldItem.getRawSlot())
           )));
         } else {
           MerchantItem merchantItem = new MerchantItem(material, price, slot);
@@ -92,7 +93,7 @@ public class MerchantItemSubCommand implements ISubCommand {
           sender.sendMessage(Lang.MERCHANT_ITEM_SET.toComponentWithPrefix(Map.of(
             "%material%", merchantItem.getMaterial().name(),
             "%price%", NumberUtil.formatInt(merchantItem.getCost()),
-            "%slot%", String.valueOf(merchantItem.getSlot())
+            "%slot%", String.valueOf(merchantItem.getRawSlot())
           )));
         }
         return;
@@ -112,19 +113,19 @@ public class MerchantItemSubCommand implements ISubCommand {
           sender.sendMessage(Lang.MERCHANT_ITEM_INVALID_SLOT.toComponentWithPrefix());
           return;
         }
-        if (!merchant.getItems().stream().map(MerchantItem::getSlot).toList().contains(slot)) {
+        if (!merchant.getItems().stream().map(MerchantItem::getRawSlot).toList().contains(slot)) {
           sender.sendMessage(Lang.MERCHANT_ITEM_NOT_FOUND.toComponentWithPrefix(Map.of(
               "%slot%", String.valueOf(slot)
           )));
           return;
         }
         for (MerchantItem item : merchant.getItems()) {
-          if (item.getSlot() == slot) {
+          if (item.getRawSlot() == slot) {
             merchant.getItems().remove(item);
             sender.sendMessage(Lang.MERCHANT_ITEM_REMOVED.toComponentWithPrefix(Map.of(
                 "%material%", item.getMaterial().name(),
                 "%price%", NumberUtil.formatInt(item.getCost()),
-                "%slot%", String.valueOf(item.getSlot())
+                "%slot%", String.valueOf(slot)
             )));
             break;
           }
@@ -134,5 +135,23 @@ public class MerchantItemSubCommand implements ISubCommand {
         commandSender.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
         break;
     }
+  }
+  
+  @Override
+  public List<String> tabComplete(CommandSender commandSender, String[] args) {
+    
+    if (args.length == 2) {
+      return List.of("set", "remove");
+    }
+    
+    if (args.length == 3) {
+      return List.of("cost");
+    }
+    
+    if (args.length == 4) {
+      return List.of("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28");
+    }
+    
+    return List.of(" ");
   }
 }

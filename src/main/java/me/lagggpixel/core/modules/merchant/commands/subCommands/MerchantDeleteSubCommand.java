@@ -8,6 +8,7 @@ import me.lagggpixel.core.modules.merchant.MerchantModule;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.List;
 import java.util.Map;
 
 public class MerchantDeleteSubCommand implements ISubCommand {
@@ -35,5 +36,10 @@ public class MerchantDeleteSubCommand implements ISubCommand {
     sender.sendMessage(Lang.MERCHANT_DELETED.toComponentWithPrefix(Map.of("%merchant%", user.getCurrentMerchant().getId())));
     user.getCurrentMerchant().delete();
     user.setCurrentMerchant(null);
+  }
+  
+  @Override
+  public List<String> tabComplete(CommandSender commandSender, String[] args) {
+    return List.of(" ");
   }
 }

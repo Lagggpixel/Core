@@ -83,6 +83,13 @@ public class MerchantCommand implements ICommandClass {
     if (args.length == 1) {
       return subCommands.keySet().stream().toList();
     }
-    return null;
+    
+    String subCommand = args[0].toLowerCase();
+    
+    if (!subCommands.containsKey(subCommand)) {
+      return List.of(" ");
+    }
+    
+    return subCommands.get(subCommand).tabComplete(commandSender, args);
   }
 }

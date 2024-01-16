@@ -8,6 +8,7 @@ import me.lagggpixel.core.modules.merchant.MerchantModule;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.List;
 import java.util.Map;
 
 public class MerchantSelectSubCommand implements ISubCommand {
@@ -45,5 +46,15 @@ public class MerchantSelectSubCommand implements ISubCommand {
     
     user.setCurrentMerchant(id);
     sender.sendMessage(Lang.MERCHANT_SELECTED.toComponentWithPrefix(Map.of("%merchant%", id)));
+  }
+  
+  @Override
+  public List<String> tabComplete(CommandSender commandSender, String[] args) {
+    
+    if (args.length == 2) {
+      return merchantModule.getMerchantHandler().getMerchants().keySet().stream().toList();
+    }
+    
+    return List.of(" ");
   }
 }

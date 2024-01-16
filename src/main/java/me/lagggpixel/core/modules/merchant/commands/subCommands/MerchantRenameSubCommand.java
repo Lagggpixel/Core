@@ -8,6 +8,7 @@ import me.lagggpixel.core.modules.merchant.MerchantModule;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.List;
 import java.util.Map;
 
 public class MerchantRenameSubCommand implements ISubCommand {
@@ -41,5 +42,10 @@ public class MerchantRenameSubCommand implements ISubCommand {
     
     user.getCurrentMerchant().setName(name);
     sender.sendMessage(Lang.MERCHANT_RENAMED.toComponentWithPrefix(Map.of("%name%", user.getCurrentMerchant().getName())));
+  }
+  
+  @Override
+  public List<String> tabComplete(CommandSender commandSender, String[] args) {
+    return List.of(" ");
   }
 }

@@ -7,6 +7,8 @@ import me.lagggpixel.core.utils.ChatUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.List;
+
 public class MerchantListSubCommand implements ISubCommand {
   
   private final MerchantModule merchantModule;
@@ -32,5 +34,10 @@ public class MerchantListSubCommand implements ISubCommand {
     merchantModule.getMerchantHandler().getMerchants().forEach((merchantId, merchant) -> {
       sender.sendMessage(merchant.getId() + ": " + merchant.getName());
     });
+  }
+  
+  @Override
+  public List<String> tabComplete(CommandSender commandSender, String[] args) {
+    return List.of(" ");
   }
 }

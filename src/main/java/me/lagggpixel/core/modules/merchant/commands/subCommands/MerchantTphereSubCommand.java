@@ -8,6 +8,8 @@ import me.lagggpixel.core.modules.merchant.MerchantModule;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.List;
+
 public class MerchantTphereSubCommand implements ISubCommand {
   
   private final MerchantModule merchantModule;
@@ -35,5 +37,10 @@ public class MerchantTphereSubCommand implements ISubCommand {
     }
     
     user.getCurrentMerchant().setLocation(sender.getLocation());
+  }
+  
+  @Override
+  public List<String> tabComplete(CommandSender commandSender, String[] args) {
+    return List.of(" ");
   }
 }

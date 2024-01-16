@@ -9,6 +9,10 @@ public class MerchantItem {
   private final int cost;
   private final int slot;
   
+  public int getRawSlot() {
+    return slot;
+  }
+  
   public int getSlot() {
     if (slot <= 7) {
       return slot + 9;

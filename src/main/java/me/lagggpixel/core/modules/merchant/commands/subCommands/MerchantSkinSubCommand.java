@@ -10,6 +10,8 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.List;
+
 public class MerchantSkinSubCommand implements ISubCommand {
   
   private final MerchantModule merchantModule;
@@ -39,5 +41,10 @@ public class MerchantSkinSubCommand implements ISubCommand {
     
     OfflinePlayer offLinePlayer= Bukkit.getOfflinePlayer(args[1]);
     user.getCurrentMerchant().setSkin(offLinePlayer);
+  }
+  
+  @Override
+  public List<String> tabComplete(CommandSender commandSender, String[] args) {
+    return List.of(" ");
   }
 }
