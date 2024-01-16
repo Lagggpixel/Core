@@ -9,6 +9,7 @@ import me.lagggpixel.core.modules.guilds.data.Guild;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.List;
 import java.util.Map;
 
 public class GuildJoinCommand implements ISubCommand {
@@ -65,5 +66,18 @@ public class GuildJoinCommand implements ISubCommand {
     guild.sendMessage(Lang.GUILD_JOIN_PLAYER_BROADCAST.toComponentWithPrefix(Map.of("%player%", sender.getName())));
     guild.getInvitedPlayers().remove(sender.getUniqueId());
     guild.getMembers().add(sender.getUniqueId());
+  }
+  
+  @Override
+  public List<String> tabComplete(CommandSender commandSender, String[] args) {
+    
+    if (!(commandSender instanceof Player sender)) {
+      return List.of(" ");
+    }
+    
+    return guildModule.getGuildHandler().getGuilds().stream()
+        .filter(guild -> guild.getInvitedPlayers().contains(sender.getUniqueId()))
+        .map(Guild::getName)
+        .toList();
   }
 }

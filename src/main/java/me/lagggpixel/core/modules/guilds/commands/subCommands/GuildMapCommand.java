@@ -98,5 +98,10 @@ public class GuildMapCommand implements ISubCommand {
       }
     }
   }
-
+  
+  @Override
+  public List<String> tabComplete(CommandSender commandSender, String[] args) {
+    return List.of(" ");
+  }
+  
 }

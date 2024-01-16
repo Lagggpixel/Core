@@ -85,9 +85,17 @@ public class GuildCommand implements ICommandClass {
   
   @Override
   public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
-    if (args.length == 1) {
+    if (args.length == 1 || args.length == 0) {
       return subCommands.keySet().stream().toList();
     }
-    return null;
+    
+    String baseArg = args[0].toLowerCase();
+    
+    if (!subCommands.containsKey(baseArg)) {
+      return List.of(" ");
+    }
+    
+    ISubCommand subCommand = subCommands.get(baseArg);
+    return subCommand.tabComplete(commandSender, args);
   }
 }

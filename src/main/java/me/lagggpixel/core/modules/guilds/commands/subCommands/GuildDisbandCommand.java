@@ -8,6 +8,7 @@ import me.lagggpixel.core.interfaces.ISubCommand;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -41,5 +42,10 @@ public class GuildDisbandCommand implements ISubCommand {
     guildHandler.disbandGuild(sender, guild);
     
     commandSender.sendMessage(Lang.GUILD_DISBANDED_LEADER.toComponentWithPrefix(Map.of("%guild%", guildName)));
+  }
+  
+  @Override
+  public List<String> tabComplete(CommandSender commandSender, String[] args) {
+    return List.of(" ");
   }
 }

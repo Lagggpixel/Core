@@ -23,7 +23,7 @@ import java.util.logging.Level;
 
 public class GuildLoadSave {
   @Getter
-  private static String folder = Main.getInstance().getDataFolder() + "/data/modules/guild/guilds/";
+  private static final String folder = Main.getInstance().getDataFolder() + "/data/modules/guild/guilds/";
 
   public static void load() throws NullPointerException {
     File folder = new File(GuildLoadSave.folder);
@@ -118,8 +118,10 @@ public class GuildLoadSave {
           int z1 = config.getInt("claims." + c + ".z1");
           int z2 = config.getInt("claims." + c + ".z2");
           int value = config.getInt("claims." + c + ".value");
+          boolean claimExplosions = config.getBoolean("claims." + c + ".claim_explosions", false);
           World world = Bukkit.getWorld(Objects.requireNonNull(config.getString("claims." + c + ".world")));
           Claim claim = new Claim(c, guild, x1, x2, z1, z2, world, value);
+          claim.setClaimExplosions(claimExplosions);
           if (!claim.isGlitched()) {
             GuildModule.getInstance().getClaimManager().getClaims().add(claim);
             guild.getClaims().add(claim);

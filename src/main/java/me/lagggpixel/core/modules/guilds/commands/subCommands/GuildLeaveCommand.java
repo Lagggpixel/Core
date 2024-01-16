@@ -8,6 +8,7 @@ import me.lagggpixel.core.modules.guilds.handlers.GuildHandler;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.List;
 import java.util.Map;
 
 public class GuildLeaveCommand implements ISubCommand {
@@ -48,5 +49,10 @@ public class GuildLeaveCommand implements ISubCommand {
     guild.sendMessage(Lang.GUILD_LEAVE_SUCCESS_BROADCAST.toComponentWithPrefix(Map.of("%player%", sender.getName())));
     sender.sendMessage(Lang.GUILD_LEAVE_SUCCESS_NOTIFY.toComponentWithPrefix());
     return;
+  }
+  
+  @Override
+  public List<String> tabComplete(CommandSender commandSender, String[] args) {
+    return List.of(" ");
   }
 }

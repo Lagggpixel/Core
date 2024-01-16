@@ -57,8 +57,14 @@ public class GuildWhoCommand implements ISubCommand {
     }
 
   }
-
-
+  
+  @Override
+  public List<String> tabComplete(CommandSender commandSender, String[] args) {
+    return guildModule.getGuildHandler().getGuilds()
+        .stream().map(Guild::getName).toList();
+  }
+  
+  
   public List<Component> getInformation(Guild guild) {
     List<Component> list = new ArrayList<>();
 

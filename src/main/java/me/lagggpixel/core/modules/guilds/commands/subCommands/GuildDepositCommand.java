@@ -11,6 +11,7 @@ import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.List;
 import java.util.Map;
 
 public class GuildDepositCommand implements ISubCommand {
@@ -77,6 +78,9 @@ public class GuildDepositCommand implements ISubCommand {
     senderUser.sendMessage(Lang.GUILD_DEPOSIT_SUCCESS_ACKNOWLEDGE.toComponentWithPrefix(Map.of("%amount%", amount + "")));
     guild.sendMessage(Lang.GUILD_DEPOSIT_SUCCESS_BROADCAST.toComponentWithPrefix(Map.of("%player%", sender.getName(), "%amount%", amount + "")));
   }
-
-
+  
+  @Override
+  public List<String> tabComplete(CommandSender commandSender, String[] args) {
+    return List.of("all");
+  }
 }

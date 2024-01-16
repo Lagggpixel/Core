@@ -11,6 +11,7 @@ import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.List;
 import java.util.Map;
 
 public class GuildWithdrawCommand implements ISubCommand {
@@ -77,6 +78,11 @@ public class GuildWithdrawCommand implements ISubCommand {
     guild.sendMessage(Lang.GUILD_WITHDRAW_SUCCESS_BROADCAST.toComponentWithPrefix(Map.of("%player%", sender.getName(), "%amount%", amount + "")));
     guild.setBalance(guild.getBalance() - amount);
     
+  }
+  
+  @Override
+  public List<String> tabComplete(CommandSender commandSender, String[] args) {
+    return List.of("all");
   }
   
 }

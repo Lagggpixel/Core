@@ -13,6 +13,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.List;
 import java.util.Map;
 
 public class GuildInviteCommand implements ISubCommand {
@@ -82,5 +83,10 @@ public class GuildInviteCommand implements ISubCommand {
       guild.sendMessage(Lang.GUILD_INVITED_PLAYER_BROADCAST.toComponentWithPrefix(Map.of("%player%", sender.getName(), "%target%", inv.getName())));
       guild.getInvitedPlayers().add(inv.getUniqueId());
     }
+  }
+  
+  @Override
+  public List<String> tabComplete(CommandSender commandSender, String[] args) {
+    return Bukkit.getServer().getOnlinePlayers().stream().map(Player::getName).toList();
   }
 }

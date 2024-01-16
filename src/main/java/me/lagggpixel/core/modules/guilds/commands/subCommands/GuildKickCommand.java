@@ -6,9 +6,11 @@ import me.lagggpixel.core.enums.Lang;
 import me.lagggpixel.core.modules.guilds.GuildModule;
 import me.lagggpixel.core.interfaces.ISubCommand;
 import me.lagggpixel.core.modules.guilds.data.Guild;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -76,5 +78,36 @@ public class GuildKickCommand implements ISubCommand {
       return;
     }
     senderUser.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
+  }
+  
+  @Override
+  public List<String> tabComplete(CommandSender commandSender, String[] args) {
+    
+    if (!(commandSender instanceof Player sender)) {
+      return List.of(" ");
+    }
+    
+    Guild guild = guildModule.getGuildHandler().getGuildFromPlayer(sender);
+    
+    if (guild == null) {
+      return List.of(" ");
+    }
+    
+    if (guild.isLeader(sender.getUniqueId()) || guild.getOfficers().contains(sender.getUniqueId())) {
+      return List.of(" ");
+    }
+    
+    if (guild.isLeader(sender.getUniqueId())) {
+      return guild.getMembers()
+          .stream().filter(member -> !guild.getLeader().equals(member))
+          .map(uuid -> Bukkit.getOfflinePlayer(uuid).getName())
+          .toList();
+    }
+    else {
+      return guild.getMembers()
+          .stream().filter(member -> !guild.getOfficers().contains(member) && !guild.getLeader().equals(member))
+          .map(uuid -> Bukkit.getOfflinePlayer(uuid).getName())
+          .toList();
+    }
   }
 }
