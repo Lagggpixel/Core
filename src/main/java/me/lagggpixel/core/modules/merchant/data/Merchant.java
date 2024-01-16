@@ -14,7 +14,6 @@ import me.lagggpixel.core.utils.ExceptionUtils;
 import me.lagggpixel.core.utils.InventoryUtils;
 import me.lagggpixel.core.utils.NumberUtil;
 import net.citizensnpcs.api.CitizensAPI;
-import net.citizensnpcs.api.event.DespawnReason;
 import net.citizensnpcs.api.event.NPCRightClickEvent;
 import net.citizensnpcs.api.npc.NPC;
 import net.citizensnpcs.trait.LookClose;
@@ -43,7 +42,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-@SuppressWarnings("StatementWithEmptyBody")
 @Data
 public class Merchant implements Listener {
   
@@ -79,7 +77,6 @@ public class Merchant implements Listener {
   }
   
   public void setName(String name) {
-    this.npc.setName(name);
     this.stand.setName(ChatUtils.stringToComponentCC(name));
     getConfigurationSection().set("name", name);
     saveConfigurationFile();
@@ -102,9 +99,8 @@ public class Merchant implements Listener {
           getConfigurationSection().set("skinValue", user.data.texture.value);
           getConfigurationSection().set("skinSignature", user.data.texture.signature);
           saveConfigurationFile();
-          this.npc.despawn(DespawnReason.RELOAD);
-          unregister();
-          createNpc();
+          SkinTrait skinTrait = npc.getOrAddTrait(SkinTrait.class);
+          skinTrait.setSkinPersistent("npc", skinSignature, skinValue);
         });
   }
   
@@ -161,7 +157,7 @@ public class Merchant implements Listener {
     
     location.getChunk().addPluginChunkTicket(Main.getInstance());
     
-    this.npc = CitizensAPI.getNPCRegistry().createNPC(EntityType.PLAYER, "****");
+    this.npc = CitizensAPI.getNPCRegistry().createNPC(EntityType.PLAYER, "");
     boolean isChunkLoaded = location.getChunk().isLoaded();
     if (!isChunkLoaded) {
       Main.getInstance().getLogger().info("Force loading chunk " + location.getChunk().getX() + " " + location.getChunk().getZ() + " to spawn merchant " + name);
@@ -365,18 +361,13 @@ public class Merchant implements Listener {
   private @NotNull ItemStack buildShopOption(@NotNull ItemStack item, int amount, Player player, Gui gui) {
     ItemStack clone = item.clone();
     ItemMeta meta = clone.getItemMeta();
-    List<Component> lore = meta.lore();
+    List<Component> lore = new ArrayList<>();
     
     NBTItem nbt = new NBTItem(clone);
     
     int costForOne = nbt.getInteger("merchantCost");
     
     meta.displayName((ChatUtils.stringToComponentCC(item.getType().name() + " &7x" + amount)));
-    
-    assert lore != null;
-    for (int i = 0; i < 7; i++) {
-      lore.remove(lore.size() - 1);
-    }
     
     lore.add(ChatUtils.stringToComponentCC(" "));
     lore.add(ChatUtils.stringToComponentCC("&7Cost"));
