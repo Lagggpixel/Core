@@ -9,6 +9,7 @@ import me.lagggpixel.core.modules.discord.handlers.ServerStatusHandler;
 import me.lagggpixel.core.modules.discord.listener.Listeners;
 import me.lagggpixel.core.modules.discord.listener.LoggingListeners;
 import me.lagggpixel.core.modules.discord.handlers.NMSHandler;
+import net.dv8tion.jda.api.EmbedBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.LoggerContext;
 import org.jetbrains.annotations.NotNull;
@@ -64,7 +65,9 @@ public class DiscordModule implements IModule {
   
   @Override
   public void onDisable() {
-  
+    serverStatusHandler.setServerPlayersVcChannelOffline();
+    DiscordModule.discordHandler.sendEmbed(DiscordModule.discordHandler.LOGGING_CHANNEL, new EmbedBuilder().setTitle("**Core Plugin Disabled**").build());
+    DiscordModule.discordHandler.getJda().shutdown();
   }
   
   @Override

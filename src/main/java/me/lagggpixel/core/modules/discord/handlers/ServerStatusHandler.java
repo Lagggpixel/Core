@@ -37,8 +37,7 @@ public class ServerStatusHandler {
     }
     if (isWhiteListed) {
       voiceChannel.getManager().setName("Server is whitelisted").queue();
-    }
-    else {
+    } else {
       AtomicInteger onlinePlayers = new AtomicInteger();
       Main.getUserData().forEach((uuid, userData) -> {
         if (userData.isOnline() && !userData.isVanished()) {
@@ -47,5 +46,13 @@ public class ServerStatusHandler {
       });
       voiceChannel.getManager().setName("Players: " + onlinePlayers.get()).queue();
     }
+  }
+  
+  public void setServerPlayersVcChannelOffline() {
+    VoiceChannel voiceChannel = DiscordModule.discordHandler.getJda().getVoiceChannelById(SERVER_PLAYERS_VC);
+    if (voiceChannel == null) {
+      return;
+    }
+    voiceChannel.getManager().setName("Server is offline").queue();
   }
 }

@@ -186,9 +186,7 @@ public final class Main extends JavaPlugin {
         v.onDisable();
       }
     });
-    DiscordModule.discordHandler.sendEmbed(DiscordModule.discordHandler.LOGGING_CHANNEL, new EmbedBuilder().setTitle("**Core Plugin Disabled**").build());
     UserDataSerializer.saveData(userData);
-    DiscordModule.discordHandler.getJda().shutdown();
     HologramUtils.despawnAll();
   }
   
