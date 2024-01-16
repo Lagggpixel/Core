@@ -29,6 +29,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -41,7 +42,6 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 
 @SuppressWarnings("StatementWithEmptyBody")
 @Data
@@ -87,9 +87,9 @@ public class Merchant implements Listener {
   
   public void setLocation(Location location) {
     this.location = location;
-    this.npc.getEntity().teleport(location);
-    this.stand.setLocation(this.npc.getEntity().getLocation().add(0, 1.95, 0));
-    this.click.setLocation(this.location.add(0, 1.6, 0));
+    this.npc.teleport(location, PlayerTeleportEvent.TeleportCause.PLUGIN);
+    this.stand.setLocation(this.location.clone().add(0, 1.95, 0));
+    this.click.setLocation(this.location.clone().add(0, 1.6, 0));
     getConfigurationSection().set("location", location);
     saveConfigurationFile();
   }
@@ -111,12 +111,12 @@ public class Merchant implements Listener {
   public void delete() {
     getYamlConfiguration().set(id, null);
     unregister();
+    saveConfigurationFile();
+    MerchantModule.getInstance().getMerchantHandler().getMerchants().remove(id);
   }
   
   public void unregister() {
     this.npc.destroy();
-    this.stand.destroy();
-    this.click.destroy();
     this.npc.getOwningRegistry().deregister(this.npc);
     this.stand.destroy();
     this.click.destroy();
@@ -157,7 +157,7 @@ public class Merchant implements Listener {
     npc.getEntity().setMetadata("merchantName", new FixedMetadataValue(Main.getInstance(), name));
   }
   
-  public void spawnNpc(Location location, String name, String skinValue, String skinSignature, boolean skin, boolean look) {
+  public void spawnNpc(@NotNull Location location, String name, String skinValue, String skinSignature, boolean skin, boolean look) {
     
     location.getChunk().addPluginChunkTicket(Main.getInstance());
     
@@ -168,8 +168,7 @@ public class Merchant implements Listener {
       location.getChunk().setForceLoaded(true);
       if (location.getChunk().isLoaded()) {
         Main.getInstance().getLogger().info("Chunk " + location.getChunk().getX() + " " + location.getChunk().getZ() + " loaded");
-      }
-      else {
+      } else {
         Main.getInstance().getLogger().info("Chunk " + location.getChunk().getX() + " " + location.getChunk().getZ() + " not loaded");
       }
     }
@@ -184,8 +183,8 @@ public class Merchant implements Listener {
     
     npc.getEntity().getLocation().setDirection(location.getWorld().getSpawnLocation().toVector().subtract(location.toVector()).normalize());
     
-    this.stand = new Hologram(name + "_name_tag", ChatUtils.stringToComponentCC(name), npc.getEntity().getLocation().add(0, 1.95, 0));
-    this.click = new Hologram(name + "_click_tag", ChatUtils.stringToComponentCC(name), npc.getEntity().getLocation().add(0, 1.6, 0));
+    this.stand = new Hologram(name + "_name_tag", ChatUtils.stringToComponentCC(name), npc.getEntity().getLocation().clone().add(0, 1.95, 0));
+    this.click = new Hologram(name + "_click_tag", ChatUtils.stringToComponentCC("&eClick to open!"), npc.getEntity().getLocation().clone().add(0, 1.6, 0));
     
     if (skin) {
       SkinTrait skinTrait = npc.getOrAddTrait(SkinTrait.class);
@@ -205,7 +204,7 @@ public class Merchant implements Listener {
   }
   
   @EventHandler
-  public void onRightClick(NPCRightClickEvent event) {
+  public void onRightClick(@NotNull NPCRightClickEvent event) {
     if (!event.getNPC().equals(this.npc)) return;
     
     Player player = event.getClicker();
@@ -221,29 +220,19 @@ public class Merchant implements Listener {
     for (MerchantItem item : this.items) {
       ItemStack stack = new ItemStack(item.getMaterial());
       
-      if (stack.getItemMeta().lore() != null) {
-        if (Objects.requireNonNull(stack.getItemMeta().lore())
-            .stream().map(ChatUtils::componentToString).noneMatch(l -> l.contains("Right-Click for more trading options!"))) {
-          ItemMeta meta = stack.getItemMeta();
-          List<Component> lore = meta.lore();
-          if (lore == null) {
-            lore = new ArrayList<>();
-          }
-          lore.addAll(List.of(ChatUtils.stringToComponentCC(" "),
-              ChatUtils.stringToComponentCC("&7Cost"),
-              ChatUtils.stringToComponentCC(" "),
-              ChatUtils.stringToComponentCC("&6" + formatter.format(item.getCost()) + " &6coins"),
-              ChatUtils.stringToComponentCC(" "),
-              ChatUtils.stringToComponentCC(" "),
-              ChatUtils.stringToComponentCC("&eClick to trade!"),
-              ChatUtils.stringToComponentCC(" "),
-              ChatUtils.stringToComponentCC("&eRight-Click for more trading options!")));
-          
-          
-          meta.lore(lore);
-          stack.setItemMeta(meta);
-        }
+      ItemMeta meta = stack.getItemMeta();
+      List<Component> lore = meta.lore();
+      if (lore == null) {
+        lore = new ArrayList<>();
       }
+      lore.addAll(List.of(ChatUtils.stringToComponentCC(" "),
+          ChatUtils.stringToComponentCC("&7Cost &6" + formatter.format(item.getCost()) + " &6coins"),
+          ChatUtils.stringToComponentCC("&eClick to trade!"),
+          ChatUtils.stringToComponentCC(" "),
+          ChatUtils.stringToComponentCC("&eRight-Click for more trading options!")));
+      
+      meta.lore(lore);
+      stack.setItemMeta(meta);
       
       NBTItem nbt = new NBTItem(stack);
       
@@ -259,7 +248,7 @@ public class Merchant implements Listener {
   }
   
   @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
-  public void onInventoryClick(InventoryClickEvent event) {
+  public void onInventoryClick(@NotNull InventoryClickEvent event) {
     if (!event.getView().title().equals(ChatUtils.stringToComponentCC(this.name))) return;
     
     if (event.getCurrentItem() == null || event.getCurrentItem().getType().equals(Material.AIR)) return;
@@ -311,7 +300,7 @@ public class Merchant implements Listener {
         Component displayName = item.getItemMeta().displayName();
         Component message;
         if (displayName == null) {
-          message = ChatUtils.stringToComponentCC("&aYou have purchased null &afor &6" + formatter.format(nbt.getInteger("merchantCost")) + " coins&a!");
+          message = ChatUtils.stringToComponentCC("&aYou have purchased " + item.getType().name() + " &afor &6" + formatter.format(nbt.getInteger("merchantCost")) + " coins&a!");
         } else {
           message = ChatUtils.stringToComponentCC("&aYou have purchased ")
               .append(displayName)
@@ -326,7 +315,7 @@ public class Merchant implements Listener {
         Component message;
         if (displayName == null) {
           message =
-              ChatUtils.stringToComponentCC("&aYou have bought back null &afor " + "&6" + formatter.format(nbt.getInteger("merchantCost")) + " coins&a!");
+              ChatUtils.stringToComponentCC("&aYou have bought back " + item.getType().name() + " &afor " + "&6" + formatter.format(nbt.getInteger("merchantCost")) + " coins&a!");
         } else {
           message =
               ChatUtils.stringToComponentCC("&aYou have bought back ")
@@ -353,7 +342,7 @@ public class Merchant implements Listener {
       Component message;
       if (displayName == null) {
         message =
-            ChatUtils.stringToComponentCC("&aYou have sold null &afor &6" + NumberUtil.formatInt((int) price) + " coins&a!");
+            ChatUtils.stringToComponentCC("&aYou have sold " + item.getType().name() + " &afor &6" + NumberUtil.formatInt((int) price) + " coins&a!");
       } else {
         message =
             ChatUtils.stringToComponentCC("&aYou have sold ")
@@ -373,7 +362,7 @@ public class Merchant implements Listener {
     }
   }
   
-  private @NotNull ItemStack buildShopOption(ItemStack item, int amount, Player player, Gui gui) {
+  private @NotNull ItemStack buildShopOption(@NotNull ItemStack item, int amount, Player player, Gui gui) {
     ItemStack clone = item.clone();
     ItemMeta meta = clone.getItemMeta();
     List<Component> lore = meta.lore();
@@ -382,9 +371,7 @@ public class Merchant implements Listener {
     
     int costForOne = nbt.getInteger("merchantCost");
     
-    Component displayName = meta.displayName();
-    assert displayName != null;
-    meta.displayName(displayName.append(ChatUtils.stringToComponentCC(" &7x" + amount)));
+    meta.displayName((ChatUtils.stringToComponentCC(item.getType().name() + " &7x" + amount)));
     
     assert lore != null;
     for (int i = 0; i < 7; i++) {
@@ -413,7 +400,7 @@ public class Merchant implements Listener {
         Component displayName1 = meta.displayName();
         Component message1;
         if (displayName1 == null) {
-          message1 = ChatUtils.stringToComponentCC("&aYou have purchased null &afor " + formatter.format((long) costForOne * amount) + " coins&a!");
+          message1 = ChatUtils.stringToComponentCC("&aYou have purchased " + item.getType().name() + " &afor " + formatter.format((long) costForOne * amount) + " coins&a!");
         } else {
           message1 =
               ChatUtils.stringToComponentCC("&aYou have purchased ")
