@@ -37,9 +37,11 @@ public class Hologram {
   }
   
   public void destroy() {
-    this.armorStand.remove();
-    this.armorStand = null;
     HologramUtils.holograms.remove(id);
+    if (this.armorStand != null) {
+      this.armorStand.remove();
+      this.armorStand = null;
+    }
   }
   
   public void setName(Component name) {
