@@ -314,6 +314,7 @@ public class Guild {
       this.config.set("claims." + claim.getId() + ".z2", claim.getZ2());
       this.config.set("claims." + claim.getId() + ".world", claim.getWorld().getName());
       this.config.set("claims." + claim.getId() + ".value", claim.getValue());
+      this.config.set("claims." + claim.getId() + ".claim_explosions", claim.isClaimExplosions());
     }
     if (getHome() != null) {
       this.config.set("home", LocationSerializer.serializeLocation(getHome()));
