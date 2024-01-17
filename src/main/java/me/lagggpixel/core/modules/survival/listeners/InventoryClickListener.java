@@ -7,6 +7,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryMoveItemEvent;
 import org.bukkit.inventory.Inventory;
 import org.jetbrains.annotations.NotNull;
 
@@ -16,7 +17,7 @@ public class InventoryClickListener implements Listener {
     Main.getPluginManager().registerEvents(this, Main.getInstance());
   }
   
-  @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+  @EventHandler(priority = EventPriority.LOWEST)
   public void InventoryClickEvent(@NotNull InventoryClickEvent event) {
     Inventory inventory = event.getInventory();
     if (inventory.getHolder(false) instanceof SurvivalCoreInventoryHolder survivalCoreInventoryHolder) {
@@ -24,6 +25,14 @@ public class InventoryClickListener implements Listener {
       if (survivalCoreInventoryHolder instanceof SurvivalItemInventoryHolder inventoryHolder) {
         inventoryHolder.handleInventoryClick(event);
       }
+    }
+  }
+  
+  @EventHandler(priority = EventPriority.LOWEST)
+  public void onInventoryMoveItem(InventoryMoveItemEvent event) {
+    Inventory inventory = event.getSource();
+    if (inventory.getHolder(false) instanceof SurvivalCoreInventoryHolder) {
+      event.setCancelled(true);
     }
   }
 }

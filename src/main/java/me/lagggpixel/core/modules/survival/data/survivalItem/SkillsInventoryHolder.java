@@ -32,7 +32,7 @@ public class SkillsInventoryHolder extends SurvivalCoreInventoryHolder {
             .toItemStack()
     );
     
-    inventory.setItem(19,
+    inventory.setItem(20,
         new ItemBuilder(Material.GOLDEN_HOE)
             .setDisplayName("&aFarming " + user.getSkills().getFarming().getLevel())
             .setLore(List.of(
@@ -44,7 +44,7 @@ public class SkillsInventoryHolder extends SurvivalCoreInventoryHolder {
             .toItemStack()
     );
     
-    inventory.setItem(20,
+    inventory.setItem(21,
         new ItemBuilder(Material.STONE_PICKAXE)
             .setDisplayName("&aMining " + user.getSkills().getMining().getLevel())
             .setLore(List.of(
@@ -58,7 +58,7 @@ public class SkillsInventoryHolder extends SurvivalCoreInventoryHolder {
     );
     
     
-    inventory.setItem(21,
+    inventory.setItem(22,
         new ItemBuilder(Material.STONE_SWORD)
             .setDisplayName("&aCombat " + user.getSkills().getCombat().getLevel())
             .setLore(List.of(
@@ -70,7 +70,7 @@ public class SkillsInventoryHolder extends SurvivalCoreInventoryHolder {
     );
     
     
-    inventory.setItem(22,
+    inventory.setItem(23,
         new ItemBuilder(Material.JUNGLE_SAPLING)
             .setDisplayName("&aWoodcutting " + user.getSkills().getWoodcutting().getLevel())
             .setLore(List.of(
@@ -82,7 +82,7 @@ public class SkillsInventoryHolder extends SurvivalCoreInventoryHolder {
             .toItemStack()
     );
     
-    inventory.setItem(23,
+    inventory.setItem(24,
         new ItemBuilder(Material.FISHING_ROD)
             .setDisplayName("&aFishing " + user.getSkills().getFishing().getLevel())
             .setLore(List.of(
@@ -94,7 +94,7 @@ public class SkillsInventoryHolder extends SurvivalCoreInventoryHolder {
     );
     
     
-    inventory.setItem(49,
+    inventory.setItem(48,
         new ItemBuilder(Material.ARROW)
             .setDisplayName("&aGo Back")
             .setLore(List.of(
@@ -103,6 +103,15 @@ public class SkillsInventoryHolder extends SurvivalCoreInventoryHolder {
             .setTag("back")
             .toItemStack()
     );
+    
+    inventory.setItem(49,
+        new ItemBuilder((Material.BARRIER))
+            .setDisplayName("&cClose")
+            .setLore(List.of(
+              ChatUtils.stringToComponentCC("&7Click to close")
+            ))
+            .setTag("close")
+            .toItemStack());
     
     
     this.fillEmptySlots();
@@ -126,6 +135,11 @@ public class SkillsInventoryHolder extends SurvivalCoreInventoryHolder {
     }
     if (tag.equalsIgnoreCase("back")) {
       new SurvivalItemInventoryHolder(player).openInventory(player);
+      return;
+    }
+    if (tag.equalsIgnoreCase("close")) {
+      player.closeInventory();
+      return;
     }
   }
 }
