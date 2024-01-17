@@ -4,6 +4,7 @@ import de.tr7zw.nbtapi.NBTItem;
 import lombok.Getter;
 import me.lagggpixel.core.Main;
 import me.lagggpixel.core.builders.ItemBuilder;
+import me.lagggpixel.core.data.Pair;
 import me.lagggpixel.core.data.User;
 import me.lagggpixel.core.utils.ChatUtils;
 import me.lagggpixel.core.utils.ExceptionUtils;
@@ -20,6 +21,7 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -32,15 +34,15 @@ public class Gui implements Listener {
   
   private static final HashMap<Gui, Boolean> REGISTERED_LISTENERS = new HashMap<>();
   
-  public final HashMap<ItemStack, Runnable> specificClickEvents;
-  public final HashMap<Component, Runnable> clickEvents;
+  public final HashMap<ItemStack, Pair<Runnable, Boolean>> specificClickEvents;
+  public final HashMap<Component, Pair<Runnable, Boolean>> clickEvents;
   public final HashMap<Integer, ItemStack> items;
   public final HashMap<Player, Boolean> opened;
   public final List<ItemStack> addableItems;
   public final int slots;
   public Component name;
   
-  public Gui(Component name, int slots, HashMap<Component, Runnable> clickEvents) {
+  public Gui(Component name, int slots, HashMap<Component, Pair<Runnable, Boolean>> clickEvents) {
     this(name, slots, clickEvents, new HashMap<>());
   }
   
@@ -57,7 +59,7 @@ public class Gui implements Listener {
   
   private static final HashMap<Component, Class<? extends Gui>> BACK_BUTTONS = new HashMap<>();
   
-  public Gui(Component name, int slots, HashMap<Component, Runnable> clickEvents, HashMap<ItemStack, Runnable> specificClickEvents) {
+  public Gui(Component name, int slots, HashMap<Component, Pair<Runnable, Boolean>> clickEvents, HashMap<ItemStack, Pair<Runnable, Boolean>> specificClickEvents) {
     this.name = name;
     this.slots = slots;
     
@@ -119,7 +121,7 @@ public class Gui implements Listener {
   }
   
   @EventHandler
-  public void onClick(InventoryClickEvent event) {
+  public void onClick(@NotNull InventoryClickEvent event) {
     if (event.getView().title().equals(name) && opened.containsKey((Player) event.getWhoClicked())) {
       event.setCancelled(true);
       
@@ -142,6 +144,7 @@ public class Gui implements Listener {
       }
       
       if (displayName.equals(buildCloseButton().getItemMeta().displayName())) {
+        player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
         event.getWhoClicked().closeInventory();
         return;
       }
@@ -165,20 +168,24 @@ public class Gui implements Listener {
       }
       
       if (specificClickEvents.containsKey(event.getCurrentItem())) {
-        specificClickEvents.get(event.getCurrentItem()).run();
-        player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
+        specificClickEvents.get(event.getCurrentItem()).getFirst().run();
+        if (specificClickEvents.get(event.getCurrentItem()).getSecond()) {
+          player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
+        }
         return;
       }
       
       if (clickEvents.containsKey(event.getCurrentItem().getItemMeta().displayName())) {
-        clickEvents.get(event.getCurrentItem().getItemMeta().displayName()).run();
-        player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
+        clickEvents.get(event.getCurrentItem().getItemMeta().displayName()).getFirst().run();
+        if (clickEvents.get(event.getCurrentItem().getItemMeta().displayName()).getSecond()) {
+          player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
+        }
       }
     }
   }
   
   @EventHandler
-  public void onClose(InventoryCloseEvent e) {
+  public void onClose(@NotNull InventoryCloseEvent e) {
     if (e.getView().title().equals(name) && opened.containsKey((Player) e.getPlayer())) {
       onClose((Player) e.getPlayer());
       

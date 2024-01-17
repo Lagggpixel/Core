@@ -6,6 +6,7 @@ import lombok.Data;
 import me.lagggpixel.core.Main;
 import me.lagggpixel.core.builders.ItemBuilder;
 import me.lagggpixel.core.data.Hologram;
+import me.lagggpixel.core.data.Pair;
 import me.lagggpixel.core.data.User;
 import me.lagggpixel.core.modules.economy.managers.EconomyManager;
 import me.lagggpixel.core.modules.merchant.MerchantModule;
@@ -36,7 +37,6 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
-import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -78,8 +78,7 @@ public class Merchant implements Listener {
   
   public void setName(String name) {
     this.stand.setName(ChatUtils.stringToComponentCC(name));
-    getConfigurationSection().set("name", name);
-    saveConfigurationFile();
+    save();
   }
   
   public void setLocation(Location location) {
@@ -87,8 +86,7 @@ public class Merchant implements Listener {
     this.npc.teleport(location, PlayerTeleportEvent.TeleportCause.PLUGIN);
     this.stand.setLocation(this.location.clone().add(0, 1.95, 0));
     this.click.setLocation(this.location.clone().add(0, 1.6, 0));
-    getConfigurationSection().set("location", location);
-    saveConfigurationFile();
+    save();
   }
   
   public void setSkin(OfflinePlayer offlinePlayer) {
@@ -96,18 +94,26 @@ public class Merchant implements Listener {
         .thenAccept(user -> {
           this.skinValue = user.data.texture.value;
           this.skinSignature = user.data.texture.signature;
-          getConfigurationSection().set("skinValue", user.data.texture.value);
-          getConfigurationSection().set("skinSignature", user.data.texture.signature);
-          saveConfigurationFile();
+          save();
           SkinTrait skinTrait = npc.getOrAddTrait(SkinTrait.class);
           skinTrait.setSkinPersistent("npc", skinSignature, skinValue);
         });
   }
   
+  public void addItem(MerchantItem item) {
+    getItems().add(item);
+    save();
+  }
+  
+  public void removeItem(MerchantItem item) {
+    getItems().remove(item);
+    save();
+  }
+  
   public void delete() {
     getYamlConfiguration().set(id, null);
     unregister();
-    saveConfigurationFile();
+    save();
     MerchantModule.getInstance().getMerchantHandler().getMerchants().remove(id);
   }
   
@@ -277,7 +283,7 @@ public class Merchant implements Listener {
         
         gui.getClickEvents()
             .put(ChatUtils.stringToComponentCC("&aGo Back"),
-                () -> player.openInventory(event.getInventory()));
+                Pair.of(() -> player.openInventory(event.getInventory()), true));
         
         gui.show(player);
         
@@ -324,7 +330,8 @@ public class Merchant implements Listener {
         
       }
       player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10, 2);
-    } else if (event.getClickedInventory() != null && event.getClickedInventory().equals(event.getWhoClicked().getInventory())) {
+    }
+    else if (event.getClickedInventory() != null && event.getClickedInventory().equals(event.getWhoClicked().getInventory())) {
       double price = MerchantModule.getInstance().getPriceHandler().getPrice(item);
       if (price == 0) {
         player.sendMessage(ChatUtils.stringToComponentCC("&cThis item cannot be sold!"));
@@ -379,7 +386,7 @@ public class Merchant implements Listener {
     
     clone.setAmount(amount);
     
-    gui.getClickEvents().put(meta.displayName(), () -> {
+    gui.getClickEvents().put(meta.displayName(), Pair.of(() -> {
       if (EconomyManager.getInstance().hasEnough(player, costForOne * amount)) {
         DecimalFormat formatter = new DecimalFormat("#,###");
         formatter.setGroupingUsed(true);
@@ -401,7 +408,7 @@ public class Merchant implements Listener {
         player.sendMessage(message1);
         player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10, 2);
       }
-    });
+    }, false));
     
     return clone;
   }
@@ -424,32 +431,7 @@ public class Merchant implements Listener {
     return item.getItem();
   }
   
-  private File getFile() {
-    if (file == null) {
-      file = MerchantModule.getInstance().getMerchantHandler().getMerchantFile();
-    }
-    return file;
-  }
-  
-  private YamlConfiguration getYamlConfiguration() {
-    if (yamlConfiguration == null) {
-      yamlConfiguration = YamlConfiguration.loadConfiguration(getFile());
-    }
-    return yamlConfiguration;
-  }
-  
-  private ConfigurationSection getConfigurationSection() {
-    if (configurationSection == null) {
-      configurationSection = getYamlConfiguration().getConfigurationSection(getId());
-    }
-    return configurationSection;
-  }
-  
-  private void saveConfigurationFile() {
-    try {
-      getYamlConfiguration().save(getFile());
-    } catch (IOException e) {
-      ExceptionUtils.handleException(e);
-    }
+  public void save() {
+    MerchantModule.getInstance().getMerchantHandler().saveMerchant(this.id, this);
   }
 }

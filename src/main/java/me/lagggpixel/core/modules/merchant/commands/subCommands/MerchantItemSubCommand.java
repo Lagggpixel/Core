@@ -73,13 +73,13 @@ public class MerchantItemSubCommand implements ISubCommand {
           for (MerchantItem item : merchant.getItems()) {
             if (item.getRawSlot() == slot) {
               oldItem = item;
-              merchant.getItems().remove(item);
+              merchant.removeItem(item);
               break;
             }
           }
           assert oldItem != null;
           MerchantItem merchantItem = new MerchantItem(material, price, slot);
-          merchant.getItems().add(merchantItem);
+          merchant.addItem(merchantItem);
           sender.sendMessage(Lang.MERCHANT_ITEM_REPLACED.toComponentWithPrefix(Map.of(
               "%old%", oldItem.getMaterial().name(),
               "%new%", merchantItem.getMaterial().name(),
@@ -89,7 +89,7 @@ public class MerchantItemSubCommand implements ISubCommand {
           )));
         } else {
           MerchantItem merchantItem = new MerchantItem(material, price, slot);
-          merchant.getItems().add(merchantItem);
+          merchant.addItem(merchantItem);
           sender.sendMessage(Lang.MERCHANT_ITEM_SET.toComponentWithPrefix(Map.of(
             "%material%", merchantItem.getMaterial().name(),
             "%price%", NumberUtil.formatInt(merchantItem.getCost()),
@@ -121,7 +121,7 @@ public class MerchantItemSubCommand implements ISubCommand {
         }
         for (MerchantItem item : merchant.getItems()) {
           if (item.getRawSlot() == slot) {
-            merchant.getItems().remove(item);
+            merchant.removeItem(item);
             sender.sendMessage(Lang.MERCHANT_ITEM_REMOVED.toComponentWithPrefix(Map.of(
                 "%material%", item.getMaterial().name(),
                 "%price%", NumberUtil.formatInt(item.getCost()),
