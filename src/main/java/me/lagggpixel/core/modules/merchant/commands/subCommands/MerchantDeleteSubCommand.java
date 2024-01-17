@@ -36,6 +36,11 @@ public class MerchantDeleteSubCommand implements ISubCommand {
       return;
     }
     
+    if (args.length != 1) {
+      commandSender.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
+      return;
+    }
+    
     User user = Main.getUser(sender);
     
     if (user.getCurrentMerchant() == null) {

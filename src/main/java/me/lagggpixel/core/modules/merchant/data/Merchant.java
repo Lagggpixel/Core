@@ -17,10 +17,10 @@ import me.lagggpixel.core.data.Hologram;
 import me.lagggpixel.core.data.Pair;
 import me.lagggpixel.core.data.User;
 import me.lagggpixel.core.modules.economy.managers.EconomyManager;
+import me.lagggpixel.core.modules.merchant.MerchantUtils;
 import me.lagggpixel.core.modules.merchant.utils.MerchantModule;
 import me.lagggpixel.core.utils.ChatUtils;
 import me.lagggpixel.core.utils.ExceptionUtils;
-import me.lagggpixel.core.modules.merchant.MerchantUtils;
 import me.lagggpixel.core.utils.NumberUtil;
 import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.event.NPCRightClickEvent;
@@ -29,8 +29,6 @@ import net.citizensnpcs.trait.LookClose;
 import net.citizensnpcs.trait.SkinTrait;
 import net.kyori.adventure.text.Component;
 import org.bukkit.*;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -44,7 +42,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -67,10 +64,6 @@ public class Merchant implements Listener {
   
   private final List<MerchantItem> items;
   private Location location;
-  
-  private File file;
-  private YamlConfiguration yamlConfiguration;
-  private ConfigurationSection configurationSection;
   
   public Merchant(String id, String name, String skinValue, String skinSignature, List<MerchantItem> items, Location location) {
     this.id = id;
@@ -119,7 +112,8 @@ public class Merchant implements Listener {
   }
   
   public void delete() {
-    getYamlConfiguration().set(id, null);
+    MerchantModule.getInstance().getMerchantHandler()
+        .getMerchantConfiguration().set(id, null);
     unregister();
     save();
     MerchantModule.getInstance().getMerchantHandler().getMerchants().remove(id);
