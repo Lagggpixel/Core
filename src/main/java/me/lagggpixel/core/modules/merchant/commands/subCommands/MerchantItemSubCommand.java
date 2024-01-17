@@ -101,9 +101,9 @@ public class MerchantItemSubCommand implements ISubCommand {
           MerchantItem merchantItem = new MerchantItem(material, price, slot);
           merchant.addItem(merchantItem);
           sender.sendMessage(Lang.MERCHANT_ITEM_SET.toComponentWithPrefix(Map.of(
-            "%material%", merchantItem.getMaterial().name(),
-            "%price%", NumberUtil.formatInt(merchantItem.getCost()),
-            "%slot%", String.valueOf(merchantItem.getRawSlot())
+              "%material%", merchantItem.getMaterial().name(),
+              "%price%", NumberUtil.formatInt(merchantItem.getCost()),
+              "%slot%", String.valueOf(merchantItem.getRawSlot())
           )));
         }
         return;
@@ -155,11 +155,19 @@ public class MerchantItemSubCommand implements ISubCommand {
     }
     
     if (args.length == 3) {
-      return List.of("cost");
+      if (args[2].equalsIgnoreCase("set")) {
+        return List.of("cost");
+      } else {
+        return List.of(" ");
+      }
     }
     
     if (args.length == 4) {
-      return List.of("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28");
+      if (args[2].equalsIgnoreCase("set")) {
+        return List.of("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28");
+      } else {
+        return List.of(" ");
+      }
     }
     
     return List.of(" ");
