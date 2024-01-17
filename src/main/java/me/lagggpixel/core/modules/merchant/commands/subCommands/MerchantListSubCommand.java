@@ -2,7 +2,7 @@ package me.lagggpixel.core.modules.merchant.commands.subCommands;
 
 import me.lagggpixel.core.enums.Lang;
 import me.lagggpixel.core.interfaces.ISubCommand;
-import me.lagggpixel.core.modules.merchant.MerchantModule;
+import me.lagggpixel.core.modules.merchant.utils.MerchantModule;
 import me.lagggpixel.core.utils.ChatUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

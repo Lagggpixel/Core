@@ -30,9 +30,9 @@ import java.util.List;
 
 @SuppressWarnings("unused")
 @Getter
-public class Gui implements Listener {
+public class MerchantGui implements Listener {
   
-  private static final HashMap<Gui, Boolean> REGISTERED_LISTENERS = new HashMap<>();
+  private static final HashMap<MerchantGui, Boolean> REGISTERED_LISTENERS = new HashMap<>();
   
   public final HashMap<ItemStack, Pair<Runnable, Boolean>> specificClickEvents;
   public final HashMap<Component, Pair<Runnable, Boolean>> clickEvents;
@@ -42,11 +42,11 @@ public class Gui implements Listener {
   public final int slots;
   public Component name;
   
-  public Gui(Component name, int slots, HashMap<Component, Pair<Runnable, Boolean>> clickEvents) {
+  public MerchantGui(Component name, int slots, HashMap<Component, Pair<Runnable, Boolean>> clickEvents) {
     this(name, slots, clickEvents, new HashMap<>());
   }
   
-  private static class AbstractCommandGui extends Gui {
+  private static class AbstractCommandGui extends MerchantGui {
     private final String command;
     
     @SuppressWarnings("unused")
@@ -57,9 +57,9 @@ public class Gui implements Listener {
     }
   }
   
-  private static final HashMap<Component, Class<? extends Gui>> BACK_BUTTONS = new HashMap<>();
+  private static final HashMap<Component, Class<? extends MerchantGui>> BACK_BUTTONS = new HashMap<>();
   
-  public Gui(Component name, int slots, HashMap<Component, Pair<Runnable, Boolean>> clickEvents, HashMap<ItemStack, Pair<Runnable, Boolean>> specificClickEvents) {
+  public MerchantGui(Component name, int slots, HashMap<Component, Pair<Runnable, Boolean>> clickEvents, HashMap<ItemStack, Pair<Runnable, Boolean>> specificClickEvents) {
     this.name = name;
     this.slots = slots;
     
@@ -154,7 +154,7 @@ public class Gui implements Listener {
       if (lore != null
           && !lore.isEmpty()
           && BACK_BUTTONS.containsKey(lore.get(0))) {
-        Class<? extends Gui> clazz = BACK_BUTTONS.get(lore.get(0));
+        Class<? extends MerchantGui> clazz = BACK_BUTTONS.get(lore.get(0));
         
         try {
           //noinspection RedundantCast

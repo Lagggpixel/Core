@@ -4,7 +4,7 @@ import me.lagggpixel.core.Main;
 import me.lagggpixel.core.data.User;
 import me.lagggpixel.core.enums.Lang;
 import me.lagggpixel.core.interfaces.ISubCommand;
-import me.lagggpixel.core.modules.merchant.MerchantModule;
+import me.lagggpixel.core.modules.merchant.utils.MerchantModule;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 

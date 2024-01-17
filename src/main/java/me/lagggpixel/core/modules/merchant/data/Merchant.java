@@ -9,10 +9,10 @@ import me.lagggpixel.core.data.Hologram;
 import me.lagggpixel.core.data.Pair;
 import me.lagggpixel.core.data.User;
 import me.lagggpixel.core.modules.economy.managers.EconomyManager;
-import me.lagggpixel.core.modules.merchant.MerchantModule;
+import me.lagggpixel.core.modules.merchant.utils.MerchantModule;
 import me.lagggpixel.core.utils.ChatUtils;
 import me.lagggpixel.core.utils.ExceptionUtils;
-import me.lagggpixel.core.utils.InventoryUtils;
+import me.lagggpixel.core.modules.merchant.MerchantUtils;
 import me.lagggpixel.core.utils.NumberUtil;
 import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.event.NPCRightClickEvent;
@@ -214,7 +214,7 @@ public class Merchant implements Listener {
     
     Inventory inventory = Bukkit.createInventory(null, 54, ChatUtils.stringToComponentCC(this.name));
     
-    InventoryUtils.fillBorder(inventory);
+    MerchantUtils.fillBorder(inventory);
     
     DecimalFormat formatter = new DecimalFormat("#,###");
     formatter.setGroupingUsed(true);
@@ -269,23 +269,23 @@ public class Merchant implements Listener {
     
     if (nbt.hasTag("merchantItem") || nbt.hasTag("merchantSold")) {
       if (event.isRightClick() && nbt.hasTag("merchantItem")) {
-        Gui gui = new Gui(ChatUtils.stringToComponentCC("Shop Trading Options"), 54, new HashMap<>());
+        MerchantGui merchantGui = new MerchantGui(ChatUtils.stringToComponentCC("Shop Trading Options"), 54, new HashMap<>());
         
-        InventoryUtils.fillEmpty(gui);
-        gui.addItem(49, buildCloseButton());
-        gui.addItem(48, buildBackButton(List.of(ChatUtils.stringToComponentCC("&7To " + this.name))));
+        MerchantUtils.fillEmpty(merchantGui);
+        merchantGui.addItem(49, buildCloseButton());
+        merchantGui.addItem(48, buildBackButton(List.of(ChatUtils.stringToComponentCC("&7To " + this.name))));
         
-        gui.addItem(20, buildShopOption(nbt.getItem(), 1, player, gui));
-        gui.addItem(21, buildShopOption(nbt.getItem(), 5, player, gui));
-        gui.addItem(22, buildShopOption(nbt.getItem(), 10, player, gui));
-        gui.addItem(23, buildShopOption(nbt.getItem(), 32, player, gui));
-        gui.addItem(24, buildShopOption(nbt.getItem(), 64, player, gui));
+        merchantGui.addItem(20, buildShopOption(nbt.getItem(), 1, player, merchantGui));
+        merchantGui.addItem(21, buildShopOption(nbt.getItem(), 5, player, merchantGui));
+        merchantGui.addItem(22, buildShopOption(nbt.getItem(), 10, player, merchantGui));
+        merchantGui.addItem(23, buildShopOption(nbt.getItem(), 32, player, merchantGui));
+        merchantGui.addItem(24, buildShopOption(nbt.getItem(), 64, player, merchantGui));
         
-        gui.getClickEvents()
+        merchantGui.getClickEvents()
             .put(ChatUtils.stringToComponentCC("&aGo Back"),
                 Pair.of(() -> player.openInventory(event.getInventory()), true));
         
-        gui.show(player);
+        merchantGui.show(player);
         
         return;
       }
@@ -365,7 +365,7 @@ public class Merchant implements Listener {
     }
   }
   
-  private @NotNull ItemStack buildShopOption(@NotNull ItemStack item, int amount, Player player, Gui gui) {
+  private @NotNull ItemStack buildShopOption(@NotNull ItemStack item, int amount, Player player, MerchantGui merchantGui) {
     ItemStack clone = item.clone();
     ItemMeta meta = clone.getItemMeta();
     List<Component> lore = new ArrayList<>();
@@ -386,7 +386,7 @@ public class Merchant implements Listener {
     
     clone.setAmount(amount);
     
-    gui.getClickEvents().put(meta.displayName(), Pair.of(() -> {
+    merchantGui.getClickEvents().put(meta.displayName(), Pair.of(() -> {
       if (EconomyManager.getInstance().hasEnough(player, costForOne * amount)) {
         DecimalFormat formatter = new DecimalFormat("#,###");
         formatter.setGroupingUsed(true);

@@ -3,7 +3,7 @@ package me.lagggpixel.core.modules.merchant.commands;
 import me.lagggpixel.core.enums.Lang;
 import me.lagggpixel.core.interfaces.ICommandClass;
 import me.lagggpixel.core.interfaces.ISubCommand;
-import me.lagggpixel.core.modules.merchant.MerchantModule;
+import me.lagggpixel.core.modules.merchant.utils.MerchantModule;
 import me.lagggpixel.core.modules.merchant.commands.subCommands.*;
 import me.lagggpixel.core.utils.CommandUtils;
 import org.bukkit.command.Command;

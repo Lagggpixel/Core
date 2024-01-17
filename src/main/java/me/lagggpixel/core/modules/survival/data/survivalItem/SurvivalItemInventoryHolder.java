@@ -6,6 +6,7 @@ import me.lagggpixel.core.enums.Lang;
 import me.lagggpixel.core.modules.survival.data.SurvivalCoreInventoryHolder;
 import me.lagggpixel.core.utils.ChatUtils;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemFlag;
@@ -74,6 +75,7 @@ public class SurvivalItemInventoryHolder extends SurvivalCoreInventoryHolder {
       return;
     }
     if (tag.equals("skillItem")) {
+      player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
       new SkillsInventoryHolder(player).openInventory(player);
     }
   }

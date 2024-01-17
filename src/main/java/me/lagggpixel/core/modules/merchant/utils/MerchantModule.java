@@ -1,4 +1,4 @@
-package me.lagggpixel.core.modules.merchant;
+package me.lagggpixel.core.modules.merchant.utils;
 
 import lombok.Getter;
 import me.lagggpixel.core.Main;

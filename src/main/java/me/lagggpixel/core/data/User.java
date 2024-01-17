@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import me.lagggpixel.core.modules.home.data.Home;
-import me.lagggpixel.core.modules.merchant.MerchantModule;
+import me.lagggpixel.core.modules.merchant.utils.MerchantModule;
 import me.lagggpixel.core.modules.merchant.data.Merchant;
 import me.lagggpixel.core.modules.skills.data.Skills;
 import me.lagggpixel.core.modules.staff.data.InstantPlayerData;
