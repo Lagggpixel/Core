@@ -76,7 +76,7 @@ Data for users are stored at `Main.getInstance.getDataFolder + "data/users"`
 
   
 **Discord Module**
-- None
+- Add players online display feature in discord
 
 
 **Economy Module**
