@@ -104,25 +104,8 @@ public class SkillsInventoryHolder extends SurvivalCoreInventoryHolder {
     );
     
     
-    inventory.setItem(48,
-        new ItemBuilder(Material.ARROW)
-            .setDisplayName("&aGo Back")
-            .setLore(List.of(
-                ChatUtils.stringToComponentCC("&7Click to go back")
-            ))
-            .setTag("back")
-            .toItemStack()
-    );
-    
-    inventory.setItem(49,
-        new ItemBuilder((Material.BARRIER))
-            .setDisplayName("&cClose")
-            .setLore(List.of(
-              ChatUtils.stringToComponentCC("&7Click to close")
-            ))
-            .setTag("close")
-            .toItemStack());
-    
+    buildBackButton();
+    buildCloseButton();
     
     this.fillEmptySlots();
   }
@@ -134,7 +117,7 @@ public class SkillsInventoryHolder extends SurvivalCoreInventoryHolder {
   
   @Override
   public void handleInventoryClick(@NotNull InventoryClickEvent event) {
-    event.setCancelled(true);
+    super.handleInventoryClick(event);
     if (event.getCurrentItem() == null) {
       return;
     }
@@ -145,10 +128,6 @@ public class SkillsInventoryHolder extends SurvivalCoreInventoryHolder {
     }
     if (tag.equalsIgnoreCase("back")) {
       new SurvivalItemInventoryHolder(player).openInventory(player);
-      return;
-    }
-    if (tag.equalsIgnoreCase("close")) {
-      player.closeInventory();
       return;
     }
   }

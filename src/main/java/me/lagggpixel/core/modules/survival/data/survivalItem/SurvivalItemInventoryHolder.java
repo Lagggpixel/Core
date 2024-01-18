@@ -64,7 +64,9 @@ public class SurvivalItemInventoryHolder extends SurvivalCoreInventoryHolder {
     inventory.setItem(31, comingSoon);
     inventory.setItem(32, comingSoon);
     inventory.setItem(33, comingSoon);
-
+    
+    buildCloseButton();
+    
     this.fillEmptySlots();
   }
 
@@ -75,7 +77,7 @@ public class SurvivalItemInventoryHolder extends SurvivalCoreInventoryHolder {
 
   @Override
   public void handleInventoryClick(@NotNull InventoryClickEvent event) {
-    event.setCancelled(true);
+    super.handleInventoryClick(event);
     if (event.getCurrentItem() == null) {
       return;
     }
