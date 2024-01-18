@@ -29,11 +29,11 @@ public class MerchantSellPriceHandler {
   }
   
   private void init() {
-    File file = new File(Main.getInstance().getDataFolder() + "/module_data/merchant", "prices.yml");
+    File file = new File(Main.getInstance().getDataFolder() + "/data/merchant", "prices.yml");
     
     if (!file.exists()) {
-      FileUtil.copyToDefault("module_data/merchant/prices.yml");
-      file = new File(Main.getInstance().getDataFolder() + "/module_data/merchant", "prices.yml");
+      FileUtil.copyToDefault("data/merchant/prices.yml");
+      file = new File(Main.getInstance().getDataFolder() + "/data/merchant", "prices.yml");
     }
     
     YamlConfiguration yamlConfiguration = YamlConfiguration.loadConfiguration(file);

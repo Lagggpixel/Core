@@ -85,7 +85,7 @@ Data for users are stored at `Main.getInstance.getDataFolder + "data/users"`
 
 
 **Guild Module**
-- None
+- Add claim blocks
 
 
 **Home Module**
@@ -107,7 +107,7 @@ Data for users are stored at `Main.getInstance.getDataFolder + "data/users"`
 
 
 **Staff Module**
-- Add 9th slot item
+- None
 
 
 **Warps Module**
