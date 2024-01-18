@@ -25,11 +25,11 @@ public class MerchantItem {
     if (slot <= 7) {
       return slot + 9;
     } else if (slot <= 14) {
-      return slot + 18;
+      return slot + 11;
     } else if (slot <= 21) {
-      return slot + 27;
+      return slot + 13;
     } else if (slot <= 28) {
-      return slot + 36;
+      return slot + 15;
     }
     throw new IllegalArgumentException("[Merchant Item] Invalid slot: " + slot);
   }

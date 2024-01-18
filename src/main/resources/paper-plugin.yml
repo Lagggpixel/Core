@@ -24,3 +24,6 @@ dependencies:
     EzChestShop:
       load: AFTER
       required: false
+    MyPet:
+      load: AFTER
+      required: false

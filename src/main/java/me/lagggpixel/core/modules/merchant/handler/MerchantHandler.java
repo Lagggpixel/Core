@@ -69,7 +69,7 @@ public class MerchantHandler {
     
     ConfigurationSection items = section.createSection("items");
     for (MerchantItem item : merchant.getItems()) {
-      ConfigurationSection itemSection = items.createSection(String.valueOf(item.getSlot()));
+      ConfigurationSection itemSection = items.createSection(String.valueOf(item.getRawSlot()));
       itemSection.set("material", item.getMaterial().name());
       itemSection.set("cost", item.getCost());
     }
