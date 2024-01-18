@@ -76,8 +76,9 @@ Data for users are stored at `Main.getInstance.getDataFolder + "data/users"`
 
   
 **Discord Module**
-- Add players online display feature in discord
-
+- Add tickets module
+- Convert to using javacord
+- Change to store token in jda
 
 **Economy Module**
 - None
