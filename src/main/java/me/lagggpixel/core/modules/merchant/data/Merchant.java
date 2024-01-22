@@ -121,7 +121,6 @@ public class Merchant implements Listener {
   
   public void unregister() {
     this.npc.destroy();
-    this.npc.getOwningRegistry().deregister(this.npc);
     this.stand.destroy();
     this.click.destroy();
   }
