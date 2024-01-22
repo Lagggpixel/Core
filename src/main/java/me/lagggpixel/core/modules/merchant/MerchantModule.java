@@ -18,6 +18,7 @@ import me.lagggpixel.core.modules.merchant.data.Merchant;
 import me.lagggpixel.core.modules.merchant.handler.MerchantHandler;
 import me.lagggpixel.core.modules.merchant.handler.MerchantSellPriceHandler;
 import me.lagggpixel.core.utils.CommandUtils;
+import net.citizensnpcs.api.CitizensAPI;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 import org.mineskin.MineskinClient;
@@ -65,6 +66,7 @@ public class MerchantModule implements IModule {
         for (Merchant merchant : merchantHandler.getMerchants().values()) {
           merchant.createNpc();
         }
+        CitizensAPI.getNPCRegistry().saveToStore();
         long timeTaken = System.currentTimeMillis() - timeStarted;
         Main.getInstance().getLogger().info("Loaded " + merchantHandler.getMerchants().size() + " merchants in " + timeTaken + "ms");
       }
@@ -73,9 +75,13 @@ public class MerchantModule implements IModule {
   
   @Override
   public void onDisable() {
+    long timeStarted = System.currentTimeMillis();
     for (Merchant merchant : this.merchantHandler.getMerchants().values()) {
       merchant.unregister();
     }
+    CitizensAPI.getNPCRegistry().saveToStore();
+    long timeTaken = System.currentTimeMillis() - timeStarted;
+    Main.getInstance().getLogger().info("Unloaded " + this.merchantHandler.getMerchants().size() + " merchants in " + timeTaken + "ms");
   }
   
   @Override
