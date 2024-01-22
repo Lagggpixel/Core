@@ -13,7 +13,6 @@ package me.lagggpixel.core.modules.economy.managers;
 import me.lagggpixel.core.Main;
 import me.lagggpixel.core.data.User;
 import me.lagggpixel.core.modules.economy.events.BalanceTopUpdateEvent;
-import org.apache.commons.collections4.map.HashedMap;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -160,12 +159,10 @@ public class EconomyManager {
     long timeStarted = System.currentTimeMillis();
     
     Map<UUID, User> userMap = Main.getUserData();
-    Map<UUID, Double> tempBalanceMap = new HashedMap<>();
+    Map<UUID, Double> tempBalanceMap = new HashMap<>();
     
     Map<UUID, Double> finalTempBalanceMap = tempBalanceMap;
-    userMap.forEach((uuid, user) -> {
-      finalTempBalanceMap.put(uuid, user.getPlayerBalance());
-    });
+    userMap.forEach((uuid, user) -> finalTempBalanceMap.put(uuid, user.getPlayerBalance()));
     
     tempBalanceMap = sortBalanceMap(tempBalanceMap);
     setBalanceTop(tempBalanceMap);

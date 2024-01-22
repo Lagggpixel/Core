@@ -19,9 +19,9 @@ import me.lagggpixel.core.modules.discord.handlers.ServerStatusHandler;
 import me.lagggpixel.core.modules.discord.listener.Listeners;
 import me.lagggpixel.core.modules.discord.listener.LoggingListeners;
 import me.lagggpixel.core.modules.discord.handlers.NMSHandler;
-import net.dv8tion.jda.api.EmbedBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.LoggerContext;
+import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.logging.Level;
@@ -60,7 +60,8 @@ public class DiscordModule implements IModule {
       Main.log(Level.SEVERE, "Log4j classes are NOT available, console channel will not be attached");
     }
     try {
-      serverIsLog4j21Capable = Class.forName("org.apache.logging.log4j.core.Filter") != null;
+      Class.forName("org.apache.logging.log4j.core.Filter");
+      serverIsLog4j21Capable = true;
     } catch (ClassNotFoundException e) {
       Main.log(Level.SEVERE, "Log4j 2.1 classes are NOT available, JDA messages will NOT be formatted properly");
     }
@@ -76,8 +77,7 @@ public class DiscordModule implements IModule {
   @Override
   public void onDisable() {
     serverStatusHandler.setServerPlayersVcChannelOffline();
-    DiscordModule.discordHandler.sendEmbed(DiscordModule.discordHandler.LOGGING_CHANNEL, new EmbedBuilder().setTitle("**Core Plugin Disabled**").build());
-    DiscordModule.discordHandler.getJda().shutdown();
+    DiscordModule.discordHandler.sendEmbed(DiscordModule.discordHandler.LOGGING_CHANNEL, new EmbedBuilder().setTitle("**Core Plugin Disabled**"));
   }
   
   @Override

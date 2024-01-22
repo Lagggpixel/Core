@@ -15,20 +15,20 @@ import me.lagggpixel.core.modules.discord.handlers.DiscordHandler;
 import me.lagggpixel.core.modules.economy.events.BalanceTopUpdateEvent;
 import me.lagggpixel.core.modules.skills.events.SkillLevelUpEvent;
 import me.lagggpixel.core.utils.ChatUtils;
-import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLoginEvent;
+import org.javacord.api.entity.channel.ServerTextChannel;
+import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
 
 public class LoggingListeners implements Listener {
 
-  private final TextChannel loggingChannel;
+  private final ServerTextChannel loggingChannel;
 
   public LoggingListeners() {
     this.loggingChannel = DiscordHandler.getInstance().LOGGING_CHANNEL;
@@ -59,15 +59,15 @@ public class LoggingListeners implements Listener {
     embedBuilder.setAuthor(message, null, DiscordHandler.getInstance().getAvatarUrl(event.getPlayer()));
     embedBuilder.addField("Kick message", ChatUtils.componentToString(event.kickMessage()), false);
     embedBuilder.setFooter("AsyncPlayerPreLoginEvent result: " + event.getResult());
-    DiscordHandler.getInstance().sendEmbed(loggingChannel, embedBuilder.build());
+    DiscordHandler.getInstance().sendEmbed(loggingChannel, embedBuilder);
   }
   
   @EventHandler(priority = EventPriority.MONITOR)
   public void BalanceTopUpdateEvent(@NotNull BalanceTopUpdateEvent event) {
     EmbedBuilder embedBuilder = new EmbedBuilder().setTimestamp(java.time.Instant.now()).setColor(Color.ORANGE);
-    embedBuilder.setAuthor("Balance top updated in " + event.getTimeTaken() + "ms", null, null);
+    embedBuilder.setAuthor("Balance top updated in " + event.getTimeTaken() + "ms");
     embedBuilder.setFooter("BalanceTopUpdateEvent");
-    DiscordHandler.getInstance().sendEmbed(loggingChannel, embedBuilder.build());
+    DiscordHandler.getInstance().sendEmbed(loggingChannel, embedBuilder);
   }
   
   @EventHandler(priority = EventPriority.MONITOR)
@@ -82,7 +82,7 @@ public class LoggingListeners implements Listener {
     
     embedBuilder.setFooter("SkillLevelUpEvent");
     
-    DiscordHandler.getInstance().sendEmbed(loggingChannel, embedBuilder.build());
+    DiscordHandler.getInstance().sendEmbed(loggingChannel, embedBuilder);
   }
   
 }

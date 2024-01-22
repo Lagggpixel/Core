@@ -40,8 +40,6 @@ import me.lagggpixel.core.serializers.UserDataSerializer;
 import me.lagggpixel.core.utils.HologramUtils;
 import me.lagggpixel.core.utils.LangUtils;
 import me.lagggpixel.core.utils.TeleportUtils;
-import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.MessageEmbed;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.Logger;
 import org.bukkit.NamespacedKey;
@@ -49,9 +47,9 @@ import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -99,7 +97,7 @@ public final class Main extends JavaPlugin {
   @Getter
   private Logger log4jLogger;
   
-  public static @Nonnull Main getInstance() {
+  public static @NotNull Main getInstance() {
     return INSTANCE;
   }
   
@@ -107,7 +105,7 @@ public final class Main extends JavaPlugin {
     Main.getInstance().getLogger().log(level, "[Infinite Minecrafters Core]: " + message);
   }
   
-  public static @Nonnull Map<UUID, User> getUserData() {
+  public static @NotNull Map<UUID, User> getUserData() {
     return userData;
   }
   
@@ -176,17 +174,17 @@ public final class Main extends JavaPlugin {
     modules.forEach((k, v) -> {
       if (v.isEnabled()) {
         log(Level.INFO, "IModule " + v.getId() + " is enabled.");
-        startupLogEmbed.addField(new MessageEmbed.Field(StringUtils.capitalize(v.getId()) + " module", "Enabled", true));
+        startupLogEmbed.addField(StringUtils.capitalize(v.getId()) + " module", "Enabled", true);
         v.onEnable();
         v.registerCommands();
         v.registerListeners();
       } else {
-        startupLogEmbed.addField(new MessageEmbed.Field(StringUtils.capitalize(v.getId()) + " module", "Disabled", true));
+        startupLogEmbed.addField(StringUtils.capitalize(v.getId()) + " module", "Disabled", true);
         log(Level.INFO, "IModule " + v.getId() + " is disabled.");
       }
     });
     
-    DiscordModule.discordHandler.sendEmbed(DiscordModule.discordHandler.LOGGING_CHANNEL, startupLogEmbed.build());
+    DiscordModule.discordHandler.sendEmbed(DiscordModule.discordHandler.LOGGING_CHANNEL, startupLogEmbed);
   }
   
   @Override

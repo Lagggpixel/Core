@@ -11,17 +11,21 @@
 package me.lagggpixel.core.modules.discord.handlers;
 
 import me.lagggpixel.core.Main;
-import me.lagggpixel.core.modules.discord.DiscordModule;
-import net.dv8tion.jda.api.entities.channel.concrete.VoiceChannel;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.javacord.api.entity.channel.ServerVoiceChannel;
+import org.javacord.api.entity.channel.ServerVoiceChannelUpdater;
 
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class ServerStatusHandler {
   
-  private final long SERVER_PLAYERS_VC = 1151627010582523964L;
+  private final Optional<ServerVoiceChannel> serverPlayersVc;
   
   public ServerStatusHandler() {
+    serverPlayersVc = DiscordHandler.getInstance().getDiscordApi()
+        .getServerVoiceChannelById(DiscordHandler.getInstance().getYamlConfiguration().getString("playerCountChannelId"));
+    
     updateAllChannelsTimer();
   }
   
@@ -40,13 +44,16 @@ public class ServerStatusHandler {
   }
   
   private void updateServerPlayersVcChannel() {
+    if (serverPlayersVc.isEmpty()) {
+      return;
+    }
     boolean isWhiteListed = Main.getInstance().getServer().isWhitelistEnforced() || Main.getInstance().whitelisted;
-    VoiceChannel voiceChannel = DiscordModule.discordHandler.getJda().getVoiceChannelById(SERVER_PLAYERS_VC);
-    if (voiceChannel == null) {
+    ServerVoiceChannelUpdater serverVoiceChannelUpdater = serverPlayersVc.get().createUpdater();
+    if (serverVoiceChannelUpdater == null) {
       return;
     }
     if (isWhiteListed) {
-      voiceChannel.getManager().setName("Server is whitelisted").queue();
+      serverVoiceChannelUpdater.setName("Server is whitelisted").update();
     } else {
       AtomicInteger onlinePlayers = new AtomicInteger();
       Main.getUserData().forEach((uuid, userData) -> {
@@ -54,15 +61,18 @@ public class ServerStatusHandler {
           onlinePlayers.getAndIncrement();
         }
       });
-      voiceChannel.getManager().setName("Players: " + onlinePlayers.get()).queue();
+      serverVoiceChannelUpdater.setName("Players: " + onlinePlayers.get()).update();
     }
   }
   
   public void setServerPlayersVcChannelOffline() {
-    VoiceChannel voiceChannel = DiscordModule.discordHandler.getJda().getVoiceChannelById(SERVER_PLAYERS_VC);
-    if (voiceChannel == null) {
+    if (serverPlayersVc.isEmpty()) {
       return;
     }
-    voiceChannel.getManager().setName("Server is offline").queue();
+    ServerVoiceChannelUpdater serverVoiceChannelUpdater = serverPlayersVc.get().createUpdater();
+    if (serverVoiceChannelUpdater == null) {
+      return;
+    }
+    serverVoiceChannelUpdater.setName("Server is offline").update();
   }
 }
