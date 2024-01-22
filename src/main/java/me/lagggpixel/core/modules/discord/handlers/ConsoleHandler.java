@@ -38,7 +38,7 @@ public class ConsoleHandler {
       currentContent = currentContent + "\n" + formatLoggingMessage(logEvent);
       return;
     }
-    DiscordModule.discordHandler.LOGGING_CHANNEL.sendMessage(currentContent)
+    DiscordModule.discordHandler.CONSOLE_CHANNEL.sendMessage(currentContent)
         .thenAccept(Message::removeEmbed);
     lastMessageMillis = System.currentTimeMillis();
     currentContent = "";

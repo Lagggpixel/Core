@@ -89,7 +89,7 @@ public class DiscordHandler {
         .setAllIntents()
         .login().join();
     
-    Optional<Server> optionalServer = discordApi.getServerById(yamlConfiguration.getString("serverId"));
+    Optional<Server> optionalServer = discordApi.getServerById(yamlConfiguration.getLong("serverId"));
     if (optionalServer.isEmpty()) {
       Main.log(Level.SEVERE, "Discord server is not set correctly, disabling Core!");
       Main.getInstance().onDisable();
@@ -99,7 +99,7 @@ public class DiscordHandler {
     
     Optional<ServerTextChannel> optionalServerTextChannel;
     
-    optionalServerTextChannel = discordApi.getServerTextChannelById(yamlConfiguration.getString("messageChannelId"));
+    optionalServerTextChannel = discordApi.getServerTextChannelById(yamlConfiguration.getLong("messageChannelId"));
     if (optionalServerTextChannel.isEmpty()) {
       Main.log(Level.SEVERE, "Discord message channel is not set correctly, disabling Core!");
       Main.getInstance().onDisable();
@@ -107,7 +107,7 @@ public class DiscordHandler {
     }
     MESSAGING_CHANNEL = optionalServerTextChannel.get();
     
-    optionalServerTextChannel = discordApi.getServerTextChannelById(yamlConfiguration.getString("consoleChannelId"));
+    optionalServerTextChannel = discordApi.getServerTextChannelById(yamlConfiguration.getLong("consoleChannelId"));
     if (optionalServerTextChannel.isEmpty()) {
       Main.log(Level.SEVERE, "Discord console channel is not set correctly, disabling Core!");
       Main.getInstance().onDisable();
@@ -115,7 +115,7 @@ public class DiscordHandler {
     }
     CONSOLE_CHANNEL = optionalServerTextChannel.get();
     
-    optionalServerTextChannel = discordApi.getServerTextChannelById(yamlConfiguration.getString("loggingChannelId"));
+    optionalServerTextChannel = discordApi.getServerTextChannelById(yamlConfiguration.getLong("loggingChannelId"));
     if (optionalServerTextChannel.isEmpty()) {
       Main.log(Level.SEVERE, "Discord logging channel is not set correctly, disabling Core!");
       Main.getInstance().onDisable();

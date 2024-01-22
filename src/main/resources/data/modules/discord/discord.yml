@@ -1,8 +1,8 @@
 token: ""
-serverId: "773814795291328512"
-messageChannelId: "1151605428371869696"
-consoleChannelId: "1152691818916487348"
-loggingChannelId: "1157654059378036776"
+serverId: ""
+messageChannelId: ""
+consoleChannelId: ""
+loggingChannelId: ""
 
 # Optional
-playerCountChannelId: "1151627010582523964L"
+playerCountChannelId: ""
