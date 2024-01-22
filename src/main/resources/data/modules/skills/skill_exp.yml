@@ -2,7 +2,7 @@ farming:
   blocks:
     WHEAT: 5.0
     CARROT: 3.0
-    POTATOES: 3.0
+    POTATO: 3.0
   mobs:
     COW: 10.0
     CHICKEN: 8.0
