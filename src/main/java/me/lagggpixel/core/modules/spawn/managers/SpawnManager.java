@@ -15,9 +15,9 @@ import lombok.Setter;
 import me.lagggpixel.core.Main;
 import me.lagggpixel.core.modules.discord.DiscordModule;
 import me.lagggpixel.core.modules.discord.handlers.DiscordHandler;
-import net.dv8tion.jda.api.EmbedBuilder;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.javacord.api.entity.message.embed.EmbedBuilder;
 
 import java.awt.*;
 import java.io.File;
@@ -43,7 +43,7 @@ public class SpawnManager {
       embedBuilder.setAuthor("Spawn location was not found");
       embedBuilder.addField("Location in memory", String.valueOf(config.getString("location")), false);
       embedBuilder.setFooter("SpawnManager.loadSpawnLocation");
-      DiscordHandler.getInstance().sendEmbed(DiscordModule.discordHandler.LOGGING_CHANNEL, embedBuilder.build());
+      DiscordHandler.getInstance().sendEmbed(DiscordModule.discordHandler.LOGGING_CHANNEL, embedBuilder);
     }
   }
   

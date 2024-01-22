@@ -10,33 +10,38 @@
 
 package me.lagggpixel.core.modules.discord.handlers;
 
-import net.dv8tion.jda.api.JDA;
-import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.utils.messages.MessageCreateBuilder;
-import net.dv8tion.jda.api.utils.messages.MessageData;
+import me.lagggpixel.core.modules.discord.DiscordModule;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.core.LogEvent;
+import org.javacord.api.entity.message.Message;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Collections;
 import java.util.TimeZone;
 
 public class ConsoleHandler {
   private static final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-  private static Integer time;
-  private static Message message;
-  private static MessageData messageData;
+  private static long lastMessageMillis = -1L;
+  private static String currentContent;
 
   public static void onLogEvent(LogEvent logEvent) {
-    MessageCreateBuilder builder = new MessageCreateBuilder();
-    builder.setContent(formatLoggingMessage(logEvent));
-    builder.setEmbeds(Collections.emptyList());
-    if (!(DiscordHandler.getInstance().getJda().getStatus() == JDA.Status.SHUTDOWN
-        || DiscordHandler.getInstance().getJda().getStatus() == JDA.Status.SHUTTING_DOWN)
-        || DiscordHandler.getInstance().getJda().getStatus() == JDA.Status.DISCONNECTED) {
-      DiscordHandler.getInstance().CONSOLE_CHANNEL.sendMessage(builder.build()).queue();
+    if (lastMessageMillis == -1L) {
+      lastMessageMillis = System.currentTimeMillis();
     }
+    
+    if (System.currentTimeMillis() - lastMessageMillis < 1000L) {
+      if (StringUtils.isBlank(currentContent)) {
+        currentContent = formatLoggingMessage(logEvent);
+        return;
+      }
+      currentContent = currentContent + "\n" + formatLoggingMessage(logEvent);
+      return;
+    }
+    DiscordModule.discordHandler.LOGGING_CHANNEL.sendMessage(currentContent)
+        .thenAccept(Message::removeEmbed);
+    lastMessageMillis = System.currentTimeMillis();
+    currentContent = "";
   }
 
   private static String stripAnsiColors(String input) {
