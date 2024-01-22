@@ -31,6 +31,11 @@ import java.util.Objects;
 import java.util.UUID;
 import java.util.logging.Level;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class GuildLoadSave {
   @Getter
   private static final String folder = Main.getInstance().getDataFolder() + "/data/modules/guild/";

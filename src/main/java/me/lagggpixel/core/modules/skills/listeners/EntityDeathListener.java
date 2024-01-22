@@ -21,6 +21,11 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class EntityDeathListener implements Listener {
 
   private final SkillsModule skillsModule;

@@ -19,6 +19,11 @@ import java.util.ArrayList;
 
 @SuppressWarnings({"unused", "deprecation"})
 @Getter
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class Pillar {
   private ClaimProfile profile;
   private Material blockType;

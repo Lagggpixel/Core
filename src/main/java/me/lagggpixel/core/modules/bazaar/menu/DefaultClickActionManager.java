@@ -32,6 +32,11 @@ import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class DefaultClickActionManager implements ClickActionManager {
   private final BazaarModule module;
   private final Map<String, Function<MenuInfo, Consumer<ContextClickInfo>>> clickActions = new HashMap<>();

@@ -16,6 +16,11 @@ import me.lagggpixel.core.modules.staff.data.InstantPlayerData;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class StaffModeHandler {
   
   public void enterStaffMode(Player player) {

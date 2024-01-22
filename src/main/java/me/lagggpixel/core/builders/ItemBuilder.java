@@ -27,6 +27,11 @@ import java.util.Collections;
 import java.util.List;
 
 @SuppressWarnings({"unused"})
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class ItemBuilder {
 
     private final ItemStack item;

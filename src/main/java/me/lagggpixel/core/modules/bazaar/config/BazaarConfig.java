@@ -25,6 +25,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class BazaarConfig extends CustomConfig {
     public BazaarConfig(JavaPlugin plugin) {
         super(plugin, "bazaar");

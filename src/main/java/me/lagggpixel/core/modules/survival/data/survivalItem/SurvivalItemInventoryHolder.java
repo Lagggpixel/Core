@@ -31,6 +31,11 @@ import java.util.List;
  * @see SkillsInventoryHolder
  */
 @Getter
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class SurvivalItemInventoryHolder extends SurvivalCoreInventoryHolder {
   public SurvivalItemInventoryHolder(Player player) {
     super(player, Lang.SURVIVAL_ITEM_INVENTORY_TITLE.toComponent(), 54);

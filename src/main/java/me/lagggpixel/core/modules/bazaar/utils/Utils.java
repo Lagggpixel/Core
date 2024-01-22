@@ -20,6 +20,11 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.text.DecimalFormat;
 import java.util.List;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class Utils {
     private Utils() {
         throw new IllegalStateException("Utility class cannot be instantiated");

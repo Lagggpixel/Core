@@ -17,6 +17,11 @@ import java.util.List;
 
 import static org.bukkit.Bukkit.getServer;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public final class Containr {
 
     private static final List<Plugin> registrations = new ArrayList<>();

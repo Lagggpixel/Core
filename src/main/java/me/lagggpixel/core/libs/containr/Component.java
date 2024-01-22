@@ -25,6 +25,11 @@ import java.util.function.BiConsumer;
  *
  * @author ZorTik
  */
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public interface Component {
 
     /**

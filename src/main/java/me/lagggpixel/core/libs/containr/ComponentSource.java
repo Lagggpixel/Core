@@ -19,6 +19,11 @@ package me.lagggpixel.core.libs.containr;
  *
  * @author ZorTik
  */
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public interface ComponentSource {
 
     boolean enable(ComponentTunnel tunnel);

@@ -16,6 +16,11 @@ import org.bukkit.inventory.ItemStack;
 
 @AllArgsConstructor
 @Getter
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public final class ContextClickInfo {
 
     private final GUI gui;

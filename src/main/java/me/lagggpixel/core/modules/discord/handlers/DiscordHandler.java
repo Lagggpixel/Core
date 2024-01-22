@@ -45,6 +45,11 @@ import java.util.logging.Level;
 import java.util.regex.Pattern;
 
 @SuppressWarnings({"DataFlowIssue", "FieldCanBeLocal"})
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class DiscordHandler {
   
   private File configFile;

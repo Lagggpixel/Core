@@ -15,6 +15,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class CyclicArrayList<T> extends LinkedList<T> {
 
     @Setter

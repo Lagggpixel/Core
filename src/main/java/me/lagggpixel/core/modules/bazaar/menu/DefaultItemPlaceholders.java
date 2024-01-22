@@ -32,6 +32,11 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class DefaultItemPlaceholders implements ItemPlaceholders {
   public static final int ORDER_LIMIT = 5;
   private final BazaarModule module;

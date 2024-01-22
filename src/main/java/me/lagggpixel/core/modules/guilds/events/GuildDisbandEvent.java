@@ -13,6 +13,11 @@ package me.lagggpixel.core.modules.guilds.events;
 import me.lagggpixel.core.modules.guilds.data.Guild;
 import org.bukkit.entity.Player;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class GuildDisbandEvent extends GuildEvents {
   public GuildDisbandEvent(Player player, Guild guild) {
     super(player, guild);

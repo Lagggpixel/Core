@@ -15,6 +15,11 @@ import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Predicate;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public interface OrderManager {
     BazaarOrder prepareBazaarOrder(Product product, int amount, double unitPrice, OrderType type, UUID player);
 

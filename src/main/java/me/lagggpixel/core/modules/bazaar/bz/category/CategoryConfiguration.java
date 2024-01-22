@@ -18,6 +18,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class CategoryConfiguration implements ConfigurationSerializable {
     private final CategoryMenuConfiguration menuConfig;
     private final List<ProductCategoryConfiguration> productCategories;

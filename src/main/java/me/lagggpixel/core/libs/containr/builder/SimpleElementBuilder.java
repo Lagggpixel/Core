@@ -32,6 +32,11 @@ import java.util.function.Supplier;
  * @author ZorTik
  */
 @Getter(AccessLevel.PROTECTED)
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class SimpleElementBuilder implements ElementBuilder<Element> {
 
     public static @NotNull SimpleElementBuilder b() {

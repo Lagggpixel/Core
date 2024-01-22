@@ -11,6 +11,11 @@ package me.lagggpixel.core.libs.containr.util;
 import me.lagggpixel.core.libs.containr.Container;
 import me.lagggpixel.core.libs.containr.geometry.Region;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public final class Util {
 
     public static int[] relativeToRealCoords(int[] relative, Container container) {

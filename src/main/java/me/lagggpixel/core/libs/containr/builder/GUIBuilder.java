@@ -16,6 +16,11 @@ import me.lagggpixel.core.libs.containr.GUI;
  * @param <T> The type of the GUI.
  * @author ZorTik
  */
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public interface GUIBuilder<T extends GUI> {
 
     T build();

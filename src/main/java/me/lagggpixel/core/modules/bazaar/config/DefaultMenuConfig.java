@@ -21,6 +21,11 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class DefaultMenuConfig extends CustomConfig implements MenuConfig {
     public DefaultMenuConfig(JavaPlugin plugin) {
         super(plugin, "menu");

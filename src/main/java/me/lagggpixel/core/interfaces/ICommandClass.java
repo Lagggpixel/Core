@@ -14,6 +14,11 @@ import org.bukkit.command.TabExecutor;
 
 import java.util.List;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public interface ICommandClass extends TabExecutor {
   
   String getCommandName();

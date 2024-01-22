@@ -19,6 +19,11 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class MerchantListSubCommand implements ISubCommand {
   
   private final MerchantModule merchantModule;

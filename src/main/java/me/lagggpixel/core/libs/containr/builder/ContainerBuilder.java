@@ -16,6 +16,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Consumer;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public interface ContainerBuilder<C extends Container> {
 
     ContainerBuilder<C> size(int width, int height);

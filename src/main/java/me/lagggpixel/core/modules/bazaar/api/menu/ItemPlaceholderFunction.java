@@ -13,6 +13,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 @FunctionalInterface
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public interface ItemPlaceholderFunction {
     ItemStack apply(ContainerComponent containerComponent, ItemStack item, int itemSlot, Player player, MenuInfo info);
 }

@@ -16,6 +16,11 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class SimpleGUIBuilder implements GUIBuilder<GUI> {
     private BiConsumer<GUI, Player> build = (player, gui) -> {};
     private String title = "";

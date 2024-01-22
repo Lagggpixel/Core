@@ -18,6 +18,11 @@ import me.lagggpixel.core.modules.staff.commands.VanishCommand;
 import me.lagggpixel.core.utils.CommandUtils;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class StaffModule implements IModule {
     @NotNull
     @Override

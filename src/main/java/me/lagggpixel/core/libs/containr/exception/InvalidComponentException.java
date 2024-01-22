@@ -11,6 +11,11 @@ package me.lagggpixel.core.libs.containr.exception;
 import lombok.Getter;
 import me.lagggpixel.core.libs.containr.Component;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class InvalidComponentException extends RuntimeException {
 
     @Getter

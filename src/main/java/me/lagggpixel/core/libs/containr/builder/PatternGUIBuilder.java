@@ -35,6 +35,11 @@ import static com.google.common.base.Preconditions.checkArgument;
  *
  * @author ZorTik
  */
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public final class PatternGUIBuilder implements GUIBuilder<GUI> {
 
     private final Map<Integer, Container> containers = new ConcurrentHashMap<>();
@@ -44,7 +49,12 @@ public final class PatternGUIBuilder implements GUIBuilder<GUI> {
     private String title;
     private Element filler = null;
 
-    public interface PatternGUIFactory<T extends GUI> {
+    /**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
+public interface PatternGUIFactory<T extends GUI> {
         T create(String title, int rows, Consumer<GUI> doBuildFunction);
     }
 
@@ -171,7 +181,12 @@ public final class PatternGUIBuilder implements GUIBuilder<GUI> {
      * @deprecated Use {@link PatternContainerFactory} instead.
      */
     @Deprecated
-    public interface ContainerFactoryHelper<T extends Container> {
+    /**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
+public interface ContainerFactoryHelper<T extends Container> {
 
         /**
          * Constructs a container based on found x and y sizes.
@@ -186,7 +201,12 @@ public final class PatternGUIBuilder implements GUIBuilder<GUI> {
 
     }
 
-    public interface PatternContainerFactory<T extends Container> {
+    /**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
+public interface PatternContainerFactory<T extends Container> {
 
         /**
          * Constructs a container based on found x and y sizes and

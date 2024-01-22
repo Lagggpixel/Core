@@ -22,6 +22,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class SkillsModule implements IModule {
 
   private File dataFolder;

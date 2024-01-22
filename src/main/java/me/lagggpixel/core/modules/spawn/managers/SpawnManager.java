@@ -23,6 +23,11 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class SpawnManager {
   
   private final File dataFolder = new File(Main.getInstance().getDataFolder(), "data/modules/spawn");

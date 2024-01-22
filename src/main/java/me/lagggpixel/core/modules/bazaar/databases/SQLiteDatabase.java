@@ -16,6 +16,11 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class SQLiteDatabase implements SQLDatabase {
     private final File folder;
     private final String fileName;

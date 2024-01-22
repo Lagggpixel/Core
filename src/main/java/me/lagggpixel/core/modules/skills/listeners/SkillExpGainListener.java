@@ -22,6 +22,11 @@ import org.bukkit.event.Listener;
 
 import java.util.Map;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class SkillExpGainListener implements Listener {
 
   private final SkillsModule module;

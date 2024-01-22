@@ -10,6 +10,11 @@ package me.lagggpixel.core.modules.bazaar.api.bazaar.orders;
 
 import me.lagggpixel.core.modules.bazaar.api.bazaar.Product;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public interface CompressedBazaarOrder {
     boolean canAddOrder(BazaarOrder order);
 

@@ -11,4 +11,9 @@ package me.lagggpixel.core.libs.containr;
 /**
  * Excluded from 'previous' history
  */
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public interface Silent {}

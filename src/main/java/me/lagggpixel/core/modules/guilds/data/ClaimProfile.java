@@ -20,6 +20,11 @@ import java.util.UUID;
 @Setter
 @SuppressWarnings("unused")
 @Getter
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class ClaimProfile {
   private UUID uuid;
   private Claim lastInside;

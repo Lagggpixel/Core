@@ -21,6 +21,11 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.Map;
 
 @Getter
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class TpaRequest {
   
   private final Player requester;

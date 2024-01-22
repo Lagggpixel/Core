@@ -12,6 +12,11 @@ package me.lagggpixel.core.utils;
 
 import java.text.DecimalFormat;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class NumberUtil {
   public static String formatInt(int num) {
     DecimalFormat format = new DecimalFormat("#,###");

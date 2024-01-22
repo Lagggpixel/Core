@@ -33,6 +33,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class SkipNightVoteManager implements Runnable, Listener {
   
   private final SkipNightModule module;

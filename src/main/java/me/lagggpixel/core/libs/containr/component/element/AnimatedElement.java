@@ -23,6 +23,11 @@ import java.util.function.Supplier;
 
 @RequiredArgsConstructor
 @Getter
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public abstract class AnimatedElement extends Element {
 
     private final CyclicArrayList<Supplier<ItemStack>> parts;

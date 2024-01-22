@@ -14,6 +14,11 @@ import me.lagggpixel.core.modules.skipnight.objects.SkipNightVoteType;
 import org.bukkit.World;
 import org.bukkit.plugin.Plugin;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class SkipNightManager implements Runnable {
   
   private final World world;

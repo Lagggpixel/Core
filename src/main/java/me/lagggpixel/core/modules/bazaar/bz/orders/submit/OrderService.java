@@ -13,6 +13,11 @@ import me.lagggpixel.core.modules.bazaar.api.bazaar.orders.InstantBazaarOrder;
 import me.lagggpixel.core.modules.bazaar.api.bazaar.orders.InstantSubmitResult;
 import me.lagggpixel.core.modules.bazaar.api.bazaar.orders.SubmitResult;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public interface OrderService {
     InstantSubmitResult submit(InstantBazaarOrder order);
 

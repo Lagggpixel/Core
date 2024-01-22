@@ -28,6 +28,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class SkillHandler {
   private final SkillsModule skillsModule;
   

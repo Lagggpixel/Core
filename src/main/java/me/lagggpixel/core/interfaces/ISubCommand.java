@@ -14,6 +14,11 @@ import org.bukkit.command.CommandSender;
 
 import java.util.List;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public interface ISubCommand {
   void execute(CommandSender commandSender, String[] args);
   

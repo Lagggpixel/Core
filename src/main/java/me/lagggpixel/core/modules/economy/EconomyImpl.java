@@ -19,6 +19,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("DeprecatedIsStillUsed")
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class EconomyImpl extends AbstractEconomy {
   
   EconomyModule module;

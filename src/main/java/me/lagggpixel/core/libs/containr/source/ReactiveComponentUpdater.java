@@ -18,6 +18,11 @@ import java.util.UUID;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 @RequiredArgsConstructor
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class ReactiveComponentUpdater implements ComponentSource {
 
     private final ComponentSupplier supplier;
@@ -43,7 +48,12 @@ public class ReactiveComponentUpdater implements ComponentSource {
             }
     }
 
-    public interface ComponentSupplier {
+    /**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
+public interface ComponentSupplier {
         Collection<Element> getComponents();
     }
 

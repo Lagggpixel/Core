@@ -15,6 +15,11 @@ import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public interface ClickActionManager {
   void addClickAction(String name, Consumer<ContextClickInfo> action);
 

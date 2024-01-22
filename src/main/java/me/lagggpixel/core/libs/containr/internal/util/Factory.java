@@ -8,6 +8,11 @@
 
 package me.lagggpixel.core.libs.containr.internal.util;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public interface Factory<T> {
 
     T create();

@@ -31,6 +31,11 @@ import java.util.function.Consumer;
 
 @AllArgsConstructor
 @Getter
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public final class ItemBuilder {
 
     public static @NotNull ItemBuilder fromConfig(ConfigurationSection section) {

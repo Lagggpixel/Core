@@ -8,6 +8,11 @@
 
 package me.lagggpixel.core.modules.bazaar.api.config;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public final class MessagePlaceholder implements Placeholder {
     private final String placeholder;
     private final String value;

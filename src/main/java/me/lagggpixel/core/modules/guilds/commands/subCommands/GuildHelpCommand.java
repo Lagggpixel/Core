@@ -16,6 +16,11 @@ import org.bukkit.command.CommandSender;
 
 import java.util.List;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class GuildHelpCommand implements ISubCommand {
   private final GuildModule guildModule;
   

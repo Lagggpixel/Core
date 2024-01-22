@@ -12,6 +12,11 @@ import me.lagggpixel.core.modules.bazaar.databases.SQLDatabase;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.java.JavaPlugin;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class DatabaseConfig extends CustomConfig {
     public DatabaseConfig(JavaPlugin plugin) {
         super(plugin, "database");

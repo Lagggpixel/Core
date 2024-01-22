@@ -10,6 +10,11 @@
 
 package me.lagggpixel.core.modules.skills.enums;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public enum SkillExpGainCause {
   BLOCK_BREAK,
   MOB_KILL,

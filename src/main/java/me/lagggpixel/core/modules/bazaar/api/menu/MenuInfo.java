@@ -8,5 +8,10 @@
 
 package me.lagggpixel.core.modules.bazaar.api.menu;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public interface MenuInfo {
 }

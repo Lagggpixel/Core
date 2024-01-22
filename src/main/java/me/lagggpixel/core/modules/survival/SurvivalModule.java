@@ -26,6 +26,11 @@ import me.lagggpixel.core.modules.survival.listeners.WhitelistedListener;
 import me.lagggpixel.core.utils.CommandUtils;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class SurvivalModule implements IModule {
   private TpaHandler tpaHandler;
   private SurvivalItemHandler survivalItemHandler;

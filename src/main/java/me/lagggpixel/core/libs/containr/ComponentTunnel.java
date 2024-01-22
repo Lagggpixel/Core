@@ -14,6 +14,11 @@ package me.lagggpixel.core.libs.containr;
  *
  * @author ZorTik
  */
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public interface ComponentTunnel {
 
     void send(ContainerComponent container);

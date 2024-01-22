@@ -15,6 +15,11 @@ import java.util.Optional;
 import java.util.Stack;
 import java.util.UUID;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public interface MenuHistory {
     void addGui(Player player, GUI gui);
 

@@ -21,6 +21,11 @@ import org.bukkit.inventory.ItemStack;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class DefaultConfigurableMenuItem implements ConfigurableMenuItem {
     private int slot;
     private ItemStack item;

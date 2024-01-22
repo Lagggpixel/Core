@@ -14,6 +14,11 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class BlockUtils {
   
   public static boolean isBlockTillable(@NotNull Block block) {

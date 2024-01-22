@@ -14,6 +14,11 @@ import lombok.Getter;
 
 import java.util.UUID;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class SkipNightVoter {
   
   private final UUID uuid;

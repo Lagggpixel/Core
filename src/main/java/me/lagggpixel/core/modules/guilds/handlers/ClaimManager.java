@@ -25,6 +25,11 @@ import org.bukkit.persistence.PersistentDataType;
 import java.util.*;
 
 @Getter
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class ClaimManager {
   private final HashMap<UUID, Guild> claiming = new HashMap<>();
   private final HashSet<Claim> claims = new HashSet<>();

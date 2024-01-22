@@ -25,6 +25,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class SurvivalItemListeners implements Listener {
   
   private final SurvivalItemHandler survivalItemHandler;

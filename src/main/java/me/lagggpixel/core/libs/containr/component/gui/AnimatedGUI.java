@@ -22,6 +22,11 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.TimeUnit;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public abstract class AnimatedGUI extends GUI {
 
     @Nullable

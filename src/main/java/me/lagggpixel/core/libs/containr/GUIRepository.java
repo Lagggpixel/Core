@@ -17,6 +17,11 @@ import java.util.LinkedList;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentMap;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public final class GUIRepository {
 
     public static final ConcurrentMap<String, GUI> OPENED_GUIS = Maps.newConcurrentMap();

@@ -27,6 +27,11 @@ import java.util.Optional;
 
 @RequiredArgsConstructor
 @Getter
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class GUIListener implements Listener {
 
     private final Plugin plugin;

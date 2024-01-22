@@ -13,6 +13,11 @@ import me.lagggpixel.core.modules.merchant.data.MerchantGui;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class MerchantUtils {
   
   public static void fillBorder(Inventory inventory) {

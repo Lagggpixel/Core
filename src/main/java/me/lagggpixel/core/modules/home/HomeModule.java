@@ -17,6 +17,11 @@ import me.lagggpixel.core.modules.home.handlers.HomeHandler;
 import me.lagggpixel.core.utils.CommandUtils;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class HomeModule implements IModule {
   
   private HomeHandler homeHandler;

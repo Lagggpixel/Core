@@ -22,6 +22,11 @@ import org.bukkit.entity.Player;
 import java.util.List;
 import java.util.Map;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class GuildJoinCommand implements ISubCommand {
 
   GuildModule guildModule;

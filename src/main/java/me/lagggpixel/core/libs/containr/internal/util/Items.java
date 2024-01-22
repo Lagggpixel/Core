@@ -28,6 +28,11 @@ import java.lang.reflect.Field;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public final class Items {
 
     public static ItemStack create(Material mat, int count, short data, Map<Enchantment, Integer> enchantments, String title, String... lore) {

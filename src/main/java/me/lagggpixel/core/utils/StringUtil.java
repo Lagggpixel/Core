@@ -19,9 +19,19 @@ import java.util.Arrays;
 import java.util.stream.Collectors;
 
 @UtilityClass
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class StringUtil {
   
-  public interface Case {
+  /**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
+public interface Case {
     Case LOWER_CAMEL = new LowerCamelCase();
     Case SNAKE = new SnakeCase();
     

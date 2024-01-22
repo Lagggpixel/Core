@@ -17,6 +17,11 @@ import org.javacord.api.entity.message.embed.EmbedBuilder;
 import java.awt.*;
 import java.util.Arrays;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class ExceptionUtils {
   public static void handleException(Throwable e) {
     ServerTextChannel channel = DiscordHandler.getInstance().LOGGING_CHANNEL;

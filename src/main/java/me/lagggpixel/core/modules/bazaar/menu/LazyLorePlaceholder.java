@@ -25,6 +25,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class LazyLorePlaceholder implements Placeholder {
     private final BazaarAPI bazaarAPI;
     private final ContainerComponent container;

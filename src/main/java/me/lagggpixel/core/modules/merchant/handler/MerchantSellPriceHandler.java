@@ -18,6 +18,11 @@ import org.jetbrains.annotations.NotNull;
 import java.io.File;
 import java.util.HashMap;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class MerchantSellPriceHandler {
   
   private final HashMap<Material, Double> prices;

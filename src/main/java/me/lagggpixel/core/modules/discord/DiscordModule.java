@@ -27,6 +27,11 @@ import org.jetbrains.annotations.NotNull;
 import java.util.logging.Level;
 
 @Getter
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class DiscordModule implements IModule {
   
   NMSHandler nmsHandler;

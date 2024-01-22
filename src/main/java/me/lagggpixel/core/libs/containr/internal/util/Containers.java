@@ -12,6 +12,11 @@ import me.lagggpixel.core.libs.containr.Container;
 import me.lagggpixel.core.libs.containr.StaticContainer;
 import org.bukkit.inventory.Inventory;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public final class Containers {
 
     public static Container ofInv(Inventory inventory) {

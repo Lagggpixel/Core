@@ -23,6 +23,11 @@ import java.util.stream.IntStream;
  *
  * @author ZorTik
  */
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public interface ContainerComponent extends Component, Iterable<Element> {
 
     <T extends Element> Map<Integer, T> content(Class<T> clazz);

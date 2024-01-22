@@ -19,6 +19,11 @@ import org.bukkit.entity.Player;
 import java.util.*;
 import java.util.function.Consumer;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class MessageInputManager {
   private final BazaarModule module;
   private final Map<UUID, Consumer<String>> playerOneLineInputCallbacks = new HashMap<>();

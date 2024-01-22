@@ -36,6 +36,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class CategoryMenuConfiguration extends MenuConfiguration {
   public CategoryMenuConfiguration(String name, int rows, List<DefaultConfigurableMenuItem> items) {
     super(name, rows, items);

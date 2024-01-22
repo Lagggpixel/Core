@@ -38,6 +38,11 @@ import java.util.stream.IntStream;
  * @author ZorTik
  */
 @Getter
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public abstract class Container implements ContainerComponent {
 
     private final Map<Integer, Container> containers;
@@ -402,7 +407,12 @@ public abstract class Container implements ContainerComponent {
         }
     }
 
-    public interface LocalEventInterface {
+    /**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
+public interface LocalEventInterface {
         @Nullable Container getContainer();
     }
 

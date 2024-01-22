@@ -10,6 +10,11 @@
 
 package me.lagggpixel.core.modules.skipnight.objects;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public enum SkipNightVoteType {
   NIGHT
 }

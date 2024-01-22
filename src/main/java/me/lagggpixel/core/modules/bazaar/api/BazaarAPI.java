@@ -18,6 +18,11 @@ import me.lagggpixel.core.modules.bazaar.api.menu.MenuHistory;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.plugin.java.JavaPlugin;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public interface BazaarAPI {
     Economy getEconomy();
 

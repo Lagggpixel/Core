@@ -14,6 +14,11 @@ import org.jetbrains.annotations.NotNull;
 import java.util.*;
 import java.util.stream.IntStream;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public abstract class ContainerHolder implements ContainerComponent {
 
     public abstract Container getContainer();

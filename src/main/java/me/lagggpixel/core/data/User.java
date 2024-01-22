@@ -38,6 +38,11 @@ import java.util.*;
 @Getter
 @Setter
 @AllArgsConstructor
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class User {
   // Player data
   @SerializedName("PlayerUUID")

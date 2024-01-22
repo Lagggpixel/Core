@@ -20,6 +20,11 @@ import org.bukkit.inventory.ItemStack;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class CategoryImpl implements Category {
     private final Bazaar bazaar;
     private final CategoryConfiguration config;

@@ -19,6 +19,11 @@ import java.util.Map;
 
 
 @Getter
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class TpaHandler {
   
   private final Map<Player, TpaRequest> tpaRequestMap = new HashMap<>();

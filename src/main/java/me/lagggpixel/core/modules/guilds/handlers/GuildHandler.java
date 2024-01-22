@@ -26,6 +26,11 @@ import java.util.List;
 import java.util.UUID;
 
 @Getter
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class GuildHandler {
   
   private final List<Guild> guilds = new ArrayList<>();

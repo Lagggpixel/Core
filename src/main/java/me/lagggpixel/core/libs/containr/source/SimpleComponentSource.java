@@ -16,6 +16,11 @@ import me.lagggpixel.core.libs.containr.ComponentSource;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class SimpleComponentSource implements ComponentSource {
 
     @Getter

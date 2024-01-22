@@ -26,6 +26,11 @@ import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class BazaarImpl implements Bazaar {
   private final BazaarModule module;
   private final List<Category> categories;

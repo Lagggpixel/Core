@@ -20,6 +20,11 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Level;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class CommandUtils {
 
   public static void registerCommand(ICommandClass ICommandClass) {

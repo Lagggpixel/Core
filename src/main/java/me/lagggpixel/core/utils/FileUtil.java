@@ -15,6 +15,11 @@ import me.lagggpixel.core.Main;
 import java.io.*;
 import java.util.logging.Level;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class FileUtil {
   
   public static void copyToDefault(String resourcePath) {

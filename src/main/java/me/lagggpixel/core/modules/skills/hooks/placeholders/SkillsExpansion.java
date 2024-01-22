@@ -20,6 +20,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class SkillsExpansion extends ICorePlaceholderExpansion {
 
   @Override

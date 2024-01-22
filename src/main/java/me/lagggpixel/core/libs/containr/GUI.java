@@ -44,6 +44,11 @@ import java.util.stream.Collectors;
  */
 @ApiStatus.AvailableSince("0.1")
 @Getter
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public abstract class GUI extends ContainerHolder implements InventoryHolder, Cloneable {
 
     public static @NotNull PatternGUIBuilder ofPattern(@NotNull final Collection<String> pattern) {
@@ -297,11 +302,21 @@ public abstract class GUI extends ContainerHolder implements InventoryHolder, Cl
         }
     }
 
-    public interface NormalEditHandler {
+    /**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
+public interface NormalEditHandler {
         void onEdit(Player player, int slot);
     }
 
-    public enum CloseReason {
+    /**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
+public enum CloseReason {
         BY_METHOD,
         BY_PLAYER
     }

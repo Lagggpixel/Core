@@ -30,6 +30,11 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class ProductCategoryMenuConfiguration extends MenuConfiguration {
   private final List<Integer> productSlots;
 

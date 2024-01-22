@@ -15,6 +15,11 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 @Getter
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class DelayTeleport {
   
   private final Player player;

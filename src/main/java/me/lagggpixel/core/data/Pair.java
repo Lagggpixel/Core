@@ -18,6 +18,11 @@ import org.jetbrains.annotations.NotNull;
 
 @Data
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class Pair<F, S> {
   
   private final F first;

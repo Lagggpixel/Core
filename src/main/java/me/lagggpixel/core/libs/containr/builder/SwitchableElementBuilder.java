@@ -20,6 +20,11 @@ import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class SwitchableElementBuilder<T> implements ElementBuilder<SwitchableElement<T>> {
 
     private BiConsumer<ContextClickInfo, T> action = (i, o) -> {};

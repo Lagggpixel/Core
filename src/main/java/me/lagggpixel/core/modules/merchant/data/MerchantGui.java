@@ -38,6 +38,11 @@ import java.util.List;
 
 @SuppressWarnings("unused")
 @Getter
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class MerchantGui implements Listener {
   
   private static final HashMap<MerchantGui, Boolean> REGISTERED_LISTENERS = new HashMap<>();

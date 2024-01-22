@@ -22,6 +22,11 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class AnvilCommand implements ICommandClass {
 
   private final SurvivalModule survivalModule;

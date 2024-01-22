@@ -55,6 +55,11 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Level;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public final class Main extends JavaPlugin {
   
   private static Main INSTANCE;

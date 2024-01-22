@@ -13,6 +13,11 @@ package me.lagggpixel.core.serializers;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class LocationSerializer {
   /**
    * Serializes a Location object into a String representation.

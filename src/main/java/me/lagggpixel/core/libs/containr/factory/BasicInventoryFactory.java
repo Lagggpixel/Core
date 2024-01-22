@@ -16,6 +16,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;
 
 @RequiredArgsConstructor
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class BasicInventoryFactory implements InventoryFactory {
 
     private final String title;

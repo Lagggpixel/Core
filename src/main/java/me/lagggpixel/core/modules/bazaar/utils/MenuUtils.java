@@ -24,6 +24,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class MenuUtils {
     private MenuUtils() {
         throw new IllegalStateException("Utility class cannot be instantiated");

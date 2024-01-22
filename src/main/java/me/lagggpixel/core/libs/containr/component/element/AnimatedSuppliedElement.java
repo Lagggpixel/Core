@@ -20,6 +20,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public abstract class AnimatedSuppliedElement extends Element {
 
     @Getter

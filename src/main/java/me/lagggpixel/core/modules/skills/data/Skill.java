@@ -31,6 +31,11 @@ import java.util.UUID;
 @Getter
 @Setter
 @AllArgsConstructor
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class Skill {
   @SerializedName("PlayerUniqueID")
   @Expose

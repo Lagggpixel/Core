@@ -48,6 +48,11 @@ import java.util.HashMap;
 import java.util.List;
 
 @Data
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class Merchant implements Listener {
   
   private final String id;

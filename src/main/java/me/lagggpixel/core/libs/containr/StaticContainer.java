@@ -19,6 +19,11 @@ import java.util.*;
  *
  * @author ZorTik
  */
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class StaticContainer extends Container {
 
     public StaticContainer(int xSize, int ySize) {

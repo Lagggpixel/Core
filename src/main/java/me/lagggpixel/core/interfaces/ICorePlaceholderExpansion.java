@@ -16,6 +16,11 @@ import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("UnstableApiUsage")
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public abstract class ICorePlaceholderExpansion extends PlaceholderExpansion {
   
   protected String version = Main.getInstance().getPluginMeta().getVersion();

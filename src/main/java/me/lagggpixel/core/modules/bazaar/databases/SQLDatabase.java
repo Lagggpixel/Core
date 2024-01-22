@@ -10,6 +10,11 @@ package me.lagggpixel.core.modules.bazaar.databases;
 
 import java.sql.Connection;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public interface SQLDatabase {
     Connection getConnection();
 
@@ -33,7 +38,12 @@ public interface SQLDatabase {
             return configName;
         }
 
-        public Class<? extends SQLDatabase> getDatabaseClass() {
+        /**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
+public class<? extends SQLDatabase> getDatabaseClass() {
             return databaseClass;
         }
     }

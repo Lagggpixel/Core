@@ -16,6 +16,11 @@ import me.lagggpixel.core.modules.bazaar.api.bazaar.orders.OrderType;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class DefaultCompressedBazaarOrder implements CompressedBazaarOrder {
     private final Set<BazaarOrder> orders;
 

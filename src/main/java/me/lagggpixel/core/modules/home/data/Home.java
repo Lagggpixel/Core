@@ -34,6 +34,11 @@ import java.util.Objects;
 
 @Data
 @Getter
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public final class Home implements ConfigurationSerializable {
   @SerializedName("Name")
   @Expose

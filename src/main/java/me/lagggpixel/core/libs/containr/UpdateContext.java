@@ -14,6 +14,11 @@ import org.bukkit.entity.Player;
 
 @RequiredArgsConstructor
 @Getter
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class UpdateContext {
     private final GUI gui;
     private final Player player;

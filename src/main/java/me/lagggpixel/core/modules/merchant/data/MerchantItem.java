@@ -12,6 +12,11 @@ import lombok.Data;
 import org.bukkit.Material;
 
 @Data
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class MerchantItem {
   private final Material material;
   private final int cost;

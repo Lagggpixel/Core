@@ -18,6 +18,11 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("unused")
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class ChatUtils {
   
   public static @NotNull Component stringToComponentCC(String stringWithColorCodes) {

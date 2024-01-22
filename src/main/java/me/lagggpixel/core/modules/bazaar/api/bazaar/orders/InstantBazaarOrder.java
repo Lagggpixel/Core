@@ -14,6 +14,11 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.UUID;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public interface InstantBazaarOrder extends MenuInfo {
     Product getProduct();
 

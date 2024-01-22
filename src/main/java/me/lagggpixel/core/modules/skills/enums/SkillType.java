@@ -12,6 +12,11 @@ package me.lagggpixel.core.modules.skills.enums;
 
 import org.apache.commons.lang3.StringUtils;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public enum SkillType {
 
   FARMING,

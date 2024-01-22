@@ -27,6 +27,11 @@ import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 
 @Getter
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public abstract class CoreInventoryHolder implements InventoryHolder {
   
   public final Inventory inventory;

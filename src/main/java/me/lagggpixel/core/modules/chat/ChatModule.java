@@ -16,6 +16,11 @@ import me.lagggpixel.core.modules.chat.listeners.AsyncPlayerChatListener;
 import me.lagggpixel.core.utils.CommandUtils;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class ChatModule implements IModule {
   @NotNull
   @Override

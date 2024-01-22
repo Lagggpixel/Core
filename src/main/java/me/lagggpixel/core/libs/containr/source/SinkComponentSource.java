@@ -14,6 +14,11 @@ import reactor.core.publisher.Sinks;
 
 import static reactor.core.publisher.Sinks.many;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class SinkComponentSource extends SimpleComponentSource {
 
     private final Sinks.Many<Component> attachedSink;
@@ -54,7 +59,12 @@ public class SinkComponentSource extends SimpleComponentSource {
             completed = true;
     }
 
-    public interface ComponentMapper<T> {
+    /**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
+public interface ComponentMapper<T> {
         Component map(T anyObject);
     }
 }

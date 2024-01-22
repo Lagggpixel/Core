@@ -18,6 +18,11 @@ import org.bukkit.entity.Player;
 
 import java.util.*;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class DefaultMenuHistory implements MenuHistory {
     private final BazaarModule module;
     private final Map<UUID, Stack<GUI>> playerHistories = new HashMap<>();

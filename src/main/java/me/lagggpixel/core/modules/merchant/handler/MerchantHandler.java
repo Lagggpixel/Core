@@ -27,6 +27,11 @@ import java.util.HashMap;
 import java.util.List;
 
 @SuppressWarnings("FieldCanBeLocal")
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class MerchantHandler {
   @Getter
   private final File merchantFile;

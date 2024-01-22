@@ -30,6 +30,11 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Map;
 import java.util.UUID;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class HomeHandler {
   
   public final Component HOME_GUI_NAME = ChatUtils.stringToComponentCC("&aHomes");

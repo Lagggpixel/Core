@@ -16,6 +16,11 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.concurrent.CompletableFuture;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public interface Product extends MenuInfo {
     ItemStack getItem();
 

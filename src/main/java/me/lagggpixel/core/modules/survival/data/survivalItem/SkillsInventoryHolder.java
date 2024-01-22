@@ -23,6 +23,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class SkillsInventoryHolder extends SurvivalCoreInventoryHolder {
   protected SkillsInventoryHolder(Player player) {
     super(player, "Your Skills", 54);

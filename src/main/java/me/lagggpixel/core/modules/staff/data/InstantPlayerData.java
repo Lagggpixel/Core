@@ -42,6 +42,11 @@ import java.util.Map;
 @NoArgsConstructor
 @Getter
 @Setter
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class InstantPlayerData implements ConfigurationSerializable {
 
   @SerializedName("Health")

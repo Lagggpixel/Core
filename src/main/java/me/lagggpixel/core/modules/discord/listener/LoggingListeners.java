@@ -26,6 +26,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class LoggingListeners implements Listener {
 
   private final ServerTextChannel loggingChannel;

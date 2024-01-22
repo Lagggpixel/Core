@@ -23,6 +23,11 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class TpaCancelCommand implements ICommandClass {
   
   private final SurvivalModule module;

@@ -8,6 +8,11 @@
 
 package me.lagggpixel.core.modules.bazaar.api.bazaar.orders;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public enum SubmitResult {
     SUCCESS,
     NOT_ENOUGH,

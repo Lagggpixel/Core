@@ -18,6 +18,11 @@ import org.jetbrains.annotations.NotNull;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class AnimatedElementBuilder implements ElementBuilder<AnimatedElement> {
 
     private Consumer<ContextClickInfo> action = (i) -> {};

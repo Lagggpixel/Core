@@ -15,6 +15,11 @@ import org.jetbrains.annotations.Nullable;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public final class NBT {
 
     public static ItemStack putNBT(ItemStack stack, String key, String value) {

@@ -27,6 +27,11 @@ import java.util.function.Function;
  *
  * @author ZorTik
  */
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class PagedContainer extends Container {
 
     private int currentPageIndex = 0;

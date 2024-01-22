@@ -15,6 +15,11 @@ import me.lagggpixel.core.data.Hologram;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class HologramUtils {
   
   public static Map<String, Hologram> holograms = new HashMap<>();

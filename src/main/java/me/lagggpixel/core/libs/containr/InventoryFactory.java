@@ -8,6 +8,11 @@
 
 package me.lagggpixel.core.libs.containr;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public interface InventoryFactory {
 
     InventoryInfo createInventory(GUI gui);

@@ -32,6 +32,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class HomeCommands implements Listener, ICommandClass {
 
   IModule module;

@@ -14,6 +14,11 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Data
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class Pair<K, V> implements Serializable {
 
     private K key;

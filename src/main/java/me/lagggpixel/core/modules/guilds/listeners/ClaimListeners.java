@@ -42,6 +42,11 @@ import java.util.*;
 
 
 @SuppressWarnings("FieldCanBeLocal")
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class ClaimListeners implements Listener {
   
   private final int CLAIM_PRICE_MULTIPLER = 100;

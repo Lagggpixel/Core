@@ -20,6 +20,11 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.UUID;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class DefaultInstantBazaarOrder implements InstantBazaarOrder {
     private final Product product;
     private final int amount;

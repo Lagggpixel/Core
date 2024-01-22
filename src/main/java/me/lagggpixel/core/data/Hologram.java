@@ -20,6 +20,11 @@ import org.bukkit.entity.ArmorStand;
 
 @Data
 @Getter
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class Hologram {
   
   private ArmorStand armorStand;

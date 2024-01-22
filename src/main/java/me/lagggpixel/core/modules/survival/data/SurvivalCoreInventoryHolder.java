@@ -23,6 +23,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public abstract class SurvivalCoreInventoryHolder extends CoreInventoryHolder {
   
   protected SurvivalCoreInventoryHolder(Player player, Component title, int slots) {

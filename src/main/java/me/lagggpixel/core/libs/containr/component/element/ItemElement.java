@@ -23,6 +23,11 @@ import org.jetbrains.annotations.Nullable;
 @Deprecated
 @EqualsAndHashCode(callSuper = true)
 @Data
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class ItemElement extends Element {
 
     @Contract("_ -> new")

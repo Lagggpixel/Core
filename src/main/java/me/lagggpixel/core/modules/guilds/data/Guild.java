@@ -37,6 +37,11 @@ import java.util.UUID;
 @Setter
 @Data
 @AllArgsConstructor
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class Guild {
 
   private File file;

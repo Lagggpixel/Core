@@ -15,6 +15,11 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class EvtBus<T> {
 
     private final Map<UUID, ListenerWrapper<T>> entries = new ConcurrentHashMap<>();
@@ -42,7 +47,12 @@ public class EvtBus<T> {
         }
     }
 
-    public interface EvtListener<I> {
+    /**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
+public interface EvtListener<I> {
         void onEvent(I event);
     }
 

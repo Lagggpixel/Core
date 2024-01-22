@@ -18,6 +18,11 @@ import org.javacord.api.entity.channel.ServerVoiceChannelUpdater;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class ServerStatusHandler {
   
   private final Optional<ServerVoiceChannel> serverPlayersVc;

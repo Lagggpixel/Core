@@ -24,6 +24,11 @@ import org.bukkit.entity.Player;
 
 import java.util.*;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class GuildWhoCommand implements ISubCommand {
 
   private final GuildModule guildModule;

@@ -25,6 +25,11 @@ import java.util.UUID;
 @Setter
 @SuppressWarnings("unused")
 @Getter
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class Claim {
   private int x1;
   private int x2;

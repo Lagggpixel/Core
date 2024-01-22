@@ -12,6 +12,11 @@ package me.lagggpixel.core.interfaces;
 
 import javax.annotation.Nonnull;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public interface IModule {
 
   @Nonnull

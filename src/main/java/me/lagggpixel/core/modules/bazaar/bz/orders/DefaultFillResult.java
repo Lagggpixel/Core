@@ -14,6 +14,11 @@ import me.lagggpixel.core.modules.bazaar.api.bazaar.orders.OrderManager;
 
 import java.util.List;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class DefaultFillResult implements FillResult {
     private final OrderManager orderManager;
     private final List<BazaarOrder> previousOrders;

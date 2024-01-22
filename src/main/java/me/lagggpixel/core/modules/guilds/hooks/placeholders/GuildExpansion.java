@@ -23,6 +23,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class GuildExpansion extends ICorePlaceholderExpansion {
 
   private final GuildModule guildModule = GuildModule.getInstance();

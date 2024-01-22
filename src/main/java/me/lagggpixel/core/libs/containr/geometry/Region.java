@@ -18,6 +18,11 @@ import java.util.stream.Stream;
 
 @AllArgsConstructor
 @Data
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public final class Region implements Cloneable {
 
     private Pair<Integer, Integer> corner1;

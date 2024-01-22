@@ -16,6 +16,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public interface Bazaar {
   void open(Player player);
 

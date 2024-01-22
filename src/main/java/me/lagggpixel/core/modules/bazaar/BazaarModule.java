@@ -42,6 +42,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("LombokGetterMayBeUsed")
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class BazaarModule implements IModule, BazaarAPI {
 
   private Economy economy = null;

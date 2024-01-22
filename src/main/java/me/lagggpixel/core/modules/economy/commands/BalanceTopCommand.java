@@ -25,6 +25,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class BalanceTopCommand implements ICommandClass {
 
   private final EconomyModule economyModule;

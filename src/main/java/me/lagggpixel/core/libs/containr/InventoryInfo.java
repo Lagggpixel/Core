@@ -14,6 +14,11 @@ import org.bukkit.inventory.Inventory;
 
 @RequiredArgsConstructor
 @Getter
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class InventoryInfo {
 
     private final Inventory inventory;

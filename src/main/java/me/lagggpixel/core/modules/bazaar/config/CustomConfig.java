@@ -18,6 +18,11 @@ import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class CustomConfig {
     private final JavaPlugin plugin;
     private final Map<String, Object> defaults = new LinkedHashMap<>();

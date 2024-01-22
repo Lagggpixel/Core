@@ -29,6 +29,11 @@ import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Predicate;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class SQLOrderManager extends AbstractOrderManager {
   private final SQLDatabase sqlDatabase;
 

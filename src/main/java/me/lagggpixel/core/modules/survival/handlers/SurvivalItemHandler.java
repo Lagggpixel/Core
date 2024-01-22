@@ -25,6 +25,11 @@ import org.bukkit.persistence.PersistentDataType;
 
 import java.util.Objects;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class SurvivalItemHandler {
   
   private final NamespacedKey nameSpacedKey = new NamespacedKey(Main.getInstance(), "survival");

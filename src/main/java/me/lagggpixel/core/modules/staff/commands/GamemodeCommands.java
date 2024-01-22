@@ -27,6 +27,11 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.Map;
 
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public class GamemodeCommands implements ICommandClass {
   private final StaffModule module;
   private final GamemodeHandler gamemodeHandler;
