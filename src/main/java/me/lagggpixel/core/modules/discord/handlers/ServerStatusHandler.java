@@ -24,7 +24,7 @@ public class ServerStatusHandler {
   
   public ServerStatusHandler() {
     serverPlayersVc = DiscordHandler.getInstance().getDiscordApi()
-        .getServerVoiceChannelById(DiscordHandler.getInstance().getYamlConfiguration().getLong("playerCountChannelId"));
+        .getServerVoiceChannelById(DiscordHandler.getInstance().getYamlConfiguration().getString("playerCountChannelId"));
     
     updateAllChannelsTimer();
   }
