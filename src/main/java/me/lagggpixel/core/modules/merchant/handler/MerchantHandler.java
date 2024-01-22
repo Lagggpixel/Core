@@ -40,9 +40,9 @@ public class MerchantHandler {
   private final String defaultSkinSignature = "SJ3UgiyBz4IO+gihrH0wEn3yGydYYw0yiJr8PxFxjay9v6HthvJP6mYDpG2/TZMetVUtFaHPy6BV0ZBVMo0oNt8Wkpbxq5NhvUCwLKRXSZIC8vjJme1gcTMqwn29ZJoXltHpgAOq54K7SnrPEgFHdq3nS7HH11BGsVSVRp9Oo028S7bEwHZf+QRnMzf/MdN6BIWWUjDwyYtx6EFqOE5BAlqA9ZRfDPPjRAoNfgg2s9JbrHRR7ouP6C224SRwbD6HFi1EC2XjsfcNSFPCYmoZIUoNAXKkNusgeaDY22OqkZGEtw1uJ86SoaPPZ0gJiGOuaKrPK7fYcG+3pDf0GFl9Fsv1rqjHjBq1tR+1PeCKuzY26Ad8E0tMdQapGwP974HEoF1AuJCHMxx/sC2WPk6Brw845kUnrducENBhtXg4cVP4aHeKRKGEDc5FeAcJBo7Q2FTIKr/fJ+cjsDCAn6vudsAmQBU+PnXZQcj3RAkJDa+kJPwCsCFZqIrUR79iqkw0GuJuxlFSjxy3Nhl14zc9eyWz+zv1MuRROuFVx88NZfNJGPFjhRPt7CeF+AiQ72RAGgnX9zoDJkNUPvbi5uTSm8HafK9HCfEX9zibIetYUjP6OciRxk9JvmPven5F0c7XI6Ow793kZnLr6NW3JGIiUDpb4odCjla+uaMVv75H3xo=";
   
   public MerchantHandler() {
-    this.merchantFile = new File(Main.getInstance().getDataFolder() + "/data/merchant", "merchants.yml");
+    this.merchantFile = new File(Main.getInstance().getDataFolder() + "/data/modules/merchant", "merchants.yml");
     if (!merchantFile.exists()) {
-      new File(Main.getInstance().getDataFolder() + "/data/merchant", "merchants.yml");
+      new File(Main.getInstance().getDataFolder() + "/data/modules/merchant", "merchants.yml");
     }
     this.merchantConfiguration = YamlConfiguration.loadConfiguration(merchantFile);
     this.merchants = new HashMap<>();

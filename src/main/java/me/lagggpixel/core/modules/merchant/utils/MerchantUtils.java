@@ -1,14 +1,12 @@
 /*
  * Copyright (c) 2024 Infinite Minecrafter's Developers.
  *
- * This file was created by the developers of Infinite Minecrafter's.
+ * This file was created by external developers.
  *
- * You are hereby granted the right to view the code for personal or educational purposes.
- * However, you are not allowed to copy, distribute, or resell the code without
- * explicit permission from the lead developer of Infinite Minecrafter's.
+ * You are hereby granted the right to view, copy, edit, distribute the code.
  */
 
-package me.lagggpixel.core.modules.merchant;
+package me.lagggpixel.core.modules.merchant.utils;
 
 import me.lagggpixel.core.builders.ItemBuilder;
 import me.lagggpixel.core.modules.merchant.data.MerchantGui;

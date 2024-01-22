@@ -48,7 +48,7 @@ public class SkillsModule implements IModule {
 
   @Override
   public void onEnable() {
-    dataFolder = new File(Main.getInstance().getDataFolder(), "data/skills");
+    dataFolder = new File(Main.getInstance().getDataFolder(), "data/modules/skills");
     skill_exp = new File(dataFolder, "skill_exp.yml");
     skill_level_up = new File(dataFolder, "skill_level_up.yml");
 
@@ -82,12 +82,12 @@ public class SkillsModule implements IModule {
 
   private void initConfig() {
     if (!skill_exp.exists()) {
-      String resourcePath = "data/skills/skill_exp.yml";
+      String resourcePath = "data/modules/skills/skill_exp.yml";
       FileUtil.copyToDefault(resourcePath);
     }
 
     if (!skill_level_up.exists()) {
-      String resourcePath = "data/skills/skill_level_up.yml";
+      String resourcePath = "data/modules/skills/skill_level_up.yml";
       FileUtil.copyToDefault(resourcePath);
     }
   }

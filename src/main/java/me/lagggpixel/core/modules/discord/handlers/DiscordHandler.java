@@ -73,10 +73,10 @@ public class DiscordHandler {
     }
     instance = this;
     this.nmsHandler = nmsHandler;
-    configFile = new File(Main.getInstance().getDataFolder() + "/data/discord", "discord.yml");
+    configFile = new File(Main.getInstance().getDataFolder() + "/data/modules/discord", "discord.yml");
     if (!configFile.exists()) {
-      FileUtil.copyToDefault("data/discord/discord.yml");
-      configFile = new File(Main.getInstance().getDataFolder() + "/data/discord", "discord.yml");
+      FileUtil.copyToDefault("data/modules/discord/discord.yml");
+      configFile = new File(Main.getInstance().getDataFolder() + "/data/modules/discord", "discord.yml");
     }
     yamlConfiguration = YamlConfiguration.loadConfiguration(configFile);
     String token = yamlConfiguration.getString("token");
