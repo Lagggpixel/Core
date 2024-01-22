@@ -28,7 +28,7 @@ import me.lagggpixel.core.modules.economy.EconomyModule;
 import me.lagggpixel.core.modules.guilds.GuildModule;
 import me.lagggpixel.core.modules.home.HomeModule;
 import me.lagggpixel.core.modules.home.data.Home;
-import me.lagggpixel.core.modules.merchant.utils.MerchantModule;
+import me.lagggpixel.core.modules.merchant.MerchantModule;
 import me.lagggpixel.core.modules.skills.SkillsModule;
 import me.lagggpixel.core.modules.skipnight.SkipNightModule;
 import me.lagggpixel.core.modules.spawn.SpawnModule;

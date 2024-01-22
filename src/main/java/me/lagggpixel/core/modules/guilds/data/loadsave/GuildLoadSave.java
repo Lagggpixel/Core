@@ -33,7 +33,7 @@ import java.util.logging.Level;
 
 public class GuildLoadSave {
   @Getter
-  private static final String folder = Main.getInstance().getDataFolder() + "/data/modules/guild/guilds/";
+  private static final String folder = Main.getInstance().getDataFolder() + "/data/modules/guild/";
 
   public static void load() throws NullPointerException {
     File folder = new File(GuildLoadSave.folder);
