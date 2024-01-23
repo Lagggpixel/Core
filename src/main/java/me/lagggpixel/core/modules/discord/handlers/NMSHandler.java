@@ -25,7 +25,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- *  @author Lagggpixel
+ *  @author    Lagggpixel
  *  </p>
  *  Created on January 22, 2024
  */
@@ -84,7 +84,12 @@ public class NMSHandler {
     }
   }
   
-  public Class<?> getClass(String className) {
+  /**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
+public class<?> getClass(String className) {
     Class<?> result = null;
     try {
       result = NMSHandler.class.getClassLoader().loadClass(className);
@@ -93,7 +98,12 @@ public class NMSHandler {
     return result;
   }
   
-  public Class<?> fixBukkitClass(String className, String... alternateClassNames) throws ClassNotFoundException {
+  /**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
+public class<?> fixBukkitClass(String className, String... alternateClassNames) throws ClassNotFoundException {
     List<String> classNames = new ArrayList<>();
     classNames.add(className);
     classNames.addAll(Arrays.asList(alternateClassNames));

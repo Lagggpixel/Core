@@ -16,7 +16,12 @@ import org.jetbrains.annotations.ApiStatus;
  * This interface is determined to be used ONLY by implementing
  * in a GUI class since only GUI class handles it.
  * <pre>
- *     public class MyGUI extends GUI implements Rebuildable {
+ *     /**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
+public class MyGUI extends GUI implements Rebuildable {
  *      public void rebuild() {
  *          // ...
  *      }
@@ -27,22 +32,27 @@ import org.jetbrains.annotations.ApiStatus;
  * @deprecated Deprecated in favor of {@link Container#refresh(Player)}
  */
 @Deprecated
+/**
+ *  @author    Lagggpixel
+ *  </p>
+ *  Created on January 22, 2024
+ */
 public interface Rebuildable {
-  
-  /**
-   * Rebuilds the GUI.
-   *
-   * @deprecated Use {@link #rebuild(Player)} instead.
-   */
-  @ApiStatus.ScheduledForRemoval
-  @Deprecated
-  default void rebuild() {}
-  
-  /**
-   * Rebuilds the GUI.
-   *
-   * @param player The player for whom the GUI is being rebuilt.
-   */
-  default void rebuild(Player player) {}
-  
+
+    /**
+     * Rebuilds the GUI.
+     *
+     * @deprecated Use {@link #rebuild(Player)} instead.
+     */
+    @ApiStatus.ScheduledForRemoval
+    @Deprecated
+    default void rebuild() {}
+
+    /**
+     * Rebuilds the GUI.
+     *
+     * @param player The player for whom the GUI is being rebuilt.
+     */
+    default void rebuild(Player player) {}
+
 }
