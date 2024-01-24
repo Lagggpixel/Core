@@ -57,6 +57,8 @@ public class ClaimListeners implements Listener {
   private final String ADMIN_NODE_CLAIM_MONEY_BYPASS = "core.guilds.claims.admin_money_bypass";
   private final String ADMIN_NODE_CLAIM_TOO_FAR_BYPASS = "core.guilds.claims.admin_too_far_bypass";
   private final String ADMIN_NODE_CLAIM_TOO_CLOSE_BYPASS = "core.guilds.claims.admin_too_close_bypass";
+  private final boolean EXPLOSION_PROTECTION_ENABLED = true; // Set to false if not implemented
+  private final String ADMIN_NODE_EXPLOSION_BYPASS = "core.guilds.explosion_bypass";
   
   private final GuildModule guildModule = GuildModule.getInstance();
   private final ClaimManager claimManager = guildModule.getClaimManager();
@@ -64,11 +66,18 @@ public class ClaimListeners implements Listener {
   private final HashSet<ClaimProfile> profiles = new HashSet<>();
   private final ArrayList<UUID> clicked = new ArrayList<>();
   private final PillarManager pillarManager = guildModule.getPillarManager();
-  
+
   public ClaimListeners() {
-    Bukkit.getPluginManager().registerEvents(this, Main.getInstance());
+      this.guildModule = GuildModule.getInstance();
+      this.claimManager = guildModule.getClaimManager();
+      this.guildHandler = guildModule.getGuildHandler();
+      this.profiles = new HashSet<>();
+      this.clicked = new ArrayList<>();
+      this.pillarManager = guildModule.getPillarManager();
+
+      Bukkit.getPluginManager().registerEvents(this, Main.getInstance());
   }
-  
+
   private ClaimProfile getProfile(UUID id) {
     for (ClaimProfile profile : this.profiles) {
       if (profile.getUuid() == id) {
@@ -79,11 +88,27 @@ public class ClaimListeners implements Listener {
     this.profiles.add(newProfile);
     return newProfile;
   }
-  
+
   @EventHandler(priority = EventPriority.HIGHEST)
   public void onClaimInteract(PlayerInteractEvent event) {
     Player player = event.getPlayer();
     User user = Main.getUser(player);
+
+    if (event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.LEFT_CLICK_BLOCK) {
+        Block clickedBlock = event.getClickedBlock();
+        if (clickedBlock != null && clickedBlock.getType() == Material.PISTON) {
+        // Handle piston interaction within claims
+           handlePistonInteraction(event, clickedBlock);
+      }
+    }
+
+    if (EXPLOSION_PROTECTION_ENABLED && event.getAction() == Action.RIGHT_CLICK_BLOCK && !event.isCancelled()) {
+      if (isExplosiveItem(event.getClickedBlock(), player)) {
+        event.setCancelled(true);
+        user.sendMessage("Explosion protection message"); // Replace with your message
+        return;
+      }
+    }
     if (event.getAction() == Action.PHYSICAL) {
       for (Claim claim : this.claimManager.getClaims()) {
         if (event.getClickedBlock() == null) {
@@ -133,6 +158,15 @@ public class ClaimListeners implements Listener {
    * @param guild the PlayerFaction object
    * @return true if the claim interaction is handled successfully, false otherwise
    */
+  private boolean isExplosiveItem(Block block, Player player) {
+    Material itemType = player.getInventory().getItemInMainHand().getType();
+    return (itemType == Material.WATER_BUCKET || itemType == Material.LAVA_BUCKET || itemType == Material.FLINT_AND_STEEL)
+            && isInteractiveBlock(block);
+  }
+
+  private boolean handleExplosionBypass(Player player) {
+  return player.hasPermission(ADMIN_NODE_EXPLOSION_BYPASS);
+  }
   private boolean handleClaimInteraction(PlayerInteractEvent e, Claim claim, Guild guild) {
     if ((guild != null && guild == claim.getOwner())
         || e.getPlayer().hasPermission(ADMIN_NODE_CLAIM_INTERACTION_BYPASS)) {
@@ -146,9 +180,32 @@ public class ClaimListeners implements Listener {
   @EventHandler(priority = EventPriority.LOW)
   public void onClaimInteract(BlockBreakEvent e) {
     handleClaimInteract(e);
+
+    // Check if a mob is breaking a block within a claim
+    if (isMobBreakingBlock(e)) {
+      handleMobBlockBreak(e);
+    }
   }
-  
-  
+
+// Additional method to check if a mob is breaking a block
+private boolean isMobBreakingBlock(BlockBreakEvent event) {
+  return event.getPlayer() instanceof Monster; // Customize this condition based on your mob type checks
+}
+
+// Additional method to handle mob block break prevention
+private void handleMobBlockBreak(BlockBreakEvent event) {
+  Player player = event.getPlayer();
+  for (Claim claim : this.claimManager.getClaims()) {
+    if (claim.isInside(event.getBlock().getLocation(), false)) {
+      Guild playerFaction = guildHandler.getGuildFromPlayer(player);
+      if ((playerFaction != null && playerFaction == claim.getOwner()) || player.hasPermission(ADMIN_NODE_CLAIM_INTERACTION_BYPASS)) {
+        return; // Allow mob block break for claim owner or admin
+      }
+      event.setCancelled(true);
+      Main.getUser(player).sendMessage("Mob block destruction prevention message"); // Replace with your message
+    }
+  }
+}
   @EventHandler(priority = EventPriority.LOW)
   public void onClaimInteract(BlockPlaceEvent e) {
     handleClaimInteract(e);
@@ -161,6 +218,22 @@ public class ClaimListeners implements Listener {
    * @param guild    the guild involved in the claim change
    * @param entering true if the player is entering the claim, false if leaving
    */
+  private void handlePistonInteraction(PlayerInteractEvent event, Block pistonBlock) {
+    Player player = event.getPlayer();
+    User user = Main.getUser(player);
+
+    for (Claim claim : this.claimManager.getClaims()) {
+      if (claim.isInside(pistonBlock.getLocation(), false)) {
+        Guild playerFaction = guildHandler.getGuildFromPlayer(player);
+        if ((playerFaction != null && playerFaction == claim.getOwner()) || player.hasPermission(ADMIN_NODE_CLAIM_INTERACTION_BYPASS)) {
+          return; // Allow piston interaction for claim owner or admin
+        }
+
+        event.setCancelled(true);
+        user.sendMessage("Piston protection message"); // Replace with your message
+      }
+    }
+  }
   private void sendClaimChange(Player p, Guild guild, boolean entering) {
     Guild playerFaction = guildHandler.getGuildFromPlayer(p);
     if (entering) {
@@ -529,5 +602,4 @@ public class ClaimListeners implements Listener {
     }
   }
 }
-
 
