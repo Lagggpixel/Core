@@ -17,8 +17,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  *  @author    Lagggpixel
- *  </p>
- *  Created on January 22, 2024
+ * @since January 27, 2024 January 22, 2024
  */
 public class EvtBus<T> {
 
@@ -49,8 +48,7 @@ public class EvtBus<T> {
 
     /**
  *  @author    Lagggpixel
- *  </p>
- *  Created on January 22, 2024
+ * @since January 27, 2024 January 22, 2024
  */
 public interface EvtListener<I> {
         void onEvent(I event);

@@ -27,8 +27,7 @@ import java.util.UUID;
 @Getter
 /**
  *  @author    Lagggpixel
- *  </p>
- *  Created on January 22, 2024
+ * @since January 27, 2024 January 22, 2024
  */
 public class Claim {
   private int x1;

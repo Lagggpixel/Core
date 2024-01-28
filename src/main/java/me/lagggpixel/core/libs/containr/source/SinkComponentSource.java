@@ -16,8 +16,7 @@ import static reactor.core.publisher.Sinks.many;
 
 /**
  *  @author    Lagggpixel
- *  </p>
- *  Created on January 22, 2024
+ * @since January 27, 2024 January 22, 2024
  */
 public class SinkComponentSource extends SimpleComponentSource {
 
@@ -61,8 +60,7 @@ public class SinkComponentSource extends SimpleComponentSource {
 
     /**
  *  @author    Lagggpixel
- *  </p>
- *  Created on January 22, 2024
+ * @since January 27, 2024 January 22, 2024
  */
 public interface ComponentMapper<T> {
         Component map(T anyObject);

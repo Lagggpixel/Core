@@ -25,8 +25,7 @@ import java.util.Map;
 
 /**
  *  @author    Lagggpixel
- *  </p>
- *  Created on January 22, 2024
+ * @since January 27, 2024 January 22, 2024
  */
 public class SearchMenuConfiguration extends MenuConfiguration {
     public SearchMenuConfiguration(String name, int rows, List<DefaultConfigurableMenuItem> items) {

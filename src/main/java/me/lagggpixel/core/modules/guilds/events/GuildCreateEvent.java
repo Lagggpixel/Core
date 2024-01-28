@@ -15,8 +15,7 @@ import org.bukkit.entity.Player;
 
 /**
  *  @author    Lagggpixel
- *  </p>
- *  Created on January 22, 2024
+ * @since January 27, 2024 January 22, 2024
  */
 public class GuildCreateEvent extends GuildEvents {
   public GuildCreateEvent(Player player, Guild guild) {

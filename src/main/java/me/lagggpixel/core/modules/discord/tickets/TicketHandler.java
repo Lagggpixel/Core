@@ -2,7 +2,6 @@ package me.lagggpixel.core.modules.discord.tickets;
 
 import org.javacord.api.entity.channel.RegularServerChannel;
 
-import java.util.HashSet;
 import java.util.Set;
 
 /**

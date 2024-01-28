@@ -40,8 +40,7 @@ import java.util.stream.IntStream;
 @Getter
 /**
  *  @author    Lagggpixel
- *  </p>
- *  Created on January 22, 2024
+ * @since January 27, 2024 January 22, 2024
  */
 public abstract class Container implements ContainerComponent {
 
@@ -409,8 +408,7 @@ public abstract class Container implements ContainerComponent {
 
     /**
  *  @author    Lagggpixel
- *  </p>
- *  Created on January 22, 2024
+ * @since January 27, 2024 January 22, 2024
  */
 public interface LocalEventInterface {
         @Nullable Container getContainer();

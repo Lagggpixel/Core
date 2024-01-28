@@ -32,8 +32,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  *  @author    Lagggpixel
- *  </p>
- *  Created on January 22, 2024
+ * @since January 27, 2024 January 22, 2024
  */
 public abstract class AbstractOrderManager implements OrderManager {
   protected final BazaarModule module;

@@ -14,8 +14,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 /**
  *  @author    Lagggpixel
- *  </p>
- *  Created on January 22, 2024
+ * @since January 27, 2024 January 22, 2024
  */
 public class DatabaseConfig extends CustomConfig {
     public DatabaseConfig(JavaPlugin plugin) {
