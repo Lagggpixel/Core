@@ -4,5 +4,7 @@ messageChannelId: ""
 consoleChannelId: ""
 loggingChannelId: ""
 
+staffRoleId: ""
+
 # Optional
 playerCountChannelId: ""

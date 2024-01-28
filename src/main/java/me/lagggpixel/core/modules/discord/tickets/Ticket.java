@@ -51,15 +51,6 @@ public class Ticket {
           .setState(PermissionType.ATTACH_FILE, PermissionState.ALLOWED)
           .build();
 
-  private final Permissions adminPermission =
-      new PermissionsBuilder()
-          .setAllDenied()
-          .setState(PermissionType.VIEW_CHANNEL, PermissionState.ALLOWED)
-          .setState(PermissionType.READ_MESSAGE_HISTORY, PermissionState.ALLOWED)
-          .setState(PermissionType.SEND_MESSAGES, PermissionState.ALLOWED)
-          .setState(PermissionType.ATTACH_FILE, PermissionState.ALLOWED)
-          .build();
-
   private Ticket(@NotNull User creator, @NotNull TicketType ticketType) {
     this.creator = creator;
     this.ticketType = ticketType;
