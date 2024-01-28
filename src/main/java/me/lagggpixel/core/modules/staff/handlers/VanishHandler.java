@@ -21,8 +21,7 @@ import java.util.Map;
 
 /**
  *  @author    Lagggpixel
- *  </p>
- *  Created on January 22, 2024
+ * @since January 27, 2024 January 22, 2024
  */
 public class VanishHandler {
   public static final String vanishSeePermission = "coreplugin.staff.command.vanish.see";

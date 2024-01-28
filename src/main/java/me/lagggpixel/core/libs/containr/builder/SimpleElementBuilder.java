@@ -34,8 +34,7 @@ import java.util.function.Supplier;
 @Getter(AccessLevel.PROTECTED)
 /**
  *  @author    Lagggpixel
- *  </p>
- *  Created on January 22, 2024
+ * @since January 27, 2024 January 22, 2024
  */
 public class SimpleElementBuilder implements ElementBuilder<Element> {
 

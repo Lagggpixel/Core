@@ -17,8 +17,7 @@ import java.util.Optional;
 
 /**
  *  @author    Lagggpixel
- *  </p>
- *  Created on January 22, 2024
+ * @since January 27, 2024 January 22, 2024
  */
 public class CyclicArrayList<T> extends LinkedList<T> {
 

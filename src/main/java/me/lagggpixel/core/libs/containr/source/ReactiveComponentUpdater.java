@@ -20,8 +20,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @RequiredArgsConstructor
 /**
  *  @author    Lagggpixel
- *  </p>
- *  Created on January 22, 2024
+ * @since January 27, 2024 January 22, 2024
  */
 public class ReactiveComponentUpdater implements ComponentSource {
 
@@ -50,8 +49,7 @@ public class ReactiveComponentUpdater implements ComponentSource {
 
     /**
  *  @author    Lagggpixel
- *  </p>
- *  Created on January 22, 2024
+ * @since January 27, 2024 January 22, 2024
  */
 public interface ComponentSupplier {
         Collection<Element> getComponents();

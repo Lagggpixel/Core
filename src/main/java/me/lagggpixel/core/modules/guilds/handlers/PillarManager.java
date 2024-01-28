@@ -21,8 +21,7 @@ import java.util.Iterator;
 @Getter
 /**
  *  @author    Lagggpixel
- *  </p>
- *  Created on January 22, 2024
+ * @since January 27, 2024 January 22, 2024
  */
 public class PillarManager {
   private final HashSet<Pillar> pillars = new HashSet<>();

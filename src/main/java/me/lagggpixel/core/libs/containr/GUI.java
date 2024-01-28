@@ -46,8 +46,7 @@ import java.util.stream.Collectors;
 @Getter
 /**
  *  @author    Lagggpixel
- *  </p>
- *  Created on January 22, 2024
+ * @since January 27, 2024 January 22, 2024
  */
 public abstract class GUI extends ContainerHolder implements InventoryHolder, Cloneable {
 
@@ -304,8 +303,7 @@ public abstract class GUI extends ContainerHolder implements InventoryHolder, Cl
 
     /**
  *  @author    Lagggpixel
- *  </p>
- *  Created on January 22, 2024
+ * @since January 27, 2024 January 22, 2024
  */
 public interface NormalEditHandler {
         void onEdit(Player player, int slot);
@@ -313,8 +311,7 @@ public interface NormalEditHandler {
 
     /**
  *  @author    Lagggpixel
- *  </p>
- *  Created on January 22, 2024
+ * @since January 27, 2024 January 22, 2024
  */
 public enum CloseReason {
         BY_METHOD,

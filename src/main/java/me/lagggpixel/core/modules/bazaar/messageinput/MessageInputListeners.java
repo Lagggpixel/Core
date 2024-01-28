@@ -17,8 +17,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 /**
  *  @author    Lagggpixel
- *  </p>
- *  Created on January 22, 2024
+ * @since January 27, 2024 January 22, 2024
  */
 public class MessageInputListeners implements Listener {
     private final MessageInputManager messageInputManager;

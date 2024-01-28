@@ -27,8 +27,7 @@ import java.util.*;
 @Getter
 /**
  *  @author    Lagggpixel
- *  </p>
- *  Created on January 22, 2024
+ * @since January 27, 2024 January 22, 2024
  */
 public class ClaimManager {
   private final HashMap<UUID, Guild> claiming = new HashMap<>();

@@ -44,12 +44,11 @@ import java.util.UUID;
 import java.util.logging.Level;
 import java.util.regex.Pattern;
 
-@SuppressWarnings({"DataFlowIssue", "FieldCanBeLocal"})
 /**
  *  @author    Lagggpixel
- *  </p>
- *  Created on January 22, 2024
+ * @since January 27, 2024 January 22, 2024
  */
+@SuppressWarnings({"DataFlowIssue", "FieldCanBeLocal"})
 public class DiscordHandler {
   
   private File configFile;
@@ -67,7 +66,7 @@ public class DiscordHandler {
   @NotNull
   public ServerTextChannel LOGGING_CHANNEL = null;
   @NotNull
-  private Server server = null;
+  public Server server = null;
   
   @Getter
   private final DiscordApi discordApi;
