@@ -60,7 +60,7 @@ public class SurvivalItemListeners implements Listener {
     }.runTaskLater(Main.getInstance(), 20);
   }
   
-  @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+  @EventHandler(priority = EventPriority.LOWEST)
   public void PlayerDropItemEvent(@NotNull PlayerDropItemEvent event) {
     Item itemDropped = event.getItemDrop();
     if (survivalItemHandler.isSurvivalItem(itemDropped)) {
@@ -83,7 +83,7 @@ public class SurvivalItemListeners implements Listener {
     }
   }
   
-  @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+  @EventHandler(priority = EventPriority.LOWEST)
   public void PlayerSwapHandItemsEvent(@NotNull PlayerSwapHandItemsEvent event) {
     ItemStack itemSwapped = event.getOffHandItem();
     if (survivalItemHandler.isSurvivalItem(itemSwapped)) {
@@ -91,7 +91,7 @@ public class SurvivalItemListeners implements Listener {
     }
   }
   
-  @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+  @EventHandler(priority = EventPriority.LOW)
   public void onPlayerClick(@NotNull PlayerInteractEvent event) {
     Player player = event.getPlayer();
     if (survivalItemHandler.isSurvivalItem(event.getPlayer().getInventory().getItemInMainHand())) {
