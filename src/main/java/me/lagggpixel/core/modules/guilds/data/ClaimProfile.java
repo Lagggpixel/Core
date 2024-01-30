@@ -17,13 +17,13 @@ import org.bukkit.entity.Player;
 
 import java.util.UUID;
 
+/**
+ * @author Lagggpixel
+ * @since January 22, 2024
+ */
 @Setter
 @SuppressWarnings("unused")
 @Getter
-/**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
- */
 public class ClaimProfile {
   private UUID uuid;
   private Claim lastInside;

@@ -18,8 +18,8 @@ import me.lagggpixel.core.utils.CommandUtils;
 import org.jetbrains.annotations.NotNull;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
 public class SkipNightModule implements IModule {
 
@@ -41,12 +41,12 @@ public class SkipNightModule implements IModule {
     skipNightVoteManager = new SkipNightVoteManager(this);
     CommandUtils.registerCommand(new SkipNightCommand(this, skipNightVoteManager));
   }
-  
+
   @Override
   public void onDisable() {
-  
+
   }
-  
+
   @Override
   public void registerCommands() {
 

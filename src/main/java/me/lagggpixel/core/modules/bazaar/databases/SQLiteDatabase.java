@@ -4,6 +4,7 @@
  * This file was created by external developers.
  *
  * You are hereby granted the right to view, copy, edit, distribute the code.
+ *
  */
 
 package me.lagggpixel.core.modules.bazaar.databases;
@@ -17,57 +18,56 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @since January 22, 2024
  */
 public class SQLiteDatabase implements SQLDatabase {
-    private final File folder;
-    private final String fileName;
-    private Connection connection;
+  private final File folder;
+  private final String fileName;
+  private Connection connection;
 
-    public SQLiteDatabase(File folder, String fileName) {
-        this.folder = folder;
-        this.fileName = fileName;
-        connect();
-        if (!isConnected()) {
-            Bukkit.getLogger().severe("Cannot connect to sqlite database!");
-        }
+  public SQLiteDatabase(File folder, String fileName) {
+    this.folder = folder;
+    this.fileName = fileName;
+    connect();
+    if (!isConnected()) {
+      Bukkit.getLogger().severe("Cannot connect to sqlite database!");
+    }
+  }
+
+  public void connect() {
+    if (isConnected()) return;
+
+    File file = new File(folder, fileName + ".db");
+    if (!file.exists()) {
+      try {
+        file.createNewFile();
+      } catch (IOException e) {
+        throw new RuntimeException(e);
+      }
     }
 
-    public void connect() {
-        if (isConnected()) return;
+    String url = "jdbc:sqlite:" + file;
 
-        File file = new File(folder, fileName + ".db");
-        if (!file.exists()) {
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        String url = "jdbc:sqlite:" + file;
-
-        try {
-            Class.forName("org.sqlite.JDBC");
-            connection = DriverManager.getConnection(url);
-        } catch (SQLException | ClassNotFoundException exception) {
-            throw new RuntimeException(exception);
-        }
+    try {
+      Class.forName("org.sqlite.JDBC");
+      connection = DriverManager.getConnection(url);
+    } catch (SQLException | ClassNotFoundException exception) {
+      throw new RuntimeException(exception);
     }
+  }
 
-    @Override
-    public Connection getConnection() {
-        return connection;
-    }
+  @Override
+  public Connection getConnection() {
+    return connection;
+  }
 
-    @Override
-    public boolean isConnected() {
-        return connection != null;
-    }
+  @Override
+  public boolean isConnected() {
+    return connection != null;
+  }
 
-    @Override
-    public Type getType() {
-        return Type.SQLITE;
-    }
+  @Override
+  public Type getType() {
+    return Type.SQLITE;
+  }
 }

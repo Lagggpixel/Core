@@ -11,7 +11,6 @@
 package me.lagggpixel.core.modules.guilds;
 
 import lombok.Getter;
-import me.lagggpixel.core.Main;
 import me.lagggpixel.core.interfaces.IModule;
 import me.lagggpixel.core.modules.guilds.commands.GuildCommand;
 import me.lagggpixel.core.modules.guilds.data.loadsave.GuildLoadSave;
@@ -24,13 +23,11 @@ import me.lagggpixel.core.utils.CommandUtils;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.logging.Level;
-
-@Getter
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
+@Getter
 public class GuildModule implements IModule {
   private static GuildModule INSTANCE;
   private GuildHandler guildHandler;

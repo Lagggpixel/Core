@@ -32,15 +32,15 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * @author Lagggpixel
+ * @since January 22, 2024
+ */
 @SuppressWarnings("unused")
 @Getter
 @Setter
 @Data
 @AllArgsConstructor
-/**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
- */
 public class Guild {
 
   private File file;

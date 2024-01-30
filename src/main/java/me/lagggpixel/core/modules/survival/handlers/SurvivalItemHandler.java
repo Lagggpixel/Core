@@ -26,13 +26,13 @@ import org.bukkit.persistence.PersistentDataType;
 import java.util.Objects;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
 public class SurvivalItemHandler {
-  
+
   private final NamespacedKey nameSpacedKey = new NamespacedKey(Main.getInstance(), "survival");
-  
+
   public ItemStack getSurvivalItem() {
     ItemBuilder itemBuilder = new ItemBuilder(Material.NETHER_STAR)
         .setDisplayName(Lang.SURVIVAL_ITEM_NAME.toComponent())
@@ -43,7 +43,7 @@ public class SurvivalItemHandler {
     itemStack.setItemMeta(itemMeta);
     return itemStack;
   }
-  
+
   public boolean isSurvivalItem(Item item) {
     if (item == null) {
       return false;
@@ -51,7 +51,7 @@ public class SurvivalItemHandler {
     ItemStack itemStack = item.getItemStack();
     return isSurvivalItem(itemStack);
   }
-  
+
   public boolean isSurvivalItem(ItemStack item) {
     if (item == null) {
       return false;
@@ -64,7 +64,7 @@ public class SurvivalItemHandler {
     }
     return (Objects.requireNonNull(item.getItemMeta().getPersistentDataContainer().get(nameSpacedKey, PersistentDataType.STRING)).equals("survival_item"));
   }
-  
+
   public void openInventory(Player player) {
     new SurvivalItemInventoryHolder(player).openInventory(player);
   }

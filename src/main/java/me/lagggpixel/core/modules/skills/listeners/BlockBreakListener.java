@@ -21,8 +21,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
 public class BlockBreakListener implements Listener {
 
@@ -35,11 +35,11 @@ public class BlockBreakListener implements Listener {
   @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
   public void BlockBreakEvent(BlockBreakEvent event) {
     Block block = event.getBlock();
-    
+
     if (skillsModule.getSkillHandler().getNonNaturalBlocks().contains(block.getLocation())) {
       return;
     }
-    
+
     User user = Main.getUser(event.getPlayer().getUniqueId());
     if (skillsModule.getSkillHandler().isBlockFarming(block)) {
       handleFarmingBlockBreak(user, block);

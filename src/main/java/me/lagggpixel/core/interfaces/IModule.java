@@ -13,8 +13,8 @@ package me.lagggpixel.core.interfaces;
 import javax.annotation.Nonnull;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
 public interface IModule {
 
@@ -24,7 +24,7 @@ public interface IModule {
   boolean isEnabled();
 
   void onEnable();
-  
+
   void onDisable();
 
   void registerCommands();

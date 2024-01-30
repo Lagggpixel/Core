@@ -26,15 +26,10 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 /**
- * This class represents the survival item inventory holder.
- *
- * @see SkillsInventoryHolder
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
 @Getter
-/**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
- */
 public class SurvivalItemInventoryHolder extends SurvivalCoreInventoryHolder {
   public SurvivalItemInventoryHolder(Player player) {
     super(player, Lang.SURVIVAL_ITEM_INVENTORY_TITLE.toComponent(), 54);
@@ -68,9 +63,9 @@ public class SurvivalItemInventoryHolder extends SurvivalCoreInventoryHolder {
     inventory.setItem(31, comingSoon);
     inventory.setItem(32, comingSoon);
     inventory.setItem(33, comingSoon);
-    
+
     buildCloseButton();
-    
+
     this.fillEmptySlots();
   }
 

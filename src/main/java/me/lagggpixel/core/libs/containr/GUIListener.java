@@ -4,6 +4,7 @@
  * This file was created by external developers.
  *
  * You are hereby granted the right to view, copy, edit, distribute the code.
+ *
  */
 
 package me.lagggpixel.core.libs.containr;
@@ -25,76 +26,76 @@ import org.bukkit.plugin.Plugin;
 import java.util.LinkedList;
 import java.util.Optional;
 
+/**
+ * @author ZorTik
+ * @since January 22, 2024
+ */
 @RequiredArgsConstructor
 @Getter
-/**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
- */
 public class GUIListener implements Listener {
 
-    private final Plugin plugin;
+  private final Plugin plugin;
 
-    @EventHandler
-    public void onInventoryClick(InventoryClickEvent e) {
-        HumanEntity entity = e.getWhoClicked();
-        if(!(entity instanceof Player)) {
-            return;
+  @EventHandler
+  public void onInventoryClick(InventoryClickEvent e) {
+    HumanEntity entity = e.getWhoClicked();
+    if (!(entity instanceof Player)) {
+      return;
+    }
+    Player p = (Player) entity;
+    if (e.getClickedInventory() != null) {
+      Inventory inv = e.getClickedInventory();
+      if (inv.getHolder() != null && inv.getHolder() instanceof GUI) {
+        e.setCancelled(true);
+        GUI gui = (GUI) inv.getHolder();
+        if (gui.isFrozen()) {
+          return;
         }
-        Player p = (Player) entity;
-        if(e.getClickedInventory() != null) {
-            Inventory inv = e.getClickedInventory();
-            if(inv.getHolder() != null && inv.getHolder() instanceof GUI) {
-                e.setCancelled(true);
-                GUI gui = (GUI) inv.getHolder();
-                if(gui.isFrozen()) {
-                    return;
-                }
-                if(gui.getNormalItemSlots().contains(e.getSlot())) {
-                    e.setCancelled(false);
-                    for(GUI.NormalEditHandler handler : gui.getNormalEditHandlers()) {
-                        try {
-                            handler.onEdit(p, e.getSlot());
-                        } catch(Exception ex) {
-                            ex.printStackTrace();
-                        }
-                    }
-                    return;
-                }
-                if (e.getCurrentItem() != null)
-                    gui.invokeElement(p, e.getClick(), e.getCurrentItem(), e.getCursor());
-            } else if(GUIRepository.hasOpen(p) && e.getAction().equals(InventoryAction.MOVE_TO_OTHER_INVENTORY)) {
-                // We don't want to allow players to drop items to gui with shift click.
-                e.setCancelled(true);
-                return;
+        if (gui.getNormalItemSlots().contains(e.getSlot())) {
+          e.setCancelled(false);
+          for (GUI.NormalEditHandler handler : gui.getNormalEditHandlers()) {
+            try {
+              handler.onEdit(p, e.getSlot());
+            } catch (Exception ex) {
+              ex.printStackTrace();
             }
+          }
+          return;
         }
+        if (e.getCurrentItem() != null)
+          gui.invokeElement(p, e.getClick(), e.getCurrentItem(), e.getCursor());
+      } else if (GUIRepository.hasOpen(p) && e.getAction().equals(InventoryAction.MOVE_TO_OTHER_INVENTORY)) {
+        // We don't want to allow players to drop items to gui with shift click.
+        e.setCancelled(true);
+        return;
+      }
     }
+  }
 
-    @EventHandler
-    public void onInventoryClose(InventoryCloseEvent e) {
-        LinkedList<GUI> history = GUIRepository.PREV_GUIS.get(e.getPlayer().getName());
-        GUI gui = null;
-        if(e.getInventory() == Optional.ofNullable(GUIRepository.OPENED_GUIS.get(e.getPlayer().getName()))
-                .map(GUI::getInventory).orElse(null)) {
-            gui = GUIRepository.remove(e.getPlayer().getName());
-        }
-        if(gui != null) {
-            gui.close((Player) e.getPlayer(), GUI.CloseReason.BY_PLAYER);
-        }
-        if(history != null) {
-            history.clear();
-        }
+  @EventHandler
+  public void onInventoryClose(InventoryCloseEvent e) {
+    LinkedList<GUI> history = GUIRepository.PREV_GUIS.get(e.getPlayer().getName());
+    GUI gui = null;
+    if (e.getInventory() == Optional.ofNullable(GUIRepository.OPENED_GUIS.get(e.getPlayer().getName()))
+        .map(GUI::getInventory).orElse(null)) {
+      gui = GUIRepository.remove(e.getPlayer().getName());
     }
+    if (gui != null) {
+      gui.close((Player) e.getPlayer(), GUI.CloseReason.BY_PLAYER);
+    }
+    if (history != null) {
+      history.clear();
+    }
+  }
 
-    @EventHandler
-    public void onInventoryCreativeEvent(InventoryCreativeEvent e) {
-        onInventoryClick(e);
-    }
+  @EventHandler
+  public void onInventoryCreativeEvent(InventoryCreativeEvent e) {
+    onInventoryClick(e);
+  }
 
-    @EventHandler
-    public void onDisable(PluginDisableEvent e) {
-        Containr.unregisterSignal(e.getPlugin());
-    }
+  @EventHandler
+  public void onDisable(PluginDisableEvent e) {
+    Containr.unregisterSignal(e.getPlugin());
+  }
 
 }

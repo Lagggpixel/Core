@@ -29,44 +29,44 @@ import java.util.List;
 import java.util.Map;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
 public class SpawnCommand implements ICommandClass {
-  
+
   private final SpawnModule spawnModule;
   private final SpawnManager spawnManager;
-  
+
   public SpawnCommand(SpawnModule spawnModule) {
     this.spawnModule = spawnModule;
-    this.spawnManager =  this.spawnModule.getSpawnManager();
+    this.spawnManager = this.spawnModule.getSpawnManager();
   }
-  
+
   @Override
   public String getCommandName() {
     return "spawn";
   }
-  
+
   @Override
   public String getCommandDescription() {
     return null;
   }
-  
+
   @Override
   public List<String> getCommandAliases() {
     return List.of();
   }
-  
+
   @Override
   public String getCommandPermission() {
     return CommandUtils.generateCommandBasePermission(spawnModule, this);
   }
-  
+
   @Override
   public String getUsage() {
     return null;
   }
-  
+
   @Override
   public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String label, String[] args) {
     if (!(commandSender instanceof Player sender)) {
@@ -76,9 +76,9 @@ public class SpawnCommand implements ICommandClass {
           commandSender.sendMessage(Lang.PLAYER_NOT_FOUND.toComponentWithPrefix(Map.of("%player%", args[0])));
           return true;
         }
-        
+
         User targetUser = Main.getUser(target.getUniqueId());
-        
+
         if (spawnManager.getSpawnLocation() == null) {
           commandSender.sendMessage(Lang.SPAWN_NO_SET_SPAWN.toComponentWithPrefix());
           return true;
@@ -91,15 +91,15 @@ public class SpawnCommand implements ICommandClass {
       commandSender.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
       return true;
     }
-    
+
     User senderUser = Main.getUser(sender.getUniqueId());
-    
+
     if (args.length == 0) {
       if (spawnManager.getSpawnLocation() == null) {
         senderUser.sendMessage(Lang.SPAWN_NO_SET_SPAWN.toComponentWithPrefix());
         return true;
       }
-      
+
       TeleportUtils.teleportWithDelay(sender, spawnManager.getSpawnLocation(), Lang.SPAWN_NAME.getDef());
       return true;
     }
@@ -114,7 +114,7 @@ public class SpawnCommand implements ICommandClass {
         senderUser.sendMessage(Lang.PLAYER_NOT_FOUND.toComponentWithPrefix(Map.of("%player%", args[0])));
         return true;
       }
-      
+
       User targetUser = Main.getUser(target.getUniqueId());
 
       if (spawnManager.getSpawnLocation() == null) {
@@ -126,12 +126,12 @@ public class SpawnCommand implements ICommandClass {
       senderUser.sendMessage(Lang.SPAWN_TELEPORTED_OTHER.toComponentWithPrefix(Map.of("%player%", target.getName())));
       return true;
     }
-    
+
     senderUser.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
     return true;
   }
-  
-  
+
+
   @Override
   public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, org.bukkit.command.@NotNull Command command, @NotNull String s, @NotNull String[] strings) {
     return null;

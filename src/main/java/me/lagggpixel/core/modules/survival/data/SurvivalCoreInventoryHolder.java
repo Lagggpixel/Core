@@ -24,20 +24,20 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
 public abstract class SurvivalCoreInventoryHolder extends CoreInventoryHolder {
-  
+
   protected SurvivalCoreInventoryHolder(Player player, Component title, int slots) {
     super(player, title, slots);
   }
-  
+
   protected SurvivalCoreInventoryHolder(Player player, String title, int slots) {
     super(player, title, slots);
   }
-  
-  
+
+
   @Override
   public void handleInventoryClick(@NotNull InventoryClickEvent event) {
     event.setCancelled(true);
@@ -54,7 +54,7 @@ public abstract class SurvivalCoreInventoryHolder extends CoreInventoryHolder {
       player.closeInventory();
     }
   }
-  
+
   protected void buildCloseButton(int slot) {
     this.inventory.setItem(slot, new ItemBuilder((Material.BARRIER))
         .setDisplayName("&cClose")
@@ -64,11 +64,11 @@ public abstract class SurvivalCoreInventoryHolder extends CoreInventoryHolder {
         .setTag("close")
         .toItemStack());
   }
-  
+
   protected void buildCloseButton() {
     buildCloseButton(49);
   }
-  
+
   protected void buildBackButton(int slot) {
     this.inventory.setItem(slot, new ItemBuilder(Material.ARROW)
         .setDisplayName("&aGo Back")
@@ -78,7 +78,7 @@ public abstract class SurvivalCoreInventoryHolder extends CoreInventoryHolder {
         .setTag("back")
         .toItemStack());
   }
-  
+
   protected void buildBackButton() {
     buildBackButton(48);
   }

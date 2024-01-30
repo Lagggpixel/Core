@@ -27,41 +27,41 @@ import me.lagggpixel.core.utils.CommandUtils;
 import org.jetbrains.annotations.NotNull;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
 public class SurvivalModule implements IModule {
   private TpaHandler tpaHandler;
   private SurvivalItemHandler survivalItemHandler;
-  
+
   @NotNull
   @Override
   public String getId() {
     return "survival";
   }
-  
+
   @Override
   public boolean isEnabled() {
     return true;
   }
-  
+
   @Override
   public void onEnable() {
     tpaHandler = new TpaHandler();
     survivalItemHandler = new SurvivalItemHandler();
   }
-  
+
   @Override
   public void onDisable() {
-  
+
   }
-  
+
   @Override
   public void registerCommands() {
-   registerTpaCommands();
+    registerTpaCommands();
     registerInventoryCommands();
   }
-  
+
   @Override
   public void registerListeners() {
     new SurvivalItemListeners(survivalItemHandler);

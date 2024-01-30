@@ -14,8 +14,8 @@ import me.lagggpixel.core.modules.guilds.data.Guild;
 import org.bukkit.entity.Player;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
 public class GuildDisbandEvent extends GuildEvents {
   public GuildDisbandEvent(Player player, Guild guild) {

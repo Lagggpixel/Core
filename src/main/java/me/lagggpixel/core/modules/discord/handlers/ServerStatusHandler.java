@@ -19,20 +19,20 @@ import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
 public class ServerStatusHandler {
-  
+
   private final Optional<ServerVoiceChannel> serverPlayersVc;
-  
+
   public ServerStatusHandler() {
     serverPlayersVc = DiscordHandler.getInstance().getDiscordApi()
         .getServerVoiceChannelById(DiscordHandler.getInstance().getYamlConfiguration().getString("playerCountChannelId"));
-    
+
     updateAllChannelsTimer();
   }
-  
+
   /**
    * Updates the timer for all channels on a 30 seconds time
    * <p>
@@ -46,7 +46,7 @@ public class ServerStatusHandler {
       }
     }.runTaskTimerAsynchronously(Main.getInstance(), 0, 20L * 30);
   }
-  
+
   private void updateServerPlayersVcChannel() {
     if (serverPlayersVc.isEmpty()) {
       return;
@@ -68,7 +68,7 @@ public class ServerStatusHandler {
       serverVoiceChannelUpdater.setName("Players: " + onlinePlayers.get()).update();
     }
   }
-  
+
   public void setServerPlayersVcChannelOffline() {
     if (serverPlayersVc.isEmpty()) {
       return;

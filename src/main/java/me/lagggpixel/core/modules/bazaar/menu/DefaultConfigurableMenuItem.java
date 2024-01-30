@@ -4,6 +4,7 @@
  * This file was created by external developers.
  *
  * You are hereby granted the right to view, copy, edit, distribute the code.
+ *
  */
 
 package me.lagggpixel.core.modules.bazaar.menu;
@@ -22,8 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @since January 22, 2024
  */
 public class DefaultConfigurableMenuItem implements ConfigurableMenuItem {
     private int slot;

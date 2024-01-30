@@ -24,8 +24,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.UUID;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
 public class GuildExpansion extends ICorePlaceholderExpansion {
 
@@ -78,7 +78,7 @@ public class GuildExpansion extends ICorePlaceholderExpansion {
         return Lang.GUILD_PLACEHOLDER_COLOR_ENEMY.getDef() + guild.getName();
       }
 
-        case "name" -> {
+      case "name" -> {
         Guild playerGuild = guildHandler.getGuildFromPlayerUUID(uuid);
         if (playerGuild == null) {
           return Lang.GUILD_PLACEHOLDER_NO_GUILD.getDef();

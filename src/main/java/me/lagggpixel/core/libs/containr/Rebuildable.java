@@ -4,6 +4,7 @@
  * This file was created by external developers.
  *
  * You are hereby granted the right to view, copy, edit, distribute the code.
+ *
  */
 
 package me.lagggpixel.core.libs.containr;
@@ -25,10 +26,11 @@ import org.jetbrains.annotations.ApiStatus;
  *
  * @author ZorTik
  * @deprecated Deprecated in favor of {@link Container#refresh(Player)}
+ * @since January 22, 2024
  */
 @Deprecated
 public interface Rebuildable {
-  
+
   /**
    * Rebuilds the GUI.
    *
@@ -36,13 +38,15 @@ public interface Rebuildable {
    */
   @ApiStatus.ScheduledForRemoval
   @Deprecated
-  default void rebuild() {}
-  
+  default void rebuild() {
+  }
+
   /**
    * Rebuilds the GUI.
    *
    * @param player The player for whom the GUI is being rebuilt.
    */
-  default void rebuild(Player player) {}
-  
+  default void rebuild(Player player) {
+  }
+
 }

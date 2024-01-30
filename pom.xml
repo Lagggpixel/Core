@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2024 Infinite Minecrafter's Developers.
+  ~
+  ~ This file was created by the developers of Infinite Minecrafter's.
+  ~
+  ~ You are hereby granted the right to view the code for personal or educational purposes.
+  ~ However, you are not allowed to copy, distribute, or resell the code without
+  ~ explicit permission from the lead developer of Infinite Minecrafter's.
+  -->
+
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">

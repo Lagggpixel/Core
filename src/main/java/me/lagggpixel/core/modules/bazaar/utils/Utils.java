@@ -4,6 +4,7 @@
  * This file was created by external developers.
  *
  * You are hereby granted the right to view, copy, edit, distribute the code.
+ *
  */
 
 package me.lagggpixel.core.modules.bazaar.utils;
@@ -21,68 +22,67 @@ import java.text.DecimalFormat;
 import java.util.List;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @since January 22, 2024
  */
 public class Utils {
-    private Utils() {
-        throw new IllegalStateException("Utility class cannot be instantiated");
+  private Utils() {
+    throw new IllegalStateException("Utility class cannot be instantiated");
+  }
+
+  public static String colorize(String message) {
+    return ChatColor.translateAlternateColorCodes('&', message);
+  }
+
+  public static ItemStack getGlowedItem(ItemStack item) {
+    ItemStack glowedItem = item.clone();
+
+    glowedItem.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
+
+    ItemMeta itemMeta = glowedItem.getItemMeta();
+    itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+    glowedItem.setItemMeta(itemMeta);
+
+    return glowedItem;
+  }
+
+  public static String getTextPrice(double price) {
+    return new DecimalFormat("#.#").format(price);
+  }
+
+  public static TextComponent createClickableText(String text, String command) {
+    TextComponent component = new TextComponent(text);
+    component.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/" + command));
+    return component;
+  }
+
+  public static double getTotalPrice(List<BazaarOrder> orders, int amount) {
+    double price = 0;
+    for (int i = 0; i < orders.size(); i++) {
+      BazaarOrder order = orders.get(i);
+
+      if (i == orders.size() - 1) {
+        price += order.getUnitPrice() * getLastOrderFillAmount(orders, amount);
+        break;
+      }
+
+      price += order.getUnitPrice() * order.getOrderableItems();
     }
 
-    public static String colorize(String message) {
-        return ChatColor.translateAlternateColorCodes('&', message);
+    return price;
+  }
+
+  public static int getLastOrderFillAmount(List<BazaarOrder> orders, int amount) {
+    int currentAmount = 0;
+    for (int i = 0; i < orders.size(); i++) {
+      BazaarOrder order = orders.get(i);
+
+      if (i == orders.size() - 1) {
+        return Math.min(amount - currentAmount, order.getOrderableItems());
+      }
+
+      currentAmount += order.getOrderableItems();
     }
 
-    public static ItemStack getGlowedItem(ItemStack item) {
-        ItemStack glowedItem = item.clone();
-
-        glowedItem.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
-
-        ItemMeta itemMeta = glowedItem.getItemMeta();
-        itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        glowedItem.setItemMeta(itemMeta);
-
-        return glowedItem;
-    }
-
-    public static String getTextPrice(double price) {
-        return new DecimalFormat("#.#").format(price);
-    }
-
-    public static TextComponent createClickableText(String text, String command) {
-        TextComponent component = new TextComponent(text);
-        component.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/" + command));
-        return component;
-    }
-
-    public static double getTotalPrice(List<BazaarOrder> orders, int amount) {
-        double price = 0;
-        for (int i = 0; i < orders.size(); i++) {
-            BazaarOrder order = orders.get(i);
-
-            if (i == orders.size() - 1) {
-                price += order.getUnitPrice() * getLastOrderFillAmount(orders, amount);
-                break;
-            }
-
-            price += order.getUnitPrice() * order.getOrderableItems();
-        }
-
-        return price;
-    }
-
-    public static int getLastOrderFillAmount(List<BazaarOrder> orders, int amount) {
-        int currentAmount = 0;
-        for (int i = 0; i < orders.size(); i++) {
-            BazaarOrder order = orders.get(i);
-
-            if (i == orders.size() - 1) {
-                return Math.min(amount - currentAmount, order.getOrderableItems());
-            }
-
-            currentAmount += order.getOrderableItems();
-        }
-
-        return orders.get(orders.size() - 1).getOrderableItems();
-    }
+    return orders.get(orders.size() - 1).getOrderableItems();
+  }
 }

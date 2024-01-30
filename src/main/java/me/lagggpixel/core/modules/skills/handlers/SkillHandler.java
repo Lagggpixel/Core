@@ -29,20 +29,20 @@ import java.util.Map;
 import java.util.logging.Level;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
 public class SkillHandler {
   private final SkillsModule skillsModule;
-  
+
   @Getter
   private static final Map<Integer, Long> skillExpPerLevel = new HashMap<>();
   @Getter
   private static final Map<Integer, Long> moneyPerLevel = new HashMap<>();
-  
+
   @Getter
   private final List<Location> nonNaturalBlocks = new ArrayList<>();
-  
+
   @Getter
   private final Map<Material, Double> farmingBlocks = new HashMap<>();
   @Getter
@@ -55,7 +55,7 @@ public class SkillHandler {
   private final Map<Material, Double> combatBlocks = new HashMap<>();
   @Getter
   private final Map<EntityType, Double> combatEntities = new HashMap<>();
-  
+
   public SkillHandler(@NotNull SkillsModule skillsModule) {
     this.skillsModule = skillsModule;
     YamlConfiguration skillExpConfiguration = YamlConfiguration.loadConfiguration(skillsModule.getSkill_exp());
@@ -69,7 +69,7 @@ public class SkillHandler {
           checkMaterialToAppend(k, exp, farmingBlocks);
         });
       }
-      
+
       ConfigurationSection farmingMobsSection = farmingSection.getConfigurationSection("mobs");
       if (farmingMobsSection != null) {
         farmingMobsSection.getKeys(false).forEach((k) -> {
@@ -89,7 +89,7 @@ public class SkillHandler {
           checkMaterialToAppend(k, exp, miningBlocks);
         });
       }
-      
+
       ConfigurationSection miningMobsSection = miningSection.getConfigurationSection("mobs");
       if (miningMobsSection != null) {
         miningMobsSection.getKeys(false).forEach((k) -> {
@@ -109,7 +109,7 @@ public class SkillHandler {
           checkMaterialToAppend(k, exp, combatBlocks);
         });
       }
-      
+
       ConfigurationSection combatMobsSection = combatSection.getConfigurationSection("combat");
       if (combatMobsSection != null) {
         combatMobsSection.getKeys(false).forEach((k) -> {
@@ -119,7 +119,7 @@ public class SkillHandler {
       }
     }
     //</editor-fold>
-    
+
     YamlConfiguration skillLevelUpConfiguration = YamlConfiguration.loadConfiguration(skillsModule.getSkill_exp());
     skillLevelUpConfiguration.getKeys(false).forEach((k) -> {
       try {
@@ -131,10 +131,11 @@ public class SkillHandler {
           skillExpPerLevel.put(level, exp);
           moneyPerLevel.put(level, reward);
         }
-      } catch (NumberFormatException ignored) { }
+      } catch (NumberFormatException ignored) {
+      }
     });
   }
-  
+
   private void checkMaterialToAppend(String input, double exp, Map<Material, Double> list) {
     Material material;
     try {
@@ -149,7 +150,7 @@ public class SkillHandler {
     }
     list.put(material, exp);
   }
-  
+
   private void checkMobToAppend(String input, double exp, Map<EntityType, Double> list) {
     EntityType entityType;
     try {
@@ -164,27 +165,27 @@ public class SkillHandler {
     }
     list.put(entityType, exp);
   }
-  
+
   public boolean isBlockFarming(@NotNull Block block) {
     return farmingBlocks.containsKey(block.getType());
   }
-  
+
   public boolean isMobFarming(@NotNull Entity entity) {
     return farmingEntities.containsKey(entity.getType());
   }
-  
+
   public boolean isBlockMining(@NotNull Block block) {
     return miningBlocks.containsKey(block.getType());
   }
-  
+
   public boolean isMobMining(@NotNull Entity entity) {
     return miningEntities.containsKey(entity.getType());
   }
-  
+
   public boolean isBlockCombat(@NotNull Block block) {
     return combatBlocks.containsKey(block.getType());
   }
-  
+
   public boolean isMobCombat(@NotNull Entity entity) {
     return combatEntities.containsKey(entity.getType());
   }

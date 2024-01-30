@@ -1,11 +1,10 @@
 /*
  * Copyright (c) 2024 Infinite Minecrafter's Developers.
  *
- * This file was created by the developers of Infinite Minecrafter's.
+ * This file was created by external developers.
  *
- * You are hereby granted the right to view the code for personal or educational purposes.
- * However, you are not allowed to copy, distribute, or resell the code without
- * explicit permission from the lead developer of Infinite Minecrafter's.
+ * You are hereby granted the right to view, copy, edit, distribute the code.
+ *
  */
 
 package me.lagggpixel.core.modules.skipnight.managers;
@@ -34,34 +33,34 @@ import java.util.Map;
 import java.util.UUID;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
 public class SkipNightVoteManager implements Runnable, Listener {
-  
+
   private final SkipNightModule module;
-  
+
   private Timer timer;
   private SkipNightVoteType skipNightVoteType;
   private int yes, no, playerCount, countDown, afkCount;
   private BossBar bar;
-  
+
   private List<SkipNightVoter> skipNightVoters;
   private List<SkipNightVoter> afkSkipNightVoters;
   private Player player;
   private User user;
   private World world;
   private SkipNightManager skipNightManager;
-  
+
   public SkipNightVoteManager(SkipNightModule module) {
     timer = Timer.OFF;
     this.module = module;
   }
-  
+
   @EventHandler
   public void onLogoff(PlayerQuitEvent event) {
     Player player = event.getPlayer();
-    
+
     if (timer != Timer.OFF && skipNightVoteType != null) {// vote is running
       SkipNightVoter skipNightVoter = new SkipNightVoter(player.getUniqueId());
       if (skipNightVoters.contains(skipNightVoter)) { // player is in voter list
@@ -70,15 +69,15 @@ public class SkipNightVoteManager implements Runnable, Listener {
         if (skipNightVoter.getVote() == -1) no--;
         skipNightVoters.remove(skipNightVoter);
       }
-      
+
     }
   }
-  
+
   @EventHandler
   public void onBedEnter(PlayerBedEnterEvent event) {
     Player player = event.getPlayer();
     User user = Main.getUser(player);
-    
+
     if (timer != Timer.OFF && skipNightVoteType == SkipNightVoteType.NIGHT) { // vote is running at night
       SkipNightVoter skipNightVoter = new SkipNightVoter(player.getUniqueId());
       if (skipNightVoters.contains(skipNightVoter)) { // Voter exists but hasn't voted
@@ -86,7 +85,7 @@ public class SkipNightVoteManager implements Runnable, Listener {
         if (skipNightVoter.getVote() == 0) {
           skipNightVoter.voteYes();
           yes++;
-          
+
           user.sendMessage(Lang.SN_IN_BED_VOTED_YES.toComponentWithPrefix());
         }
       } else { // Voter doesn't exist but hasn't voted
@@ -101,8 +100,8 @@ public class SkipNightVoteManager implements Runnable, Listener {
       }
     }
   }
-  
-  
+
+
   public void run() {
     switch (timer) {
       case INIT:
@@ -130,26 +129,26 @@ public class SkipNightVoteManager implements Runnable, Listener {
         break;
     }
   }
-  
+
   private void doInit() {
     skipNightVoters = new ArrayList<>();
     afkSkipNightVoters = new ArrayList<>();
-    
+
     bar = BossBar.bossBar(Component.text(), 1.0f, BossBar.Color.PURPLE, BossBar.Overlay.PROGRESS);
-    
+
     yes = 1;
     no = 0;
     countDown = 30;
     afkCount = 0;
-    
+
     bar.name(currentVotePA(yes, no, afkCount)).color(BossBar.Color.PURPLE);
-    
+
     updateAll(skipNightVoters, player);
-    
+
     timer = Timer.OPERATION;
     Main.getInstance().getServer().getScheduler().runTaskLater(Main.getInstance(), this, 20);
   }
-  
+
   private void doOperation() {
     countDown--;
     if (yes + no == playerCount) timer = Timer.INTERRUPT;
@@ -160,17 +159,17 @@ public class SkipNightVoteManager implements Runnable, Listener {
     if (countDown == 10) timer = Timer.FINAL;
     Main.getInstance().getServer().getScheduler().runTaskLater(Main.getInstance(), this, 20);
   }
-  
+
   private void doInterrupt() {
     countDown = 0;
     bar.progress(1.0f);
     bar.name(Lang.SN_ALL_PLAYERS_VOTED_BOSS_BAR.toComponent());
     bar.color(BossBar.Color.YELLOW);
-    
+
     timer = Timer.COMPLETE;
     Main.getInstance().getServer().getScheduler().runTaskLater(Main.getInstance(), this, 20);
   }
-  
+
   private void doFinal() {
     countDown--;
     if (yes + no == playerCount) timer = Timer.INTERRUPT;
@@ -180,14 +179,14 @@ public class SkipNightVoteManager implements Runnable, Listener {
     if (countDown == 9)
       skipNightVoters = updateAll(skipNightVoters, Lang.SN_TEN_SECOND_LEFT.toComponentWithPrefix());
     else updateAll(skipNightVoters);
-    
+
     if (countDown % 2 == 1) bar.color(BossBar.Color.WHITE);
     else bar.color(BossBar.Color.PURPLE);
-    
+
     if (countDown == 0) timer = Timer.COMPLETE;
     Main.getInstance().getServer().getScheduler().runTaskLater(Main.getInstance(), this, 20);
   }
-  
+
   private void doComplete() {
     countDown--;
     if (countDown == -1) {
@@ -198,11 +197,11 @@ public class SkipNightVoteManager implements Runnable, Listener {
         updateAll(skipNightVoters, Lang.SN_VOTE_PASSED_BOSS_BAR.toComponentWithPrefix());
         skipNightManager = new SkipNightManager(world, Main.getInstance(), skipNightVoteType);
         Main.getInstance().getServer().getScheduler().runTaskLater(Main.getInstance(), skipNightManager, 10);
-        
+
         // Set boss bar progress to fast-forward progress
         bar.progress(0.0f);
         new BukkitRunnable() {
-          
+
           @Override
           public void run() {
             float time = (float) world.getTime();
@@ -214,7 +213,7 @@ public class SkipNightVoteManager implements Runnable, Listener {
             }
           }
         }.runTaskTimer(Main.getInstance(), 0, 1);
-        
+
         if (world.hasStorm()) world.setStorm(false);
       } else {
         bar.name(Lang.SN_VOTE_FAILED_BOSS_BAR.toComponent());
@@ -223,9 +222,9 @@ public class SkipNightVoteManager implements Runnable, Listener {
       }
       Main.getInstance().getServer().getScheduler().runTaskLater(Main.getInstance(), this, 20);
     }
-    
+
     if (countDown <= -2) Main.getInstance().getServer().getScheduler().runTaskLater(Main.getInstance(), this, 20);
-    
+
     if (countDown == -9) {
       Main.getInstance().getServer().getOnlinePlayers().forEach(p -> p.hideBossBar(bar));
       bar = null;
@@ -243,7 +242,7 @@ public class SkipNightVoteManager implements Runnable, Listener {
         else timer = Timer.OFF;
     }
     */
-  
+
   private void doCancel() {
     if (countDown > 0) countDown = 0;
     if (countDown == 0) {
@@ -251,11 +250,11 @@ public class SkipNightVoteManager implements Runnable, Listener {
       bar.color(BossBar.Color.BLUE);
       bar.name(Lang.SN_ALREADY_DAY_BOSS_BAR.toComponent());
     }
-    
+
     countDown--;
-    
+
     if (countDown > -4) Main.getInstance().getServer().getScheduler().runTaskLater(Main.getInstance(), this, 20);
-    
+
     if (countDown == -4) {
       Main.getInstance().getServer().getOnlinePlayers().forEach(p -> p.hideBossBar(bar));
       bar = null;
@@ -265,9 +264,9 @@ public class SkipNightVoteManager implements Runnable, Listener {
       timer = Timer.OFF;
     }
   }
-  
+
   public void addYes(UUID uuid, SkipNightVoteType skipNightVoteType) {
-    
+
     if (timer != Timer.OFF) {
       SkipNightVoter skipNightVoter = new SkipNightVoter(uuid);
       if (!skipNightVoters.isEmpty() && skipNightVoters.contains(skipNightVoter)) {
@@ -281,7 +280,7 @@ public class SkipNightVoteManager implements Runnable, Listener {
       }
     } else user.sendMessage(noVoteInProgress());
   }
-  
+
   public void addNo(UUID uuid, SkipNightVoteType skipNightVoteType) {
     if (timer != Timer.OFF) {
       SkipNightVoter skipNightVoter = new SkipNightVoter(uuid);
@@ -296,12 +295,12 @@ public class SkipNightVoteManager implements Runnable, Listener {
       }
     } else user.sendMessage(noVoteInProgress());
   }
-  
+
   // Attempts to start a vote if all conditions are met, otherwise informs player why vote can't start
   public void start(Player player, SkipNightVoteType skipNightVoteType) {
     User user = Main.getUser(player);
     boolean isAfk = Main.getUser(player.getUniqueId()).isAfk();
-    
+
     if (!isInOverworld(player)) // If player isn't in the overworld
       user.sendMessage(Lang.SN_WORLD_NO_OVERWORLD.toComponentWithPrefix());
     else if (skipNightVoteType == SkipNightVoteType.NIGHT && player.getWorld().getTime() < 12516) // If it's day, trying to skip night
@@ -321,26 +320,26 @@ public class SkipNightVoteManager implements Runnable, Listener {
       run();
     }
   }
-  
+
   // Checks whether player is in overworld
   private boolean isInOverworld(Player player) {
     return player.getWorld().getEnvironment() == World.Environment.NORMAL;
   }
-  
+
   public String voteTypeString() {
     return voteTypeString(this.skipNightVoteType);
   }
-  
+
   public String voteTypeString(SkipNightVoteType skipNightVoteType) {
     return "night";
   }
-  
+
   private void updateAll(List<SkipNightVoter> skipNightVoters) {
     for (Player player : Main.getInstance().getServer().getOnlinePlayers()) {
       SkipNightVoter skipNightVoter = new SkipNightVoter(player.getUniqueId());
       User user = Main.getUser(player);
       boolean isAfk = Main.getUser(player.getUniqueId()).isAfk();
-      
+
       if (isInOverworld(player)) {
         if (skipNightVoters.contains(skipNightVoter)) {
           skipNightVoter = skipNightVoters.get(skipNightVoters.indexOf(skipNightVoter));
@@ -390,13 +389,13 @@ public class SkipNightVoteManager implements Runnable, Listener {
     playerCount = skipNightVoters.size();
     afkCount = afkSkipNightVoters.size();
   }
-  
+
   private List<SkipNightVoter> updateAll(List<SkipNightVoter> skipNightVoters, Component message) {
     for (Player player : Main.getInstance().getServer().getOnlinePlayers()) {
       SkipNightVoter skipNightVoter = new SkipNightVoter(player.getUniqueId());
       User user = Main.getUser(player);
       boolean isAfk = Main.getUser(player.getUniqueId()).isAfk();
-      
+
       if (isInOverworld(player)) {
         if (skipNightVoters.contains(skipNightVoter)) {
           skipNightVoter = skipNightVoters.get(skipNightVoters.indexOf(skipNightVoter));
@@ -448,13 +447,13 @@ public class SkipNightVoteManager implements Runnable, Listener {
     afkCount = afkSkipNightVoters.size();
     return skipNightVoters;
   }
-  
+
   private void updateAll(List<SkipNightVoter> skipNightVoters, Player sender) {
     for (Player player : Main.getInstance().getServer().getOnlinePlayers()) {
       SkipNightVoter skipNightVoter = new SkipNightVoter(player.getUniqueId());
       User user = Main.getUser(player);
       boolean isAfk = Main.getUser(player.getUniqueId()).isAfk();
-      
+
       if (isInOverworld(player)) {
         if (skipNightVoters.contains(skipNightVoter)) {
           skipNightVoter = skipNightVoters.get(skipNightVoters.indexOf(skipNightVoter));
@@ -513,11 +512,11 @@ public class SkipNightVoteManager implements Runnable, Listener {
     playerCount = skipNightVoters.size();
     afkCount = afkSkipNightVoters.size();
   }
-  
+
   private void actionBarMessage(Component message) {
     for (Player player : Main.getInstance().getServer().getOnlinePlayers()) {
       SkipNightVoter skipNightVoter = new SkipNightVoter(player.getUniqueId());
-      
+
       if (isInOverworld(player)) {
         if (skipNightVoters.contains(skipNightVoter)) {
           player.sendActionBar(message);
@@ -525,11 +524,11 @@ public class SkipNightVoteManager implements Runnable, Listener {
       }
     }
   }
-  
+
   private boolean voteCancel() {
     return (skipNightVoteType == SkipNightVoteType.NIGHT && (world.getTime() > 23900 || world.getTime() < 12516));
   }
-  
+
   private enum Timer {
     INIT,
     OPERATION,
@@ -540,7 +539,7 @@ public class SkipNightVoteManager implements Runnable, Listener {
     COOLDOWN,
     OFF
   }
-  
+
   private Component voteButtons() {
     return Lang.PREFIX.toComponent().asComponent().append(MiniMessage.miniMessage().deserialize("Please vote: " +
         "<green><bold><click:run_command:/skipnight yes>" +
@@ -550,7 +549,7 @@ public class SkipNightVoteManager implements Runnable, Listener {
         "<hover:show_text:'<gold><bold>Click here to vote no'>" +
         "[No]"));
   }
-  
+
   private Component currentVotePA(int yes, int no, int afk) {
     // Current Vote: Yes - X No - X Idle - X Away - X
     return MiniMessage.miniMessage().deserialize("Current vote: " +
@@ -558,7 +557,7 @@ public class SkipNightVoteManager implements Runnable, Listener {
         " <bold><dark_red>No<reset> - " + no +
         " <bold><dark_aqua>Afk<reset> - " + afk);
   }
-  
+
   private Component noVoteInProgress() {
     return Lang.PREFIX.toComponent().append(MiniMessage.miniMessage().deserialize(MessageFormat.format("<red>No vote in progress! <blue>{0}",
         "<click:suggest_command:/skipnight>" +

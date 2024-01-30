@@ -26,18 +26,18 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
 public class SurvivalItemListeners implements Listener {
-  
+
   private final SurvivalItemHandler survivalItemHandler;
-  
+
   public SurvivalItemListeners(SurvivalItemHandler survivalItemHandler) {
     this.survivalItemHandler = survivalItemHandler;
     Main.getPluginManager().registerEvents(this, Main.getInstance());
   }
-  
+
   @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
   public void onPlayerJoin(@NotNull PlayerJoinEvent event) {
     Player player = event.getPlayer();
@@ -48,7 +48,7 @@ public class SurvivalItemListeners implements Listener {
       }
     }.runTaskLater(Main.getInstance(), 20);
   }
-  
+
   @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
   public void onWorldChange(PlayerChangedWorldEvent event) {
     Player player = event.getPlayer();
@@ -59,7 +59,7 @@ public class SurvivalItemListeners implements Listener {
       }
     }.runTaskLater(Main.getInstance(), 20);
   }
-  
+
   @EventHandler(priority = EventPriority.LOWEST)
   public void PlayerDropItemEvent(@NotNull PlayerDropItemEvent event) {
     Item itemDropped = event.getItemDrop();
@@ -67,7 +67,7 @@ public class SurvivalItemListeners implements Listener {
       event.setCancelled(true);
     }
   }
-  
+
   @EventHandler(priority = EventPriority.LOWEST)
   public void InventoryClickEvent(@NotNull InventoryClickEvent event) {
     InventoryAction inventoryAction = event.getAction();
@@ -82,7 +82,7 @@ public class SurvivalItemListeners implements Listener {
       }
     }
   }
-  
+
   @EventHandler(priority = EventPriority.LOWEST)
   public void PlayerSwapHandItemsEvent(@NotNull PlayerSwapHandItemsEvent event) {
     ItemStack itemSwapped = event.getOffHandItem();
@@ -90,7 +90,7 @@ public class SurvivalItemListeners implements Listener {
       event.setCancelled(true);
     }
   }
-  
+
   @EventHandler(priority = EventPriority.LOW)
   public void onPlayerClick(@NotNull PlayerInteractEvent event) {
     Player player = event.getPlayer();
@@ -99,7 +99,6 @@ public class SurvivalItemListeners implements Listener {
       survivalItemHandler.openInventory(player);
     }
   }
-  
-  
-  
+
+
 }

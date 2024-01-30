@@ -4,6 +4,7 @@
  * This file was created by external developers.
  *
  * You are hereby granted the right to view, copy, edit, distribute the code.
+ *
  */
 
 package me.lagggpixel.core.modules.bazaar.menu.configurations;
@@ -31,8 +32,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.*;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @since January 22, 2024
  */
 public class ProductCategoryMenuConfiguration extends MenuConfiguration {
   private final List<Integer> productSlots;

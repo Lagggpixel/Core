@@ -25,13 +25,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- *  @author Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
 public class NMSHandler {
   protected String versionPrefix = "";
   protected boolean failed = false;
-  
+
   protected Class<?> class_CraftPlayer;
   protected Class<?> class_GameProfile;
   protected Class<?> class_GameProfileProperty;
@@ -41,14 +41,14 @@ public class NMSHandler {
   public Method method_GameProfile_getProperties;
   protected Field field_PropertyMap_properties;
   public Field field_GameProfileProperty_value;
-  
+
   {
     String className = Bukkit.getServer().getClass().getName();
     String[] packages = className.split("\\.");
     if (packages.length == 5) {
       versionPrefix = packages[3] + ".";
     }
-    
+
     try {
       class_EntityPlayer = fixBukkitClass("net.minecraft.server.EntityPlayer", "net.minecraft.server.level.EntityPlayer");
       try {
@@ -62,10 +62,10 @@ public class NMSHandler {
               .findFirst().orElseThrow(() -> new RuntimeException("Couldn't find the GameProfile method"));
         }
       }
-      
+
       class_CraftPlayer = fixBukkitClass("org.bukkit.craftbukkit.entity.CraftPlayer");
       method_CraftPlayer_getHandle = class_CraftPlayer.getMethod("getHandle");
-      
+
       class_GameProfile = getClass("com.mojang.authlib.GameProfile");
       class_GameProfileProperty = getClass("com.mojang.authlib.properties.Property");
       if (class_GameProfile == null) {
@@ -82,7 +82,7 @@ public class NMSHandler {
       failed = true;
     }
   }
-  
+
   public Class<?> getClass(String className) {
     Class<?> result = null;
     try {
@@ -91,23 +91,23 @@ public class NMSHandler {
     }
     return result;
   }
-  
+
   public Class<?> fixBukkitClass(String className, String... alternateClassNames) throws ClassNotFoundException {
     List<String> classNames = new ArrayList<>();
     classNames.add(className);
     classNames.addAll(Arrays.asList(alternateClassNames));
-    
+
     for (String name : classNames) {
       try {
         return NMSHandler.class.getClassLoader().loadClass(name);
       } catch (ClassNotFoundException ignored) {
       }
-      
+
       if (!versionPrefix.isEmpty()) {
         name = name.replace("org.bukkit.craftbukkit.", "org.bukkit.craftbukkit." + versionPrefix);
         name = name.replace("net.minecraft.server.", "net.minecraft.server." + versionPrefix);
       }
-      
+
       try {
         return NMSHandler.class.getClassLoader().loadClass(name);
       } catch (ClassNotFoundException ignored) {
@@ -115,10 +115,10 @@ public class NMSHandler {
     }
     throw new ClassNotFoundException("Could not find " + className);
   }
-  
+
   public Object getHandle(Player player) {
     if (failed) return null;
-    
+
     try {
       return method_CraftPlayer_getHandle.invoke(player);
     } catch (Throwable e) {
@@ -126,10 +126,10 @@ public class NMSHandler {
     }
     return null;
   }
-  
+
   public Object getGameProfile(Player player) {
     if (failed) return null;
-    
+
     Object handle = getHandle(player);
     if (handle != null) {
       try {
@@ -140,10 +140,10 @@ public class NMSHandler {
     }
     return null;
   }
-  
+
   public Object getTextureProperty(Object propertyMap) {
     if (failed) return null;
-    
+
     try {
       Object multi = field_PropertyMap_properties.get(propertyMap);
       //noinspection rawtypes
@@ -158,10 +158,10 @@ public class NMSHandler {
     }
     return null;
   }
-  
+
   public String getTexture(Player player) {
     if (failed) return null;
-    
+
     try {
       Object profile = getGameProfile(player);
       if (profile == null) return null;
@@ -178,5 +178,5 @@ public class NMSHandler {
     }
     return null;
   }
-  
+
 }

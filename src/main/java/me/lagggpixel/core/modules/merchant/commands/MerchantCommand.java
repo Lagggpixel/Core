@@ -26,18 +26,18 @@ import java.util.List;
 import java.util.Map;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
 public class MerchantCommand implements ICommandClass {
-  
+
   private final MerchantModule merchantModule;
   private final Map<String, ISubCommand> subCommands;
-  
+
   public MerchantCommand(MerchantModule merchantModule) {
     this.merchantModule = merchantModule;
     this.subCommands = new HashMap<>();
-    
+
     subCommands.put("create", new MerchantCreateSubCommand(merchantModule));
     subCommands.put("delete", new MerchantDeleteSubCommand(merchantModule));
     subCommands.put("item", new MerchantItemSubCommand(merchantModule));
@@ -47,63 +47,63 @@ public class MerchantCommand implements ICommandClass {
     subCommands.put("skin", new MerchantSkinSubCommand(merchantModule));
     subCommands.put("tphere", new MerchantTphereSubCommand(merchantModule));
   }
-  
-  
+
+
   @Override
   public String getCommandName() {
     return "merchant";
   }
-  
+
   @Override
   public String getCommandDescription() {
     return null;
   }
-  
+
   @Override
   public List<String> getCommandAliases() {
     return List.of();
   }
-  
+
   @Override
   public String getCommandPermission() {
     return CommandUtils.generateCommandBasePermission(merchantModule, this);
   }
-  
+
   @Override
   public String getUsage() {
     return null;
   }
-  
+
   @Override
   public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
     if (args.length == 0) {
       commandSender.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
       return true;
     }
-    
+
     String subCommand = args[0].toLowerCase();
-    
+
     if (subCommands.containsKey(subCommand)) {
       subCommands.get(subCommand).execute(commandSender, args);
       return true;
     }
-    
+
     commandSender.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
     return true;
   }
-  
+
   @Override
   public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
     if (args.length == 1) {
       return subCommands.keySet().stream().toList();
     }
-    
+
     String subCommand = args[0].toLowerCase();
-    
+
     if (!subCommands.containsKey(subCommand)) {
       return List.of(" ");
     }
-    
+
     return subCommands.get(subCommand).tabComplete(commandSender, args);
   }
 }

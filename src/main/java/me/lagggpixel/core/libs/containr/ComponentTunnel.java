@@ -4,6 +4,7 @@
  * This file was created by external developers.
  *
  * You are hereby granted the right to view, copy, edit, distribute the code.
+ *
  */
 
 package me.lagggpixel.core.libs.containr;
@@ -13,24 +14,24 @@ package me.lagggpixel.core.libs.containr;
  * between {@link ComponentSource} and it's destination.
  *
  * @author ZorTik
- */
-/**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @since January 22, 2024
  */
 public interface ComponentTunnel {
 
-    void send(ContainerComponent container);
-    void send(Element element);
-    void clear();
-    String getId();
+  void send(ContainerComponent container);
 
-    default void send(Component component) {
-        if(component instanceof Element) {
-            send((Element) component);
-        } else if(component instanceof ContainerComponent) {
-            send((ContainerComponent) component);
-        }
+  void send(Element element);
+
+  void clear();
+
+  String getId();
+
+  default void send(Component component) {
+    if (component instanceof Element) {
+      send((Element) component);
+    } else if (component instanceof ContainerComponent) {
+      send((ContainerComponent) component);
     }
+  }
 
 }

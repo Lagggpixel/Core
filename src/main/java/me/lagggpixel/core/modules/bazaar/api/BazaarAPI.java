@@ -4,6 +4,7 @@
  * This file was created by external developers.
  *
  * You are hereby granted the right to view, copy, edit, distribute the code.
+ *
  */
 
 package me.lagggpixel.core.modules.bazaar.api;
@@ -19,25 +20,24 @@ import net.milkbowl.vault.economy.Economy;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @since January 22, 2024
  */
 public interface BazaarAPI {
-    Economy getEconomy();
+  Economy getEconomy();
 
-    MenuConfig getMenuConfig();
+  MenuConfig getMenuConfig();
 
-    Bazaar getBazaar();
+  Bazaar getBazaar();
 
-    ClickActionManager getClickActionManager();
+  ClickActionManager getClickActionManager();
 
-    ItemPlaceholders getItemPlaceholders();
+  ItemPlaceholders getItemPlaceholders();
 
-    OrderManager getOrderManager();
+  OrderManager getOrderManager();
 
-    MenuHistory getMenuHistory();
+  MenuHistory getMenuHistory();
 
-    EditManager getEditManager();
+  EditManager getEditManager();
 
-    JavaPlugin getPlugin();
+  JavaPlugin getPlugin();
 }

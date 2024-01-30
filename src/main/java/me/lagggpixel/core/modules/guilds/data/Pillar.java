@@ -11,18 +11,20 @@
 package me.lagggpixel.core.modules.guilds.data;
 
 import lombok.Getter;
+import lombok.Setter;
 import me.lagggpixel.core.modules.guilds.GuildModule;
 import org.bukkit.Location;
 import org.bukkit.Material;
 
 import java.util.ArrayList;
 
+/**
+ * @author Lagggpixel
+ * @since January 22, 2024
+ */
+@Setter
 @SuppressWarnings({"unused", "deprecation"})
 @Getter
-/**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
- */
 public class Pillar {
   private ClaimProfile profile;
   private Material blockType;
@@ -40,31 +42,7 @@ public class Pillar {
     this.ID = ID;
     GuildModule.getInstance().getPillarManager().getPillars().add(this);
   }
-  
-  public void setBlockType(Material blockType) {
-    this.blockType = blockType;
-  }
-  
-  public void setData(byte data) {
-    this.data = data;
-  }
-  
-  public void setInts(ArrayList<Integer> ints) {
-    this.ints = ints;
-  }
-  
-  public void setLocation(Location location) {
-    this.location = location;
-  }
-  
-  public void setID(String ID) {
-    this.ID = ID;
-  }
-  
-  public void setProfile(ClaimProfile profile) {
-    this.profile = profile;
-  }
-  
+
   public Pillar sendPillar() {
     int x = this.location.getBlockX();
     int z = this.location.getBlockZ();

@@ -23,49 +23,49 @@ import org.bukkit.plugin.ServicesManager;
 import org.jetbrains.annotations.NotNull;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
 public class EconomyModule implements IModule {
-  
+
   EconomyImpl economyImpl;
   EconomyManager economyManager;
-  
-  
+
+
   @NotNull
   @Override
   public String getId() {
     return "economy";
   }
-  
+
   @Override
   public boolean isEnabled() {
     return true;
   }
-  
+
   @Override
   public void onEnable() {
     this.economyManager = new EconomyManager();
     this.economyImpl = new EconomyImpl(this, economyManager);
-    
+
     ServicesManager services = Main.getInstance().getServer().getServicesManager();
     services.register(Economy.class, this.economyImpl, Main.getInstance(), ServicePriority.High);
   }
-  
+
   @Override
   public void onDisable() {
-  
+
   }
-  
+
   @Override
   public void registerCommands() {
     CommandUtils.registerCommand(new BalanceCommand(this, economyManager));
     CommandUtils.registerCommand(new EconomyCommand(this, economyManager));
     CommandUtils.registerCommand(new BalanceTopCommand(this, economyManager));
   }
-  
+
   @Override
   public void registerListeners() {
-  
+
   }
 }

@@ -22,53 +22,53 @@ import java.util.List;
 import java.util.Map;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
 public class MerchantSelectSubCommand implements ISubCommand {
-  
+
   private final MerchantModule merchantModule;
-  
+
   public MerchantSelectSubCommand(MerchantModule merchantModule) {
     this.merchantModule = merchantModule;
   }
-  
+
   @Override
   public void execute(CommandSender commandSender, String[] args) {
     if (!(commandSender instanceof Player sender)) {
       commandSender.sendMessage(Lang.PLAYER_ONLY.toComponentWithPrefix());
       return;
     }
-    
+
     if (args.length != 2) {
       sender.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
       return;
     }
-    
+
     String id = args[1];
     User user = Main.getUser(sender);
-    
+
     if (id.equalsIgnoreCase("none")) {
       user.setCurrentMerchant(null);
       return;
     }
-    
+
     if (!merchantModule.getMerchantHandler().hasMerchant(id)) {
       sender.sendMessage(Lang.MERCHANT_NOT_FOUND.toComponentWithPrefix(Map.of("%merchant%", id)));
       return;
     }
-    
+
     user.setCurrentMerchant(id);
     sender.sendMessage(Lang.MERCHANT_SELECTED.toComponentWithPrefix(Map.of("%merchant%", id)));
   }
-  
+
   @Override
   public List<String> tabComplete(CommandSender commandSender, String[] args) {
-    
+
     if (args.length == 2) {
       return merchantModule.getMerchantHandler().getMerchants().keySet().stream().toList();
     }
-    
+
     return List.of(" ");
   }
 }

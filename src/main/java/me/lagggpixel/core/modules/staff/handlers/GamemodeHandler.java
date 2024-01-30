@@ -21,17 +21,17 @@ import org.bukkit.entity.Player;
 import java.util.Map;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
 public class GamemodeHandler {
-  
+
   public void setGameMode(Player player, GameMode gamemode) {
     User user = Main.getUser(player.getUniqueId());
     player.setGameMode(gamemode);
     user.sendMessage(Lang.STAFF_GAMEMODE_SELF.toComponentWithPrefix(Map.of("%gamemode%", gamemode.name().toLowerCase())));
   }
-  
+
   public void setGameMode(Player sender, Player target, GameMode gamemode) {
     User senderUser = Main.getUser(sender.getUniqueId());
     User targetUser = Main.getUser(target.getUniqueId());
@@ -39,17 +39,16 @@ public class GamemodeHandler {
     senderUser.sendMessage(Lang.STAFF_GAMEMODE_OTHER.toComponentWithPrefix(Map.of("%gamemode%", gamemode.name().toLowerCase(), "%player%", target.getName())));
     targetUser.sendMessage(Lang.STAFF_GAMEMODE_OTHER_NOTIFY.toComponentWithPrefix(Map.of("%gamemode%", gamemode.name().toLowerCase(), "%player%", sender.getName())));
   }
-  
+
   public void setGameMode(CommandSender commandSender, Player target, GameMode gamemode) {
     User targetUser = Main.getUser(target.getUniqueId());
     target.setGameMode(gamemode);
     commandSender.sendMessage(Lang.STAFF_GAMEMODE_OTHER.toComponentWithPrefix(Map.of("%gamemode%", gamemode.name().toLowerCase(), "%player%", target.getName())));
     if (commandSender instanceof ConsoleCommandSender) {
       targetUser.sendMessage(Lang.STAFF_GAMEMODE_OTHER_NOTIFY.toComponentWithPrefix(Map.of("%gamemode%", gamemode.name().toLowerCase(), "%player%", "console")));
-    }
-    else {
+    } else {
       targetUser.sendMessage(Lang.STAFF_GAMEMODE_OTHER_NOTIFY.toComponentWithPrefix(Map.of("%gamemode%", gamemode.name().toLowerCase(), "%player%", "unknown")));
     }
   }
-  
+
 }

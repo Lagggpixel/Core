@@ -24,11 +24,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-@Plugin(name = "CaptureAppender", category = "Core", elementType = "appender", printObject = true)
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
+@Plugin(name = "CaptureAppender", category = "Core", elementType = "appender", printObject = true)
 public class CaptureAppender extends AbstractAppender {
   
   @Getter

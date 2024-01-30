@@ -20,8 +20,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.UUID;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
 public class SkillExpGainEvent extends Event {
 

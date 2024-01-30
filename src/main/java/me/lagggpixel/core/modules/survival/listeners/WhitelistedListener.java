@@ -25,15 +25,15 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 import org.jetbrains.annotations.NotNull;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
 public class WhitelistedListener implements Listener {
-  
+
   public WhitelistedListener() {
     Main.getInstance().getServer().getPluginManager().registerEvents(this, Main.getInstance());
   }
-  
+
   @EventHandler
   public void onPlayerJoin(@NotNull PlayerJoinEvent event) {
     if (Main.getInstance().whitelisted && !event.getPlayer().isOp()) {
@@ -43,7 +43,7 @@ public class WhitelistedListener implements Listener {
       event.getPlayer().sendMessage(Lang.SURVIVAL_WHITELISTED_INFORM.toComponentWithPrefix());
     }
   }
-  
+
   @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
   public void asyncCommandExecute(@NotNull PlayerCommandPreprocessEvent event) {
     if (Main.getInstance().whitelisted && !event.getPlayer().isOp()) {
@@ -51,7 +51,7 @@ public class WhitelistedListener implements Listener {
       event.getPlayer().sendMessage(Lang.SURVIVAL_WHITELISTED_ERROR.toComponentWithPrefix());
     }
   }
-  
+
   @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
   public void onPlayerTeleport(@NotNull PlayerTeleportEvent event) {
     if (Main.getInstance().whitelisted && !event.getPlayer().isOp()) {
@@ -59,7 +59,7 @@ public class WhitelistedListener implements Listener {
       event.getPlayer().sendMessage(Lang.SURVIVAL_WHITELISTED_ERROR.toComponentWithPrefix());
     }
   }
-  
+
   @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
   public void onPlayerChat(@NotNull AsyncChatEvent event) {
     if (Main.getInstance().whitelisted && !event.getPlayer().isOp()) {
@@ -67,7 +67,7 @@ public class WhitelistedListener implements Listener {
       event.getPlayer().sendMessage(Lang.SURVIVAL_WHITELISTED_ERROR.toComponentWithPrefix());
     }
   }
-  
+
   @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
   public void onPlayerMove(@NotNull PlayerMoveEvent event) {
     if (Main.getInstance().whitelisted && !event.getPlayer().isOp()) {
@@ -75,7 +75,7 @@ public class WhitelistedListener implements Listener {
       event.getPlayer().sendMessage(Lang.SURVIVAL_WHITELISTED_ERROR.toComponentWithPrefix());
     }
   }
-  
+
   @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
   public void onInventoryOpen(@NotNull InventoryOpenEvent event) {
     if (Main.getInstance().whitelisted && !event.getPlayer().isOp()) {

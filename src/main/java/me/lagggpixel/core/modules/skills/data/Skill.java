@@ -27,14 +27,14 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 
+/**
+ * @author Lagggpixel
+ * @since January 22, 2024
+ */
 @Data
 @Getter
 @Setter
 @AllArgsConstructor
-/**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
- */
 public class Skill {
   @SerializedName("PlayerUniqueID")
   @Expose
@@ -52,7 +52,7 @@ public class Skill {
   @SerializedName("SkillCurrentLevelExperience")
   @Expose
   private double levelExp;
-  
+
   public Skill(@NotNull UUID playerUuid, SkillType skillType) {
     this.playerUuid = playerUuid;
     this.skillType = skillType;
@@ -60,14 +60,14 @@ public class Skill {
     this.totalExp = 0;
     this.levelExp = 0;
   }
-  
+
   public void addExp(double expGained, SkillExpGainCause cause) {
     this.totalExp += totalExp + expGained;
     SkillExpGainEvent skillExpGainEvent = new SkillExpGainEvent(playerUuid, this.skillType, expGained, cause);
     Bukkit.getServer().getPluginManager().callEvent(skillExpGainEvent);
     updateSkillLevel();
   }
-  
+
   public void updateSkillLevel() {
     boolean hasUpdated = true;
     int money = 0;
@@ -85,7 +85,7 @@ public class Skill {
     }
     EconomyManager.getInstance().deposit(playerUuid, money);
   }
-  
+
   public void initSkillLevel() {
     int originalSkillLevel = this.level;
     this.level = 0;
@@ -100,8 +100,7 @@ public class Skill {
         } else {
           hasUpdated = false;
         }
-      }
-      else {
+      } else {
         hasUpdated = false;
       }
     }
@@ -110,7 +109,7 @@ public class Skill {
     if (originalSkillLevel >= newSkillLevel) {
       return;
     }
-    for (int i = originalSkillLevel+1; i <= newSkillLevel; i++) {
+    for (int i = originalSkillLevel + 1; i <= newSkillLevel; i++) {
       money += SkillHandler.getMoneyPerLevel().get(i);
       SkillLevelUpEvent skillLevelUpEvent = new SkillLevelUpEvent(playerUuid, this.skillType, i, money);
       Bukkit.getServer().getPluginManager().callEvent(skillLevelUpEvent);

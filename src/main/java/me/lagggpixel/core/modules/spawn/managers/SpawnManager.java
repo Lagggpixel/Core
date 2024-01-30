@@ -24,19 +24,19 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
 public class SpawnManager {
-  
+
   private final File dataFolder = new File(Main.getInstance().getDataFolder(), "data/modules/spawn");
   private final String dataFileName = "spawn_data.yml";
   private final File file = new File(dataFolder, dataFileName);
-  
+
   @Getter
   @Setter
   private Location spawnLocation;
-  
+
   public void loadSpawnLocation() {
     YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
     try {
@@ -50,12 +50,12 @@ public class SpawnManager {
       DiscordHandler.getInstance().sendEmbed(DiscordModule.discordHandler.LOGGING_CHANNEL, embedBuilder);
     }
   }
-  
+
   public void saveSpawnLocation() {
     if (spawnLocation == null) {
       return;
     }
-    
+
     try {
       if (!dataFolder.exists()) {
         dataFolder.mkdir();
@@ -63,16 +63,16 @@ public class SpawnManager {
       if (!file.exists()) {
         file.createNewFile();
       }
-      
+
       YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
-      
+
       config.set("location", spawnLocation);
       config.save(file);
-      
+
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
-    
+
   }
-  
+
 }

@@ -33,8 +33,8 @@ import java.util.Map;
 import java.util.UUID;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
 public class HomeCommands implements Listener, ICommandClass {
 
@@ -79,7 +79,7 @@ public class HomeCommands implements Listener, ICommandClass {
     }
 
     // Todo - block commands in certain worlds
-    
+
     UUID playerUUID = player.getUniqueId();
     User user = Main.getUser(playerUUID);
 
@@ -117,7 +117,7 @@ public class HomeCommands implements Listener, ICommandClass {
         handleDeleteHome(player, user, args[1]);
         return true;
       }
-      
+
       user.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
 
       return true;
@@ -140,7 +140,7 @@ public class HomeCommands implements Listener, ICommandClass {
       handleDeleteHome(player, user, args[0]);
       return true;
     }
-    
+
     user.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
     return true;
   }
@@ -161,7 +161,7 @@ public class HomeCommands implements Listener, ICommandClass {
     if (player.hasPermission(homeHandler.HOME_PERMISSION_PREFIX + "unlimited")) {
       Home home = homeHandler.createHomeObject(homeName, player.getLocation());
       homeHandler.setHome(user, homeName, home);
-      
+
       user.sendMessage(Lang.HOME_CREATED.toComponentWithPrefix(Map.of(
           "%home%", homeName
       )));
@@ -191,7 +191,7 @@ public class HomeCommands implements Listener, ICommandClass {
 
     Home home = homeHandler.createHomeObject(homeName, player.getLocation());
     homeHandler.setHome(user, homeName, home);
-    
+
     user.sendMessage(Lang.HOME_CREATED.toComponentWithPrefix(Map.of(
         "%home%", homeName
     )));
@@ -206,7 +206,7 @@ public class HomeCommands implements Listener, ICommandClass {
     }
 
     homeHandler.deleteHome(user, homeName);
-    
+
     user.sendMessage(Lang.HOME_DELETED.toComponentWithPrefix(Map.of(
         "%home%", homeName
     )));

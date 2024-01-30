@@ -26,36 +26,36 @@ import java.util.List;
 import java.util.Map;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
 public class MerchantItemSubCommand implements ISubCommand {
-  
+
   private final MerchantModule merchantModule;
-  
+
   public MerchantItemSubCommand(MerchantModule merchantModule) {
     this.merchantModule = merchantModule;
   }
-  
+
   @Override
   public void execute(CommandSender commandSender, String[] args) {
     if (!(commandSender instanceof Player sender)) {
       commandSender.sendMessage(Lang.PLAYER_ONLY.toComponentWithPrefix());
       return;
     }
-    
+
     User user = Main.getUser(sender);
-    
+
     if (user.getCurrentMerchant() == null) {
       commandSender.sendMessage(Lang.MERCHANT_NONE_SELECTED.toComponentWithPrefix());
       return;
     }
-    
+
     Merchant merchant = user.getCurrentMerchant();
-    
+
     String subCmd = args[1];
     int slot;
-    
+
     switch (subCmd) {
       case "set":
         // /merchant item set <price> <slot>
@@ -81,7 +81,7 @@ public class MerchantItemSubCommand implements ISubCommand {
           return;
         }
         Material material = sender.getInventory().getItemInMainHand().getType();
-        
+
         if (merchant.getItems().stream().map(MerchantItem::getRawSlot).toList().contains(slot)) {
           MerchantItem oldItem = null;
           for (MerchantItem item : merchant.getItems()) {
@@ -150,14 +150,14 @@ public class MerchantItemSubCommand implements ISubCommand {
         break;
     }
   }
-  
+
   @Override
   public List<String> tabComplete(CommandSender commandSender, String[] args) {
-    
+
     if (args.length == 2) {
       return List.of("set", "remove");
     }
-    
+
     if (args.length == 3) {
       if (args[2].equalsIgnoreCase("set")) {
         return List.of("cost");
@@ -165,7 +165,7 @@ public class MerchantItemSubCommand implements ISubCommand {
         return List.of(" ");
       }
     }
-    
+
     if (args.length == 4) {
       if (args[2].equalsIgnoreCase("set")) {
         return List.of("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28");
@@ -173,7 +173,7 @@ public class MerchantItemSubCommand implements ISubCommand {
         return List.of(" ");
       }
     }
-    
+
     return List.of(" ");
   }
 }

@@ -18,38 +18,38 @@ import me.lagggpixel.core.utils.CommandUtils;
 import org.jetbrains.annotations.NotNull;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
 public class HomeModule implements IModule {
-  
+
   private HomeHandler homeHandler;
-  
+
   @Override
   public @NotNull String getId() {
     return "home";
   }
-  
+
   @Override
   public boolean isEnabled() {
     return true;
   }
-  
+
   @Override
   public void onEnable() {
     homeHandler = new HomeHandler();
   }
-  
+
   @Override
   public void onDisable() {
-  
+
   }
-  
+
   @Override
   public void registerCommands() {
     CommandUtils.registerCommand(new HomeCommands(this, homeHandler));
   }
-  
+
   @Override
   public void registerListeners() {
     new HomeGuiListeners(homeHandler);

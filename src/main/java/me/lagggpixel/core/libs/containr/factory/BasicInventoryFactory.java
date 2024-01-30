@@ -4,6 +4,7 @@
  * This file was created by external developers.
  *
  * You are hereby granted the right to view, copy, edit, distribute the code.
+ *
  */
 
 package me.lagggpixel.core.libs.containr.factory;
@@ -15,19 +16,19 @@ import me.lagggpixel.core.libs.containr.InventoryFactory;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;
 
-@RequiredArgsConstructor
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author ZorTik
+ * @since January 22, 2024
  */
+@RequiredArgsConstructor
 public class BasicInventoryFactory implements InventoryFactory {
 
-    private final String title;
-    private final int rows;
+  private final String title;
+  private final int rows;
 
-    @Override
-    public InventoryInfo createInventory(GUI gui) {
-        Inventory inventory = Bukkit.createInventory(gui, rows * 9, title);
-        return new InventoryInfo(inventory, title);
-    }
+  @Override
+  public InventoryInfo createInventory(GUI gui) {
+    Inventory inventory = Bukkit.createInventory(gui, rows * 9, title);
+    return new InventoryInfo(inventory, title);
+  }
 }

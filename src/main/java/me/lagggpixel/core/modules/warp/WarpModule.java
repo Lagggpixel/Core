@@ -14,38 +14,38 @@ import me.lagggpixel.core.interfaces.IModule;
 import org.jetbrains.annotations.NotNull;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
 public class WarpModule implements IModule {
-  
+
   @Override
   public @NotNull String getId() {
     return "warps";
   }
-  
+
   @Override
   public boolean isEnabled() {
     return true;
   }
-  
+
   @Override
   public void onEnable() {
-  
+
   }
-  
+
   @Override
   public void onDisable() {
-  
+
   }
-  
+
   @Override
   public void registerCommands() {
-  
+
   }
-  
+
   @Override
   public void registerListeners() {
-  
+
   }
 }

@@ -23,40 +23,40 @@ import org.bukkit.entity.Player;
 import java.util.List;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
 public class MerchantSkinSubCommand implements ISubCommand {
-  
+
   private final MerchantModule merchantModule;
-  
+
   public MerchantSkinSubCommand(MerchantModule merchantModule) {
     this.merchantModule = merchantModule;
   }
-  
+
   @Override
   public void execute(CommandSender commandSender, String[] args) {
     if (!(commandSender instanceof Player sender)) {
       commandSender.sendMessage(Lang.PLAYER_ONLY.toComponentWithPrefix());
       return;
     }
-    
+
     if (args.length != 2) {
       sender.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
       return;
     }
-    
+
     User user = Main.getUser(sender);
-    
+
     if (user.getCurrentMerchant() == null) {
       sender.sendMessage(Lang.MERCHANT_NONE_SELECTED.toComponentWithPrefix());
       return;
     }
-    
-    OfflinePlayer offLinePlayer= Bukkit.getOfflinePlayer(args[1]);
+
+    OfflinePlayer offLinePlayer = Bukkit.getOfflinePlayer(args[1]);
     user.getCurrentMerchant().setSkin(offLinePlayer);
   }
-  
+
   @Override
   public List<String> tabComplete(CommandSender commandSender, String[] args) {
     return List.of(" ");

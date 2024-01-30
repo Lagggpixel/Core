@@ -16,11 +16,11 @@ import java.io.*;
 import java.util.logging.Level;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
 public class FileUtil {
-  
+
   public static void copyToDefault(String resourcePath) {
     resourcePath = resourcePath.replace('\\', '/');
     InputStream in = Main.getInstance().getResource(resourcePath);
@@ -33,19 +33,19 @@ public class FileUtil {
       if (!outDir.exists()) {
         outDir.mkdirs();
       }
-      
+
       try {
         if (outFile.exists()) {
           Main.log(Level.WARNING, "Could not save " + resourcePath + " to " + outFile + " because " + outFile.getName() + " already exists.");
         } else {
           OutputStream out = new FileOutputStream(outFile);
           byte[] buf = new byte[1024];
-          
+
           int len;
           while ((len = in.read(buf)) > 0) {
             out.write(buf, 0, len);
           }
-          
+
           out.close();
           in.close();
         }
@@ -56,5 +56,5 @@ public class FileUtil {
     }
   }
 
-  
+
 }

@@ -4,6 +4,7 @@
  * This file was created by external developers.
  *
  * You are hereby granted the right to view, copy, edit, distribute the code.
+ *
  */
 
 package me.lagggpixel.core.libs.containr;
@@ -14,22 +15,23 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
-@Getter
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author ZorTik
+ * @since January 22, 2024
  */
+@Getter
 public abstract class Element implements Component {
 
-    private final String id;
+  private final String id;
 
-    public Element() {
-        this.id = RandomStringUtils.randomAlphabetic(8);
-    }
+  public Element() {
+    this.id = RandomStringUtils.randomAlphabetic(8);
+  }
 
-    public void click(ContextClickInfo info) {}
+  public void click(ContextClickInfo info) {
+  }
 
-    @Nullable
-    public abstract ItemStack item(Player player);
+  @Nullable
+  public abstract ItemStack item(Player player);
 
 }

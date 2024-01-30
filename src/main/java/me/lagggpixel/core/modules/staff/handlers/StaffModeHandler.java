@@ -17,11 +17,11 @@ import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
 public class StaffModeHandler {
-  
+
   public void enterStaffMode(Player player) {
     User user = Main.getUser(player.getUniqueId());
     user.setStaffMode(true);
@@ -37,7 +37,7 @@ public class StaffModeHandler {
     player.getInventory().clear();
     player.getInventory().setArmorContents(null);
   }
-  
+
   public void exitStaffMode(Player player) {
     User user = Main.getUser(player.getUniqueId());
     user.setStaffMode(false);
@@ -45,5 +45,5 @@ public class StaffModeHandler {
     instantPlayerData.restorePlayerData(player);
     user.setInstantPlayerData(null);
   }
-  
+
 }

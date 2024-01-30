@@ -4,6 +4,7 @@
  * This file was created by external developers.
  *
  * You are hereby granted the right to view, copy, edit, distribute the code.
+ *
  */
 
 package me.lagggpixel.core.libs.containr;
@@ -36,12 +37,9 @@ import java.util.stream.IntStream;
  * coordinates.
  *
  * @author ZorTik
+ * @since January 22, 2024
  */
 @Getter
-/**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
- */
 public abstract class Container implements ContainerComponent {
 
     private final Map<Integer, Container> containers;

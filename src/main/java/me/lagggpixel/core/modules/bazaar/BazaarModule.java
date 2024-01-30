@@ -41,11 +41,10 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
-@SuppressWarnings("LombokGetterMayBeUsed")
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @since January 22, 2024
  */
+@SuppressWarnings("LombokGetterMayBeUsed")
 public class BazaarModule implements IModule, BazaarAPI {
 
   private Economy economy = null;
@@ -59,18 +58,18 @@ public class BazaarModule implements IModule, BazaarAPI {
   private OrderManager orderManager;
   private EditManager editManager;
   private MessageInputManager messageInputManager;
-  
+
   @NotNull
   @Override
   public String getId() {
     return "bazaar";
   }
-  
+
   @Override
   public boolean isEnabled() {
     return true;
   }
-  
+
   @Override
   public void onEnable() {
     RegisteredServiceProvider<Economy> rsp = Main.getInstance().getServer().getServicesManager().getRegistration(Economy.class);
@@ -100,18 +99,18 @@ public class BazaarModule implements IModule, BazaarAPI {
 
     messageInputManager = new MessageInputManager(this);
   }
-  
+
   @Override
   public void onDisable() {
-  
+
   }
-  
+
   @Override
   public void registerCommands() {
     CommandUtils.registerCommand(new BazaarCommand(this));
     CommandUtils.registerCommand(new EditCommand(this));
   }
-  
+
   @Override
   public void registerListeners() {
     Bukkit.getPluginManager().registerEvents(new MenuListeners(this), Main.getInstance());

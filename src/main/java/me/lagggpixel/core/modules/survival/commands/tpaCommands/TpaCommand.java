@@ -28,47 +28,47 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
 public class TpaCommand implements ICommandClass {
-  
+
   private final SurvivalModule module;
   private final TpaHandler tpaHandler;
-  
+
   public TpaCommand(SurvivalModule module, TpaHandler tpaHandler) {
     this.module = module;
     this.tpaHandler = tpaHandler;
   }
-  
+
   @Override
   public String getCommandName() {
     return "teleportrequest";
   }
-  
+
   @Override
   public String getCommandDescription() {
     return null;
   }
-  
+
   @Override
   public List<String> getCommandAliases() {
     return List.of("tpr", "tpa", "tprequest", "tpask", "teleportask", "teleportrequest");
   }
-  
+
   @Override
   public String getCommandPermission() {
     return CommandUtils.generateCommandBasePermission(module, this);
   }
-  
+
   @Override
   public String getUsage() {
     return null;
   }
-  
+
   @Override
   public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
-    
+
     if (!(commandSender instanceof Player sender)) {
       commandSender.sendMessage(Lang.PLAYER_ONLY.toComponentWithPrefix());
       return true;
@@ -78,23 +78,23 @@ public class TpaCommand implements ICommandClass {
       user.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
       return true;
     }
-    
+
     if (tpaHandler.getTpaRequestMap().containsKey(sender)) {
       user.sendMessage(Lang.TPA_REQUEST_ALREADY_OUTGOING.toComponentWithPrefix());
       return true;
     }
-    
+
     Player target = Bukkit.getPlayer(strings[0]);
     if (target == null) {
       user.sendMessage(Lang.PLAYER_NOT_FOUND.toComponentWithPrefix());
       return true;
     }
-    
+
     new TpaRequest(sender, target, tpaHandler);
-    
+
     return true;
   }
-  
+
   @Override
   public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
     return null;

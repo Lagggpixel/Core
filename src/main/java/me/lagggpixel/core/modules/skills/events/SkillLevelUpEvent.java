@@ -19,14 +19,14 @@ import org.jetbrains.annotations.NotNull;
 import java.util.UUID;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
 public class SkillLevelUpEvent extends Event {
-  
+
   @Getter
   private static HandlerList handlerList = new HandlerList();
-  
+
   @Getter
   private final UUID uuid;
   @Getter
@@ -35,7 +35,7 @@ public class SkillLevelUpEvent extends Event {
   private final int level;
   @Getter
   private final int reward;
-  
+
   /**
    * @param uuid      Player that leveled up
    * @param skillType The skillType that the player leveled up in
@@ -47,11 +47,11 @@ public class SkillLevelUpEvent extends Event {
     this.level = level;
     this.reward = reward;
   }
-  
-  
+
+
   @Override
   public @NotNull HandlerList getHandlers() {
     return handlerList;
   }
-  
+
 }

@@ -15,15 +15,16 @@ import me.lagggpixel.core.Main;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
 
-@SuppressWarnings("UnstableApiUsage")
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
+@SuppressWarnings("UnstableApiUsage")
+
 public abstract class ICorePlaceholderExpansion extends PlaceholderExpansion {
-  
+
   protected String version = Main.getInstance().getPluginMeta().getVersion();
-  
+
   @Override
   public @NotNull String getIdentifier() {
     return "core";

@@ -24,18 +24,18 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
 public class SkillsInventoryHolder extends SurvivalCoreInventoryHolder {
   protected SkillsInventoryHolder(Player player) {
     super(player, "Your Skills", 54);
   }
-  
+
   @Override
   public void initializeInventoryItems() {
     User user = Main.getUser(player);
-    
+
     inventory.setItem(13,
         new ItemBuilder(Material.DIAMOND_SWORD)
             .setDisplayName("&aYour Skills")
@@ -45,7 +45,7 @@ public class SkillsInventoryHolder extends SurvivalCoreInventoryHolder {
             ))
             .toItemStack()
     );
-    
+
     inventory.setItem(20,
         new ItemBuilder(Material.GOLDEN_HOE)
             .setDisplayName("&aFarming " + user.getSkills().getFarming().getLevel())
@@ -57,7 +57,7 @@ public class SkillsInventoryHolder extends SurvivalCoreInventoryHolder {
             ))
             .toItemStack()
     );
-    
+
     inventory.setItem(21,
         new ItemBuilder(Material.STONE_PICKAXE)
             .setDisplayName("&aMining " + user.getSkills().getMining().getLevel())
@@ -70,8 +70,8 @@ public class SkillsInventoryHolder extends SurvivalCoreInventoryHolder {
             ))
             .toItemStack()
     );
-    
-    
+
+
     inventory.setItem(22,
         new ItemBuilder(Material.STONE_SWORD)
             .setDisplayName("&aCombat " + user.getSkills().getCombat().getLevel())
@@ -82,8 +82,8 @@ public class SkillsInventoryHolder extends SurvivalCoreInventoryHolder {
                 ChatUtils.stringToTextComponentCC("&eClick to view!")))
             .toItemStack()
     );
-    
-    
+
+
     inventory.setItem(23,
         new ItemBuilder(Material.JUNGLE_SAPLING)
             .setDisplayName("&aWoodcutting " + user.getSkills().getWoodcutting().getLevel())
@@ -95,7 +95,7 @@ public class SkillsInventoryHolder extends SurvivalCoreInventoryHolder {
             ))
             .toItemStack()
     );
-    
+
     inventory.setItem(24,
         new ItemBuilder(Material.FISHING_ROD)
             .setDisplayName("&aFishing " + user.getSkills().getFishing().getLevel())
@@ -106,19 +106,19 @@ public class SkillsInventoryHolder extends SurvivalCoreInventoryHolder {
                 ChatUtils.stringToTextComponentCC("&eClick to view!")))
             .toItemStack()
     );
-    
-    
+
+
     buildBackButton();
     buildCloseButton();
-    
+
     this.fillEmptySlots();
   }
-  
+
   @Override
   public void openInventory(@NotNull Player player) {
     player.openInventory(this.getInventory());
   }
-  
+
   @Override
   public void handleInventoryClick(@NotNull InventoryClickEvent event) {
     super.handleInventoryClick(event);

@@ -27,27 +27,27 @@ import org.jetbrains.annotations.NotNull;
 import java.util.logging.Level;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
 @Getter
 public class DiscordModule implements IModule {
-  
+
   NMSHandler nmsHandler;
   public static DiscordHandler discordHandler;
   private ServerStatusHandler serverStatusHandler;
-  
+
   @NotNull
   @Override
   public String getId() {
     return "discord";
   }
-  
+
   @Override
   public boolean isEnabled() {
     return true;
   }
-  
+
   @Override
   public void onEnable() {
     nmsHandler = new NMSHandler();
@@ -77,18 +77,18 @@ public class DiscordModule implements IModule {
       CaptureAppender.clearCapturedLogs();
     }
   }
-  
+
   @Override
   public void onDisable() {
     serverStatusHandler.setServerPlayersVcChannelOffline();
     DiscordModule.discordHandler.sendEmbed(DiscordModule.discordHandler.LOGGING_CHANNEL, new EmbedBuilder().setTitle("**Core Plugin Disabled**"));
   }
-  
+
   @Override
   public void registerCommands() {
-  
+
   }
-  
+
   @Override
   public void registerListeners() {
     new Listeners(discordHandler);

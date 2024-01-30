@@ -28,8 +28,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
 public class BalanceCommand implements ICommandClass {
   private final EconomyModule economyModule;

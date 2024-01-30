@@ -40,14 +40,13 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
 
-
-@SuppressWarnings("FieldCanBeLocal")
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
+@SuppressWarnings("FieldCanBeLocal")
 public class ClaimListeners implements Listener {
-  
+
   private final int CLAIM_PRICE_MULTIPLER = 100;
   private final int CLAIM_MINIMUM = 5;
   private final List<String> worlds = List.of("world", "world_nether");
@@ -56,18 +55,18 @@ public class ClaimListeners implements Listener {
   private final String ADMIN_NODE_CLAIM_MONEY_BYPASS = "core.guilds.claims.admin_money_bypass";
   private final String ADMIN_NODE_CLAIM_TOO_FAR_BYPASS = "core.guilds.claims.admin_too_far_bypass";
   private final String ADMIN_NODE_CLAIM_TOO_CLOSE_BYPASS = "core.guilds.claims.admin_too_close_bypass";
-  
+
   private final GuildModule guildModule = GuildModule.getInstance();
   private final ClaimManager claimManager = guildModule.getClaimManager();
   private final GuildHandler guildHandler = this.guildModule.getGuildHandler();
   private final HashSet<ClaimProfile> profiles = new HashSet<>();
   private final ArrayList<UUID> clicked = new ArrayList<>();
   private final PillarManager pillarManager = guildModule.getPillarManager();
-  
+
   public ClaimListeners() {
     Bukkit.getPluginManager().registerEvents(this, Main.getInstance());
   }
-  
+
   private ClaimProfile getProfile(UUID id) {
     for (ClaimProfile profile : this.profiles) {
       if (profile.getUuid() == id) {
@@ -78,7 +77,7 @@ public class ClaimListeners implements Listener {
     this.profiles.add(newProfile);
     return newProfile;
   }
-  
+
   @EventHandler(priority = EventPriority.HIGHEST)
   public void onClaimInteract(PlayerInteractEvent event) {
     Player player = event.getPlayer();
@@ -111,7 +110,7 @@ public class ClaimListeners implements Listener {
           }
         }
       }
-      
+
       if (isInteractiveBlock(event.getClickedBlock())) {
         for (Claim claim : this.claimManager.getClaims()) {
           if (claim.isInside(event.getClickedBlock().getLocation(), false)) {
@@ -123,7 +122,7 @@ public class ClaimListeners implements Listener {
       }
     }
   }
-  
+
   /**
    * Handles the claim interaction for a player.
    *
@@ -140,19 +139,19 @@ public class ClaimListeners implements Listener {
     e.setCancelled(true);
     return false;
   }
-  
-  
+
+
   @EventHandler(priority = EventPriority.LOW)
   public void onClaimInteract(BlockBreakEvent e) {
     handleClaimInteract(e);
   }
-  
-  
+
+
   @EventHandler(priority = EventPriority.LOW)
   public void onClaimInteract(BlockPlaceEvent e) {
     handleClaimInteract(e);
   }
-  
+
   /**
    * Sends a claim change notification to the player.
    *
@@ -188,7 +187,7 @@ public class ClaimListeners implements Listener {
       }
     }
   }
-  
+
   @EventHandler
   public void onMove(PlayerMoveEvent e) {
     if (e.getTo().getX() != e.getFrom().getX() || e.getTo().getZ() != e.getFrom().getZ()) {
@@ -206,7 +205,7 @@ public class ClaimListeners implements Listener {
             sendClaimChange(p, profile.getLastInside().getOwner(), false);
             sendClaimChange(p, claim.getOwner(), true);
           }
-          
+
           profile.setLastInside(claim);
           continue;
         }
@@ -224,15 +223,15 @@ public class ClaimListeners implements Listener {
       }
     }
   }
-  
-  
+
+
   @EventHandler
   public void onDrop(PlayerDropItemEvent e) {
     if (this.claimManager.isWand(e.getItemDrop().getItemStack())) {
       e.getItemDrop().remove();
     }
   }
-  
+
   @EventHandler
   public void onStore(InventoryMoveItemEvent e) {
     if (this.claimManager.isWand(e.getItem())) {
@@ -240,7 +239,7 @@ public class ClaimListeners implements Listener {
       e.getDestination().remove(e.getItem());
     }
   }
-  
+
   @EventHandler
   public void onInteract(PlayerInteractEvent e) {
     if (this.claimManager.isWand(e.getItem())) {
@@ -277,12 +276,12 @@ public class ClaimListeners implements Listener {
             prof.setZ1(0);
             prof.setZ2(0);
             prof.setX2(0);
-            
+
             return;
           }
         } else {
           p.sendMessage(Lang.GUILD_WAND_MESSAGES_INVALID_SELECTION.toComponentWithPrefix());
-          
+
           return;
         }
       }
@@ -292,7 +291,7 @@ public class ClaimListeners implements Listener {
           for (Claim claim1 : this.claimManager.getClaims()) {
             if (claim1.overlaps(prof.getX1(), prof.getZ1(), prof.getX2(), prof.getZ2()) && claim1.getWorld() == p.getWorld()) {
               p.sendMessage(Lang.GUILD_WAND_MESSAGES_OVERCLAIM.toComponentWithPrefix());
-              
+
               return;
             }
           }
@@ -300,33 +299,33 @@ public class ClaimListeners implements Listener {
             p.sendMessage(Lang.GUILD_WAND_MESSAGES_OTHER.toComponentWithPrefix());
             return;
           }
-          
+
           Pillar two = this.pillarManager.getPillar(prof, "second");
           Pillar one = this.pillarManager.getPillar(prof, "first");
-          
+
           Location loc1 = new Location(p.getWorld(), prof.getX1(), 0.0D, prof.getZ1());
           Location loc2 = new Location(p.getWorld(), prof.getX2(), 0.0D, prof.getZ2());
-          
+
           int price = (int) Math.round(loc1.distance(loc2) * CLAIM_PRICE_MULTIPLER);
-          
-          
+
+
           if (price > guild.getBalance() && !p.hasPermission(ADMIN_NODE_CLAIM_MONEY_BYPASS)) {
             p.sendMessage(Lang.GUILD_WAND_MESSAGES_INVALID_FUNDS.toComponentWithPrefix());
             return;
           }
           guild.setBalance(guild.getBalance() - price);
           guild.sendMessage(Lang.GUILD_WAND_MESSAGES_CLEAR.toComponentWithPrefix(Map.of("%player%", p.getName())));
-          
+
           if (one != null) {
             one.removePillar();
           }
           if (two != null) {
             two.removePillar();
           }
-          
-          
+
+
           claimManager.getClaiming().remove(p.getUniqueId());
-          
+
           Claim claim = new Claim(UUID.randomUUID().toString() + UUID.randomUUID(), guild, prof.getX1(), prof.getX2(), prof.getZ1(), prof.getZ2(), p.getWorld(), price);
           this.claimManager.getClaims().add(claim);
           guild.getClaims().add(claim);
@@ -335,22 +334,22 @@ public class ClaimListeners implements Listener {
           prof.setZ2(0);
           prof.setX2(0);
           p.getInventory().remove(p.getInventory().getItemInMainHand());
-          
+
           return;
         }
         p.sendMessage(Lang.GUILD_WAND_MESSAGES_INVALID_SELECTION.toComponentWithPrefix());
-        
+
         return;
       }
-      
+
       // Set position 1
       if (e.getAction() == Action.LEFT_CLICK_BLOCK) {
         e.setCancelled(true);
-        
+
         if (e.getClickedBlock() == null) {
           return;
         }
-        
+
         if (!guild.getClaims().isEmpty() && !guild.isNearBorder(e.getClickedBlock().getLocation()) && !p.hasPermission(ADMIN_NODE_CLAIM_TOO_FAR_BYPASS)) {
           p.sendMessage(Lang.GUILD_WAND_MESSAGES_TOO_FAR.toComponentWithPrefix());
           return;
@@ -360,9 +359,9 @@ public class ClaimListeners implements Listener {
         }
         prof.setX1(e.getClickedBlock().getX());
         prof.setZ1(e.getClickedBlock().getZ());
-        
+
         handlePointSelection(p, guild, e.getClickedBlock(), prof, 1);
-        
+
         Pillar pillar = this.pillarManager.getPillar(prof, "first");
         if (pillar != null) {
           this.pillarManager.getPillars().remove(pillar);
@@ -371,11 +370,11 @@ public class ClaimListeners implements Listener {
         pillar = new Pillar(prof, Material.DIAMOND_BLOCK, (byte) 0, e.getClickedBlock().getLocation(), "first");
         pillar.sendPillar();
       }
-      
+
       // Set position 2
       if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
         e.setCancelled(true);
-        
+
         if (e.getClickedBlock() == null) {
           return;
         }
@@ -384,9 +383,9 @@ public class ClaimListeners implements Listener {
         }
         prof.setX2(e.getClickedBlock().getX());
         prof.setZ2(e.getClickedBlock().getZ());
-        
+
         handlePointSelection(p, guild, e.getClickedBlock(), prof, 2);
-        
+
         Pillar pillar = this.pillarManager.getPillar(prof, "second");
         if (pillar != null) {
           this.pillarManager.getPillars().remove(pillar);
@@ -400,10 +399,10 @@ public class ClaimListeners implements Listener {
           }
         }).runTaskLater(Main.getInstance(), 1L);
       }
-      
+
     }
   }
-  
+
   /**
    * Calculates the price for claiming a guild territory based on the distance between two locations.
    *
@@ -414,14 +413,14 @@ public class ClaimListeners implements Listener {
    */
   private void checkIsClaimAffordable(Player p, Guild guild, Location loc1, Location loc2) {
     int price = (int) Math.round(loc1.distance(loc2) * CLAIM_PRICE_MULTIPLER);
-    
+
     if (guild.getBalance() < price) {
       p.sendMessage(Lang.GUILD_WAND_MESSAGES_COST_TOO_MUCH.toComponentWithPrefix(Map.of("%amount%", price + "")));
     } else {
       p.sendMessage(Lang.GUILD_WAND_MESSAGES_COST_ENOUGH.toComponentWithPrefix(Map.of("%amount%", price + "")));
     }
   }
-  
+
   /**
    * Checks if a player can claim a specific block.
    *
@@ -450,12 +449,12 @@ public class ClaimListeners implements Listener {
     }
     if (!this.worlds.contains(p.getWorld().getName()) && !p.hasPermission(ADMIN_NODE_CLAIM_WORLD_BYPASS)) {
       p.sendMessage(Lang.GUILD_WAND_MESSAGES_OTHER.toComponentWithPrefix());
-      
+
       return true;
     }
     return false;
   }
-  
+
   /**
    * Determines if a given block is an interactive block.
    *
@@ -471,25 +470,25 @@ public class ClaimListeners implements Listener {
         || block.getType().name().contains("BUTTON")
         || block.getType().name().contains("LEVER");
   }
-  
+
   private void handlePointSelection(Player p, Guild guild, Block clickedBlock, ClaimProfile prof, int claimNumber) {
     if (prof.getX2() != 0 && prof.getZ2() != 0) {
       Location loc1 = new Location(p.getWorld(), prof.getX1(), 0.0D, prof.getZ1());
       Location loc2 = new Location(p.getWorld(), prof.getX2(), 0.0D, prof.getZ2());
-      
+
       if (loc1.distance(loc2) < CLAIM_MINIMUM) {
         p.sendMessage(Lang.GUILD_WAND_MESSAGES_TOO_SMALL.toComponentWithPrefix());
         return;
       }
-      
+
       handleClaimMessage(p, clickedBlock, claimNumber);
-      
+
       checkIsClaimAffordable(p, guild, loc1, loc2);
     } else {
       handleClaimMessage(p, clickedBlock, claimNumber);
     }
   }
-  
+
   private void handleClaimMessage(Player p, Block clickedBlock, int claimNumber) {
     if (claimNumber == 1) {
       p.sendMessage(Lang.GUILD_WAND_MESSAGES_FIRST_POINT.toComponentWithPrefix(Map.of("%x%", clickedBlock.getX() + "", "%z%", clickedBlock.getZ() + "")));
@@ -497,7 +496,7 @@ public class ClaimListeners implements Listener {
       p.sendMessage(Lang.GUILD_WAND_MESSAGES_SECOND_POINT.toComponentWithPrefix(Map.of("%x%", clickedBlock.getX() + "", "%z%", clickedBlock.getZ() + "")));
     }
   }
-  
+
   private void handleClaimInteract(BlockBreakEvent blockBreakEvent) {
     Player player = blockBreakEvent.getPlayer();
     User user = Main.getUser(player);
@@ -512,7 +511,7 @@ public class ClaimListeners implements Listener {
       }
     }
   }
-  
+
   private void handleClaimInteract(BlockPlaceEvent blockPlaceEvent) {
     Player player = blockPlaceEvent.getPlayer();
     User user = Main.getUser(player);

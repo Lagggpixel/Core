@@ -4,6 +4,7 @@
  * This file was created by external developers.
  *
  * You are hereby granted the right to view, copy, edit, distribute the code.
+ *
  */
 
 package me.lagggpixel.core.modules.bazaar.utils;
@@ -25,100 +26,99 @@ import java.util.List;
 import java.util.Map;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @since January 22, 2024
  */
 public class MenuUtils {
-    private MenuUtils() {
-        throw new IllegalStateException("Utility class cannot be instantiated");
+  private MenuUtils() {
+    throw new IllegalStateException("Utility class cannot be instantiated");
+  }
+
+  public static Element getElementAtSlot(ContainerComponent container, int itemSlot) {
+    return getContainerElements(container).get(itemSlot);
+  }
+
+  public static void updateGuiItem(MenuHistory menuHistory, ContainerComponent container, int itemSlot, Player player, ItemStack newItem) {
+    for (Map.Entry<Integer, Element> slotElementEntry : getContainerElements(container).entrySet()) {
+      int slot = slotElementEntry.getKey();
+      Element element = slotElementEntry.getValue();
+
+      if (slot != itemSlot) continue;
+
+      container.setElement(itemSlot, Component.element(newItem).click(element::click).build());
+      menuHistory.refreshGui(player);
+      break;
+    }
+  }
+
+  private static Map<Integer, Element> getContainerElements(ContainerComponent container) {
+    if (!(container instanceof Container)) {
+      return container.content(null);
     }
 
-    public static Element getElementAtSlot(ContainerComponent container, int itemSlot) {
-        return getContainerElements(container).get(itemSlot);
+    try {
+      Field elementsField = Container.class.getDeclaredField("elements");
+      elementsField.setAccessible(true);
+      Map<Integer, Element> elementMap = (Map<Integer, Element>) elementsField.get(container);
+      return elementMap;
+    } catch (NoSuchFieldException | IllegalAccessException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  public static int getNextFreeSlot(PagedContainer container) {
+    int slot = 0;
+    while (!container.isFreeSlot(slot)) {
+      slot++;
+    }
+    return slot;
+  }
+
+  public static void setPagingArrows(MenuConfiguration menuConfiguration, GUI gui, PagedContainer container, BazaarAPI bazaarApi, Player player, int previousSlot, int nextSlot, boolean edit) {
+    if (container.getCurrentPageIndex() > 0) {
+      gui.setElement(previousSlot, Component.element()
+          .click(info -> {
+            container.previousPage();
+            setPagingArrows(menuConfiguration, gui, container, bazaarApi, player, previousSlot, nextSlot, edit);
+            gui.update(info.getPlayer());
+          })
+          .item(Items.create(Material.ARROW, ChatColor.GREEN + "Previous page"))
+          .build());
+    } else {
+      menuConfiguration.getItems().stream().filter(item -> item.getSlot() == previousSlot).findAny().ifPresent(glassItem -> {
+        glassItem.putItem(gui, bazaarApi, player, null, edit);
+      });
     }
 
-    public static void updateGuiItem(MenuHistory menuHistory, ContainerComponent container, int itemSlot, Player player, ItemStack newItem) {
-        for (Map.Entry<Integer, Element> slotElementEntry : getContainerElements(container).entrySet()) {
-            int slot = slotElementEntry.getKey();
-            Element element = slotElementEntry.getValue();
-
-            if (slot != itemSlot) continue;
-
-            container.setElement(itemSlot, Component.element(newItem).click(element::click).build());
-            menuHistory.refreshGui(player);
-            break;
-        }
+    if (container.getCurrentPageIndex() < container.getMaxPageIndex()) {
+      gui.setElement(nextSlot, Component.element()
+          .click(info -> {
+            container.nextPage();
+            setPagingArrows(menuConfiguration, gui, container, bazaarApi, player, previousSlot, nextSlot, edit);
+            gui.update(info.getPlayer());
+          })
+          .item(Items.create(Material.ARROW, ChatColor.GREEN + "Next page"))
+          .build());
+    } else {
+      menuConfiguration.getItems().stream().filter(item -> item.getSlot() == nextSlot).findAny().ifPresent(glassItem -> {
+        glassItem.putItem(gui, bazaarApi, player, null, edit);
+      });
     }
+  }
 
-    private static Map<Integer, Element> getContainerElements(ContainerComponent container) {
-        if (!(container instanceof Container)) {
-            return container.content(null);
-        }
+  public static ItemStack getPlusSkull(String name) {
+    return Items.createSkull(name, "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjBiNTVmNzQ2ODFjNjgyODNhMWMxY2U1MWYxYzgzYjUyZTI5NzFjOTFlZTM0ZWZjYjU5OGRmMzk5MGE3ZTcifX19");
+  }
 
-        try {
-            Field elementsField = Container.class.getDeclaredField("elements");
-            elementsField.setAccessible(true);
-            Map<Integer, Element> elementMap = (Map<Integer, Element>) elementsField.get(container);
-            return elementMap;
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
+  public static ItemStack appendEditLore(ItemStack item, boolean shouldAppend) {
+    return appendEditLore(item, shouldAppend, false);
+  }
+
+  public static ItemStack appendEditLore(ItemStack item, boolean shouldAppend, boolean removable) {
+    List<String> lore = new ArrayList<>();
+    lore.add(ChatColor.AQUA + "Right-Click to edit!");
+    if (removable) {
+      lore.add(ChatColor.DARK_AQUA + "Middle-Click to remove!");
     }
-
-    public static int getNextFreeSlot(PagedContainer container) {
-        int slot = 0;
-        while (!container.isFreeSlot(slot)) {
-            slot++;
-        }
-        return slot;
-    }
-
-    public static void setPagingArrows(MenuConfiguration menuConfiguration, GUI gui, PagedContainer container, BazaarAPI bazaarApi, Player player, int previousSlot, int nextSlot, boolean edit) {
-        if (container.getCurrentPageIndex() > 0) {
-            gui.setElement(previousSlot, Component.element()
-                    .click(info -> {
-                        container.previousPage();
-                        setPagingArrows(menuConfiguration, gui, container, bazaarApi, player, previousSlot, nextSlot, edit);
-                        gui.update(info.getPlayer());
-                    })
-                    .item(Items.create(Material.ARROW, ChatColor.GREEN + "Previous page"))
-                    .build());
-        } else {
-            menuConfiguration.getItems().stream().filter(item -> item.getSlot() == previousSlot).findAny().ifPresent(glassItem -> {
-                glassItem.putItem(gui, bazaarApi, player, null, edit);
-            });
-        }
-
-        if (container.getCurrentPageIndex() < container.getMaxPageIndex()) {
-            gui.setElement(nextSlot, Component.element()
-                    .click(info -> {
-                        container.nextPage();
-                        setPagingArrows(menuConfiguration, gui, container, bazaarApi, player, previousSlot, nextSlot, edit);
-                        gui.update(info.getPlayer());
-                    })
-                    .item(Items.create(Material.ARROW, ChatColor.GREEN + "Next page"))
-                    .build());
-        } else {
-            menuConfiguration.getItems().stream().filter(item -> item.getSlot() == nextSlot).findAny().ifPresent(glassItem -> {
-                glassItem.putItem(gui, bazaarApi, player, null, edit);
-            });
-        }
-    }
-
-    public static ItemStack getPlusSkull(String name) {
-        return Items.createSkull(name, "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjBiNTVmNzQ2ODFjNjgyODNhMWMxY2U1MWYxYzgzYjUyZTI5NzFjOTFlZTM0ZWZjYjU5OGRmMzk5MGE3ZTcifX19");
-    }
-
-    public static ItemStack appendEditLore(ItemStack item, boolean shouldAppend) {
-        return appendEditLore(item, shouldAppend, false);
-    }
-
-    public static ItemStack appendEditLore(ItemStack item, boolean shouldAppend, boolean removable) {
-        List<String> lore = new ArrayList<>();
-        lore.add(ChatColor.AQUA + "Right-Click to edit!");
-        if (removable) {
-            lore.add(ChatColor.DARK_AQUA + "Middle-Click to remove!");
-        }
-        return shouldAppend ? ItemBuilder.newBuilder(item).appendLore(lore).build() : item;
-    }
+    return shouldAppend ? ItemBuilder.newBuilder(item).appendLore(lore).build() : item;
+  }
 }

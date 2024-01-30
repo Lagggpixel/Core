@@ -22,42 +22,42 @@ import java.util.List;
 import java.util.Map;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
 public class MerchantRenameSubCommand implements ISubCommand {
-  
+
   private final MerchantModule merchantModule;
-  
+
   public MerchantRenameSubCommand(MerchantModule merchantModule) {
     this.merchantModule = merchantModule;
   }
-  
+
   @Override
   public void execute(CommandSender commandSender, String[] args) {
     if (!(commandSender instanceof Player sender)) {
       commandSender.sendMessage(Lang.PLAYER_ONLY.toComponentWithPrefix());
       return;
     }
-    
+
     if (args.length != 2) {
       commandSender.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
       return;
     }
-    
+
     User user = Main.getUser(sender);
-    
+
     String name = args[1];
-    
+
     if (user.getCurrentMerchant() == null) {
       sender.sendMessage(Lang.MERCHANT_NONE_SELECTED.toComponentWithPrefix());
       return;
     }
-    
+
     user.getCurrentMerchant().setName(name);
     sender.sendMessage(Lang.MERCHANT_RENAMED.toComponentWithPrefix(Map.of("%name%", user.getCurrentMerchant().getName())));
   }
-  
+
   @Override
   public List<String> tabComplete(CommandSender commandSender, String[] args) {
     return List.of(" ");

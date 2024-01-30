@@ -1,13 +1,16 @@
 /*
  * Copyright (c) 2024 Infinite Minecrafter's Developers.
  *
- * This file was created by external developers.
+ * This file was created by the developers of Infinite Minecrafter's.
  *
- * You are hereby granted the right to view, copy, edit, distribute the code.
+ * You are hereby granted the right to view the code for personal or educational purposes.
+ * However, you are not allowed to copy, distribute, or resell the code without
+ * explicit permission from the lead developer of Infinite Minecrafter's.
  */
 
 package me.lagggpixel.core.modules.bazaar.bz.productcategory;
 
+import lombok.Getter;
 import me.lagggpixel.core.modules.bazaar.bz.product.ProductConfiguration;
 import me.lagggpixel.core.modules.bazaar.menu.configurations.ProductCategoryMenuConfiguration;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
@@ -19,9 +22,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @since January 22, 2024
  */
+@Getter
 public class ProductCategoryConfiguration implements ConfigurationSerializable {
     private final ProductCategoryMenuConfiguration menuConfig;
     private final List<ProductConfiguration> products;
@@ -42,28 +45,12 @@ public class ProductCategoryConfiguration implements ConfigurationSerializable {
                 (List<ProductConfiguration>) args.get("products"));
     }
 
-    public ProductCategoryMenuConfiguration getMenuConfig() {
-        return menuConfig;
-    }
-
-    public ItemStack getIcon() {
-        return icon;
-    }
-
     public void setIcon(ItemStack icon) {
         this.icon = icon;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public void setName(String name) {
         this.name = name;
-    }
-
-    public List<ProductConfiguration> getProducts() {
-        return products;
     }
 
     @Override

@@ -17,13 +17,13 @@ import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
-@SuppressWarnings("unused")
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
+@SuppressWarnings("unused")
 public class ChatUtils {
-  
+
   public static @NotNull Component stringToComponentCC(String stringWithColorCodes) {
     return LegacyComponentSerializer.legacy('&').deserialize(stringWithColorCodes).asComponent();
   }
@@ -31,7 +31,7 @@ public class ChatUtils {
   public static @NotNull TextComponent stringToTextComponentCC(String stringWithColorCodes) {
     return LegacyComponentSerializer.legacy('&').deserialize(stringWithColorCodes);
   }
-  
+
   @Contract("_ -> new")
   public static @NotNull Component stringToComponent(String string) {
     return Component.text(string).toBuilder().build();
@@ -41,7 +41,7 @@ public class ChatUtils {
   public static @NotNull TextComponent stringToTextComponent(String string) {
     return Component.text(string).toBuilder().build();
   }
-  
+
   public static @NotNull String componentToString(Component component) {
     if (component == null) {
       return "";

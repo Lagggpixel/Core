@@ -4,6 +4,7 @@
  * This file was created by external developers.
  *
  * You are hereby granted the right to view, copy, edit, distribute the code.
+ *
  */
 
 package me.lagggpixel.core.modules.merchant.utils;
@@ -14,8 +15,8 @@ import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Exortions
+ * @since January 22, 2024
  */
 public class MerchantUtils {
   

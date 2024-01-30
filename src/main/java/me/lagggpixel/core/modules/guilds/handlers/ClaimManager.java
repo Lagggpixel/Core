@@ -24,11 +24,11 @@ import org.bukkit.persistence.PersistentDataType;
 
 import java.util.*;
 
-@Getter
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
+@Getter
 public class ClaimManager {
   private final HashMap<UUID, Guild> claiming = new HashMap<>();
   private final HashSet<Claim> claims = new HashSet<>();

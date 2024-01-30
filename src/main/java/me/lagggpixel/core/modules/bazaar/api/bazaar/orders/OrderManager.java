@@ -1,9 +1,11 @@
 /*
  * Copyright (c) 2024 Infinite Minecrafter's Developers.
  *
- * This file was created by external developers.
+ * This file was created by the developers of Infinite Minecrafter's.
  *
- * You are hereby granted the right to view, copy, edit, distribute the code.
+ * You are hereby granted the right to view the code for personal or educational purposes.
+ * However, you are not allowed to copy, distribute, or resell the code without
+ * explicit permission from the lead developer of Infinite Minecrafter's.
  */
 
 package me.lagggpixel.core.modules.bazaar.api.bazaar.orders;
@@ -16,27 +18,26 @@ import java.util.concurrent.CompletableFuture;
 import java.util.function.Predicate;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @since January 22, 2024
  */
 public interface OrderManager {
-    BazaarOrder prepareBazaarOrder(Product product, int amount, double unitPrice, OrderType type, UUID player);
+  BazaarOrder prepareBazaarOrder(Product product, int amount, double unitPrice, OrderType type, UUID player);
 
-    CompletableFuture<InstantBazaarOrder> prepareInstantOrder(Product product, int amount, OrderType type, UUID player);
+  CompletableFuture<InstantBazaarOrder> prepareInstantOrder(Product product, int amount, OrderType type, UUID player);
 
-    int claimOrder(BazaarOrder order);
+  int claimOrder(BazaarOrder order);
 
-    CompletableFuture<SubmitResult> submitBazaarOrder(BazaarOrder order);
+  CompletableFuture<SubmitResult> submitBazaarOrder(BazaarOrder order);
 
-    CompletableFuture<InstantSubmitResult> submitInstantOrder(InstantBazaarOrder order);
+  CompletableFuture<InstantSubmitResult> submitInstantOrder(InstantBazaarOrder order);
 
-    CompletableFuture<List<BazaarOrder>> getOrders(Product product, OrderType type, Predicate<List<BazaarOrder>> shouldContinuePredicate);
+  CompletableFuture<List<BazaarOrder>> getOrders(Product product, OrderType type, Predicate<List<BazaarOrder>> shouldContinuePredicate);
 
-    CompletableFuture<List<CompressedBazaarOrder>> getCompressedOrders(Product product, OrderType orderType, int limit);
+  CompletableFuture<List<CompressedBazaarOrder>> getCompressedOrders(Product product, OrderType orderType, int limit);
 
-    CompletableFuture<List<BazaarOrder>> getUnclaimedOrders(UUID playerUniqueId);
+  CompletableFuture<List<BazaarOrder>> getUnclaimedOrders(UUID playerUniqueId);
 
-    CompletableFuture<FillResult> fillOrders(Product product, OrderType orderType, int amount);
+  CompletableFuture<FillResult> fillOrders(Product product, OrderType orderType, int amount);
 
-    CompletableFuture<Void> undoOrderFill(BazaarOrder previousOrder);
+  CompletableFuture<Void> undoOrderFill(BazaarOrder previousOrder);
 }

@@ -21,8 +21,8 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
 public class NaturalBlocksChangedListeners implements Listener {
 
@@ -31,13 +31,13 @@ public class NaturalBlocksChangedListeners implements Listener {
   public NaturalBlocksChangedListeners(SkillsModule skillsModule) {
     this.skillsModule = skillsModule;
   }
-  
+
   // A block is not "natural" after a player places a block there
   @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
   public void BlockPlaceEvent(BlockPlaceEvent event) {
     skillsModule.getSkillHandler().getNonNaturalBlocks().add(event.getBlock().getLocation());
   }
-  
+
   // A block is "natural" after tnt/creeper/tnt-mine-cart explodes it
   @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
   public void EntityExplodeEvent(EntityExplodeEvent event) {
@@ -46,7 +46,7 @@ public class NaturalBlocksChangedListeners implements Listener {
       skillsModule.getSkillHandler().getNonNaturalBlocks().remove(location);
     }
   }
-  
+
   // A block is "natural" after a crop grows there
   @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
   public void BlockGrowEvent(BlockGrowEvent event) {

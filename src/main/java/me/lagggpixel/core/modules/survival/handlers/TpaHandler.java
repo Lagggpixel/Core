@@ -17,14 +17,13 @@ import org.bukkit.entity.Player;
 import java.util.HashMap;
 import java.util.Map;
 
-
-@Getter
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
+@Getter
 public class TpaHandler {
-  
+
   private final Map<Player, TpaRequest> tpaRequestMap = new HashMap<>();
-  
+
 }

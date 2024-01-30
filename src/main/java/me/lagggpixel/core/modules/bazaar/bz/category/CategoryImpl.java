@@ -1,9 +1,11 @@
 /*
  * Copyright (c) 2024 Infinite Minecrafter's Developers.
  *
- * This file was created by external developers.
+ * This file was created by the developers of Infinite Minecrafter's.
  *
- * You are hereby granted the right to view, copy, edit, distribute the code.
+ * You are hereby granted the right to view the code for personal or educational purposes.
+ * However, you are not allowed to copy, distribute, or resell the code without
+ * explicit permission from the lead developer of Infinite Minecrafter's.
  */
 
 package me.lagggpixel.core.modules.bazaar.bz.category;
@@ -21,80 +23,79 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @since January 22, 2024
  */
 public class CategoryImpl implements Category {
-    private final Bazaar bazaar;
-    private final CategoryConfiguration config;
-    private final List<ProductCategory> productCategories;
+  private final Bazaar bazaar;
+  private final CategoryConfiguration config;
+  private final List<ProductCategory> productCategories;
 
-    public CategoryImpl(BazaarImpl bazaar, CategoryConfiguration config) {
-        this.bazaar = bazaar;
-        this.config = config;
-        productCategories = config.getProductCategories().stream()
-                .map(productCategoryConfiguration -> new ProductCategoryImpl(this, productCategoryConfiguration))
-                .collect(Collectors.toList());
-    }
+  public CategoryImpl(BazaarImpl bazaar, CategoryConfiguration config) {
+    this.bazaar = bazaar;
+    this.config = config;
+    productCategories = config.getProductCategories().stream()
+        .map(productCategoryConfiguration -> new ProductCategoryImpl(this, productCategoryConfiguration))
+        .collect(Collectors.toList());
+  }
 
-    @Override
-    public ItemStack getIcon() {
-        return config.getIcon();
-    }
+  @Override
+  public ItemStack getIcon() {
+    return config.getIcon();
+  }
 
-    @Override
-    public void setIcon(ItemStack icon) {
-        config.setIcon(icon);
-        bazaar.saveConfig();
-    }
+  @Override
+  public void setIcon(ItemStack icon) {
+    config.setIcon(icon);
+    bazaar.saveConfig();
+  }
 
-    @Override
-    public String getName() {
-        return Utils.colorize(config.getName());
-    }
+  @Override
+  public String getName() {
+    return Utils.colorize(config.getName());
+  }
 
-    @Override
-    public void setName(String name) {
-        config.setName(name);
-        bazaar.saveConfig();
-    }
+  @Override
+  public void setName(String name) {
+    config.setName(name);
+    bazaar.saveConfig();
+  }
 
-    @Override
-    public List<ProductCategory> getProductCategories() {
-        return productCategories;
-    }
+  @Override
+  public List<ProductCategory> getProductCategories() {
+    return productCategories;
+  }
 
-    @Override
-    public void addProductCategory(ProductCategory productCategory) {
-        config.getProductCategories().add(((ProductCategoryImpl) productCategory).getConfig());
-        productCategories.add(productCategory);
-        bazaar.saveConfig();
-    }
+  @Override
+  public void addProductCategory(ProductCategory productCategory) {
+    config.getProductCategories().add(((ProductCategoryImpl) productCategory).getConfig());
+    productCategories.add(productCategory);
+    bazaar.saveConfig();
+  }
 
-    @Override
-    public void removeProductCategory(ProductCategory productCategory) {
-        config.getProductCategories().remove(((ProductCategoryImpl) productCategory).getConfig());
-        productCategories.remove(productCategory);
-        bazaar.saveConfig();
-    }
+  @Override
+  public void removeProductCategory(ProductCategory productCategory) {
+    config.getProductCategories().remove(((ProductCategoryImpl) productCategory).getConfig());
+    productCategories.remove(productCategory);
+    bazaar.saveConfig();
+  }
 
-    @Override
-    public GUI getMenu() {
-        return config.getMenuConfig().getMenu(this, false);
-    }
+  @Override
+  public GUI getMenu() {
+    return config.getMenuConfig().getMenu(this, false);
+  }
 
-    @Override
-    public void setTitle(String name) {
-        config.getMenuConfig().setName(bazaar, name);
-    }
+  @Override
+  public void setTitle(String name) {
+    config.getMenuConfig().setName(bazaar, name);
+  }
 
-    @Override
-    public GUI getEditMenu() {
-        return config.getMenuConfig().getMenu(this, true);
-    }
+  @Override
+  public GUI getEditMenu() {
+    return config.getMenuConfig().getMenu(this, true);
+  }
 
-    @Override
-    public Bazaar getBazaar() {
-        return bazaar;
-    }
+  @Override
+  public Bazaar getBazaar() {
+    return bazaar;
+  }
 }

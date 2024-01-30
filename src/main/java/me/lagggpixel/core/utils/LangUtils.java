@@ -20,11 +20,11 @@ import java.io.InputStream;
 import java.util.logging.Level;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
 public class LangUtils {
-  
+
   public static void loadLangConfig() {
     File langFile = new File(Main.getInstance().getDataFolder(), "lang.yml");
     if (!langFile.exists()) {

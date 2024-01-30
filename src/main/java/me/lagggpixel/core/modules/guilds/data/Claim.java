@@ -22,13 +22,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * @author Lagggpixel
+ * @since January 22, 2024
+ */
 @Setter
 @SuppressWarnings("unused")
 @Getter
-/**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
- */
 public class Claim {
   private int x1;
   private int x2;

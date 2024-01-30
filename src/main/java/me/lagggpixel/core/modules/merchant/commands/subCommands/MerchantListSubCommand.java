@@ -20,36 +20,36 @@ import org.bukkit.entity.Player;
 import java.util.List;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
 public class MerchantListSubCommand implements ISubCommand {
-  
+
   private final MerchantModule merchantModule;
-  
+
   public MerchantListSubCommand(MerchantModule merchantModule) {
     this.merchantModule = merchantModule;
   }
-  
+
   @Override
   public void execute(CommandSender commandSender, String[] args) {
     if (!(commandSender instanceof Player sender)) {
       commandSender.sendMessage(Lang.PLAYER_ONLY.toComponentWithPrefix());
       return;
     }
-    
+
     if (args.length != 1) {
       sender.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
       return;
     }
-    
+
     sender.sendMessage(Lang.PREFIX.toComponent().append(ChatUtils.stringToComponentCC("Merchants:")));
-    
+
     merchantModule.getMerchantHandler().getMerchants().forEach((merchantId, merchant) -> {
       sender.sendMessage(merchant.getId() + ": " + merchant.getName());
     });
   }
-  
+
   @Override
   public List<String> tabComplete(CommandSender commandSender, String[] args) {
     return List.of(" ");

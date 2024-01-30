@@ -24,8 +24,8 @@ import org.jetbrains.annotations.NotNull;
 import org.mineskin.MineskinClient;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
 public class MerchantModule implements IModule {
   

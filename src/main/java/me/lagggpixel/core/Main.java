@@ -56,20 +56,20 @@ import java.util.UUID;
 import java.util.logging.Level;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
 public final class Main extends JavaPlugin {
-  
+
   private static Main INSTANCE;
   public boolean whitelisted;
   public NamespacedKey itemTag;
   private static Map<UUID, User> userData;
-  
+
   static {
     ConfigurationSerialization.registerClass(InstantPlayerData.class);
     ConfigurationSerialization.registerClass(Home.class);
-    
+
     // Bazaar
     ConfigurationSerialization.registerClass(ProductConfiguration.class);
     ConfigurationSerialization.registerClass(ProductCategoryConfiguration.class);
@@ -82,7 +82,7 @@ public final class Main extends JavaPlugin {
     ConfigurationSerialization.registerClass(ConfirmationMenuConfiguration.class);
     ConfigurationSerialization.registerClass(OrdersMenuConfiguration.class);
   }
-  
+
   private final @NotNull HashMap<String, IModule> modules = new HashMap<>();
   private final @NotNull IModule bazaarModule = new BazaarModule();
   private final @NotNull IModule chatModule = new ChatModule();
@@ -100,19 +100,19 @@ public final class Main extends JavaPlugin {
   @Setter
   @Getter
   private Logger log4jLogger;
-  
+
   public static @NotNull Main getInstance() {
     return INSTANCE;
   }
-  
+
   public static void log(Level level, String message) {
     Main.getInstance().getLogger().log(level, "[Infinite Minecrafters Core]: " + message);
   }
-  
+
   public static @NotNull Map<UUID, User> getUserData() {
     return userData;
   }
-  
+
   /**
    * Retrieves the User object associated with the specified UUID.
    *
@@ -125,7 +125,7 @@ public final class Main extends JavaPlugin {
     }
     return userData.get(uuid);
   }
-  
+
   /**
    * Retrieves the User object associated with the specified Player Object.
    *
@@ -135,29 +135,29 @@ public final class Main extends JavaPlugin {
   public static User getUser(Player player) {
     return userData.get(player.getUniqueId());
   }
-  
+
   public static @NotNull PluginManager getPluginManager() {
     return INSTANCE.getServer().getPluginManager();
   }
-  
+
   @Override
   public void onEnable() {
-    
+
     INSTANCE = this;
     this.saveDefaultConfig();
     this.saveConfig();
     this.whitelisted = getConfig().getBoolean("whitelisted", true);
     itemTag = new NamespacedKey(Main.getInstance(), "itemTag");
-    
+
     LangUtils.loadLangConfig();
-    
+
     userData = UserDataSerializer.loadData();
-    
+
     registerListeners();
     registerCommands();
-    
+
     TeleportUtils.startTeleportTask();
-    
+
     modules.put(bazaarModule.getId(), bazaarModule);
     modules.put(chatModule.getId(), chatModule);
     modules.put(discordModule.getId(), discordModule);
@@ -171,10 +171,10 @@ public final class Main extends JavaPlugin {
     modules.put(staffModule.getId(), staffModule);
     modules.put(warpModule.getId(), warpModule);
     modules.put(survivalModule.getId(), survivalModule);
-    
+
     EmbedBuilder startupLogEmbed = new EmbedBuilder();
     startupLogEmbed.setTitle("**Core Plugin Started**");
-    
+
     modules.forEach((k, v) -> {
       if (v.isEnabled()) {
         log(Level.INFO, "IModule " + v.getId() + " is enabled.");
@@ -187,10 +187,10 @@ public final class Main extends JavaPlugin {
         log(Level.INFO, "IModule " + v.getId() + " is disabled.");
       }
     });
-    
+
     DiscordModule.discordHandler.sendEmbed(DiscordModule.discordHandler.LOGGING_CHANNEL, startupLogEmbed);
   }
-  
+
   @Override
   public void onDisable() {
     modules.forEach((k, v) -> {
@@ -201,15 +201,15 @@ public final class Main extends JavaPlugin {
     UserDataSerializer.saveData(userData);
     HologramUtils.despawnAll();
   }
-  
+
   private void registerListeners() {
     new onPlayerJoin();
     new PlayerStatsListeners();
-    
+
     TeleportUtils.PlayerTeleportCancelListener listener = new TeleportUtils.PlayerTeleportCancelListener();
     this.getServer().getPluginManager().registerEvents(listener, Main.getInstance());
   }
-  
+
   private void registerCommands() {
   }
 }

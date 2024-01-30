@@ -1,9 +1,11 @@
 /*
  * Copyright (c) 2024 Infinite Minecrafter's Developers.
  *
- * This file was created by external developers.
+ * This file was created by the developers of Infinite Minecrafter's.
  *
- * You are hereby granted the right to view, copy, edit, distribute the code.
+ * You are hereby granted the right to view the code for personal or educational purposes.
+ * However, you are not allowed to copy, distribute, or resell the code without
+ * explicit permission from the lead developer of Infinite Minecrafter's.
  */
 
 package me.lagggpixel.core.modules.bazaar.api.bazaar;
@@ -17,35 +19,34 @@ import org.bukkit.inventory.ItemStack;
 import java.util.concurrent.CompletableFuture;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @since January 22, 2024
  */
 public interface Product extends MenuInfo {
-    ItemStack getItem();
+  ItemStack getItem();
 
-    void setItem(ItemStack item);
+  void setItem(ItemStack item);
 
-    ItemStack getIcon(ContainerComponent container, int itemSlot, Player player);
+  ItemStack getIcon(ContainerComponent container, int itemSlot, Player player);
 
-    ItemStack getRawIcon();
+  ItemStack getRawIcon();
 
-    void setIcon(ItemStack icon);
+  void setIcon(ItemStack icon);
 
-    ItemStack getConfirmationIcon(double unitPrice, int amount);
+  ItemStack getConfirmationIcon(double unitPrice, int amount);
 
-    String getName();
+  String getName();
 
-    void setName(String name);
+  void setName(String name);
 
-    String getId();
+  String getId();
 
-    ProductCategory getProductCategory();
+  ProductCategory getProductCategory();
 
-    CompletableFuture<Double> getLowestBuyPrice();
+  CompletableFuture<Double> getLowestBuyPrice();
 
-    CompletableFuture<Double> getHighestSellPrice();
+  CompletableFuture<Double> getHighestSellPrice();
 
-    CompletableFuture<Pair<Double, Integer>> getBuyPriceWithOrderableAmount(int amount);
+  CompletableFuture<Pair<Double, Integer>> getBuyPriceWithOrderableAmount(int amount);
 
-    CompletableFuture<Pair<Double, Integer>> getSellPriceWithOrderableAmount(int amount);
+  CompletableFuture<Pair<Double, Integer>> getSellPriceWithOrderableAmount(int amount);
 }

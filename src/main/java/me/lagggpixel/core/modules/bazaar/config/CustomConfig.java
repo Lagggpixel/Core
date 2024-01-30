@@ -4,6 +4,7 @@
  * This file was created by external developers.
  *
  * You are hereby granted the right to view, copy, edit, distribute the code.
+ *
  */
 
 package me.lagggpixel.core.modules.bazaar.config;
@@ -19,77 +20,76 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @since January 22, 2024
  */
 public class CustomConfig {
-    private final JavaPlugin plugin;
-    private final Map<String, Object> defaults = new LinkedHashMap<>();
-    @Getter
-    private File file;
-    @Getter
-    private FileConfiguration config;
+  private final JavaPlugin plugin;
+  private final Map<String, Object> defaults = new LinkedHashMap<>();
+  @Getter
+  private File file;
+  @Getter
+  private FileConfiguration config;
 
-    public CustomConfig(JavaPlugin plugin, String name) {
-        this.plugin = plugin;
-        createCustomConfigPlugin(name);
+  public CustomConfig(JavaPlugin plugin, String name) {
+    this.plugin = plugin;
+    createCustomConfigPlugin(name);
+  }
+
+  protected void createCustomConfigPlugin(String name) {
+    String fullName = name + ".yml";
+    file = new File(plugin.getDataFolder() + "/data/modules/bazaar", fullName);
+
+    if (!file.exists()) {
+      file.getParentFile().mkdirs();
+      if (plugin.getResource(fullName) != null) {
+        plugin.saveResource(fullName, false);
+      }
+      config = YamlConfiguration.loadConfiguration(file);
+      saveDefault();
+      return;
     }
 
-    protected void createCustomConfigPlugin(String name) {
-        String fullName = name + ".yml";
-        file = new File(plugin.getDataFolder() + "/data/modules/bazaar", fullName);
+    config = YamlConfiguration.loadConfiguration(file);
+    saveDefaults();
+  }
 
-        if (!file.exists()) {
-            file.getParentFile().mkdirs();
-            if (plugin.getResource(fullName) != null) {
-                plugin.saveResource(fullName, false);
-            }
-            config = YamlConfiguration.loadConfiguration(file);
-            saveDefault();
-            return;
-        }
+  protected void set(String path, Object value) {
+    getConfig().set(path, value);
+    save();
+  }
 
-        config = YamlConfiguration.loadConfiguration(file);
-        saveDefaults();
+  public void save() {
+    try {
+      config.save(file);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
     }
+  }
 
-    protected void set(String path, Object value) {
-        getConfig().set(path, value);
-        save();
+  protected void addDefaults() {
+
+  }
+
+  public void addDefault(String path, Object object) {
+    defaults.put(path, object);
+  }
+
+  private void saveDefaults() {
+    addDefaults();
+    for (Map.Entry<String, Object> defaultConfig : defaults.entrySet()) {
+      String path = defaultConfig.getKey();
+      if (getConfig().contains(path)) continue;
+
+      getConfig().set(path, defaultConfig.getValue());
     }
+    save();
+  }
 
-    public void save() {
-        try {
-            config.save(file);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
+  protected void saveDefault() {
+    saveDefaults();
+  }
 
-    protected void addDefaults() {
-
-    }
-
-    public void addDefault(String path, Object object) {
-        defaults.put(path, object);
-    }
-
-    private void saveDefaults() {
-        addDefaults();
-        for (Map.Entry<String, Object> defaultConfig : defaults.entrySet()) {
-            String path = defaultConfig.getKey();
-            if (getConfig().contains(path)) continue;
-
-            getConfig().set(path, defaultConfig.getValue());
-        }
-        save();
-    }
-
-    protected void saveDefault() {
-        saveDefaults();
-    }
-
-    public JavaPlugin getPlugin() {
-        return plugin;
-    }
+  public JavaPlugin getPlugin() {
+    return plugin;
+  }
 }

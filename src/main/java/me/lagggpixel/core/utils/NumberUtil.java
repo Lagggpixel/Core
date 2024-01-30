@@ -13,14 +13,14 @@ package me.lagggpixel.core.utils;
 import java.text.DecimalFormat;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
 public class NumberUtil {
   public static String formatInt(int num) {
     DecimalFormat format = new DecimalFormat("#,###");
     format.setGroupingUsed(true);
-    
+
     return format.format(num);
   }
 }

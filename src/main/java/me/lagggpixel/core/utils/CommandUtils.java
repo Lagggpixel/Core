@@ -21,8 +21,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Level;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
 public class CommandUtils {
 
@@ -59,13 +59,12 @@ public class CommandUtils {
 
   public static String generateCommandBasePermission(IModule module, ICommandClass ICommandClass) {
     String moduleId;
-    
+
     if (module == null) {
       return "coreplugin.command.player." + ICommandClass.getCommandName() + ".use";
-    }
-    else {
+    } else {
       return "coreplugin." + module.getId() + ".command.player." + ICommandClass.getCommandName() + ".use";
     }
-    
+
   }
 }

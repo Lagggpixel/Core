@@ -19,41 +19,41 @@ import me.lagggpixel.core.utils.CommandUtils;
 import org.jetbrains.annotations.NotNull;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
 public class StaffModule implements IModule {
-    @NotNull
-    @Override
-    public String getId() {
-        return "staff";
-    }
+  @NotNull
+  @Override
+  public String getId() {
+    return "staff";
+  }
 
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
+  @Override
+  public boolean isEnabled() {
+    return true;
+  }
 
-    @Override
-    public void onEnable() {
-        CommandUtils.registerCommand(new GamemodeCommands(this));
-        CommandUtils.registerCommand(new StaffCommand(this));
-        CommandUtils.registerCommand(new VanishCommand(this));
-        CommandUtils.registerCommand(new SudoCommand(this));
-    }
-    
-    @Override
-    public void onDisable() {
-    
-    }
-    
-    @Override
-    public void registerCommands() {
+  @Override
+  public void onEnable() {
+    CommandUtils.registerCommand(new GamemodeCommands(this));
+    CommandUtils.registerCommand(new StaffCommand(this));
+    CommandUtils.registerCommand(new VanishCommand(this));
+    CommandUtils.registerCommand(new SudoCommand(this));
+  }
 
-    }
+  @Override
+  public void onDisable() {
 
-    @Override
-    public void registerListeners() {
+  }
 
-    }
+  @Override
+  public void registerCommands() {
+
+  }
+
+  @Override
+  public void registerListeners() {
+
+  }
 }

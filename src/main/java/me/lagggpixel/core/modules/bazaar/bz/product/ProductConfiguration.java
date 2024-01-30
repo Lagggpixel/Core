@@ -1,13 +1,17 @@
 /*
  * Copyright (c) 2024 Infinite Minecrafter's Developers.
  *
- * This file was created by external developers.
+ * This file was created by the developers of Infinite Minecrafter's.
  *
- * You are hereby granted the right to view, copy, edit, distribute the code.
+ * You are hereby granted the right to view the code for personal or educational purposes.
+ * However, you are not allowed to copy, distribute, or resell the code without
+ * explicit permission from the lead developer of Infinite Minecrafter's.
  */
 
 package me.lagggpixel.core.modules.bazaar.bz.product;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.inventory.ItemStack;
 
@@ -15,9 +19,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @since January 22, 2024
  */
+@Setter
+@Getter
 public class ProductConfiguration implements ConfigurationSerializable {
     private ItemStack item;
     private ItemStack icon;
@@ -33,30 +38,6 @@ public class ProductConfiguration implements ConfigurationSerializable {
         return new ProductConfiguration((ItemStack) args.get("item"),
                 (ItemStack) args.get("icon"),
                 (String) args.get("name"));
-    }
-
-    public ItemStack getItem() {
-        return item;
-    }
-
-    public void setItem(ItemStack item) {
-        this.item = item;
-    }
-
-    public ItemStack getIcon() {
-        return icon;
-    }
-
-    public void setIcon(ItemStack icon) {
-        this.icon = icon;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     @Override

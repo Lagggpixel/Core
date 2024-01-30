@@ -18,11 +18,11 @@ import org.bukkit.OfflinePlayer;
 import java.util.ArrayList;
 import java.util.List;
 
-@SuppressWarnings("DeprecatedIsStillUsed")
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
+@SuppressWarnings("DeprecatedIsStillUsed")
 public class EconomyImpl extends AbstractEconomy {
   
   EconomyModule module;

@@ -15,11 +15,11 @@ import org.bukkit.command.TabExecutor;
 import java.util.List;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
 public interface ICommandClass extends TabExecutor {
-  
+
   String getCommandName();
 
   String getCommandDescription();

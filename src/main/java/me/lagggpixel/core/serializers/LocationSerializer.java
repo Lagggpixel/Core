@@ -14,15 +14,15 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
 public class LocationSerializer {
   /**
    * Serializes a Location object into a String representation.
    *
    * @param  l  the Location object to be serialized
-   * @return    a String representation of the serialized Location
+   * @return a String representation of the serialized Location
    */
   public static String serializeLocation(Location l) {
     String s = "";
@@ -34,12 +34,12 @@ public class LocationSerializer {
     s = s + ":@ya;" + l.getYaw();
     return s;
   }
-  
+
   /**
    * Deserialize a string representation of a Location object.
    *
    * @param  s  the string representation of the Location object
-   * @return    the deserialized Location object
+   * @return the deserialized Location object
    */
   public static Location deserializeLocation(String s) {
     Location l = new Location(Bukkit.getWorlds().get(0), 0.0D, 0.0D, 0.0D);

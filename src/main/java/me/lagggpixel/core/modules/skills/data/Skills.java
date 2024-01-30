@@ -22,14 +22,14 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Map;
 import java.util.UUID;
 
+/**
+ * @author Lagggpixel
+ * @since January 22, 2024
+ */
 @Data
 @Getter
 @Setter
 @AllArgsConstructor
-/**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
- */
 public class Skills {
   @SerializedName("PlayerUniqueID")
   @Expose

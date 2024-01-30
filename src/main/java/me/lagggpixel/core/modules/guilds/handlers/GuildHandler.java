@@ -25,22 +25,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@Getter
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
+@Getter
 public class GuildHandler {
-  
+
   private final List<Guild> guilds = new ArrayList<>();
-  
+
   private BukkitRunnable autoSave;
-  
+
   private static final String GUILD_DIRECTORY = Main.getInstance().getDataFolder() + "/data/modules/guild/guilds/";
   private final int MAX_PLAYERS = 10;
-  
 
-  
+
   public Guild createGuild(String guildName, Player player) {
     Guild guild = new Guild(guildName, player.getUniqueId());
     GuildCreateEvent event = new GuildCreateEvent(player, guild);
@@ -51,7 +50,7 @@ public class GuildHandler {
     guilds.add(guild);
     return guild;
   }
-  
+
   public Guild getGuildByName(String name) {
     for (Guild guild : guilds) {
       if (guild.getName().equalsIgnoreCase(name)) {
@@ -60,7 +59,7 @@ public class GuildHandler {
     }
     return null;
   }
-  
+
   public Guild getGuildFromPlayer(Player player) {
     UUID uuid = player.getUniqueId();
     for (Guild guild : guilds) {
@@ -70,7 +69,7 @@ public class GuildHandler {
     }
     return null;
   }
-  
+
   public Guild getGuildFromPlayerUUID(UUID playerUniqueId) {
     for (Guild guild : guilds) {
       if (guild.isLeader(playerUniqueId) || guild.isOfficer(playerUniqueId) || guild.getMembers().contains(playerUniqueId)) {
@@ -79,7 +78,7 @@ public class GuildHandler {
     }
     return null;
   }
-  
+
   public void disbandGuild(Player player, Guild guild) {
     GuildDisbandEvent event = new GuildDisbandEvent(player, guild);
     Main.getInstance().getServer().getPluginManager().callEvent(event);
@@ -91,7 +90,7 @@ public class GuildHandler {
       guild.delete();
     }
   }
-  
+
   public void startAutoSave() {
     if (autoSave == null || !autoSave.isCancelled()) {
       if (autoSave != null) {
@@ -106,7 +105,7 @@ public class GuildHandler {
     }
     autoSave.runTaskTimerAsynchronously(Main.getInstance(), 20L * 60 * 10, 20L * 60 * 60);
   }
-  
+
   public void stopAutoSave() {
     if (autoSave != null && !autoSave.isCancelled()) {
       autoSave.cancel();

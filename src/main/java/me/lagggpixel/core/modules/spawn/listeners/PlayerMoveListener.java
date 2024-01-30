@@ -21,18 +21,18 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import java.util.Map;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
 public class PlayerMoveListener implements Listener {
-  
+
   private final SpawnModule spawnModule;
-  
+
   public PlayerMoveListener(SpawnModule spawnModule) {
     this.spawnModule = spawnModule;
     Main.getInstance().getServer().getPluginManager().registerEvents(this, Main.getInstance());
   }
-  
+
   @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
   public void PlayerMoveEvent(PlayerMoveEvent event) {
     if (!(event.getTo().getWorld() == spawnModule.getSpawnManager().getSpawnLocation().getWorld())) {

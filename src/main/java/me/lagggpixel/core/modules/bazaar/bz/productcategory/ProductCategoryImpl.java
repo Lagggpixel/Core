@@ -1,9 +1,11 @@
 /*
  * Copyright (c) 2024 Infinite Minecrafter's Developers.
  *
- * This file was created by external developers.
+ * This file was created by the developers of Infinite Minecrafter's.
  *
- * You are hereby granted the right to view, copy, edit, distribute the code.
+ * You are hereby granted the right to view the code for personal or educational purposes.
+ * However, you are not allowed to copy, distribute, or resell the code without
+ * explicit permission from the lead developer of Infinite Minecrafter's.
  */
 
 package me.lagggpixel.core.modules.bazaar.bz.productcategory;
@@ -21,86 +23,85 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @since January 22, 2024
  */
 public class ProductCategoryImpl implements ProductCategory {
-    private final Category category;
-    private final ProductCategoryConfiguration config;
-    private final List<Product> products;
+  private final Category category;
+  private final ProductCategoryConfiguration config;
+  private final List<Product> products;
 
-    public ProductCategoryImpl(Category category, ProductCategoryConfiguration config) {
-        this.category = category;
-        this.config = config;
-        products = config.getProducts().stream()
-                .map(productConfiguration -> new ProductImpl(this, productConfiguration))
-                .collect(Collectors.toList());
-    }
+  public ProductCategoryImpl(Category category, ProductCategoryConfiguration config) {
+    this.category = category;
+    this.config = config;
+    products = config.getProducts().stream()
+        .map(productConfiguration -> new ProductImpl(this, productConfiguration))
+        .collect(Collectors.toList());
+  }
 
-    @Override
-    public ItemStack getIcon() {
-        return category.getBazaar().getBazaarApi().getMenuConfig().replaceLorePlaceholders(config.getIcon(),
-                "productcategory-lore",
-                new MessagePlaceholder("products", String.valueOf(products.size())));
-    }
+  @Override
+  public ItemStack getIcon() {
+    return category.getBazaar().getBazaarApi().getMenuConfig().replaceLorePlaceholders(config.getIcon(),
+        "productcategory-lore",
+        new MessagePlaceholder("products", String.valueOf(products.size())));
+  }
 
-    @Override
-    public void setIcon(ItemStack icon) {
-        config.setIcon(icon);
-        category.getBazaar().saveConfig();
-    }
+  @Override
+  public void setIcon(ItemStack icon) {
+    config.setIcon(icon);
+    category.getBazaar().saveConfig();
+  }
 
-    @Override
-    public ItemStack getRawIcon() {
-        return config.getIcon().clone();
-    }
+  @Override
+  public ItemStack getRawIcon() {
+    return config.getIcon().clone();
+  }
 
-    @Override
-    public String getName() {
-        return Utils.colorize(config.getName());
-    }
+  @Override
+  public String getName() {
+    return Utils.colorize(config.getName());
+  }
 
-    @Override
-    public void setName(String name) {
-        config.setName(name);
-        category.getBazaar().saveConfig();
-    }
+  @Override
+  public void setName(String name) {
+    config.setName(name);
+    category.getBazaar().saveConfig();
+  }
 
-    @Override
-    public List<Product> getProducts() {
-        return products;
-    }
+  @Override
+  public List<Product> getProducts() {
+    return products;
+  }
 
-    @Override
-    public void addProduct(Product product) {
-        config.getProducts().add(((ProductImpl) product).getConfig());
-        products.add(product);
-        category.getBazaar().saveConfig();
-    }
+  @Override
+  public void addProduct(Product product) {
+    config.getProducts().add(((ProductImpl) product).getConfig());
+    products.add(product);
+    category.getBazaar().saveConfig();
+  }
 
-    @Override
-    public void removeProduct(Product product) {
-        config.getProducts().remove(((ProductImpl) product).getConfig());
-        products.remove(product);
-        category.getBazaar().saveConfig();
-    }
+  @Override
+  public void removeProduct(Product product) {
+    config.getProducts().remove(((ProductImpl) product).getConfig());
+    products.remove(product);
+    category.getBazaar().saveConfig();
+  }
 
-    @Override
-    public GUI getMenu() {
-        return config.getMenuConfig().getMenu(this, false);
-    }
+  @Override
+  public GUI getMenu() {
+    return config.getMenuConfig().getMenu(this, false);
+  }
 
-    @Override
-    public GUI getEditMenu() {
-        return config.getMenuConfig().getMenu(this, true);
-    }
+  @Override
+  public GUI getEditMenu() {
+    return config.getMenuConfig().getMenu(this, true);
+  }
 
-    @Override
-    public Category getCategory() {
-        return category;
-    }
+  @Override
+  public Category getCategory() {
+    return category;
+  }
 
-    public ProductCategoryConfiguration getConfig() {
-        return config;
-    }
+  public ProductCategoryConfiguration getConfig() {
+    return config;
+  }
 }

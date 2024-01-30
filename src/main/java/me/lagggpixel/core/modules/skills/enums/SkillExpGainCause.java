@@ -11,8 +11,8 @@
 package me.lagggpixel.core.modules.skills.enums;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
 public enum SkillExpGainCause {
   BLOCK_BREAK,

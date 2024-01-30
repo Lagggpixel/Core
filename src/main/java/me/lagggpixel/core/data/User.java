@@ -12,10 +12,7 @@ package me.lagggpixel.core.data;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import me.lagggpixel.core.modules.home.data.Home;
 import me.lagggpixel.core.modules.merchant.MerchantModule;
 import me.lagggpixel.core.modules.merchant.data.Merchant;
@@ -34,14 +31,14 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
+/**
+ * @author Lagggpixel
+ * @since January 22, 2024
+ */
 @Data
 @Getter
 @Setter
-@AllArgsConstructor
-/**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
- */
+@AllArgsConstructor(access = AccessLevel.PUBLIC)
 public class User {
   // Player data
   @SerializedName("PlayerUUID")
@@ -234,11 +231,11 @@ public class User {
   private void queueMessage(Component component) {
     this.getQueuedMessage.add(component);
   }
-  
+
   public boolean isOnline() {
     return Bukkit.getPlayer(playerUUID) != null;
   }
-  
+
   public Merchant getCurrentMerchant() {
     if (currentMerchant == null) {
       return null;
@@ -249,7 +246,7 @@ public class User {
     }
     return MerchantModule.getInstance().getMerchantHandler().getMerchant(currentMerchant);
   }
-  
+
   public List<ItemStack> getMerchantSold() {
     if (merchantSold == null) {
       merchantSold = new ArrayList<>();

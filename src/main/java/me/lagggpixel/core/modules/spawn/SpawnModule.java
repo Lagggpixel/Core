@@ -20,50 +20,50 @@ import me.lagggpixel.core.modules.spawn.managers.SpawnManager;
 import me.lagggpixel.core.utils.CommandUtils;
 import org.jetbrains.annotations.NotNull;
 
-@Getter
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
+@Getter
 public class SpawnModule implements IModule {
 
   @Getter
   private static SpawnModule instance;
   private SpawnManager spawnManager;
-  
-  
+
+
   @Override
   public @NotNull String getId() {
     return "spawn";
   }
-  
+
   @Override
   public boolean isEnabled() {
     return true;
   }
-  
+
   @Override
   public void onEnable() {
     instance = this;
     spawnManager = new SpawnManager();
     spawnManager.loadSpawnLocation();
   }
-  
+
   @Override
   public void onDisable() {
-  
+
   }
-  
+
   @Override
   public void registerCommands() {
     CommandUtils.registerCommand(new SpawnCommand(this));
     CommandUtils.registerCommand(new SetSpawnCommand(this));
   }
-  
+
   @Override
   public void registerListeners() {
-   new PlayerJoinListener(this);
-   new PlayerMoveListener(this);
+    new PlayerJoinListener(this);
+    new PlayerMoveListener(this);
   }
-  
+
 }

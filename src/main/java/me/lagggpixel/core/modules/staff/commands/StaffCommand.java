@@ -26,42 +26,42 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
 public class StaffCommand implements ICommandClass {
   private final StaffModule staffModule;
   private final StaffModeHandler staffModeHandler = new StaffModeHandler();
-  
+
   public StaffCommand(StaffModule staffModule) {
     this.staffModule = staffModule;
   }
-  
+
   @Override
   public String getCommandName() {
     return "staff";
   }
-  
+
   @Override
   public String getCommandDescription() {
     return null;
   }
-  
+
   @Override
   public List<String> getCommandAliases() {
     return List.of("staff", "staffmode", "admin");
   }
-  
+
   @Override
   public String getCommandPermission() {
     return CommandUtils.generateCommandBasePermission(staffModule, this);
   }
-  
+
   @Override
   public String getUsage() {
     return null;
   }
-  
+
   @Override
   public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command cmd, @NotNull String label, String[] args) {
     if (!(commandSender instanceof Player sender)) {
@@ -72,7 +72,7 @@ public class StaffCommand implements ICommandClass {
     if (args.length == 0) {
       boolean newStaffModeState = !senderUser.isStaffMode();
       senderUser.setStaffMode(newStaffModeState);
-      
+
       if (newStaffModeState) {
         // Player entered staff mode
         senderUser.sendMessage(Lang.STAFF_MODE_ENABLED.toComponentWithPrefix());
@@ -84,10 +84,10 @@ public class StaffCommand implements ICommandClass {
       }
       return true;
     }
-    
+
     return true;
   }
-  
+
   @Override
   public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
     // Tab completion logic (if needed)

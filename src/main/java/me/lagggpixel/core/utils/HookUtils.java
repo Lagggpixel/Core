@@ -27,13 +27,13 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@SuppressWarnings("unused")
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
+@SuppressWarnings("unused")
 public class HookUtils {
-  
+
   @SuppressWarnings("unchecked")
   public static void unloadPlugin(Plugin plugin) {
     String name = plugin.getName();
@@ -43,10 +43,10 @@ public class HookUtils {
     Map<String, Plugin> names;
     Map<String, Command> commands;
     Map<Event, SortedSet<RegisteredListener>> listeners = null;
-    
+
     boolean reloadListeners = true;
     pluginManager.disablePlugin(plugin);
-    
+
     try {
       Field pluginsField = Bukkit.getPluginManager().getClass().getDeclaredField("plugins");
       pluginsField.setAccessible(true);
@@ -55,7 +55,7 @@ public class HookUtils {
       Field lookupNamesField = Bukkit.getPluginManager().getClass().getDeclaredField("lookupNames");
       lookupNamesField.setAccessible(true);
       names = (Map<String, Plugin>) lookupNamesField.get(pluginManager);
-      
+
       try {
         Field listenersField = Bukkit.getPluginManager().getClass().getDeclaredField("listeners");
         listenersField.setAccessible(true);
@@ -63,32 +63,32 @@ public class HookUtils {
       } catch (Exception e) {
         reloadListeners = false;
       }
-      
+
       Field commandMapField = Bukkit.getPluginManager().getClass().getDeclaredField("commandMap");
       commandMapField.setAccessible(true);
       commandMap = (SimpleCommandMap) commandMapField.get(pluginManager);
-      
+
       Field knownCommandsField = SimpleCommandMap.class.getDeclaredField("knownCommands");
       knownCommandsField.setAccessible(true);
       commands = (Map<String, Command>) knownCommandsField.get(commandMap);
     } catch (NoSuchFieldException | IllegalAccessException e) {
       throw new RuntimeException(e);
     }
-    
+
     pluginManager.disablePlugin(plugin);
 
     if (plugins != null)
       plugins.remove(plugin);
-    
+
     if (names != null)
       names.remove(name);
-    
+
     if (listeners != null) {
       for (SortedSet<RegisteredListener> set : listeners.values()) {
         set.removeIf(value -> value.getPlugin() == plugin);
       }
     }
-    
+
     if (commandMap != null) {
       assert commands != null;
       for (Iterator<Map.Entry<String, Command>> it = commands.entrySet().iterator(); it.hasNext(); ) {
@@ -101,7 +101,7 @@ public class HookUtils {
         }
       }
     }
-    
+
     ClassLoader cl = plugin.getClass().getClassLoader();
     if (cl instanceof URLClassLoader) {
       try {
@@ -110,10 +110,10 @@ public class HookUtils {
         Logger.getLogger(HookUtils.class.getName()).log(Level.SEVERE, null, ex);
       }
     }
-    
+
     System.gc();
   }
-  
+
   /**
    * Check whether the given plugin is installed and enabled
    *
@@ -126,11 +126,11 @@ public class HookUtils {
       return false;
     } else return plugin.isEnabled();
   }
-  
+
   public static boolean pluginHookIsEnabled(String pluginName) {
     return checkIfPluginEnabled(pluginName);
   }
-  
+
   public static @Nullable Plugin getPlugin(String pluginName) {
     for (Plugin plugin : Bukkit.getPluginManager().getPlugins())
       if (plugin.getName().equalsIgnoreCase(pluginName)) return plugin;

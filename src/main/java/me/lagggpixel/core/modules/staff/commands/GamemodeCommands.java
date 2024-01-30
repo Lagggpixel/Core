@@ -28,28 +28,28 @@ import java.util.List;
 import java.util.Map;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
 public class GamemodeCommands implements ICommandClass {
   private final StaffModule module;
   private final GamemodeHandler gamemodeHandler;
-  
+
   public GamemodeCommands(StaffModule module) {
     this.module = module;
     this.gamemodeHandler = new GamemodeHandler();
   }
-  
+
   @Override
   public String getCommandName() {
     return "gamemode";
   }
-  
+
   @Override
   public String getCommandDescription() {
     return null;
   }
-  
+
   @Override
   public List<String> getCommandAliases() {
     return List.of(
@@ -60,20 +60,20 @@ public class GamemodeCommands implements ICommandClass {
         "gms", "gamemodesurvival", "gmsurvival", "gamemodes"
     );
   }
-  
+
   @Override
   public String getCommandPermission() {
     return CommandUtils.generateCommandBasePermission(module, this);
   }
-  
+
   @Override
   public String getUsage() {
     return null;
   }
-  
+
   @Override
   public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
-    
+
     if (commandSender instanceof Player sender) {
       User senderUser = Main.getUser(sender.getUniqueId());
       if (args.length == 0) {
@@ -92,7 +92,7 @@ public class GamemodeCommands implements ICommandClass {
         }
         return true;
       }
-      
+
       if (args.length == 1) {
         if (!(s.equalsIgnoreCase("gamemode") || s.equalsIgnoreCase("gm"))) {
           Player target = sender.getServer().getPlayer(args[0]);
@@ -113,7 +113,7 @@ public class GamemodeCommands implements ICommandClass {
           }
           return true;
         }
-        
+
         switch (args[0].toLowerCase()) {
           case "s", "survival", "0" -> gamemodeHandler.setGameMode(sender, GameMode.SURVIVAL);
           case "c", "creative", "1" -> gamemodeHandler.setGameMode(sender, GameMode.CREATIVE);
@@ -124,19 +124,19 @@ public class GamemodeCommands implements ICommandClass {
         }
         return true;
       }
-      
+
       if (args.length == 2) {
         if (!(s.equalsIgnoreCase("gamemode") || s.equalsIgnoreCase("gm"))) {
           senderUser.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
           return true;
         }
-        
+
         Player target = sender.getServer().getPlayer(args[1]);
         if (target == null) {
           senderUser.sendMessage(Lang.PLAYER_NOT_FOUND.toComponentWithPrefix(Map.of("%player%", args[1])));
           return true;
         }
-        
+
         switch (args[0].toLowerCase()) {
           case "s", "survival", "0" -> gamemodeHandler.setGameMode(sender, target, GameMode.SURVIVAL);
           case "c", "creative", "1" -> gamemodeHandler.setGameMode(sender, target, GameMode.CREATIVE);
@@ -147,11 +147,11 @@ public class GamemodeCommands implements ICommandClass {
         }
         return true;
       }
-      
+
       senderUser.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
       return true;
     }
-    
+
     if (args.length == 1) {
       Player target = commandSender.getServer().getPlayer(args[0]);
       if (target == null) {
@@ -171,19 +171,19 @@ public class GamemodeCommands implements ICommandClass {
       }
       return true;
     }
-    
+
     if (args.length == 2) {
       if (!(s.equalsIgnoreCase("gamemode") || s.equalsIgnoreCase("gm"))) {
         commandSender.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
         return true;
       }
-      
+
       Player target = commandSender.getServer().getPlayer(args[1]);
       if (target == null) {
         commandSender.sendMessage(Lang.PLAYER_NOT_FOUND.toComponentWithPrefix(Map.of("%player%", args[1])));
         return true;
       }
-      
+
       switch (args[0].toLowerCase()) {
         case "s", "survival", "0" -> gamemodeHandler.setGameMode(commandSender, target, GameMode.SURVIVAL);
         case "c", "creative", "1" -> gamemodeHandler.setGameMode(commandSender, target, GameMode.CREATIVE);
@@ -194,14 +194,14 @@ public class GamemodeCommands implements ICommandClass {
       }
       return true;
     }
-    
+
     commandSender.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
     return true;
   }
-  
+
   @Override
   public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
     return null;
   }
-  
+
 }

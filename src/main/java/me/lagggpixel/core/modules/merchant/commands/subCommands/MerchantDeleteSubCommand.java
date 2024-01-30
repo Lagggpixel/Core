@@ -22,41 +22,41 @@ import java.util.List;
 import java.util.Map;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
 public class MerchantDeleteSubCommand implements ISubCommand {
-  
+
   private final MerchantModule merchantModule;
-  
+
   public MerchantDeleteSubCommand(MerchantModule merchantModule) {
     this.merchantModule = merchantModule;
   }
-  
+
   @Override
   public void execute(CommandSender commandSender, String[] args) {
     if (!(commandSender instanceof Player sender)) {
       commandSender.sendMessage(Lang.PLAYER_ONLY.toComponentWithPrefix());
       return;
     }
-    
+
     if (args.length != 1) {
       commandSender.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
       return;
     }
-    
+
     User user = Main.getUser(sender);
-    
+
     if (user.getCurrentMerchant() == null) {
       sender.sendMessage(Lang.MERCHANT_NONE_SELECTED.toComponentWithPrefix());
       return;
     }
-    
+
     sender.sendMessage(Lang.MERCHANT_DELETED.toComponentWithPrefix(Map.of("%merchant%", user.getCurrentMerchant().getId())));
     user.getCurrentMerchant().delete();
     user.setCurrentMerchant(null);
   }
-  
+
   @Override
   public List<String> tabComplete(CommandSender commandSender, String[] args) {
     return List.of(" ");

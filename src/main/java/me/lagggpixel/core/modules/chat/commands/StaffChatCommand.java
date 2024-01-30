@@ -27,47 +27,48 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
 public class StaffChatCommand implements ICommandClass {
   private final ChatModule module;
+
   public StaffChatCommand(ChatModule module) {
     this.module = module;
   }
-  
+
   @Override
   public String getCommandName() {
     return "staffchat";
   }
-  
+
   @Override
   public String getCommandDescription() {
     return null;
   }
-  
+
   @Override
   public List<String> getCommandAliases() {
     return List.of("staffchat", "sc");
   }
-  
+
   @Override
   public String getCommandPermission() {
     return CommandUtils.generateCommandBasePermission(module, this);
   }
-  
+
   @Override
   public String getUsage() {
     return null;
   }
-  
+
   @Override
   public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
     if (!(commandSender instanceof Player sender)) {
       commandSender.sendMessage(Lang.PLAYER_ONLY.toComponentWithPrefix());
       return true;
     }
-    
+
     if (args.length == 0) {
       User user = Main.getUser(sender.getUniqueId());
       if (user.isStaffChatToggled()) {
@@ -79,13 +80,13 @@ public class StaffChatCommand implements ICommandClass {
       user.sendMessage(Lang.CHAT_STAFF_CHAT_TOGGLE_ON.toComponentWithPrefix());
       return true;
     }
-    
+
     String message = String.join(" ", args);
     StaffChatHandler.sendStaffChatMessage(sender, ChatUtils.stringToComponent(message));
-    
+
     return true;
   }
-  
+
   @Override
   public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
     return null;

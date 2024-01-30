@@ -31,18 +31,18 @@ import java.util.Map;
 import java.util.UUID;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
 public class HomeHandler {
-  
+
   public final Component HOME_GUI_NAME = ChatUtils.stringToComponentCC("&aHomes");
   public final Component HOME_GUI_NAME_OTHER = ChatUtils.stringToComponentCC("&a%player%'s homes");
   public final String HOME_GUI_NAME_FILTER = "homes";
   public final NamespacedKey HOME_ITEM_NAMESPACE_KEY_UUID = new NamespacedKey(Main.getInstance(), "HOME_USER_UUID");
   public final NamespacedKey HOME_ITEM_NAMESPACE_KEY_NAME = new NamespacedKey(Main.getInstance(), "HOME_NAME");
   public final String HOME_PERMISSION_PREFIX = "coreplugin.home.command.max.";
-  
+
   public void teleportToHome(Player player, Home home) {
     TeleportUtils.teleportWithDelay(player, home.location(), home.name() + " home");
   }
@@ -50,15 +50,15 @@ public class HomeHandler {
   public void teleportToOthersHome(Player player, User target, Home home) {
     TeleportUtils.teleportWithDelay(player, home.location(), target.getPlayerName() + "'s " + home.name() + " home");
   }
-  
+
   public void setHome(User player, String homeName, Home home) {
     if (!player.getHomes().containsKey(homeName)) player.getHomes().put(homeName, home);
   }
-  
+
   public void deleteHome(User player, String homeName) {
     player.getHomes().remove(homeName);
   }
-  
+
   public Home createHomeObject(String homeName, Location location) {
     return new Home(homeName, location);
   }

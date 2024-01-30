@@ -4,6 +4,7 @@
  * This file was created by external developers.
  *
  * You are hereby granted the right to view, copy, edit, distribute the code.
+ *
  */
 
 package me.lagggpixel.core.modules.merchant.data;
@@ -11,20 +12,20 @@ package me.lagggpixel.core.modules.merchant.data;
 import lombok.Data;
 import org.bukkit.Material;
 
-@Data
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Exortions
+ * @since January 22, 2024
  */
+@Data
 public class MerchantItem {
   private final Material material;
   private final int cost;
   private final int slot;
-  
+
   public int getRawSlot() {
     return slot;
   }
-  
+
   public int getSlot() {
     if (slot <= 7) {
       return slot + 9;

@@ -4,6 +4,7 @@
  * This file was created by external developers.
  *
  * You are hereby granted the right to view, copy, edit, distribute the code.
+ *
  */
 
 package me.lagggpixel.core.libs.containr.builder;
@@ -19,39 +20,40 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author ZorTik
+ * @since January 22, 2024
  */
 public class AnimatedElementBuilder implements ElementBuilder<AnimatedElement> {
 
-    private Consumer<ContextClickInfo> action = (i) -> {};
-    private final CyclicArrayList<Supplier<ItemStack>> frames = new CyclicArrayList<>();
+  private Consumer<ContextClickInfo> action = (i) -> {
+  };
+  private final CyclicArrayList<Supplier<ItemStack>> frames = new CyclicArrayList<>();
 
-    public final @NotNull AnimatedElementBuilder click(Consumer<ContextClickInfo> info) {
-        this.action = this.action.andThen(info);
-        return this;
-    }
+  public final @NotNull AnimatedElementBuilder click(Consumer<ContextClickInfo> info) {
+    this.action = this.action.andThen(info);
+    return this;
+  }
 
-    public final @NotNull AnimatedElementBuilder frames(ItemStack... frames) {
-        for (ItemStack frame : frames) {
-            this.frames.add(() -> frame);
-        }
-        return this;
+  public final @NotNull AnimatedElementBuilder frames(ItemStack... frames) {
+    for (ItemStack frame : frames) {
+      this.frames.add(() -> frame);
     }
+    return this;
+  }
 
-    @SafeVarargs
-    public final @NotNull AnimatedElementBuilder frames(Supplier<ItemStack>... frames) {
-        this.frames.addAll(Lists.newArrayList(frames));
-        return this;
-    }
+  @SafeVarargs
+  public final @NotNull AnimatedElementBuilder frames(Supplier<ItemStack>... frames) {
+    this.frames.addAll(Lists.newArrayList(frames));
+    return this;
+  }
 
-    @Override
-    public @NotNull AnimatedElement build() {
-        return new AnimatedElement(frames) {
-            @Override
-            public void click(ContextClickInfo info) {
-                action.accept(info);
-            }
-        };
-    }
+  @Override
+  public @NotNull AnimatedElement build() {
+    return new AnimatedElement(frames) {
+      @Override
+      public void click(ContextClickInfo info) {
+        action.accept(info);
+      }
+    };
+  }
 }

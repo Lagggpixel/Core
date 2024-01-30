@@ -30,19 +30,19 @@ import java.util.List;
 import java.util.Map;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
 public class TeleportUtils {
-  
+
   public static final String TELEPORTATION_BYPASS_PERMISSION = "core.teleportation.bypass";
-  
+
   public static void startTeleportTask() {
     BukkitRunnable teleportRunnable = new BukkitRunnable() {
       @Override
       public void run() {
         List<Player> playersToRemove = new ArrayList<>();
-        
+
         if (!teleportTasks.isEmpty()) {
           teleportTasks.forEach((k, v) -> {
             if (k == null || !k.isOnline()) {
@@ -64,7 +64,7 @@ public class TeleportUtils {
               }
             }
           });
-          
+
           // Remove the players outside the loop to avoid ConcurrentModificationException
           playersToRemove.forEach(teleportTasks::remove);
         }
@@ -72,10 +72,10 @@ public class TeleportUtils {
     };
     teleportRunnable.runTaskTimer(Main.getInstance(), 0L, 20L);
   }
-  
+
   @Getter
   private static final Map<Player, DelayTeleport> teleportTasks = new HashMap<>();
-  
+
   public static void teleportWithDelay(Player player, Location location, String place_name) {
     User user = Main.getUser(player.getUniqueId());
     if (player.hasPermission(TELEPORTATION_BYPASS_PERMISSION)) {
@@ -85,25 +85,25 @@ public class TeleportUtils {
       )));
       return;
     }
-    
+
     if (!teleportTasks.containsKey(player)) teleportTasks.put(player, new DelayTeleport(player, location, place_name));
     else teleportTasks.replace(player, new DelayTeleport(player, location, place_name));
   }
-  
-  
+
+
   public static void cancelTeleport(Player player, String reason) {
     User user = Main.getUser(player.getUniqueId());
     DelayTeleport teleportTask = teleportTasks.get(player);
     teleportTasks.remove(player, teleportTask);
-    
+
     user.sendMessage(Lang.TELEPORTATION_CANCELED.toComponentWithPrefix(Map.of(
         "%reason%", reason
     )));
   }
-  
-  
+
+
   public static class PlayerTeleportCancelListener implements Listener {
-    
+
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
       if (teleportTasks.containsKey(event.getPlayer())) {
@@ -115,7 +115,7 @@ public class TeleportUtils {
         }
       }
     }
-    
+
     @EventHandler
     public void onEntityDamage(EntityDamageEvent event) {
       if (event.getEntity() instanceof Player player) {
@@ -124,7 +124,7 @@ public class TeleportUtils {
         }
       }
     }
-    
+
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
       if (teleportTasks.containsKey(event.getPlayer())) {

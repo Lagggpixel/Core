@@ -20,37 +20,37 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Map;
 
-@Getter
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
+@Getter
 public class TpaRequest {
-  
+
   private final Player requester;
   private final Player target;
-  
+
   private final long timeStarted;
-  
+
   private BukkitRunnable runnable;
-  
+
   private final TpaHandler tpaHandler;
-  
+
   public TpaRequest(Player requester, Player target, TpaHandler tpaHandler) {
     this.requester = requester;
     this.target = target;
-    
+
     this.tpaHandler = tpaHandler;
-    
+
     this.timeStarted = System.currentTimeMillis();
-    
+
     requester.sendMessage(Lang.TPA_REQUEST_SENT.toComponentWithPrefix(Map.of("%player%", target.getName())));
     target.sendMessage(Lang.TPA_REQUEST_RECEIVED.toComponentWithPrefix(Map.of("%player%", requester.getName())));
     startCountDown();
-    
+
     tpaHandler.getTpaRequestMap().put(requester, this);
   }
-  
+
   private void startCountDown() {
     runnable = new BukkitRunnable() {
       @Override
@@ -62,20 +62,20 @@ public class TpaRequest {
           this.cancelRequest();
           return;
         }
-        
+
         if (!target.isOnline()) {
           requester.sendMessage(Lang.TPA_REQUEST_TIMEOUT_REQUESTER.toComponentWithPrefix(Map.of("%player%", target.getName())));
           this.cancelRequest();
           return;
         }
-        
+
         if (timeElapsed >= 60 * 1000) {
           requester.sendMessage(Lang.TPA_REQUEST_TIMEOUT_REQUESTER.toComponentWithPrefix(Map.of("%player%", target.getName())));
           target.sendMessage(Lang.TPA_REQUEST_TIMEOUT_RECEIVER.toComponentWithPrefix(Map.of("%player%", requester.getName())));
           this.cancelRequest();
         }
       }
-      
+
       public void cancelRequest() {
         tpaHandler.getTpaRequestMap().remove(requester);
         cancel();
@@ -83,16 +83,15 @@ public class TpaRequest {
     };
     runnable.runTaskTimerAsynchronously(Main.getInstance(), 0L, 20L);
   }
-  
-  
-  
+
+
   public void cancelTpa() {
     requester.sendMessage(Lang.TPA_REQUEST_CANCELLED_REQUESTER.toComponentWithPrefix(Map.of("%player%", target.getName())));
     target.sendMessage(Lang.TPA_REQUEST_CANCELLED_RECEIVER.toComponentWithPrefix(Map.of("%player%", requester.getName())));
     tpaHandler.getTpaRequestMap().remove(requester);
     runnable.cancel();
   }
-  
+
   public void acceptTpa() {
     tpaHandler.getTpaRequestMap().remove(requester);
     runnable.cancel();
@@ -100,7 +99,7 @@ public class TpaRequest {
     target.sendMessage(Lang.TPA_REQUEST_ACCEPTED_RECEIVER.toComponentWithPrefix(Map.of("%player%", requester.getName())));
     TeleportUtils.teleportWithDelay(requester, target.getLocation(), target.getName());
   }
-  
+
   public void denyTpa() {
     tpaHandler.getTpaRequestMap().remove(requester);
     runnable.cancel();

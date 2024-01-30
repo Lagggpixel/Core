@@ -15,14 +15,14 @@ import org.bukkit.block.Block;
 import org.jetbrains.annotations.NotNull;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
 public class BlockUtils {
-  
+
   public static boolean isBlockTillable(@NotNull Block block) {
     Material material = block.getType();
     return material == Material.DIRT || material == Material.GRASS_BLOCK;
   }
-  
+
 }

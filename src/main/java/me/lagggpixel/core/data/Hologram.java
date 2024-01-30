@@ -17,29 +17,28 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.entity.ArmorStand;
 
-
+/**
+ * @author Lagggpixel
+ * @since January 22, 2024
+ */
 @Data
 @Getter
-/**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
- */
 public class Hologram {
-  
+
   private ArmorStand armorStand;
-  
+
   private final String id;
   private Component name;
   private Location location;
-  
+
   public Hologram(String id, Component name, Location location) {
     this.id = id;
     this.name = name;
     this.location = location;
-    
+
     spawnHologram();
   }
-  
+
   private void spawnHologram() {
     this.armorStand = location.getWorld().spawn(location, ArmorStand.class);
     this.armorStand.setVisible(false);
@@ -49,7 +48,7 @@ public class Hologram {
     this.armorStand.customName(name);
     HologramUtils.holograms.put(id, this);
   }
-  
+
   public void destroy() {
     HologramUtils.holograms.remove(id);
     if (this.armorStand != null) {
@@ -57,13 +56,13 @@ public class Hologram {
       this.armorStand = null;
     }
   }
-  
+
   public void setName(Component name) {
     this.name = name;
     this.armorStand.customName(name);
     this.armorStand.setCustomNameVisible(true);
   }
-  
+
   public void setLocation(Location location) {
     this.location = location;
     this.armorStand.teleport(location);

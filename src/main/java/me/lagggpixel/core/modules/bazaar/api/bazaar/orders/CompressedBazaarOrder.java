@@ -1,9 +1,11 @@
 /*
  * Copyright (c) 2024 Infinite Minecrafter's Developers.
  *
- * This file was created by external developers.
+ * This file was created by the developers of Infinite Minecrafter's.
  *
- * You are hereby granted the right to view, copy, edit, distribute the code.
+ * You are hereby granted the right to view the code for personal or educational purposes.
+ * However, you are not allowed to copy, distribute, or resell the code without
+ * explicit permission from the lead developer of Infinite Minecrafter's.
  */
 
 package me.lagggpixel.core.modules.bazaar.api.bazaar.orders;
@@ -11,23 +13,22 @@ package me.lagggpixel.core.modules.bazaar.api.bazaar.orders;
 import me.lagggpixel.core.modules.bazaar.api.bazaar.Product;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @since January 22, 2024
  */
 public interface CompressedBazaarOrder {
-    boolean canAddOrder(BazaarOrder order);
+  boolean canAddOrder(BazaarOrder order);
 
-    boolean addOrder(BazaarOrder order);
+  boolean addOrder(BazaarOrder order);
 
-    Product getProduct();
+  Product getProduct();
 
-    int getAmount();
+  int getAmount();
 
-    double getUnitPrice();
+  double getUnitPrice();
 
-    OrderType getType();
+  OrderType getType();
 
-    int getOrderAmount();
+  int getOrderAmount();
 
-    BazaarOrder getSampleOrder();
+  BazaarOrder getSampleOrder();
 }

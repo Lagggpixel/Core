@@ -4,6 +4,7 @@
  * This file was created by external developers.
  *
  * You are hereby granted the right to view, copy, edit, distribute the code.
+ *
  */
 
 package me.lagggpixel.core.libs.containr.builder;
@@ -17,66 +18,74 @@ import org.jetbrains.annotations.NotNull;
 import java.util.function.Consumer;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author ZorTik
+ * @since January 22, 2024
  */
 public interface ContainerBuilder<C extends Container> {
 
-    ContainerBuilder<C> size(int width, int height);
-    ContainerBuilder<C> init(Consumer<C> onInitFunction);
-    C build();
-    void set(Container target, int relativeIndex);
+  ContainerBuilder<C> size(int width, int height);
 
-    @SuppressWarnings("unchecked")
-    static <T extends Container> ContainerBuilder<T> newBuilder(Class<T> typeClass) {
-        BuilderContainerFactory<T> factory;
-        if(typeClass == StaticContainer.class) {
-            factory = (init, x, y) -> (T) new StaticContainer(x, y) {
-                @Override
-                public void init() {init.accept((T) this);}
-            };
-        } else if(typeClass == PagedContainer.class) {
-            factory = (init, x, y) -> (T) new PagedContainer(x, y) {
-                @Override
-                public void init() {init.accept((T) this);}
-            };
-        } else {
-            throw new IllegalArgumentException("Unsupported container type: " + typeClass.getName());
+  ContainerBuilder<C> init(Consumer<C> onInitFunction);
+
+  C build();
+
+  void set(Container target, int relativeIndex);
+
+  @SuppressWarnings("unchecked")
+  static <T extends Container> ContainerBuilder<T> newBuilder(Class<T> typeClass) {
+    BuilderContainerFactory<T> factory;
+    if (typeClass == StaticContainer.class) {
+      factory = (init, x, y) -> (T) new StaticContainer(x, y) {
+        @Override
+        public void init() {
+          init.accept((T) this);
         }
-        return new BasicContainerBuilder<>(factory);
+      };
+    } else if (typeClass == PagedContainer.class) {
+      factory = (init, x, y) -> (T) new PagedContainer(x, y) {
+        @Override
+        public void init() {
+          init.accept((T) this);
+        }
+      };
+    } else {
+      throw new IllegalArgumentException("Unsupported container type: " + typeClass.getName());
+    }
+    return new BasicContainerBuilder<>(factory);
+  }
+
+  @RequiredArgsConstructor
+  class BasicContainerBuilder<T extends Container> implements ContainerBuilder<T> {
+    private final BuilderContainerFactory<T> factory;
+    private Consumer<T> onInitFunction = c -> {
+    };
+    private int[] size = new int[]{1, 1};
+
+    @Override
+    public final ContainerBuilder<T> size(int width, int height) {
+      this.size = new int[]{width, height};
+      return this;
     }
 
-    @RequiredArgsConstructor
-    class BasicContainerBuilder<T extends Container> implements ContainerBuilder<T> {
-        private final BuilderContainerFactory<T> factory;
-        private Consumer<T> onInitFunction = c -> {};
-        private int[] size = new int[] {1, 1};
-
-        @Override
-        public final ContainerBuilder<T> size(int width, int height) {
-            this.size = new int[] {width, height};
-            return this;
-        }
-
-        @Override
-        public final ContainerBuilder<T> init(@NotNull Consumer<T> onInitFunction) {
-            this.onInitFunction = onInitFunction;
-            return this;
-        }
-
-        @Override
-        public final void set(@NotNull Container target, int relativeIndex) {
-            onInitFunction = onInitFunction.andThen(c -> c.setContainer(relativeIndex, c));
-        }
-
-        @Override
-        public T build() {
-            return factory.create(onInitFunction, size[0], size[1]);
-        }
+    @Override
+    public final ContainerBuilder<T> init(@NotNull Consumer<T> onInitFunction) {
+      this.onInitFunction = onInitFunction;
+      return this;
     }
 
-    interface BuilderContainerFactory<T extends Container> {
-        T create(Consumer<T> onInitFunction, int width, int height);
+    @Override
+    public final void set(@NotNull Container target, int relativeIndex) {
+      onInitFunction = onInitFunction.andThen(c -> c.setContainer(relativeIndex, c));
     }
+
+    @Override
+    public T build() {
+      return factory.create(onInitFunction, size[0], size[1]);
+    }
+  }
+
+  interface BuilderContainerFactory<T extends Container> {
+    T create(Consumer<T> onInitFunction, int width, int height);
+  }
 
 }

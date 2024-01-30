@@ -25,43 +25,43 @@ import org.jetbrains.annotations.NotNull;
 import java.util.UUID;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
 public class onPlayerJoin implements Listener {
-  
+
   public onPlayerJoin() {
     Main.getPluginManager().registerEvents(this, Main.getInstance());
   }
-  
+
   @EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)
   public void PlayerJoinEvent(@NotNull PlayerJoinEvent event) {
     Player player = event.getPlayer();
     UUID uuid = player.getUniqueId();
-    
+
     User user = Main.getUser(uuid);
     user.setPlayerName(player.getName());
     user.setAfk(false);
-    
+
     if (user.getGetQueuedMessage() != null) {
       for (Component component : user.getGetQueuedMessage()) {
         user.sendMessage(component);
       }
     }
-    
+
     handleVanishPlayers(event);
   }
-  
+
   private void handleVanishPlayers(PlayerJoinEvent event) {
     Player player = event.getPlayer();
-    
+
     if (player.hasPermission(VanishHandler.vanishSeePermission)) {
       return;
     }
-    
+
     Bukkit.getOnlinePlayers().stream()
-        .filter(x-> Main.getUser(x.getUniqueId()).isVanished())
+        .filter(x -> Main.getUser(x.getUniqueId()).isVanished())
         .forEach(onlinePlayer -> player.hidePlayer(Main.getInstance(), onlinePlayer));
-    
+
   }
 }

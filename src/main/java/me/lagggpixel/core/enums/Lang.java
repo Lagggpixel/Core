@@ -20,12 +20,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 
+/**
+ * @author Lagggpixel
+ * @since January 22, 2024
+ */
 @SuppressWarnings("unused")
 @Getter
-/**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
- */
 public enum Lang {
 
   PREFIX("prefix", "&#fb0000I&#f4011bn&#ec0335f&#e50450i&#de056bn&#d60685i&#cf08a0t&#c709bae &#c00ad5M&#b90bf0i&#b216fbn&#ac2bf7e&#a63ff3c&#a054efr&#9a68eba&#947de6f&#8e91e2t&#88a6dee&#82badar&#7ccfd6s &r&7» &r"),
@@ -51,7 +51,7 @@ public enum Lang {
   TPA_REQUEST_ACCEPTED_RECEIVER("tpa.request.accepted.receiver", "&aYou have accepted the teleport request from %player%."),
   TPA_REQUEST_DENIED_REQUESTER("tpa.request.denied.requester", "&cYour teleport request to %player% has been denied."),
   TPA_REQUEST_DENIED_RECEIVER("tpa.request.denied.receiver", "&cYou have denied the teleport request from %player%."),
-  
+
   // Bazaar IModule
   BAZAAR_ORDER_REJECT("bazaar.order.reject", "&cThe order was rejected"),
   BAZAAR_ORDER_BUY_SUCCESS("bazaar.order.buy.success", "&7The buy order &6%amount%x %product% &7for &6%coins% coins &7was placed to the bazaar"),
@@ -194,7 +194,7 @@ public enum Lang {
   HOME_DELETED_OTHER_PLAYER("home.admin.deleted_other_player", "&aYou have deleted %player%'s home, named '&e%home%&a'."),
   HOME_TELEPORTED_TO_HOME_OTHER_PLAYER("home.admin.teleported_to_home_other_player", "&aYou have teleported to %player%'s home, named '&e%home%&a'."),
   HOME_NO_HOMES_OTHER_PLAYER("home.admin.no_homes_other_player", "&a%player% does not have any homes."),
-  
+
   // Merchant Module
   MERCHANT_ALREADY_EXISTS("merchant.admin.already_exists", "&cA merchant with the unique id '&e%merchant%&c' already exists."),
   MERCHANT_NONE_SELECTED("merchant.admin.no_merchant_selected", "&cYou don't have a merchant selected."),
@@ -207,7 +207,7 @@ public enum Lang {
   MERCHANT_ITEM_SET("merchant.admin.item.set", "&aYou have successfully set the merchant item in slot &e%slot%&a to &e%material%&a at a price of &e%price%&a."),
   MERCHANT_ITEM_NOT_FOUND("merchant.admin.item.not_found", "&cThe merchant item in slot &e%slot%&c was not found."),
   MERCHANT_ITEM_REMOVED("merchant.admin.item.removed", "&aYou have successfully removed the merchant item in slot &e%slot%&a, material &e%material%&a at a price of &e%price%&a."),
-  
+
   // Inventory IModule
   INVENTORY_CLEARED_SELF("inventory.cleared.self", "&aYou have cleared your inventory."),
   INVENTORY_CLEARED_OTHER("inventory.cleared.other", "&aYou have cleared %player%'s inventory."),
@@ -269,13 +269,13 @@ public enum Lang {
   STAFF_SUDO_USAGE("staff.sudo.usage", "&cUsage: /sudo <name, *> <message, /command>"),
   STAFF_SUDO_COMMAND_SUCCESS("staff.sudo.command", "&aYou have made &e%player% &arun the command &e%command%&a."),
   STAFF_SUDO_CHAT_SUCCESS("staff.sudo.chat", "&aYou have made &e%player% &asend chat message &e%message%&a."),
-  
+
   // Survival Module
   SURVIVAL_WHITELISTED_INFORM("survival.whitelisted.inform", "&cNote that the server is currently whitelisted, which means you can not do anything such as moving, sending commands, etc."),
   SURVIVAL_WHITELISTED_ERROR("survival.whitelisted.error", "&aThe server is currently whitelisted, you can not do that."),
   SURVIVAL_ITEM_INVENTORY_TITLE("survival.item.inventory.title", "&#fb0000I&#f4011bn&#ec0335f&#e50450i&#de056bn&#d60685i&#cf08a0t&#c709bae &#c00ad5M&#b90bf0i&#b216fbn&#ac2bf7e&#a63ff3c&#a054efr&#9a68eba&#947de6f&#8e91e2t&#88a6dee&#82badar&#7ccfd6s"),
   SURVIVAL_ITEM_NAME("survival.item.name", "&#fb0000I&#f4011bn&#ec0335f&#e50450i&#de056bn&#d60685i&#cf08a0t&#c709bae &#c00ad5M&#b90bf0i&#b216fbn&#ac2bf7e&#a63ff3c&#a054efr&#9a68eba&#947de6f&#8e91e2t&#88a6dee&#82badar&#7ccfd6s");
-  
+
   // Warp IModule
 
 

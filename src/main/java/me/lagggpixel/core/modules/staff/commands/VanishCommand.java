@@ -28,44 +28,44 @@ import java.util.List;
 import java.util.Map;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
 public class VanishCommand implements ICommandClass {
-  
+
   private final StaffModule module;
   private final VanishHandler vanishHandler;
-  
+
   public VanishCommand(StaffModule module) {
     this.module = module;
     this.vanishHandler = new VanishHandler();
   }
-  
+
   @Override
   public String getCommandName() {
     return "vanish";
   }
-  
+
   @Override
   public String getCommandDescription() {
     return null;
   }
-  
+
   @Override
   public List<String> getCommandAliases() {
     return List.of("vanish", "v");
   }
-  
+
   @Override
   public String getCommandPermission() {
     return CommandUtils.generateCommandBasePermission(module, this);
   }
-  
+
   @Override
   public String getUsage() {
     return null;
   }
-  
+
   @Override
   public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
     if (!(commandSender instanceof Player sender)) {
@@ -86,7 +86,7 @@ public class VanishCommand implements ICommandClass {
       commandSender.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
       return true;
     }
-    
+
     User senderUser = Main.getUser(sender.getUniqueId());
     if (args.length == 0) {
       if (senderUser.isVanished()) {
@@ -95,7 +95,7 @@ public class VanishCommand implements ICommandClass {
         vanishHandler.vanishPlayer(sender);
       }
     } else if (args.length == 1) {
-      
+
       Player target = Bukkit.getPlayer(args[0]);
       if (target != null) {
         User user = Main.getUser(target.getUniqueId());
@@ -112,11 +112,11 @@ public class VanishCommand implements ICommandClass {
     }
     return true;
   }
-  
-  
+
+
   @Override
   public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
     return null;
   }
-  
+
 }

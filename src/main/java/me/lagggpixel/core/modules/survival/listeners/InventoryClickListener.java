@@ -22,15 +22,15 @@ import org.bukkit.inventory.Inventory;
 import org.jetbrains.annotations.NotNull;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
 public class InventoryClickListener implements Listener {
-  
+
   public InventoryClickListener() {
     Main.getPluginManager().registerEvents(this, Main.getInstance());
   }
-  
+
   @EventHandler(priority = EventPriority.LOWEST)
   public void InventoryClickEvent(@NotNull InventoryClickEvent event) {
     Inventory inventory = event.getInventory();
@@ -41,7 +41,7 @@ public class InventoryClickListener implements Listener {
       }
     }
   }
-  
+
   @EventHandler(priority = EventPriority.LOWEST)
   public void onInventoryMoveItem(InventoryMoveItemEvent event) {
     Inventory inventory = event.getSource();

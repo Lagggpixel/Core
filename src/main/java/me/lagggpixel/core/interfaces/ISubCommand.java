@@ -15,11 +15,11 @@ import org.bukkit.command.CommandSender;
 import java.util.List;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
 public interface ISubCommand {
   void execute(CommandSender commandSender, String[] args);
-  
+
   List<String> tabComplete(CommandSender commandSender, String[] args);
 }

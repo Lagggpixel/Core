@@ -26,16 +26,17 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 
-@Getter
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
+@Getter
+
 public abstract class CoreInventoryHolder implements InventoryHolder {
-  
+
   public final Inventory inventory;
   public final Component title;
-  
+
   /**
    * The player object of who opened this inventory
    */
@@ -44,31 +45,31 @@ public abstract class CoreInventoryHolder implements InventoryHolder {
    * The user object of who opened this inventory
    */
   public final User user;
-  
+
   protected final ItemStack blankItem = new ItemBuilder(Material.GRAY_STAINED_GLASS_PANE).setDisplayName(" ").toItemStack();
-  
+
   protected CoreInventoryHolder(Player player, Component title, int slots) {
     this.player = player;
     this.user = Main.getUser(player);
-    
+
     this.title = title;
     this.inventory = Main.getInstance().getServer().createInventory(this, slots, this.title);
-  
+
     this.initializeInventoryItems();
   }
-  
+
   protected CoreInventoryHolder(Player player, String title, int slots) {
     this.player = player;
     this.user = Main.getUser(player);
-    
+
     this.title = ChatUtils.stringToComponentCC(title);
     this.inventory = Main.getInstance().getServer().createInventory(this, slots, this.title);
-  
+
     this.initializeInventoryItems();
   }
-  
+
   public abstract void initializeInventoryItems();
-  
+
   public void fillEmptySlots() {
     for (int i = 0; i < inventory.getContents().length; i++) {
       ItemStack itemStack = inventory.getContents()[i];
@@ -77,11 +78,11 @@ public abstract class CoreInventoryHolder implements InventoryHolder {
       }
     }
   }
-  
+
   public abstract void openInventory(@NotNull Player player);
-  
+
   public abstract void handleInventoryClick(@NotNull InventoryClickEvent event);
-  
+
   protected String getItemTag(ItemStack itemStack) {
     if (itemStack.hasItemMeta()) {
       ItemMeta itemMeta = itemStack.getItemMeta();

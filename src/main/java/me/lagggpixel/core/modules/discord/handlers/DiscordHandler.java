@@ -45,8 +45,8 @@ import java.util.logging.Level;
 import java.util.regex.Pattern;
 
 /**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
+ * @author Lagggpixel
+ * @since January 22, 2024
  */
 @SuppressWarnings({"DataFlowIssue", "FieldCanBeLocal"})
 public class DiscordHandler {

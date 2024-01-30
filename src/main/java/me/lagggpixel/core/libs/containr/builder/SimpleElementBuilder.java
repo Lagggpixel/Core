@@ -4,6 +4,7 @@
  * This file was created by external developers.
  *
  * You are hereby granted the right to view, copy, edit, distribute the code.
+ *
  */
 
 package me.lagggpixel.core.libs.containr.builder;
@@ -30,79 +31,79 @@ import java.util.function.Supplier;
  * way of creating elements via inheritance was very slow.
  *
  * @author ZorTik
+ * @since January 22, 2024
  */
 @Getter(AccessLevel.PROTECTED)
-/**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
- */
 public class SimpleElementBuilder implements ElementBuilder<Element> {
 
-    public static @NotNull SimpleElementBuilder b() {
-        return new SimpleElementBuilder();
-    }
+  public static @NotNull SimpleElementBuilder b() {
+    return new SimpleElementBuilder();
+  }
 
-    public static @NotNull SimpleElementBuilder fromConfig(ConfigurationSection section) {
-        return fromConfig(section, (item, sec) -> {});
-    }
+  public static @NotNull SimpleElementBuilder fromConfig(ConfigurationSection section) {
+    return fromConfig(section, (item, sec) -> {
+    });
+  }
 
-    public static @NotNull SimpleElementBuilder fromConfig(
-            ConfigurationSection section,
-            BiConsumer<ItemBuilder, ConfigurationSection> modifier
-    ) {
-        ItemBuilder item = ItemBuilder.fromConfig(section);
-        return b().item(() -> {
-            modifier.accept(item, section);
-            return item.build();
-        });
-    }
+  public static @NotNull SimpleElementBuilder fromConfig(
+      ConfigurationSection section,
+      BiConsumer<ItemBuilder, ConfigurationSection> modifier
+  ) {
+    ItemBuilder item = ItemBuilder.fromConfig(section);
+    return b().item(() -> {
+      modifier.accept(item, section);
+      return item.build();
+    });
+  }
 
-    private Function<Player, ItemStack> itemFunction = null;
-    private Consumer<ContextClickInfo> clickConsumer = (info) -> {};
+  private Function<Player, ItemStack> itemFunction = null;
+  private Consumer<ContextClickInfo> clickConsumer = (info) -> {
+  };
 
-    public final @NotNull SimpleElementBuilder item(@Nullable ItemStack item) {
-        return item(() -> item);
-    }
+  public final @NotNull SimpleElementBuilder item(@Nullable ItemStack item) {
+    return item(() -> item);
+  }
 
-    public final @NotNull SimpleElementBuilder item(@NotNull Supplier<ItemStack> itemSupplier) {
-        return item(player -> itemSupplier.get());
-    }
+  public final @NotNull SimpleElementBuilder item(@NotNull Supplier<ItemStack> itemSupplier) {
+    return item(player -> itemSupplier.get());
+  }
 
-    public final @NotNull SimpleElementBuilder item(@NotNull Function<Player, ItemStack> itemFunction) {
-        this.itemFunction = itemFunction;
-        return this;
-    }
+  public final @NotNull SimpleElementBuilder item(@NotNull Function<Player, ItemStack> itemFunction) {
+    this.itemFunction = itemFunction;
+    return this;
+  }
 
-    public final @NotNull SimpleElementBuilder click(Runnable runnable) {
-        return click(info -> runnable.run());
-    }
+  public final @NotNull SimpleElementBuilder click(Runnable runnable) {
+    return click(info -> runnable.run());
+  }
 
-    public final @NotNull SimpleElementBuilder click(@NotNull Consumer<ContextClickInfo> click) {
-        this.clickConsumer = click;
-        return this;
-    }
+  public final @NotNull SimpleElementBuilder click(@NotNull Consumer<ContextClickInfo> click) {
+    this.clickConsumer = click;
+    return this;
+  }
 
-    public final @NotNull SimpleElementBuilder addClick(@NotNull Consumer<ContextClickInfo> click) {
-        Consumer<ContextClickInfo> old = this.clickConsumer;
-        this.clickConsumer = info -> {
-            old.accept(info);
-            click.accept(info);
-        };
-        return this;
-    }
+  public final @NotNull SimpleElementBuilder addClick(@NotNull Consumer<ContextClickInfo> click) {
+    Consumer<ContextClickInfo> old = this.clickConsumer;
+    this.clickConsumer = info -> {
+      old.accept(info);
+      click.accept(info);
+    };
+    return this;
+  }
 
-    public @NotNull Element build() {
-        return new Element() {
-            @Override
-            public void click(ContextClickInfo info) {
-                clickConsumer.accept(info);
-            }
-            @Nullable
-            @Override
-            public ItemStack item(Player player) {
-                return itemFunction.apply(player);
-            }
-        };
-    }
+  public @NotNull Element build() {
+    return new Element() {
+      @Override
+      public void click(ContextClickInfo info) {
+        clickConsumer.accept(info);
+      }
+
+      @Nullable
+      @Override
+      public ItemStack item(Player player) {
+        return itemFunction.apply(player);
+      }
+    };
+  }
 
 }

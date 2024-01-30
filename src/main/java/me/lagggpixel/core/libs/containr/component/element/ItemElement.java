@@ -4,6 +4,7 @@
  * This file was created by external developers.
  *
  * You are hereby granted the right to view, copy, edit, distribute the code.
+ *
  */
 
 package me.lagggpixel.core.libs.containr.component.element;
@@ -20,69 +21,69 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * @author ZorTik
+ * @since January 22, 2024
+ */
 @Deprecated
 @EqualsAndHashCode(callSuper = true)
 @Data
-/**
- *  @author    Lagggpixel
- * @since January 27, 2024 January 22, 2024
- */
 public class ItemElement extends Element {
 
-    @Contract("_ -> new")
-    @NotNull
-    public static ItemElement on(Material material) {
-        return on(material, (short) 0, "");
-    }
+  @Contract("_ -> new")
+  @NotNull
+  public static ItemElement on(Material material) {
+    return on(material, (short) 0, "");
+  }
 
-    @Contract("_, _ -> new")
-    @NotNull
-    public static ItemElement on(Material material, short data) {
-        return on(material, data, "");
-    }
+  @Contract("_, _ -> new")
+  @NotNull
+  public static ItemElement on(Material material, short data) {
+    return on(material, data, "");
+  }
 
-    @Contract("_, _, _ -> new")
-    @NotNull
-    public static ItemElement on(Material material, short data, String title) {
-        return on(material, data, title, new String[0]);
-    }
+  @Contract("_, _, _ -> new")
+  @NotNull
+  public static ItemElement on(Material material, short data, String title) {
+    return on(material, data, title, new String[0]);
+  }
 
-    @Contract("_, _, _, _ -> new")
-    @NotNull
-    public static ItemElement on(Material material, short data, String title, String[] lore) {
-        return new ItemElement(material, data, title, lore);
-    }
+  @Contract("_, _, _, _ -> new")
+  @NotNull
+  public static ItemElement on(Material material, short data, String title, String[] lore) {
+    return new ItemElement(material, data, title, lore);
+  }
 
-    public static ItemElement on(ItemStack item) {
-        return new ItemElement(item);
-    }
+  public static ItemElement on(ItemStack item) {
+    return new ItemElement(item);
+  }
 
-    private ItemStack item;
+  private ItemStack item;
 
-    public ItemElement(Material material) {
-        this(material, (short) 0, "", new String[0]);
-    }
+  public ItemElement(Material material) {
+    this(material, (short) 0, "", new String[0]);
+  }
 
-    public ItemElement(Material material, short data) {
-        this(material, data, "", new String[0]);
-    }
+  public ItemElement(Material material, short data) {
+    this(material, data, "", new String[0]);
+  }
 
-    public ItemElement(Material material, short data, String title) {
-        this(material, data, title, new String[0]);
-    }
+  public ItemElement(Material material, short data, String title) {
+    this(material, data, title, new String[0]);
+  }
 
-    public ItemElement(Material material, short data, String title, String[] lore) {
-        this(Items.create(material, 1, data, Maps.newHashMap(), title, lore));
-    }
+  public ItemElement(Material material, short data, String title, String[] lore) {
+    this(Items.create(material, 1, data, Maps.newHashMap(), title, lore));
+  }
 
-    public ItemElement(ItemStack item) {
-        this.item = item;
-    }
+  public ItemElement(ItemStack item) {
+    this.item = item;
+  }
 
-    @Nullable
-    @Override
-    public ItemStack item(Player player) {
-        return item;
-    }
+  @Nullable
+  @Override
+  public ItemStack item(Player player) {
+    return item;
+  }
 
 }
