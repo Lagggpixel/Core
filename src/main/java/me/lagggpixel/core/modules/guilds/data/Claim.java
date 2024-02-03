@@ -118,8 +118,14 @@ public class Claim {
     }
     return false;
   }
-  
-  
+
+  /**
+   * Checks if the given location is inside the defined boundaries.
+   *
+   * @param  loc     the location to check
+   * @param  player  whether the location belongs to a player
+   * @return         true if the location is inside the boundaries, false otherwise
+   */
   public boolean isInside(Location loc, boolean player) {
     if (loc.getWorld() == getWorld()) {
       int x1 = Math.min(getX1(), getX2());

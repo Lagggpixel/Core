@@ -31,12 +31,14 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.inventory.InventoryMoveItemEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
@@ -67,7 +69,7 @@ public class ClaimListeners implements Listener {
     Bukkit.getPluginManager().registerEvents(this, Main.getInstance());
   }
 
-  private ClaimProfile getProfile(UUID id) {
+  private @NotNull ClaimProfile getProfile(UUID id) {
     for (ClaimProfile profile : this.profiles) {
       if (profile.getUuid() == id) {
         return profile;
@@ -79,7 +81,7 @@ public class ClaimListeners implements Listener {
   }
 
   @EventHandler(priority = EventPriority.HIGHEST)
-  public void onClaimInteract(PlayerInteractEvent event) {
+  public void onClaimInteract(@NotNull PlayerInteractEvent event) {
     Player player = event.getPlayer();
     User user = Main.getUser(player);
     if (event.getAction() == Action.PHYSICAL) {
@@ -189,7 +191,7 @@ public class ClaimListeners implements Listener {
   }
 
   @EventHandler
-  public void onMove(PlayerMoveEvent e) {
+  public void onMove(@NotNull PlayerMoveEvent e) {
     if (e.getTo().getX() != e.getFrom().getX() || e.getTo().getZ() != e.getFrom().getZ()) {
       final Player p = e.getPlayer();
       final ClaimProfile profile = getProfile(p.getUniqueId());
@@ -224,16 +226,15 @@ public class ClaimListeners implements Listener {
     }
   }
 
-
   @EventHandler
-  public void onDrop(PlayerDropItemEvent e) {
+  public void onDrop(@NotNull PlayerDropItemEvent e) {
     if (this.claimManager.isWand(e.getItemDrop().getItemStack())) {
       e.getItemDrop().remove();
     }
   }
 
   @EventHandler
-  public void onStore(InventoryMoveItemEvent e) {
+  public void onStore(@NotNull InventoryMoveItemEvent e) {
     if (this.claimManager.isWand(e.getItem())) {
       e.getSource().remove(e.getItem());
       e.getDestination().remove(e.getItem());
@@ -411,7 +412,7 @@ public class ClaimListeners implements Listener {
    * @param loc1  the first location
    * @param loc2  the second location
    */
-  private void checkIsClaimAffordable(Player p, Guild guild, Location loc1, Location loc2) {
+  private void checkIsClaimAffordable(Player p, @NotNull Guild guild, @NotNull Location loc1, Location loc2) {
     int price = (int) Math.round(loc1.distance(loc2) * CLAIM_PRICE_MULTIPLER);
 
     if (guild.getBalance() < price) {
@@ -429,7 +430,7 @@ public class ClaimListeners implements Listener {
    * @param guild the guild the player belongs to
    * @return true   if the player can claim the block, false otherwise
    */
-  private boolean checkIfPlayerCanClaim(PlayerInteractEvent e, Player p, Guild guild) {
+  private boolean checkIfPlayerCanClaim(@NotNull PlayerInteractEvent e, Player p, Guild guild) {
     if (e.getClickedBlock() == null) {
       return true;
     }
@@ -461,7 +462,7 @@ public class ClaimListeners implements Listener {
    * @param block the block to check
    * @return true if the block is an interactive block, false otherwise
    */
-  private boolean isInteractiveBlock(Block block) {
+  private boolean isInteractiveBlock(@NotNull Block block) {
     return block.getState() instanceof org.bukkit.inventory.InventoryHolder || block instanceof org.bukkit.inventory.InventoryHolder
         || block.getType().name().contains("CHEST")
         || block.getType().name().contains("FURNACE")
@@ -471,7 +472,7 @@ public class ClaimListeners implements Listener {
         || block.getType().name().contains("LEVER");
   }
 
-  private void handlePointSelection(Player p, Guild guild, Block clickedBlock, ClaimProfile prof, int claimNumber) {
+  private void handlePointSelection(Player p, Guild guild, Block clickedBlock, @NotNull ClaimProfile prof, int claimNumber) {
     if (prof.getX2() != 0 && prof.getZ2() != 0) {
       Location loc1 = new Location(p.getWorld(), prof.getX1(), 0.0D, prof.getZ1());
       Location loc2 = new Location(p.getWorld(), prof.getX2(), 0.0D, prof.getZ2());
@@ -499,32 +500,58 @@ public class ClaimListeners implements Listener {
 
   private void handleClaimInteract(BlockBreakEvent blockBreakEvent) {
     Player player = blockBreakEvent.getPlayer();
-    User user = Main.getUser(player);
-    for (Claim claim : this.claimManager.getClaims()) {
-      if (claim.isInside(blockBreakEvent.getBlock().getLocation(), false)) {
-        Guild playerFaction = guildHandler.getGuildFromPlayer(player);
-        if ((playerFaction != null && playerFaction == claim.getOwner()) || player.hasPermission(ADMIN_NODE_CLAIM_INTERACTION_BYPASS)) {
-          return;
-        }
-        blockBreakEvent.setCancelled(true);
-        user.sendMessage(Lang.GUILD_CLAIM_NO_INTERACT.toComponentWithPrefix());
-      }
+    Block block = blockBreakEvent.getBlock();
+    if (handleClaimBlock(player, block)) {
+      blockBreakEvent.setCancelled(true);
     }
   }
 
   private void handleClaimInteract(BlockPlaceEvent blockPlaceEvent) {
     Player player = blockPlaceEvent.getPlayer();
+    Block block = blockPlaceEvent.getBlock();
+    if (handleClaimBlock(player, block)) {
+      blockPlaceEvent.setCancelled(true);
+    }
+  }
+
+  /**
+   * Handle the claim block for a specific player and block.
+   *
+   * @param  player  the player for whom the claim block is being handled
+   * @param  block   the block being handled for claiming
+   * @return true if the block is claimed, false otherwise
+   */
+  private boolean handleClaimBlock(Player player, Block block) {
     User user = Main.getUser(player);
     for (Claim claim : this.claimManager.getClaims()) {
-      if (claim.isInside(blockPlaceEvent.getBlock().getLocation(), false)) {
+      if (claim.isInside(block.getLocation(), false)) {
         Guild guild = guildHandler.getGuildFromPlayer(player);
         if ((guild != null && guild == claim.getOwner()) || player.hasPermission(ADMIN_NODE_CLAIM_INTERACTION_BYPASS)) {
-          return;
+          return false;
         }
-        blockPlaceEvent.setCancelled(true);
         user.sendMessage(Lang.GUILD_CLAIM_NO_INTERACT.toComponentWithPrefix());
+        return true;
       }
     }
+    return false;
+  }
+
+  @EventHandler
+  public void onPiston(BlockPistonExtendEvent event) {
+    Block pistonBlock = event.getBlock();
+    Claim claim = this.claimManager.getClaimAt(pistonBlock.getLocation());
+    if (claim != null) {
+      List<Block> blocks = event.getBlocks();
+      for (Block block : blocks) {
+        if (!claim.isInside(block.getLocation(), false)) {
+          continue;
+        }
+        event.setCancelled(true);
+        return;
+      }
+      return;
+    }
+    event.setCancelled(true);
   }
 }
 
