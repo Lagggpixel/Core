@@ -580,7 +580,7 @@ public class ClaimListeners implements Listener {
   }
 
   @EventHandler
-  public void onExplode(EntityExplodeEvent event) {
+  public void onExplode(@NotNull EntityExplodeEvent event) {
     Location explosionLocation = event.getLocation();
     Claim claim = this.claimManager.getClaimAt(explosionLocation);
     if (claim == null) {
@@ -591,6 +591,16 @@ public class ClaimListeners implements Listener {
       event.setCancelled(false);
       return;
     }
+    event.blockList().forEach(block -> {
+      Claim c1 = this.claimManager.getClaimAt(block.getLocation());
+      if (c1 == null) {
+        if (worlds.contains(block.getWorld().getName())) {
+          event.setCancelled(true);
+          return;
+        }
+        event.setCancelled(false);
+      }
+    });
 
     if (claim.isClaimExplosions()) {
       event.setCancelled(false);
