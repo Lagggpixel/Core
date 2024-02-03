@@ -8,15 +8,13 @@
  * explicit permission from the lead developer of Infinite Minecrafter's.
  */
 
-package me.lagggpixel.core.modules.merchant.commands.subCommands;
+package me.lagggpixel.core.modules.guilds.commands.subCommands;
 
 import me.lagggpixel.core.Main;
 import me.lagggpixel.core.data.user.User;
 import me.lagggpixel.core.enums.Lang;
 import me.lagggpixel.core.interfaces.ISubCommand;
-import me.lagggpixel.core.modules.merchant.MerchantModule;
-import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
+import me.lagggpixel.core.modules.guilds.GuildModule;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -24,14 +22,14 @@ import java.util.List;
 
 /**
  * @author Lagggpixel
- * @since January 22, 2024
+ * @since February 03, 2024
  */
-public class MerchantSkinSubCommand implements ISubCommand {
+public class GuildAcknowledgeCommand implements ISubCommand {
 
-  private final MerchantModule merchantModule;
+  private final GuildModule guildModule;
 
-  public MerchantSkinSubCommand(MerchantModule merchantModule) {
-    this.merchantModule = merchantModule;
+  public GuildAcknowledgeCommand(GuildModule guildModule) {
+    this.guildModule = guildModule;
   }
 
   @Override
@@ -48,17 +46,26 @@ public class MerchantSkinSubCommand implements ISubCommand {
 
     User user = Main.getUser(sender);
 
-    if (user.getCurrentMerchant() == null) {
-      sender.sendMessage(Lang.MERCHANT_NONE_SELECTED.toComponentWithPrefix());
-      return;
+    switch (args[1]) {
+      case "piston":
+        sender.sendMessage(Lang.GUILD_ACKNOWLEDGE_PISTON.toComponentWithPrefix());
+        user.getUserPreference().setAcknowledgedPistonRules(true);
+        break;
+      case "tnt":
+        sender.sendMessage(Lang.GUILD_ACKNOWLEDGE_TNT.toComponentWithPrefix());
+        user.getUserPreference().setAcknowledgedTntRules(true);
+        break;
+      default:
+        sender.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
+        break;
     }
-
-    OfflinePlayer offLinePlayer = Bukkit.getOfflinePlayer(args[1]);
-    user.getCurrentMerchant().setSkin(offLinePlayer);
   }
 
   @Override
   public List<String> tabComplete(CommandSender commandSender, String[] args) {
-    return List.of(" ");
+    if (args.length == 2) {
+      return List.of("piston", "tnt");
+    }
+    return null;
   }
 }

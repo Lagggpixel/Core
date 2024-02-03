@@ -11,7 +11,7 @@
 package me.lagggpixel.core.modules.economy.managers;
 
 import me.lagggpixel.core.Main;
-import me.lagggpixel.core.data.User;
+import me.lagggpixel.core.data.user.User;
 import me.lagggpixel.core.modules.economy.events.BalanceTopUpdateEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;

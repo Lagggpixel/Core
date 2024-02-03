@@ -13,6 +13,7 @@ package me.lagggpixel.core.data;
 import lombok.Getter;
 import me.lagggpixel.core.Main;
 import me.lagggpixel.core.builders.ItemBuilder;
+import me.lagggpixel.core.data.user.User;
 import me.lagggpixel.core.utils.ChatUtils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;

@@ -22,7 +22,6 @@ import com.google.gson.stream.JsonWriter;
 import lombok.*;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
-import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -35,18 +34,18 @@ import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
  * @author Lagggpixel
  * @since January 22, 2024
  */
+@SuppressWarnings("unused")
 @Data
 @NoArgsConstructor
 @Getter
 @Setter
-public class InstantPlayerData implements ConfigurationSerializable {
+public class InstantPlayerData {
 
   @SerializedName("Health")
   @Expose
@@ -119,25 +118,6 @@ public class InstantPlayerData implements ConfigurationSerializable {
     player.getInventory().setContents(inventory);
   }
 
-  @Override
-  public @NotNull Map<String, Object> serialize() {
-    Map<String, Object> data = new HashMap<>();
-
-    data.put("health", health);
-    data.put("foodLevel", foodLevel);
-    data.put("saturation", saturation);
-    data.put("gameMode", gameMode.toString());
-    data.put("isFlying", isFlying);
-    data.put("affectsSpawning", affectsSpawning);
-    data.put("isSleepingIgnored", isSleepingIgnored);
-    data.put("totalExperience", totalExperience);
-
-    data.put("inventory", itemStackArrayToBase64(inventory));
-    data.put("armour", itemStackArrayToBase64(armour));
-
-    return data;
-  }
-
   @SneakyThrows
   @NotNull
   public static InstantPlayerData deserialize(Map<String, Object> map) {
@@ -166,7 +146,7 @@ public class InstantPlayerData implements ConfigurationSerializable {
    * @param playerInventory to turn into an array of strings.
    * @return Array of strings: [ main content, armor content ]
    */
-  public static String[] playerInventoryToBase64(PlayerInventory playerInventory) throws IllegalStateException {
+  public static String @NotNull [] playerInventoryToBase64(PlayerInventory playerInventory) throws IllegalStateException {
     //get the main content part, this doesn't return the armor
     String content = toBase64(playerInventory);
     String armor = itemStackArrayToBase64(playerInventory.getArmorContents());
@@ -182,7 +162,7 @@ public class InstantPlayerData implements ConfigurationSerializable {
    * @param items to turn into a Base64 String.
    * @return Base64 string of the items.
    */
-  public static String itemStackArrayToBase64(ItemStack[] items) throws IllegalStateException {
+  public static @NotNull String itemStackArrayToBase64(ItemStack[] items) throws IllegalStateException {
     try {
       ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
       BukkitObjectOutputStream dataOutput = new BukkitObjectOutputStream(outputStream);
@@ -209,7 +189,7 @@ public class InstantPlayerData implements ConfigurationSerializable {
    * @param inventory to serialize
    * @return Base64 string of the provided inventory
    */
-  public static String toBase64(Inventory inventory) throws IllegalStateException {
+  public static @NotNull String toBase64(Inventory inventory) throws IllegalStateException {
     try {
       ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
       BukkitObjectOutputStream dataOutput = new BukkitObjectOutputStream(outputStream);
@@ -236,7 +216,7 @@ public class InstantPlayerData implements ConfigurationSerializable {
    * @param data Base64 string of data containing an inventory.
    * @return Inventory created from the Base64 string.
    */
-  public static Inventory fromBase64(String data) throws IOException {
+  public static @NotNull Inventory fromBase64(String data) throws IOException {
     try {
       ByteArrayInputStream inputStream = new ByteArrayInputStream(Base64Coder.decodeLines(data));
       BukkitObjectInputStream dataInput = new BukkitObjectInputStream(inputStream);
@@ -262,7 +242,7 @@ public class InstantPlayerData implements ConfigurationSerializable {
    * @param data Base64 string to convert to ItemStack array.
    * @return ItemStack array created from the Base64 string.
    */
-  public static ItemStack[] itemStackArrayFromBase64(String data) throws IOException {
+  public static ItemStack @NotNull [] itemStackArrayFromBase64(String data) throws IOException {
     try {
       ByteArrayInputStream inputStream = new ByteArrayInputStream(Base64Coder.decodeLines(data));
       BukkitObjectInputStream dataInput = new BukkitObjectInputStream(inputStream);

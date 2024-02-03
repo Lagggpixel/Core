@@ -13,7 +13,7 @@ package me.lagggpixel.core.modules.home.commands;
 import me.lagggpixel.core.Main;
 import me.lagggpixel.core.interfaces.ICommandClass;
 import me.lagggpixel.core.enums.Lang;
-import me.lagggpixel.core.data.User;
+import me.lagggpixel.core.data.user.User;
 import me.lagggpixel.core.interfaces.IModule;
 import me.lagggpixel.core.modules.home.data.Home;
 import me.lagggpixel.core.modules.home.handlers.HomeHandler;

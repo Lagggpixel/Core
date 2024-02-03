@@ -11,7 +11,7 @@
 package me.lagggpixel.core.listeners;
 
 import me.lagggpixel.core.Main;
-import me.lagggpixel.core.data.User;
+import me.lagggpixel.core.data.user.User;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
@@ -37,10 +37,10 @@ public class PlayerStatsListeners implements Listener {
     User user = Main.getUser(event.getPlayer().getUniqueId());
     Material material = event.getBlock().getType();
 
-    if (user.getBlocksBroken().containsKey(material)) {
-      user.getBlocksBroken().replace(material, user.getBlocksBroken().get(material) + 1);
+    if (user.getUserStats().getBlocksBroken().containsKey(material)) {
+      user.getUserStats().getBlocksBroken().replace(material, user.getUserStats().getBlocksBroken().get(material) + 1);
     } else {
-      user.getBlocksBroken().put(material, 1L);
+      user.getUserStats().getBlocksBroken().put(material, 1L);
     }
   }
 
@@ -49,10 +49,10 @@ public class PlayerStatsListeners implements Listener {
     User user = Main.getUser(event.getPlayer().getUniqueId());
     Material material = event.getBlock().getType();
 
-    if (user.getBlocksPlaced().containsKey(material)) {
-      user.getBlocksPlaced().replace(material, user.getBlocksPlaced().get(material) + 1);
+    if (user.getUserStats().getBlocksPlaced().containsKey(material)) {
+      user.getUserStats().getBlocksPlaced().replace(material, user.getUserStats().getBlocksPlaced().get(material) + 1);
     } else {
-      user.getBlocksPlaced().put(material, 1L);
+      user.getUserStats().getBlocksPlaced().put(material, 1L);
     }
   }
 
@@ -65,10 +65,10 @@ public class PlayerStatsListeners implements Listener {
     User user = Main.getUser(event.getEntity().getKiller().getUniqueId());
     EntityType entityType = event.getEntity().getType();
 
-    if (user.getEntityKills().containsKey(entityType)) {
-      user.getEntityKills().replace(entityType, user.getEntityKills().get(entityType) + 1);
+    if (user.getUserStats().getEntityKills().containsKey(entityType)) {
+      user.getUserStats().getEntityKills().replace(entityType, user.getUserStats().getEntityKills().get(entityType) + 1);
     } else {
-      user.getEntityKills().put(entityType, 1L);
+      user.getUserStats().getEntityKills().put(entityType, 1L);
     }
   }
 

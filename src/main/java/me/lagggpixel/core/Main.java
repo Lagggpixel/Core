@@ -12,10 +12,10 @@ package me.lagggpixel.core;
 
 import lombok.Getter;
 import lombok.Setter;
-import me.lagggpixel.core.data.User;
+import me.lagggpixel.core.data.user.User;
+import me.lagggpixel.core.interfaces.IModule;
 import me.lagggpixel.core.listeners.PlayerStatsListeners;
 import me.lagggpixel.core.listeners.onPlayerJoin;
-import me.lagggpixel.core.interfaces.IModule;
 import me.lagggpixel.core.modules.bazaar.BazaarModule;
 import me.lagggpixel.core.modules.bazaar.bz.category.CategoryConfiguration;
 import me.lagggpixel.core.modules.bazaar.bz.product.ProductConfiguration;
@@ -27,13 +27,12 @@ import me.lagggpixel.core.modules.discord.DiscordModule;
 import me.lagggpixel.core.modules.economy.EconomyModule;
 import me.lagggpixel.core.modules.guilds.GuildModule;
 import me.lagggpixel.core.modules.home.HomeModule;
-import me.lagggpixel.core.modules.home.data.Home;
 import me.lagggpixel.core.modules.merchant.MerchantModule;
 import me.lagggpixel.core.modules.skills.SkillsModule;
+import me.lagggpixel.core.modules.skills.data.Skills;
 import me.lagggpixel.core.modules.skipnight.SkipNightModule;
 import me.lagggpixel.core.modules.spawn.SpawnModule;
 import me.lagggpixel.core.modules.staff.StaffModule;
-import me.lagggpixel.core.modules.staff.data.InstantPlayerData;
 import me.lagggpixel.core.modules.survival.SurvivalModule;
 import me.lagggpixel.core.modules.warp.WarpModule;
 import me.lagggpixel.core.serializers.UserDataSerializer;
@@ -67,9 +66,6 @@ public final class Main extends JavaPlugin {
   private static Map<UUID, User> userData;
 
   static {
-    ConfigurationSerialization.registerClass(InstantPlayerData.class);
-    ConfigurationSerialization.registerClass(Home.class);
-
     // Bazaar
     ConfigurationSerialization.registerClass(ProductConfiguration.class);
     ConfigurationSerialization.registerClass(ProductCategoryConfiguration.class);
@@ -121,7 +117,7 @@ public final class Main extends JavaPlugin {
    */
   public static @NotNull User getUser(@NotNull UUID uuid) {
     if (!userData.containsKey(uuid)) {
-      userData.put(uuid, new User(uuid));
+      userData.put(uuid, new User(uuid, new Skills(uuid)));
     }
     return userData.get(uuid);
   }

@@ -11,7 +11,7 @@
 package me.lagggpixel.core.modules.skills.listeners;
 
 import me.lagggpixel.core.Main;
-import me.lagggpixel.core.data.User;
+import me.lagggpixel.core.data.user.User;
 import me.lagggpixel.core.modules.skills.SkillsModule;
 import me.lagggpixel.core.modules.skills.enums.SkillExpGainCause;
 import org.bukkit.block.Block;

@@ -10,8 +10,6 @@
 
 package me.lagggpixel.core.modules.guilds.commands.subCommands;
 
-import me.lagggpixel.core.Main;
-import me.lagggpixel.core.data.user.User;
 import me.lagggpixel.core.enums.Lang;
 import me.lagggpixel.core.interfaces.ISubCommand;
 import me.lagggpixel.core.modules.guilds.GuildModule;
@@ -20,42 +18,66 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Lagggpixel
- * @since January 22, 2024
+ * @since February 03, 2024
  */
-public class GuildClaimCommand implements ISubCommand {
+public class GuildClaimExplosionsCommand implements ISubCommand {
+
   private final GuildModule guildModule;
-  
-  public GuildClaimCommand(GuildModule guildModule) {
+
+  public GuildClaimExplosionsCommand(GuildModule guildModule) {
     this.guildModule = guildModule;
   }
-  
+
   @Override
   public void execute(CommandSender commandSender, String[] args) {
-    
     if (!(commandSender instanceof Player sender)) {
       commandSender.sendMessage(Lang.PLAYER_ONLY.toComponentWithPrefix());
       return;
     }
-    User senderUser = Main.getUser(sender.getUniqueId());
+
+    if (args.length != 2) {
+      sender.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
+      return;
+    }
+
     Guild guild = guildModule.getGuildHandler().getGuildFromPlayerUUID(sender.getUniqueId());
     if (guild == null) {
-      senderUser.sendMessage(Lang.GUILD_NOT_IN_GUILD.toComponentWithPrefix());
+      sender.sendMessage(Lang.GUILD_NOT_IN_GUILD.toComponentWithPrefix());
       return;
     }
-    if (guild.getMembers().contains(sender.getUniqueId())) {
-      senderUser.sendMessage(Lang.GUILD_MUST_BE_OFFICER.toComponentWithPrefix());
-      return;
+
+    boolean toggleStatus;
+
+    switch (args[1]) {
+      case "true":
+        toggleStatus = true;
+        break;
+      case "false":
+        toggleStatus = false;
+        break;
+      default:
+        sender.sendMessage(Lang.INVALID_USAGE.toComponentWithPrefix());
+        return;
     }
-    
-    sender.getInventory().remove(guildModule.getClaimManager().getWand());
-    sender.getInventory().addItem(guildModule.getClaimManager().getWand());
+
+
+    guild.getClaims().forEach(claim -> claim.setClaimExplosions(toggleStatus));
+    sender.sendMessage(Lang.GUILD_CLAIM_EXPLOSIONS_CHANGED.toComponentWithPrefix(Map.of(
+            "%status%", toggleStatus ? "&aenabled" : "&cdisabled",
+            "%player%", sender.getName()
+        )
+    ));
   }
-  
+
   @Override
   public List<String> tabComplete(CommandSender commandSender, String[] args) {
-    return List.of(" ");
+    if (args.length == 2) {
+      return List.of("true", "false");
+    }
+    return null;
   }
 }

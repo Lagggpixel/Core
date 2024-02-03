@@ -11,7 +11,7 @@
 package me.lagggpixel.core.modules.home.listeners;
 
 import me.lagggpixel.core.Main;
-import me.lagggpixel.core.data.User;
+import me.lagggpixel.core.data.user.User;
 import me.lagggpixel.core.modules.home.data.Home;
 import me.lagggpixel.core.modules.home.handlers.HomeHandler;
 import me.lagggpixel.core.utils.ChatUtils;

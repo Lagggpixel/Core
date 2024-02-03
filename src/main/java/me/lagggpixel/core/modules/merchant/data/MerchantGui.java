@@ -14,7 +14,7 @@ import lombok.Getter;
 import me.lagggpixel.core.Main;
 import me.lagggpixel.core.builders.ItemBuilder;
 import me.lagggpixel.core.data.Pair;
-import me.lagggpixel.core.data.User;
+import me.lagggpixel.core.data.user.User;
 import me.lagggpixel.core.utils.ChatUtils;
 import me.lagggpixel.core.utils.ExceptionUtils;
 import net.kyori.adventure.text.Component;

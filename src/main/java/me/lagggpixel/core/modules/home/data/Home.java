@@ -23,12 +23,9 @@ import lombok.Data;
 import lombok.Getter;
 import me.lagggpixel.core.serializers.LocationSerializer;
 import org.bukkit.Location;
-import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -38,7 +35,7 @@ import java.util.Objects;
  */
 @Data
 @Getter
-public final class Home implements ConfigurationSerializable {
+public final class Home {
   @SerializedName("Name")
   @Expose
   private final String name;
@@ -90,14 +87,6 @@ public final class Home implements ConfigurationSerializable {
   public Home(Map<String, Object> map) {
     this.name = String.valueOf(map.get("name"));
     this.location = (Location) map.get("location");
-  }
-
-  @Override
-  public @NotNull Map<String, Object> serialize() {
-    return new HashMap<>() {{
-      put("name", name);
-      put("location", location);
-    }};
   }
 
   public static class LocationTypeAdapter extends TypeAdapter<Location> {
