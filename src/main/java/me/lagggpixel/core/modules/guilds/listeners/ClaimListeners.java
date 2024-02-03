@@ -11,7 +11,7 @@
 package me.lagggpixel.core.modules.guilds.listeners;
 
 import me.lagggpixel.core.Main;
-import me.lagggpixel.core.data.User;
+import me.lagggpixel.core.data.user.User;
 import me.lagggpixel.core.enums.Lang;
 import me.lagggpixel.core.modules.guilds.GuildModule;
 import me.lagggpixel.core.modules.guilds.data.Claim;

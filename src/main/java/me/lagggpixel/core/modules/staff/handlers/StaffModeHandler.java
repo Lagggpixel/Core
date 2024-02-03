@@ -11,7 +11,7 @@
 package me.lagggpixel.core.modules.staff.handlers;
 
 import me.lagggpixel.core.Main;
-import me.lagggpixel.core.data.User;
+import me.lagggpixel.core.data.user.User;
 import me.lagggpixel.core.modules.staff.data.InstantPlayerData;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;

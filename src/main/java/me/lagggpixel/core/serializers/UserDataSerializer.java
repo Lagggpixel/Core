@@ -13,7 +13,7 @@ package me.lagggpixel.core.serializers;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import me.lagggpixel.core.Main;
-import me.lagggpixel.core.data.User;
+import me.lagggpixel.core.data.user.User;
 import me.lagggpixel.core.modules.home.data.Home;
 import me.lagggpixel.core.modules.staff.data.InstantPlayerData;
 import me.lagggpixel.core.utils.ExceptionUtils;

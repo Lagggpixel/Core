@@ -11,7 +11,7 @@
 package me.lagggpixel.core.modules.skills.hooks.placeholders;
 
 import me.lagggpixel.core.Main;
-import me.lagggpixel.core.data.User;
+import me.lagggpixel.core.data.user.User;
 import me.lagggpixel.core.interfaces.ICorePlaceholderExpansion;
 import me.lagggpixel.core.modules.skills.enums.SkillType;
 import me.lagggpixel.core.modules.skills.handlers.SkillHandler;

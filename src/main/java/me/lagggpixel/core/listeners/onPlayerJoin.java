@@ -11,7 +11,7 @@
 package me.lagggpixel.core.listeners;
 
 import me.lagggpixel.core.Main;
-import me.lagggpixel.core.data.User;
+import me.lagggpixel.core.data.user.User;
 import me.lagggpixel.core.modules.staff.handlers.VanishHandler;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;

@@ -12,7 +12,7 @@ package me.lagggpixel.core.modules.chat.listeners;
 
 import io.papermc.paper.event.player.AsyncChatEvent;
 import me.lagggpixel.core.Main;
-import me.lagggpixel.core.data.User;
+import me.lagggpixel.core.data.user.User;
 import me.lagggpixel.core.modules.chat.handlers.StaffChatHandler;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

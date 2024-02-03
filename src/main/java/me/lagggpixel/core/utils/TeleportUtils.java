@@ -13,7 +13,7 @@ package me.lagggpixel.core.utils;
 import lombok.Getter;
 import me.lagggpixel.core.Main;
 import me.lagggpixel.core.data.DelayTeleport;
-import me.lagggpixel.core.data.User;
+import me.lagggpixel.core.data.user.User;
 import me.lagggpixel.core.enums.Lang;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
