@@ -29,4 +29,9 @@ public class UserPreference {
   @Expose
   private boolean acknowledgedPistonRules = false;
 
+  // Whether if the user has acknowledged the tnt rules for claims
+  @SerializedName("AcknowledgedPistonRules")
+  @Expose
+  private boolean acknowledgedTntRules = false;
+
 }
