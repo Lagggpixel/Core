@@ -35,10 +35,11 @@ import java.util.*;
  * @author Lagggpixel
  * @since January 22, 2024
  */
+@SuppressWarnings("unused")
 @Data
 @Getter
 @Setter
-@AllArgsConstructor(access = AccessLevel.PUBLIC)
+@RequiredArgsConstructor(access = AccessLevel.PUBLIC)
 public class User {
   // Player data
   @SerializedName("PlayerUUID")
@@ -47,24 +48,24 @@ public class User {
   // Player stats
   @SerializedName("EntityKills")
   @Expose
-  private final @NotNull HashMap<EntityType, Long> entityKills;
+  private final @NotNull HashMap<EntityType, Long> entityKills = new HashMap<>();
   @SerializedName("BlocksBroken")
   @Expose
-  private final @NotNull HashMap<Material, Long> blocksBroken;
+  private final @NotNull HashMap<Material, Long> blocksBroken = new HashMap<>();
   @SerializedName("BlocksPlaced")
   @Expose
-  private final @NotNull HashMap<Material, Long> blocksPlaced;
+  private final @NotNull HashMap<Material, Long> blocksPlaced = new HashMap<>();
   @SerializedName("PlayerName")
   @Expose
-  private @NotNull String playerName;
+  private @NotNull String playerName = "null";
   @SerializedName("QueuedMessages")
   @Expose
-  private List<Component> getQueuedMessage;
+  private @NotNull List<Component> getQueuedMessage = new ArrayList<>();
   private transient boolean afk = false;
   // Discord
   @SerializedName("DiscordID")
   @Expose
-  private @Nullable Long discordId;
+  private @Nullable Long discordId = null;
   // Economy
   @SerializedName("PlayerBalance")
   @Expose
@@ -72,60 +73,28 @@ public class User {
   // Homes
   @SerializedName("Homes")
   @Expose
-  private Map<String, Home> homes;
+  private @NotNull Map<String, Home> homes = new HashMap<>();
   // Merchant
-  private List<ItemStack> merchantSold = List.of();
-  private String currentMerchant = null;
+  @Getter
+  private @NotNull List<ItemStack> merchantSold = new ArrayList<>();
+  private @Nullable String currentMerchant = null;
   // Skills
   @SerializedName("Skills")
   @Expose
-  private Skills skills;
+  private @NotNull Skills skills = new Skills(playerUUID);
   // Staff configurations
   @SerializedName("InstantPlayerData")
   @Expose
-  private InstantPlayerData instantPlayerData;
+  private @Nullable InstantPlayerData instantPlayerData = null;
   @SerializedName("StaffMode")
   @Expose
-  private boolean staffMode;
+  private boolean staffMode = false;
   @SerializedName("IsVanished")
   @Expose
-  private boolean isVanished;
+  private boolean isVanished = false;
   @SerializedName("StaffChatToggled")
   @Expose
-  private boolean staffChatToggled;
-
-  /**
-   * Constructs a new user.
-   *
-   * @param uuid The uuid of the player.
-   */
-  public User(@NotNull UUID uuid) {
-    // Player data
-    this.playerUUID = uuid;
-    this.playerName = "Unknown";
-
-    // Player stats
-    this.entityKills = new HashMap<>();
-    this.blocksBroken = new HashMap<>();
-    this.blocksPlaced = new HashMap<>();
-
-    // Discord
-
-    // Economy
-    this.playerBalance = 0.00;
-
-    // Homes
-    this.homes = new HashMap<>();
-
-    // Skills
-    this.skills = new Skills(playerUUID);
-
-    // Staff
-    this.instantPlayerData = null;
-    this.staffMode = false;
-    this.isVanished = false;
-    this.staffChatToggled = false;
-  }
+  private boolean staffChatToggled = false;
 
   /**
    * Constructs a new user.
@@ -133,45 +102,45 @@ public class User {
    * @param player The player object.
    */
   public User(@NotNull Player player) {
-    // Player data
     this.playerUUID = player.getUniqueId();
     this.playerName = player.getName();
-
-    // Player stats
-    this.entityKills = new HashMap<>();
-    this.blocksBroken = new HashMap<>();
-    this.blocksPlaced = new HashMap<>();
-
-    // Discord
-
-    // Economy
-    this.playerBalance = 0.00;
-
-    // Homes
-    this.homes = new HashMap<>();
-
-    // Skills
-    this.skills = new Skills(playerUUID);
-
-    // Staff
-    this.instantPlayerData = null;
-    this.staffMode = false;
-    this.isVanished = false;
-    this.staffChatToggled = false;
   }
 
+  /**
+   * Gets the number of kills for a specific entity type.
+   *
+   * @param  entityType  the type of the entity
+   * @return the number of kills for the specified entity type, or 0 if no kills are recorded
+   */
   public long getEntityKills(EntityType entityType) {
     return entityKills.getOrDefault(entityType, 0L);
   }
 
+  /**
+   * Retrieves the number of blocks of the specified material that have been broken.
+   *
+   * @param  material  the material of the blocks
+   * @return the number of blocks broken of the specified material
+   */
   public long getBlockBroken(Material material) {
     return blocksBroken.getOrDefault(material, 0L);
   }
 
+  /**
+   * Retrieves the number of blocks of a specific material that have been placed.
+   *
+   * @param  material   the material to retrieve the number of placed blocks for
+   * @return the number of placed blocks of the specified material
+   */
   public long getBlockPlaced(Material material) {
     return blocksPlaced.getOrDefault(material, 0L);
   }
 
+  /**
+   * Returns the total number of kills for each entity type.
+   *
+   * @return the total number of kills for all entity types
+   */
   public long getTotalEntityKills() {
     long total = 0;
     for (Map.Entry<EntityType, Long> entry : entityKills.entrySet()) {
@@ -180,6 +149,11 @@ public class User {
     return total;
   }
 
+  /**
+   * Calculates the total number of blocks broken.
+   *
+   * @return the total number of blocks broken
+   */
   public long getTotalBlocksBroken() {
     long total = 0;
     for (Map.Entry<Material, Long> entry : blocksBroken.entrySet()) {
@@ -188,6 +162,11 @@ public class User {
     return total;
   }
 
+  /**
+   * Get the total number of blocks placed.
+   *
+   * @return the total number of blocks placed
+   */
   public long getTotalBlocksPlaced() {
     long total = 0;
     for (Map.Entry<Material, Long> entry : blocksPlaced.entrySet()) {
@@ -228,14 +207,29 @@ public class User {
     return false;
   }
 
+  /**
+   * A method to queue a message with the given component.
+   *
+   * @param  component   the component to be queued
+   */
   private void queueMessage(Component component) {
     this.getQueuedMessage.add(component);
   }
 
+  /**
+   * Check if the player is online.
+   *
+   * @return true if the player is online, false otherwise
+   */
   public boolean isOnline() {
     return Bukkit.getPlayer(playerUUID) != null;
   }
 
+  /**
+   * Retrieves the current Merchant the user has selected.
+   *
+   * @return the current Merchant object, or null if it does not exist
+   */
   public Merchant getCurrentMerchant() {
     if (currentMerchant == null) {
       return null;
@@ -245,12 +239,5 @@ public class User {
       return null;
     }
     return MerchantModule.getInstance().getMerchantHandler().getMerchant(currentMerchant);
-  }
-
-  public List<ItemStack> getMerchantSold() {
-    if (merchantSold == null) {
-      merchantSold = new ArrayList<>();
-    }
-    return merchantSold;
   }
 }
