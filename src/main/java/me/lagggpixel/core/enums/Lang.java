@@ -182,9 +182,9 @@ public enum Lang {
   GUILD_LEAVE_LEADER_CANT_LEAVE("guild.leave.leader_cant_leave", "&cYou cannot leave your guild as the leader."),
   GUILD_LEAVE_SUCCESS_NOTIFY("guild.leave.success", "&aYou've left your guild."),
   GUILD_LEAVE_SUCCESS_BROADCAST("guild.leave.success", "&a%player% has left your guild."),
-  GUILD_PISTON_RULES("guild.piston_rules", "Please note that you can only use pistons inside your guild's claim, pistons that are outside of your guild's claim or affects blocks outside your guild's claim will not work."),
+  GUILD_PISTON_RULES("guild.piston_rules", "Please note that you can only use pistons inside your guild's claim, pistons that are outside of your guild's claim or affects blocks outside your guild's claim will not work. Do &a/guild acknowledge piston &fto stop seeing this message."),
   GUILD_ACKNOWLEDGE_PISTON("guild.acknowledge.piston", "You have acknowledged piston rules. You will never see this message again."),
-  GUILD_TNT_RULES("guild.tnt_rules", "Please note that you can only use TNT inside your guild's claim, TNT that is outside of your guild's claim or affects blocks outside your guild's claim will not work."),
+  GUILD_TNT_RULES("guild.tnt_rules", "Please note that you can only use TNT inside your guild's claim, TNT that is outside of your guild's claim or affects blocks outside your guild's claim will not work. Do &a/guild acknowledge tnt &fto stop seeing this message."),
   GUILD_ACKNOWLEDGE_TNT("guild.acknowledge.tnt", "You have acknowledged TNT rules. You will never see this message again."),
 
   // Home IModule

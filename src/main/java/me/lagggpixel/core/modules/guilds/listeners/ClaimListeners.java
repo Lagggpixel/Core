@@ -12,6 +12,7 @@ package me.lagggpixel.core.modules.guilds.listeners;
 
 import me.lagggpixel.core.Main;
 import me.lagggpixel.core.data.user.User;
+import me.lagggpixel.core.data.user.UserPreference;
 import me.lagggpixel.core.enums.Lang;
 import me.lagggpixel.core.modules.guilds.GuildModule;
 import me.lagggpixel.core.modules.guilds.data.Claim;
@@ -506,11 +507,18 @@ public class ClaimListeners implements Listener {
     }
   }
 
-  private void handleClaimInteract(BlockPlaceEvent blockPlaceEvent) {
+  private void handleClaimInteract(@NotNull BlockPlaceEvent blockPlaceEvent) {
     Player player = blockPlaceEvent.getPlayer();
     Block block = blockPlaceEvent.getBlock();
     if (handleClaimBlock(player, block)) {
       blockPlaceEvent.setCancelled(true);
+    }
+
+    if (block.getType() == Material.PISTON || block.getType() == Material.STICKY_PISTON) {
+      handlePistonBlock(player);
+    }
+    if (block.getType() == Material.TNT) {
+      handleTntBlock(player);
     }
   }
 
@@ -534,6 +542,22 @@ public class ClaimListeners implements Listener {
       }
     }
     return false;
+  }
+
+  private void handlePistonBlock(Player player) {
+    User user  = Main.getUser(player);
+    UserPreference preference = user.getUserPreference();
+    if (!preference.isAcknowledgedPistonRules()) {
+      user.sendMessage(Lang.GUILD_PISTON_RULES.toComponentWithPrefix());
+    }
+  }
+
+  private void handleTntBlock(Player player) {
+    User user  = Main.getUser(player);
+    UserPreference preference = user.getUserPreference();
+    if (!preference.isAcknowledgedTntRules()) {
+      user.sendMessage(Lang.GUILD_TNT_RULES.toComponentWithPrefix());
+    }
   }
 
   @EventHandler
