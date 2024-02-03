@@ -186,6 +186,7 @@ public enum Lang {
   GUILD_ACKNOWLEDGE_PISTON("guild.acknowledge.piston", "You have acknowledged piston rules. You will never see this message again."),
   GUILD_TNT_RULES("guild.tnt_rules", "Please note that you can only use TNT inside your guild's claim, TNT that is outside of your guild's claim or affects blocks outside your guild's claim will not work. Do &a/guild acknowledge tnt &fto stop seeing this message."),
   GUILD_ACKNOWLEDGE_TNT("guild.acknowledge.tnt", "You have acknowledged TNT rules. You will never see this message again."),
+  GUILD_CLAIM_EXPLOSIONS_CHANGED("guild.claim_explosions_changed", "Claim explosions have been set to %status% &fby %player%."),
 
   // Home IModule
   HOME_ALREADY_EXIST("home.already_exist", "&cA home named '&e%home%&c' already exists."),

@@ -34,6 +34,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.inventory.InventoryMoveItemEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -545,7 +546,7 @@ public class ClaimListeners implements Listener {
   }
 
   private void handlePistonBlock(Player player) {
-    User user  = Main.getUser(player);
+    User user = Main.getUser(player);
     UserPreference preference = user.getUserPreference();
     if (!preference.isAcknowledgedPistonRules()) {
       user.sendMessage(Lang.GUILD_PISTON_RULES.toComponentWithPrefix());
@@ -553,7 +554,7 @@ public class ClaimListeners implements Listener {
   }
 
   private void handleTntBlock(Player player) {
-    User user  = Main.getUser(player);
+    User user = Main.getUser(player);
     UserPreference preference = user.getUserPreference();
     if (!preference.isAcknowledgedTntRules()) {
       user.sendMessage(Lang.GUILD_TNT_RULES.toComponentWithPrefix());
@@ -573,6 +574,26 @@ public class ClaimListeners implements Listener {
         event.setCancelled(true);
         return;
       }
+      return;
+    }
+    event.setCancelled(true);
+  }
+
+  @EventHandler
+  public void onExplode(EntityExplodeEvent event) {
+    Location explosionLocation = event.getLocation();
+    Claim claim = this.claimManager.getClaimAt(explosionLocation);
+    if (claim == null) {
+      if (worlds.contains(explosionLocation.getWorld().getName())) {
+        event.setCancelled(true);
+        return;
+      }
+      event.setCancelled(false);
+      return;
+    }
+
+    if (claim.isClaimExplosions()) {
+      event.setCancelled(false);
       return;
     }
     event.setCancelled(true);
