@@ -10,7 +10,9 @@
 
 package me.lagggpixel.core.data.user;
 
+import com.google.gson.annotations.Expose;
 import lombok.*;
+import org.mineskin.com.google.gson.annotations.SerializedName;
 
 /**
  * @author Lagggpixel
@@ -19,9 +21,12 @@ import lombok.*;
 @Data
 @Getter
 @Setter
-@AllArgsConstructor(access = AccessLevel.PUBLIC)
+@RequiredArgsConstructor(access = AccessLevel.PUBLIC)
 public class UserPreference {
 
-
+  // Whether if the user has acknowledged the piston rules for claims
+  @SerializedName("AcknowledgedPistonRules")
+  @Expose
+  private boolean acknowledgedPistonRules = false;
 
 }

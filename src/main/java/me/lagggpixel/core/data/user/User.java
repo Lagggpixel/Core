@@ -50,10 +50,13 @@ public class User {
   @Expose
   private @NotNull List<Component> getQueuedMessage = new ArrayList<>();
   private transient boolean afk = false;
-  // Stats
+  // Other
   @SerializedName("UserStats")
   @Expose
   private final UserStats userStats = new UserStats();
+  @SerializedName("UserPreference")
+  @Expose
+  private final UserPreference userPreference = new UserPreference();
   // Discord
   @SerializedName("DiscordID")
   @Expose
