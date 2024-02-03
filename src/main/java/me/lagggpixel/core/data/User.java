@@ -81,7 +81,7 @@ public class User {
   // Skills
   @SerializedName("Skills")
   @Expose
-  private @NotNull Skills skills = new Skills(playerUUID);
+  private final @NotNull Skills skills;
   // Staff configurations
   @SerializedName("InstantPlayerData")
   @Expose
@@ -104,6 +104,8 @@ public class User {
   public User(@NotNull Player player) {
     this.playerUUID = player.getUniqueId();
     this.playerName = player.getName();
+
+    this.skills = new Skills(player.getUniqueId());
   }
 
   /**

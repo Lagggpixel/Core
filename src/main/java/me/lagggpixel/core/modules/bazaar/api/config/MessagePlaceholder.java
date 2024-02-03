@@ -10,12 +10,9 @@
 
 package me.lagggpixel.core.modules.bazaar.api.config;
 
-import lombok.Getter;
-
 /**
  * @since January 22, 2024
  */
-@Getter
 public record MessagePlaceholder(String placeholder, String value) implements Placeholder {
 
   public String replace(String text) {

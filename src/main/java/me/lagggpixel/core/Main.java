@@ -30,6 +30,7 @@ import me.lagggpixel.core.modules.home.HomeModule;
 import me.lagggpixel.core.modules.home.data.Home;
 import me.lagggpixel.core.modules.merchant.MerchantModule;
 import me.lagggpixel.core.modules.skills.SkillsModule;
+import me.lagggpixel.core.modules.skills.data.Skills;
 import me.lagggpixel.core.modules.skipnight.SkipNightModule;
 import me.lagggpixel.core.modules.spawn.SpawnModule;
 import me.lagggpixel.core.modules.staff.StaffModule;
@@ -121,7 +122,7 @@ public final class Main extends JavaPlugin {
    */
   public static @NotNull User getUser(@NotNull UUID uuid) {
     if (!userData.containsKey(uuid)) {
-      userData.put(uuid, new User(uuid));
+      userData.put(uuid, new User(uuid, new Skills(uuid)));
     }
     return userData.get(uuid);
   }
