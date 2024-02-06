@@ -33,6 +33,7 @@ public enum Lang {
   INVALID_USAGE("invalid_usage", "&cInvalid usage. Type /help for more information."),
   INVALID_NUMBER("invalid_number", "&cInvalid number inputted."),
   PLAYER_NOT_FOUND("player_not_found", "&c%player% is not found."),
+  WORLD_NOT_FOUND("world_not_found", "&c%world% is not found."),
 
   TELEPORTATION_IN_TIME("teleportation.time", "&aTeleporting in %time% seconds..."),
   TELEPORTATION_CANCELED("teleportation.canceled", "&cTeleportation canceled due to %reason%."),

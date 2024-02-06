@@ -14,6 +14,7 @@ import me.lagggpixel.core.interfaces.IModule;
 import me.lagggpixel.core.modules.survival.commands.AnvilCommand;
 import me.lagggpixel.core.modules.survival.commands.CraftCommand;
 import me.lagggpixel.core.modules.survival.commands.EnchantingTableCommand;
+import me.lagggpixel.core.modules.survival.commands.WorldTpCommand;
 import me.lagggpixel.core.modules.survival.commands.tpaCommands.TpaAcceptCommand;
 import me.lagggpixel.core.modules.survival.commands.tpaCommands.TpaCancelCommand;
 import me.lagggpixel.core.modules.survival.commands.tpaCommands.TpaCommand;
@@ -23,6 +24,7 @@ import me.lagggpixel.core.modules.survival.handlers.TpaHandler;
 import me.lagggpixel.core.modules.survival.listeners.InventoryClickListener;
 import me.lagggpixel.core.modules.survival.listeners.SurvivalItemListeners;
 import me.lagggpixel.core.modules.survival.listeners.WhitelistedListener;
+import me.lagggpixel.core.modules.survival.listeners.WorldDataListeners;
 import me.lagggpixel.core.utils.CommandUtils;
 import org.jetbrains.annotations.NotNull;
 
@@ -67,12 +69,14 @@ public class SurvivalModule implements IModule {
     new SurvivalItemListeners(survivalItemHandler);
     new InventoryClickListener();
     new WhitelistedListener();
+    new WorldDataListeners();
   }
 
   private void registerInventoryCommands() {
     CommandUtils.registerCommand(new AnvilCommand(this));
     CommandUtils.registerCommand(new EnchantingTableCommand(this));
     CommandUtils.registerCommand(new CraftCommand(this));
+    CommandUtils.registerCommand(new WorldTpCommand(this));
   }
 
   private void registerTpaCommands() {
