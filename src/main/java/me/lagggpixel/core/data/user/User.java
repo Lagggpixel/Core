@@ -49,6 +49,9 @@ public class User {
   @SerializedName("QueuedMessages")
   @Expose
   private @NotNull List<Component> getQueuedMessage = new ArrayList<>();
+  @SerializedName("WorldData")
+  @Expose
+  private @NotNull Map<String, UserWorldData> worldData = new HashMap<>();
   private transient boolean afk = false;
   // Other
   @SerializedName("UserStats")
