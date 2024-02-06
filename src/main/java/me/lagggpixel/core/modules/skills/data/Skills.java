@@ -37,24 +37,31 @@ public class Skills {
   private final UUID playerUuid;
   @SerializedName("Mining")
   @Expose
-  private Skill mining = new Skill(this.playerUuid, SkillType.MINING);
+  private Skill mining;
   @SerializedName("Farming")
   @Expose
-  private Skill farming = new Skill(this.playerUuid, SkillType.FARMING);
+  private Skill farming;
   @SerializedName("Combat")
   @Expose
-  private Skill combat = new Skill(this.playerUuid, SkillType.COMBAT);
+  private Skill combat;
   @SerializedName("Fishing")
   @Expose
-  private Skill fishing = new Skill(this.playerUuid, SkillType.FISHING);
+  private Skill fishing;
   @SerializedName("Woodcutting")
   @Expose
-  private Skill woodcutting = new Skill(this.playerUuid, SkillType.WOODCUTTING);
+  private Skill woodcutting;
 
   private Map<SkillType, Skill> skills;
 
   public Skills(@NotNull UUID playerUuid) {
     this.playerUuid = playerUuid;
+
+    this.mining = new Skill(this.playerUuid, SkillType.MINING);
+    this.farming = new Skill(this.playerUuid, SkillType.FARMING);
+    this.combat = new Skill(this.playerUuid, SkillType.COMBAT);
+    this.fishing = new Skill(this.playerUuid, SkillType.FISHING);
+    this.woodcutting = new Skill(this.playerUuid, SkillType.WOODCUTTING);
+
     this.mining.initSkillLevel();
     this.farming.initSkillLevel();
     this.combat.initSkillLevel();
