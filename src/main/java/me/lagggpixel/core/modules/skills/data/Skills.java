@@ -37,33 +37,28 @@ public class Skills {
   private final UUID playerUuid;
   @SerializedName("Mining")
   @Expose
-  private Skill mining;
+  private Skill mining = new Skill(this.playerUuid, SkillType.MINING);
   @SerializedName("Farming")
   @Expose
-  private Skill farming;
+  private Skill farming = new Skill(this.playerUuid, SkillType.FARMING);
   @SerializedName("Combat")
   @Expose
-  private Skill combat;
+  private Skill combat = new Skill(this.playerUuid, SkillType.COMBAT);
   @SerializedName("Fishing")
   @Expose
-  private Skill fishing;
+  private Skill fishing = new Skill(this.playerUuid, SkillType.FISHING);
   @SerializedName("Woodcutting")
   @Expose
-  private Skill woodcutting;
+  private Skill woodcutting = new Skill(this.playerUuid, SkillType.WOODCUTTING);
 
   private Map<SkillType, Skill> skills;
 
   public Skills(@NotNull UUID playerUuid) {
     this.playerUuid = playerUuid;
-    this.mining = new Skill(this.playerUuid, SkillType.MINING);
     this.mining.initSkillLevel();
-    this.farming = new Skill(this.playerUuid, SkillType.FARMING);
     this.farming.initSkillLevel();
-    this.combat = new Skill(this.playerUuid, SkillType.COMBAT);
     this.combat.initSkillLevel();
-    this.fishing = new Skill(this.playerUuid, SkillType.FISHING);
     this.fishing.initSkillLevel();
-    this.woodcutting = new Skill(this.playerUuid, SkillType.WOODCUTTING);
     this.woodcutting.initSkillLevel();
   }
 
@@ -89,45 +84,5 @@ public class Skills {
     int totalSkillCount = getSkills().keySet().size();
 
     return (float) totalSkillLevel / totalSkillCount;
-  }
-  
-  public Skill getMining() {
-    if (this.mining == null) {
-      this.mining = new Skill(this.playerUuid, SkillType.MINING);
-      this.mining.initSkillLevel();
-    }
-    return mining;
-  }
-  
-  public Skill getFarming() {
-    if (this.farming == null) {
-      this.farming = new Skill(this.playerUuid, SkillType.FARMING);
-      this.farming.initSkillLevel();
-    }
-    return farming;
-  }
-  
-  public Skill getCombat() {
-    if (this.combat == null) {
-      this.combat = new Skill(this.playerUuid, SkillType.COMBAT);
-      this.combat.initSkillLevel();
-    }
-    return combat;
-  }
-  
-  public Skill getFishing() {
-    if (this.fishing == null) {
-      this.fishing = new Skill(this.playerUuid, SkillType.FISHING);
-      this.fishing.initSkillLevel();
-    }
-    return fishing;
-  }
-  
-  public Skill getWoodcutting() {
-    if (this.woodcutting == null) {
-      this.woodcutting = new Skill(this.playerUuid, SkillType.WOODCUTTING);
-      this.woodcutting.initSkillLevel();
-    }
-    return woodcutting;
   }
 }

@@ -45,20 +45,17 @@ public class Skill {
   private final SkillType skillType;
   @SerializedName("SkillLevel")
   @Expose
-  private int level;
+  private int level = 0;
   @SerializedName("SkillTotalExperience")
   @Expose
-  private double totalExp;
+  private double totalExp = 0;
   @SerializedName("SkillCurrentLevelExperience")
   @Expose
-  private double levelExp;
+  private double levelExp = 0;
 
   public Skill(@NotNull UUID playerUuid, SkillType skillType) {
     this.playerUuid = playerUuid;
     this.skillType = skillType;
-    this.level = 0;
-    this.totalExp = 0;
-    this.levelExp = 0;
   }
 
   public void addExp(double expGained, SkillExpGainCause cause) {
