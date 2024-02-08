@@ -347,8 +347,7 @@ public class Merchant implements Listener {
         return;
       }
       EconomyManager.getInstance().withdraw(player, price);
-      
-      XItemStack.giveOrDrop(player, new ItemStack(item.getType()));
+
       Component displayName = item.getItemMeta().displayName();
       Component message;
       if (displayName == null) {
