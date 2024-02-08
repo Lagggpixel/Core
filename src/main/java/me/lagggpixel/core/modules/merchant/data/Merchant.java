@@ -302,7 +302,7 @@ public class Merchant implements Listener {
         player.sendMessage(ChatUtils.stringToComponentCC("&cYou do not have enough coins to purchase this item!"));
         return;
       }
-      
+
       EconomyManager.getInstance().withdraw(player, nbt.getInteger("merchantCost"));
       
       if (nbt.hasTag("merchantItem")) {
@@ -317,7 +317,8 @@ public class Merchant implements Listener {
               .append(ChatUtils.stringToComponentCC(" &afor &6" + formatter.format(nbt.getInteger("merchantCost")) + " coins&a!"));
         }
         player.sendMessage(message);
-      } else {
+      }
+      else {
         nbt = new NBTItem(getSold(user).get(getSold(user).size() - 1));
         nbt.setBoolean("merchantSold", null);
         XItemStack.giveOrDrop(player, nbt.getItem());
@@ -335,18 +336,16 @@ public class Merchant implements Listener {
         player.sendMessage(message);
         getSold(user).remove(getSold(user).size() - 1);
         event.getInventory().setItem(49, createBuyBack(user));
-        
       }
       player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10, 2);
-    }
-    else if (event.getClickedInventory() != null && event.getClickedInventory().equals(event.getWhoClicked().getInventory())) {
+    } else if (event.getClickedInventory() != null && event.getClickedInventory().equals(event.getWhoClicked().getInventory())) {
       double price = MerchantModule.getInstance().getPriceHandler().getPrice(item);
       if (price == 0) {
         player.sendMessage(ChatUtils.stringToComponentCC("&cThis item cannot be sold!"));
         player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_NO, 10, 2);
         return;
       }
-      EconomyManager.getInstance().withdraw(player, price);
+      price = price * nbt.getItem().getAmount();
 
       Component displayName = item.getItemMeta().displayName();
       Component message;
