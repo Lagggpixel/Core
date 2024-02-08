@@ -67,7 +67,7 @@ public class User {
   // Economy
   @SerializedName("PlayerBalance")
   @Expose
-  private double playerBalance;
+  private double playerBalance = 0.0;
   // Homes
   @SerializedName("Homes")
   @Expose

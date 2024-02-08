@@ -41,6 +41,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.FixedMetadataValue;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.text.DecimalFormat;
@@ -119,8 +120,8 @@ public class Merchant implements Listener {
   public void delete() {
     MerchantModule.getInstance().getMerchantHandler()
         .getMerchantConfiguration().set(id, null);
+    MerchantModule.getInstance().getMerchantHandler().saveMerchantConfig();
     unregister();
-    save();
     MerchantModule.getInstance().getMerchantHandler().getMerchants().remove(id);
   }
   
@@ -130,7 +131,8 @@ public class Merchant implements Listener {
     this.click.destroy();
   }
   
-  private List<ItemStack> getSold(User user) {
+  @Contract(pure = true)
+  private @NotNull List<ItemStack> getSold(@NotNull User user) {
     return user.getMerchantSold();
   }
   

@@ -142,4 +142,12 @@ public class MerchantHandler {
   public boolean hasMerchant(String currentMerchant) {
     return this.merchants.containsKey(currentMerchant);
   }
+
+  public void saveMerchantConfig() {
+    try {
+      merchantConfiguration.save(merchantFile);
+    } catch (IOException e) {
+      ExceptionUtils.handleException(e);
+    }
+  }
 }
