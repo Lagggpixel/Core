@@ -74,7 +74,7 @@ public class User {
   private @NotNull Map<String, Home> homes = new HashMap<>();
   // Merchant
   @Getter
-  private @NotNull List<ItemStack> merchantSold = new ArrayList<>();
+  private List<ItemStack> merchantSold = new ArrayList<>();
   private @Nullable String currentMerchant = null;
   // Skills
   @SerializedName("Skills")
@@ -170,5 +170,12 @@ public class User {
       return null;
     }
     return MerchantModule.getInstance().getMerchantHandler().getMerchant(currentMerchant);
+  }
+
+  public List<ItemStack> getMerchantSold() {
+    if (merchantSold == null) {
+      this.merchantSold = new ArrayList<>();
+    }
+    return merchantSold;
   }
 }
