@@ -67,7 +67,6 @@ public class CoreBotSlashCommand implements BotSlashCommand {
       options.forEach(slashCommandbuilder::addOption);
     }
     slashCommandbuilder.setEnabledInDms(false);
-    slashCommandbuilder.setDefaultDisabled();
     slashCommandbuilder.setDefaultEnabledForPermissions(PermissionType.ADMINISTRATOR);
 
     slashCommand = slashCommandbuilder.createGlobal(DiscordModule.discordHandler.getDiscordApi()).join();
