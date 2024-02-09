@@ -12,6 +12,7 @@ package me.lagggpixel.core.modules.discord.handlers;
 
 import me.lagggpixel.core.interfaces.BotSlashCommand;
 import me.lagggpixel.core.modules.discord.slashCommands.commands.LinkSlashCommand;
+import me.lagggpixel.core.modules.discord.slashCommands.commands.TicketCreationSlashCommand;
 import me.lagggpixel.core.modules.discord.slashCommands.commands.UnlinkSlashCommand;
 import org.javacord.api.DiscordApi;
 import org.javacord.api.interaction.SlashCommandInteraction;
@@ -47,6 +48,7 @@ public class SlashCommandRegistry  {
 
       new LinkSlashCommand();
       new UnlinkSlashCommand();
+      new TicketCreationSlashCommand();
 
       DiscordHandler.getInstance().getDiscordApi().addSlashCommandCreateListener(event -> {
         SlashCommandInteraction interaction = event.getSlashCommandInteraction();
