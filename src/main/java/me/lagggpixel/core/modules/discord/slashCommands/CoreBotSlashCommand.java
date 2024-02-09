@@ -13,6 +13,7 @@ package me.lagggpixel.core.modules.discord.slashCommands;
 import me.lagggpixel.core.interfaces.BotSlashCommand;
 import me.lagggpixel.core.modules.discord.DiscordModule;
 import me.lagggpixel.core.modules.discord.handlers.SlashCommandRegistry;
+import org.javacord.api.entity.permission.PermissionType;
 import org.javacord.api.interaction.SlashCommand;
 import org.javacord.api.interaction.SlashCommandBuilder;
 import org.javacord.api.interaction.SlashCommandInteraction;
@@ -39,12 +40,35 @@ public class CoreBotSlashCommand implements BotSlashCommand {
     register();
   }
 
+  public CoreBotSlashCommand(String name, String description, List<SlashCommandOption> options, boolean admin) {
+    this.name = name;
+    this.description = description;
+    this.options = options;
+    registerAdmin();
+  }
+
   public void register() {
     SlashCommandBuilder slashCommandbuilder = SlashCommand.with(name, description);
 
     if (options != null && !options.isEmpty()) {
       options.forEach(slashCommandbuilder::addOption);
     }
+    slashCommandbuilder.setEnabledInDms(false);
+
+    slashCommand = slashCommandbuilder.createGlobal(DiscordModule.discordHandler.getDiscordApi()).join();
+    global = true;
+    SlashCommandRegistry.getInstance().register(this);
+  }
+
+  public void registerAdmin() {
+    SlashCommandBuilder slashCommandbuilder = SlashCommand.with(name, description);
+
+    if (options != null && !options.isEmpty()) {
+      options.forEach(slashCommandbuilder::addOption);
+    }
+    slashCommandbuilder.setEnabledInDms(false);
+    slashCommandbuilder.setDefaultDisabled();
+    slashCommandbuilder.setDefaultEnabledForPermissions(PermissionType.ADMINISTRATOR);
 
     slashCommand = slashCommandbuilder.createGlobal(DiscordModule.discordHandler.getDiscordApi()).join();
     global = true;

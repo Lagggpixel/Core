@@ -17,6 +17,7 @@ import me.lagggpixel.core.Main;
 import me.lagggpixel.core.modules.guilds.events.GuildCreateEvent;
 import me.lagggpixel.core.modules.guilds.events.GuildDisbandEvent;
 import me.lagggpixel.core.utils.ChatUtils;
+import me.lagggpixel.core.utils.ExceptionUtils;
 import me.lagggpixel.core.utils.FileUtil;
 import me.lagggpixel.core.utils.HookUtils;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
@@ -312,4 +313,12 @@ public class DiscordHandler {
     return input;
   }
   // </editor-fold>
+
+  public void saveConfig() {
+    try {
+      yamlConfiguration.save(configFile);
+    } catch (Exception e) {
+      ExceptionUtils.handleException(e);
+    }
+  }
 }

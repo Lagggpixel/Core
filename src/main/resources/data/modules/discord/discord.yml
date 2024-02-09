@@ -8,3 +8,5 @@ staffRoleId: ""
 
 # Optional
 playerCountChannelId: ""
+ticketCreationChannelId: ""
+ticketCreationMessageId: ""
