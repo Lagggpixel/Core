@@ -127,6 +127,8 @@ public class DiscordHandler {
       return;
     }
     LOGGING_CHANNEL = optionalServerTextChannel.get();
+
+    new SlashCommandRegistry();
   }
   
   public Optional<User> getMemberById(String id) {
