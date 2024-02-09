@@ -33,6 +33,7 @@ public class LinkSlashCommand extends CoreBotSlashCommand {
         List.of(
             new SlashCommandOptionBuilder()
                 .setName("token")
+                .setDescription("Token obtained from /link in-game")
                 .setType(SlashCommandOptionType.STRING)
                 .setRequired(true)
                 .build()

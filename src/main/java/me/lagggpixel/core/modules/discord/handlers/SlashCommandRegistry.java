@@ -10,28 +10,28 @@
 
 package me.lagggpixel.core.modules.discord.handlers;
 
+import me.lagggpixel.core.Main;
 import me.lagggpixel.core.interfaces.BotSlashCommand;
 import me.lagggpixel.core.modules.discord.slashCommands.commands.LinkSlashCommand;
 import me.lagggpixel.core.modules.discord.slashCommands.commands.TicketCreationSlashCommand;
 import me.lagggpixel.core.modules.discord.slashCommands.commands.UnlinkSlashCommand;
-import org.javacord.api.DiscordApi;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.javacord.api.interaction.SlashCommandInteraction;
 
 import java.util.HashMap;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author Lagggpixel
  * @since February 07, 2024
  */
-public class SlashCommandRegistry  {
+public class SlashCommandRegistry {
 
   private static SlashCommandRegistry INSTANCE;
   private final HashMap<Long, BotSlashCommand> slashCommands = new HashMap<>();
 
   public SlashCommandRegistry() {
     INSTANCE = this;
-    initTask(DiscordHandler.getInstance().getDiscordApi());
+    initTask();
   }
 
 
@@ -43,19 +43,24 @@ public class SlashCommandRegistry  {
     return INSTANCE;
   }
 
-  public void initTask(DiscordApi api) {
-    api.getThreadPool().getScheduler().schedule(() -> {
+  public void initTask() {
+    new BukkitRunnable() {
+      @Override
+      public void run() {
+        Main.getInstance().getLogger().info("Initializing slash commands");
+        new LinkSlashCommand();
+        new UnlinkSlashCommand();
+        new TicketCreationSlashCommand();
 
-      new LinkSlashCommand();
-      new UnlinkSlashCommand();
-      new TicketCreationSlashCommand();
-
-      DiscordHandler.getInstance().getDiscordApi().addSlashCommandCreateListener(event -> {
-        SlashCommandInteraction interaction = event.getSlashCommandInteraction();
-        if (slashCommands.containsKey(interaction.getCommandId())) {
-          slashCommands.get(interaction.getCommandId()).action(interaction);
-        }
-      });
-    }, 0, TimeUnit.MINUTES);
+        Main.getInstance().getLogger().info("Finished initializing slash commands");
+        DiscordHandler.getInstance().getDiscordApi().addSlashCommandCreateListener(event -> {
+          SlashCommandInteraction interaction = event.getSlashCommandInteraction();
+          if (slashCommands.containsKey(interaction.getCommandId())) {
+            slashCommands.get(interaction.getCommandId()).action(interaction);
+          }
+        });
+        Main.getInstance().getLogger().info("Finished registering slash commands");
+      }
+    }.runTaskLater(Main.getInstance(), 0);
   }
 }

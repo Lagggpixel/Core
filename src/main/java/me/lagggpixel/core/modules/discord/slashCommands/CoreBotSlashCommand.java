@@ -53,7 +53,6 @@ public class CoreBotSlashCommand implements BotSlashCommand {
     if (options != null && !options.isEmpty()) {
       options.forEach(slashCommandbuilder::addOption);
     }
-    slashCommandbuilder.setEnabledInDms(false);
 
     slashCommand = slashCommandbuilder.createGlobal(DiscordModule.discordHandler.getDiscordApi()).join();
     global = true;
@@ -66,7 +65,6 @@ public class CoreBotSlashCommand implements BotSlashCommand {
     if (options != null && !options.isEmpty()) {
       options.forEach(slashCommandbuilder::addOption);
     }
-    slashCommandbuilder.setEnabledInDms(false);
     slashCommandbuilder.setDefaultEnabledForPermissions(PermissionType.ADMINISTRATOR);
 
     slashCommand = slashCommandbuilder.createGlobal(DiscordModule.discordHandler.getDiscordApi()).join();
