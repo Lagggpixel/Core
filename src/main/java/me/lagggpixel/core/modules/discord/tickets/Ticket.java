@@ -90,8 +90,10 @@ public class Ticket {
     // todo - add additional ticket members
   }
 
-  public static void createTicket(User creator, TicketType ticketType) {
-    TicketHandler.addTicket(new Ticket(creator, ticketType));
+  public static Ticket createTicket(User creator, TicketType ticketType) {
+    Ticket ticket = new Ticket(creator, ticketType);
+    TicketHandler.addTicket(ticket);
+    return ticket;
   }
 
   public static void registerTicket(RegularServerChannel channel) {

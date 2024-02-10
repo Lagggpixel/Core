@@ -11,11 +11,14 @@
 package me.lagggpixel.core.modules.discord.tickets;
 
 
+import me.lagggpixel.core.Main;
 import me.lagggpixel.core.modules.discord.handlers.DiscordHandler;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.javacord.api.entity.channel.RegularServerChannel;
 import org.javacord.api.entity.channel.ServerTextChannel;
 import org.javacord.api.entity.channel.TextChannel;
 import org.javacord.api.entity.message.MessageBuilder;
+import org.javacord.api.entity.message.MessageFlag;
 import org.javacord.api.entity.message.component.ActionRow;
 import org.javacord.api.entity.message.component.Button;
 import org.javacord.api.entity.message.component.ButtonStyle;
@@ -36,11 +39,9 @@ import java.util.Set;
  */
 public class TicketHandler {
 
-  private static Set<Ticket> tickets;
+  private static final Set<Ticket> tickets = new HashSet<>();
 
   public TicketHandler() {
-
-    tickets = new HashSet<>();
 
     editCreationMessage();
     initTicketCreationListeners();
@@ -65,6 +66,12 @@ public class TicketHandler {
       Ticket.registerTicket(channel);
     }
 
+    new BukkitRunnable() {
+      @Override
+      public void run() {
+        editCreationMessage();
+      }
+    }.runTaskTimerAsynchronously(Main.getInstance(), 20L * 60 * 5, 20L * 60 * 5);
   }
 
   public Set<Ticket> getTickets() {
@@ -76,31 +83,7 @@ public class TicketHandler {
   }
 
   public static void createCreationMessage(@NotNull ServerTextChannel channel) {
-    EmbedBuilder builder = new EmbedBuilder();
-    builder.setColor(Color.decode("#3C89D0"));
-    builder.setAuthor("Create Support Ticket - React Emoji", "https://plugily.xyz", "https://i.imgur.com/yqKqqTX.png");
-    builder.setDescription("Need help with bug? **Create ticket now!**\n" +
-        "\n" +
-        "React one of the following emojis to create ticket for:\n" +
-        " **Minecraft Support Ticket**\n" +
-        " **Bug Report Ticket**\n" +
-        " **Discord Support Ticket**\n" +
-        " **Appeal Ticket**\n" +
-        " **Application ticket**\n" +
-        "\n" +
-        "**Currently opened tickets:** " + tickets.size());
-    builder.setThumbnail("https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQhjz07Tkt9fMph6TDf7c6jbwlGe3HEW0lUjthe1OqU_X_VKqDY");
-
-    Button minecraftButton = Button.create("minecraftTicketCreate", ButtonStyle.PRIMARY, "Minecraft Support Ticket");
-    Button bugReportButton = Button.create("bugReportTicketCreate", ButtonStyle.PRIMARY, "Bug Report Ticket");
-    Button discordButton = Button.create("discordTicketCreate", ButtonStyle.PRIMARY, "Discord Support Ticket");
-    Button appealButton = Button.create("appealTicketCreate", ButtonStyle.PRIMARY, "Appeal Ticket");
-    Button applicationButton = Button.create("applicationTicketCreate", ButtonStyle.PRIMARY, "Application Ticket");
-
-    MessageBuilder messageBuilder = new MessageBuilder();
-    messageBuilder.setEmbed(builder);
-
-    messageBuilder.addComponents(ActionRow.of(minecraftButton, bugReportButton, discordButton, appealButton, applicationButton));
+    MessageBuilder messageBuilder = createCreationMessageBuilder();
 
     messageBuilder.send(channel).thenAccept(message -> {
       DiscordHandler.getInstance().getYamlConfiguration().set("ticketCreationMessageId", message.getId());
@@ -111,20 +94,8 @@ public class TicketHandler {
   }
 
   private void editCreationMessage() {
-    EmbedBuilder builder = new EmbedBuilder();
-    builder.setColor(Color.decode("#3C89D0"));
-    builder.setAuthor("Create Support Ticket - React Emoji", "https://plugily.xyz", "https://i.imgur.com/yqKqqTX.png");
-    builder.setDescription("Need help with bug? **Create ticket now!**\n" +
-        "\n" +
-        "React one of the following emojis to create ticket for:\n" +
-        " **Minecraft Support Ticket**\n" +
-        " **Bug Report Ticket**\n" +
-        " **Discord Support Ticket**\n" +
-        " **Appeal Ticket**\n" +
-        " **Application ticket**\n" +
-        "\n" +
-        "**Currently opened tickets:** " + tickets.size());
-    builder.setThumbnail("https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQhjz07Tkt9fMph6TDf7c6jbwlGe3HEW0lUjthe1OqU_X_VKqDY");
+    MessageBuilder messageBuilder = createCreationMessageBuilder();
+
     DiscordHandler.getInstance().getDiscordApi()
         .getTextChannelById(DiscordHandler.getInstance().getYamlConfiguration().getString("ticketCreationChannelId"))
         .ifPresent(channel -> {
@@ -133,9 +104,38 @@ public class TicketHandler {
                 if (message == null) {
                   return;
                 }
-                message.edit(builder);
+                message.delete();
+
+                messageBuilder.send(channel).thenAccept(message1 -> {
+                  DiscordHandler.getInstance().getYamlConfiguration().set("ticketCreationMessageId", message1.getId());
+                  DiscordHandler.getInstance().getYamlConfiguration().set("ticketCreationChannelId", channel.getId());
+                  DiscordHandler.getInstance().saveConfig();
+                });
               });
         });
+  }
+
+  private static MessageBuilder createCreationMessageBuilder() {
+    EmbedBuilder builder = new EmbedBuilder();
+    builder.setColor(Color.decode("#3C89D0"));
+    builder.setAuthor("Create a ticket");
+    builder.setDescription("Need help? **Create ticket now!**\n" +
+        "\n" +
+        "**Currently opened tickets:** " + tickets.size());
+    builder.setThumbnail("https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQhjz07Tkt9fMph6TDf7c6jbwlGe3HEW0lUjthe1OqU_X_VKqDY");
+
+    Button minecraftButton = Button.create("minecraftTicketCreate", ButtonStyle.PRIMARY, "\uD83D\uDCE9 Minecraft Support Ticket");
+    Button bugReportButton = Button.create("bugReportTicketCreate", ButtonStyle.PRIMARY, "\uD83D\uDCE9 Bug Report Ticket");
+    Button discordButton = Button.create("discordTicketCreate", ButtonStyle.PRIMARY, "\uD83D\uDCE9 Discord Support Ticket");
+    Button appealButton = Button.create("appealTicketCreate", ButtonStyle.PRIMARY, "\uD83D\uDCE9 Appeal Ticket");
+    Button applicationButton = Button.create("applicationTicketCreate", ButtonStyle.PRIMARY, "\uD83D\uDCE9 Application Ticket");
+
+    MessageBuilder messageBuilder = new MessageBuilder();
+    messageBuilder.setEmbed(builder);
+
+    messageBuilder.addComponents(ActionRow.of(minecraftButton, bugReportButton, discordButton, appealButton, applicationButton));
+
+    return messageBuilder;
   }
 
   private void initTicketCreationListeners() {
@@ -153,46 +153,65 @@ public class TicketHandler {
       TextChannel channel = messageComponentInteraction.getChannel().get();
       User user = buttonInteraction.getUser();
 
+      Ticket ticket;
       switch (customId) {
         case "minecraftTicketCreate":
-          createMinecraftTicket(user);
+          if (getUserTicket(user, TicketType.MINECRAFT_SUPPORT) != null) {
+            e.getMessageComponentInteraction().createImmediateResponder()
+                .setContent("You already have a ticket open: <#" + getUserTicket(user, TicketType.MINECRAFT_SUPPORT).getServerTextChannel().getId() + ">")
+                .setFlags(MessageFlag.EPHEMERAL).respond();
+          }
+          ticket = Ticket.createTicket(user, TicketType.MINECRAFT_SUPPORT);
           break;
         case "bugTicketCreate":
-          createBugReportTicket(user);
+          if (getUserTicket(user, TicketType.BUG_REPORT) != null) {
+            e.getMessageComponentInteraction().createImmediateResponder()
+                .setContent("You already have a ticket open: <#" + getUserTicket(user, TicketType.BUG_REPORT).getServerTextChannel().getId() + ">")
+                .setFlags(MessageFlag.EPHEMERAL).respond();
+          }
+          ticket = Ticket.createTicket(user, TicketType.BUG_REPORT);
           break;
         case "discordTicketCreate":
-          createDiscordSupportTicket(user);
+          if (getUserTicket(user, TicketType.DISCORD_SUPPORT) != null) {
+            e.getMessageComponentInteraction().createImmediateResponder()
+                .setContent("You already have a ticket open: <#" + getUserTicket(user, TicketType.DISCORD_SUPPORT).getServerTextChannel().getId() + ">")
+                .setFlags(MessageFlag.EPHEMERAL).respond();
+          }
+          ticket = Ticket.createTicket(user, TicketType.DISCORD_SUPPORT);
           break;
         case "appealTicketCreate":
-          createAppealTicket(user);
+          if (getUserTicket(user, TicketType.APPEAL) != null) {
+            e.getMessageComponentInteraction().createImmediateResponder()
+                .setContent("You already have a ticket open: <#" + getUserTicket(user, TicketType.APPEAL).getServerTextChannel().getId() + ">")
+                .setFlags(MessageFlag.EPHEMERAL).respond();
+          }
+          ticket = Ticket.createTicket(user, TicketType.APPEAL);
           break;
         case "applicationTicketCreate":
-          createApplicationTicket(user);
+          if (getUserTicket(user, TicketType.APPLICATION) != null) {
+            e.getMessageComponentInteraction().createImmediateResponder()
+                .setContent("You already have a ticket open: <#" + getUserTicket(user, TicketType.APPLICATION).getServerTextChannel().getId() + ">")
+                .setFlags(MessageFlag.EPHEMERAL).respond();
+          }
+          ticket = Ticket.createTicket(user, TicketType.APPLICATION);
           break;
+        default:
+          return;
       }
 
+      e.getMessageComponentInteraction().createImmediateResponder()
+          .setContent("Your ticket has been created: <#" + ticket.getServerTextChannel().getId() + ">")
+          .setFlags(MessageFlag.EPHEMERAL).respond();
 
     });
   }
 
-
-  private static void createMinecraftTicket(User creator) {
-
-  }
-
-  private static void createBugReportTicket(User creator) {
-
-  }
-
-  private static void createDiscordSupportTicket(User creator) {
-
-  }
-
-  private static void createAppealTicket(User creator) {
-
-  }
-
-  private static void createApplicationTicket(User creator) {
-
+  private static Ticket getUserTicket(User user, TicketType ticketType) {
+    for (Ticket ticket : tickets) {
+      if (ticket.getCreator().equals(user) && ticket.getTicketType().equals(ticketType)) {
+        return ticket;
+      }
+    }
+    return null;
   }
 }
