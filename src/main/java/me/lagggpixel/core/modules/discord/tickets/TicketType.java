@@ -12,7 +12,7 @@ package me.lagggpixel.core.modules.discord.tickets;
 
 import lombok.Getter;
 import me.lagggpixel.core.Main;
-import me.lagggpixel.core.modules.discord.DiscordModule;
+import me.lagggpixel.core.modules.discord.handlers.DiscordHandler;
 import org.javacord.api.entity.channel.ChannelCategory;
 import org.jetbrains.annotations.NotNull;
 
@@ -37,7 +37,7 @@ public enum TicketType {
 
   @NotNull
   public ChannelCategory getCatagory() {
-    Optional<ChannelCategory> catagory = DiscordModule.discordHandler.server.getChannelCategoryById(getCatagoryId());
+    Optional<ChannelCategory> catagory = DiscordHandler.getInstance().server.getChannelCategoryById(getCatagoryId());
     if (catagory.isEmpty()) {
       Main.log(Level.SEVERE, "Ticket catagory " + getCatagoryId() + " does not exist for ticket type " + name().toLowerCase() + "!");
       Main.getInstance().onDisable();

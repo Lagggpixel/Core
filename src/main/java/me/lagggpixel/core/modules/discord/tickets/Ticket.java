@@ -12,16 +12,23 @@ package me.lagggpixel.core.modules.discord.tickets;
 
 import lombok.Getter;
 import me.lagggpixel.core.modules.discord.DiscordModule;
+import me.lagggpixel.core.modules.discord.handlers.DiscordHandler;
 import org.javacord.api.entity.channel.RegularServerChannel;
 import org.javacord.api.entity.channel.ServerTextChannel;
 import org.javacord.api.entity.channel.ServerTextChannelBuilder;
+import org.javacord.api.entity.message.MessageBuilder;
+import org.javacord.api.entity.message.component.ActionRow;
+import org.javacord.api.entity.message.component.Button;
+import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.javacord.api.entity.permission.PermissionState;
 import org.javacord.api.entity.permission.PermissionType;
 import org.javacord.api.entity.permission.Permissions;
 import org.javacord.api.entity.permission.PermissionsBuilder;
 import org.javacord.api.entity.user.User;
+import org.javacord.api.util.logging.ExceptionLogger;
 import org.jetbrains.annotations.NotNull;
 
+import java.awt.*;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -92,6 +99,7 @@ public class Ticket {
 
   public static Ticket createTicket(User creator, TicketType ticketType) {
     Ticket ticket = new Ticket(creator, ticketType);
+    ticket.sendCloseMessage();
     TicketHandler.addTicket(ticket);
     return ticket;
   }
@@ -123,5 +131,32 @@ public class Ticket {
 
   private String buildTicketName() {
     return ticketType.getId() + " - " + creator.getDisplayName(DiscordModule.discordHandler.server);
+  }
+
+  private void sendCloseMessage() {
+    EmbedBuilder builder = new EmbedBuilder();
+    builder.setColor(Color.ORANGE);
+    builder.setAuthor("Click To Close Ticket", "", "https://i.imgur.com/84zmknE.png");
+    builder.setDescription("Ticket created. Click the \uD83D\uDD12 button below to close this ticket.");
+    new MessageBuilder()
+        .setEmbed(builder)
+        .addComponents(ActionRow.of(
+            Button.secondary("closeTicket", "\uD83D\uDD12 Close Ticket")))
+        .send(serverTextChannel);
+  }
+
+  public void close() {
+    DiscordHandler.getInstance().getDiscordApi().getUserById(creator.getId()).thenAccept(user -> {
+      user.openPrivateChannel().thenCompose(privateChannel -> privateChannel.sendMessage(
+          new EmbedBuilder()
+              .setAuthor("Ticket closed", "", "https://cdn.discordapp.com/embed/avatars/0.png")
+              .setTitle("Enjoy your day!")
+              .setDescription("Thanks for using our ticket system! If you got any other questions feel free to contact us again :)")));
+
+      TicketHandler.logTicketAction(new TicketAction(user, this, TicketAction.Action.CLOSE));
+      TicketHandler.removeTicket(this);
+      TicketHandler.editCreationMessage();
+      serverTextChannel.delete("Ticket deleted, reason: ticket closed by creator.");
+    }).exceptionally(ExceptionLogger.get());
   }
 }

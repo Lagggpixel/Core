@@ -14,6 +14,7 @@ import io.papermc.paper.event.player.AsyncChatEvent;
 import lombok.Getter;
 import me.clip.placeholderapi.PlaceholderAPI;
 import me.lagggpixel.core.Main;
+import me.lagggpixel.core.modules.discord.tickets.TicketHandler;
 import me.lagggpixel.core.modules.guilds.events.GuildCreateEvent;
 import me.lagggpixel.core.modules.guilds.events.GuildDisbandEvent;
 import me.lagggpixel.core.utils.ChatUtils;
@@ -51,11 +52,11 @@ import java.util.regex.Pattern;
  */
 @SuppressWarnings({"DataFlowIssue", "FieldCanBeLocal"})
 public class DiscordHandler {
-  
+
   private File configFile;
   @Getter
   private final YamlConfiguration yamlConfiguration;
-  
+
   @Getter
   private static DiscordHandler instance;
   @NotNull
@@ -68,10 +69,12 @@ public class DiscordHandler {
   public ServerTextChannel LOGGING_CHANNEL = null;
   @NotNull
   public Server server = null;
-  
+
   @Getter
   private final DiscordApi discordApi;
-  
+
+  public Optional<ServerTextChannel> TICKET_LOG_CHANNEL;
+
   public DiscordHandler(@NotNull NMSHandler nmsHandler) {
     if (instance != null) {
       throw new RuntimeException("DiscordHandler is already initialized! DiscordHandler is a singleton!");
@@ -93,7 +96,7 @@ public class DiscordHandler {
         .setToken(token)
         .setAllIntents()
         .login().join();
-    
+
     Optional<Server> optionalServer = discordApi.getServerById(yamlConfiguration.getString("serverId"));
     if (optionalServer.isEmpty()) {
       Main.log(Level.SEVERE, "Discord server is not set correctly, disabling Core!");
@@ -101,9 +104,9 @@ public class DiscordHandler {
       return;
     }
     this.server = optionalServer.get();
-    
+
     Optional<ServerTextChannel> optionalServerTextChannel;
-    
+
     optionalServerTextChannel = discordApi.getServerTextChannelById(yamlConfiguration.getString("messageChannelId"));
     if (optionalServerTextChannel.isEmpty()) {
       Main.log(Level.SEVERE, "Discord message channel is not set correctly, disabling Core!");
@@ -111,7 +114,7 @@ public class DiscordHandler {
       return;
     }
     MESSAGING_CHANNEL = optionalServerTextChannel.get();
-    
+
     optionalServerTextChannel = discordApi.getServerTextChannelById(yamlConfiguration.getString("consoleChannelId"));
     if (optionalServerTextChannel.isEmpty()) {
       Main.log(Level.SEVERE, "Discord console channel is not set correctly, disabling Core!");
@@ -119,7 +122,7 @@ public class DiscordHandler {
       return;
     }
     CONSOLE_CHANNEL = optionalServerTextChannel.get();
-    
+
     optionalServerTextChannel = discordApi.getServerTextChannelById(yamlConfiguration.getString("loggingChannelId"));
     if (optionalServerTextChannel.isEmpty()) {
       Main.log(Level.SEVERE, "Discord logging channel is not set correctly, disabling Core!");
@@ -128,45 +131,48 @@ public class DiscordHandler {
     }
     LOGGING_CHANNEL = optionalServerTextChannel.get();
 
+    TICKET_LOG_CHANNEL = discordApi.getServerTextChannelById(yamlConfiguration.getString("ticketLogChannelId"));
+
     new SlashCommandRegistry();
+    new TicketHandler();
   }
-  
+
   public Optional<User> getMemberById(String id) {
     return server.getMemberById(id);
   }
-  
+
   public void sendEmbed(@NotNull TextChannel textChannel, @NotNull EmbedBuilder embed) {
     textChannel.sendMessage(embed).join();
   }
-  
+
   // <editor-fold defaultstate="collapsed" desc="Join/Quit embeds">
   public @NotNull EmbedBuilder createJoinMessageEmbed(@NotNull PlayerJoinEvent event) {
     Player player = event.getPlayer();
     String message = player.getName() + " joined the server";
-    
+
     return new EmbedBuilder()
         .setAuthor(message, null, getAvatarUrl(player))
         .setTimestamp(java.time.Instant.now())
         .setColor(Color.GREEN);
   }
-  
+
   public @NotNull EmbedBuilder createQuitMessageEmbed(@NotNull PlayerQuitEvent event) {
-    
+
     Player player = event.getPlayer();
     String message = player.getName() + " left the server";
-    
+
     return new EmbedBuilder()
         .setAuthor(message, null, getAvatarUrl(player))
         .setTimestamp(java.time.Instant.now())
         .setColor(Color.RED);
   }
   // </editor-fold>
-  
+
   // <editor-fold defaultstate="collapsed" desc="Chat embed handling">
   public @NotNull EmbedBuilder createChatEmbed(@NotNull AsyncChatEvent event) {
-    
+
     Player player = event.getPlayer();
-    
+
     return new EmbedBuilder()
         .setAuthor(player.getName(), null, getAvatarUrl(player))
         .setDescription("**" + PlainTextComponentSerializer.plainText().serialize(event.message()) + "**")
@@ -174,36 +180,36 @@ public class DiscordHandler {
         .setColor(Color.YELLOW);
   }
   // </editor-fold>
-  
+
   // <editor-fold defaultstate="collapsed" desc="Death embed handling">
   public @NotNull EmbedBuilder createDeathMessageEmbed(@NotNull PlayerDeathEvent event) {
-    
+
     Player player = event.getPlayer();
     String message = ChatUtils.componentToString(event.deathMessage());
-    
+
     return new EmbedBuilder()
         .setAuthor(message, null, getAvatarUrl(player))
         .setTimestamp(java.time.Instant.now())
         .setColor(Color.MAGENTA);
   }
   // </editor-fold>
-  
+
   // <editor-fold defaultstate="collapsed" desc="Guilds embed handling">
   public @NotNull EmbedBuilder createGuildCreatedEmbed(@NotNull GuildCreateEvent event) {
-    
+
     Player player = event.getPlayer();
-    
+
     return new EmbedBuilder()
         .setAuthor(player.getName(), null, getAvatarUrl(player))
         .setDescription("Guild '" + event.getGuild().getName() + "' created successfully by " + player.getName())
         .setTimestamp(java.time.Instant.now())
         .setColor(Color.BLUE);
   }
-  
+
   public @NotNull EmbedBuilder createGuildDisbandEmbed(@NotNull GuildDisbandEvent event) {
-    
+
     Player player = event.getPlayer();
-    
+
     return new EmbedBuilder()
         .setAuthor(player.getName(), null, getAvatarUrl(player))
         .setDescription("Guild '" + event.getGuild().getName() + "' disbanded successfully by " + player.getName())
@@ -211,7 +217,7 @@ public class DiscordHandler {
         .setColor(Color.BLUE);
   }
   // </editor-fold>
-  
+
   // <editor-fold defaultstate="collapsed" desc="Avatar URL">
   @Deprecated
   public String getAvatarUrlDeprecated(String username, UUID uuid) {
@@ -219,12 +225,12 @@ public class DiscordHandler {
     avatarUrl = replacePlaceholdersToDiscord(avatarUrl);
     return avatarUrl;
   }
-  
+
   public String getAvatarUrl(@NotNull OfflinePlayer player) {
     UUID uuid = player.getUniqueId();
     return "https://mc-heads.net/avatar/" + uuid + "/100/noHelm";
   }
-  
+
   @Deprecated
   public String getAvatarUrlDeprecated(@NotNull OfflinePlayer player) {
     if (player.isOnline() && player.getPlayer() != null) {
@@ -235,19 +241,19 @@ public class DiscordHandler {
       return avatarUrl;
     }
   }
-  
+
   public String getAvatarUrl(@NotNull Player player) {
     UUID uuid = player.getUniqueId();
     return "https://mc-heads.net/avatar/" + uuid + "/100/noHelm";
   }
-  
+
   @Deprecated
   public String getAvatarUrlDeprecated(@NotNull Player player) {
     String avatarUrl = constructAvatarUrlDeprecated(player.getName(), player.getUniqueId(), nmsHandler.getTexture(player));
     avatarUrl = replacePlaceholdersToDiscord(avatarUrl, player);
     return avatarUrl;
   }
-  
+
   @Deprecated
   private @NotNull String constructAvatarUrlDeprecated(String username, UUID uuid, String texture) {
     OfflinePlayer player = null;
@@ -257,54 +263,54 @@ public class DiscordHandler {
     if (StringUtils.isBlank(texture) && player != null && player.isOnline()) {
       texture = nmsHandler.getTexture(player.getPlayer());
     }
-    
+
     String avatarUrl = "https://crafatar.com/avatars/{uuid-nodashes}.png?size={size}&overlay#{texture}";
-    
-    
+
+
     avatarUrl = avatarUrl
         .replace("{texture}", texture != null ? texture : "")
         .replace("{uuid-nodashes}", uuid.toString().replace("-", ""))
         .replace("{size}", "128");
-    
+
     return avatarUrl;
   }
   // </editor-fold>
-  
+
   // <editor-fold defaultstate="collapsed" desc="Utils">
   private String strip(String text) {
     return stripLegacy(text);
   }
-  
+
   private String stripLegacy(String text) {
     if (StringUtils.isBlank(text)) {
       return "";
     }
-    
+
     return Pattern.compile("(?<!<@)[&§\u007F](?i)[0-9a-fklmnorx]").matcher(text).replaceAll("");
   }
-  
+
   private String replacePlaceholdersToDiscord(String input, OfflinePlayer player) {
     boolean placeholderapi = HookUtils.pluginHookIsEnabled("placeholderapi");
-    
+
     if (placeholderapi) input = input.replace("&", "&\u200B");
-    
+
     input = replacePlaceholders(input, player);
-    
+
     if (placeholderapi) {
       input = stripLegacySectionOnly(input);
       input = input.replace("&\u200B", "&");
     }
     return input;
   }
-  
+
   private String replacePlaceholdersToDiscord(String input) {
     return replacePlaceholdersToDiscord(input, null);
   }
-  
+
   private String stripLegacySectionOnly(String text) {
     return Pattern.compile("(?<!<@)§(?i)[0-9a-fklmnorx]").matcher(text).replaceAll("");
   }
-  
+
   private String replacePlaceholders(String input, OfflinePlayer player) {
     if (input == null) return null;
     if (HookUtils.pluginHookIsEnabled("placeholderapi")) {
