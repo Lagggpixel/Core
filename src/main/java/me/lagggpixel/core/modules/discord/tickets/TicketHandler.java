@@ -14,6 +14,7 @@ import com.google.gson.JsonParser;
 import me.lagggpixel.core.Main;
 import me.lagggpixel.core.modules.discord.handlers.DiscordHandler;
 import me.lagggpixel.core.utils.ExceptionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -359,12 +360,16 @@ public class TicketHandler {
     } else if (ticketAction.getAction() == TicketAction.Action.CLOSE) {
       builder.addField("Reason", ticketAction.getReason(), true);
     }
-    builder.addField("Transcript", generateTranscript(ticketAction.getTicket().getServerTextChannel()), true);
     builder.setColor(ticketAction.getAction().getColor());
     if (ticketAction.getCreator() != null) {
       builder.setThumbnail(ticketAction.getCreator().getAvatar());
     }
-    DiscordHandler.getInstance().TICKET_LOG_CHANNEL.ifPresent(textChannel -> textChannel.sendMessage(builder));
+    DiscordHandler.getInstance().TICKET_LOG_CHANNEL.ifPresent(textChannel -> {
+      MessageBuilder messageBuilder = new MessageBuilder();
+      messageBuilder.setEmbed(builder);
+      messageBuilder.addActionRow(Button.link(generateTranscript(ticketAction.getTicket().getServerTextChannel()), "Transcript"));
+      textChannel.sendMessage(builder);
+    });
   }
 
   private static @NotNull String generateTranscript(ServerTextChannel channel) {
@@ -418,5 +423,17 @@ public class TicketHandler {
       ExceptionUtils.handleException(e);
     }
     return "Connection with https://paste.md-5.net/ failed!";
+  }
+
+  public static void logTicketCreation(Ticket ticket) {
+    EmbedBuilder builder = new EmbedBuilder();
+    builder.setColor(Color.GREEN);
+    builder.setTitle(TicketAction.Action.CREATE.getTitle());
+    builder.addField("Created By", ticket.getCreator().getMentionTag(), true);
+    builder.addField("Ticket Type", StringUtils.capitalize(ticket.getTicketType().name().replace("_", " ")), true);
+    builder.setThumbnail(ticket.getCreator().getAvatar());
+    DiscordHandler.getInstance().TICKET_LOG_CHANNEL
+        .ifPresent(textChannel -> textChannel.sendMessage(builder));
+
   }
 }

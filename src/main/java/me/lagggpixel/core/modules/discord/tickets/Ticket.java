@@ -118,6 +118,7 @@ public class Ticket {
     ticket.serverTextChannel.sendMessage("<@" + creator.getId() + ">").thenAccept(Message::delete).join();
     TicketHandler.addTicket(ticket);
     TicketHandler.editCreationMessage();
+    TicketHandler.logTicketCreation(ticket);
     return ticket;
   }
 
