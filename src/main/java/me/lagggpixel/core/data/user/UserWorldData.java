@@ -22,7 +22,6 @@ import com.google.gson.stream.JsonWriter;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import me.lagggpixel.core.modules.home.data.Home;
 import me.lagggpixel.core.serializers.LocationSerializer;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
@@ -86,7 +85,7 @@ public final class UserWorldData {
     @Override
     public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
       if (type.getRawType() == ItemStack[].class) {
-        return (TypeAdapter<T>) new Home.LocationTypeAdapter();
+        return (TypeAdapter<T>) new UserWorldData.LocationTypeAdapter();
       }
       return null;
     }
