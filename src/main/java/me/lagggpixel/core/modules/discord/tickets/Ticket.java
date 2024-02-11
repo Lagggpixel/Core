@@ -11,6 +11,7 @@
 package me.lagggpixel.core.modules.discord.tickets;
 
 import lombok.Getter;
+import me.lagggpixel.core.Main;
 import me.lagggpixel.core.modules.discord.DiscordModule;
 import me.lagggpixel.core.modules.discord.handlers.DiscordHandler;
 import org.javacord.api.entity.channel.RegularServerChannel;
@@ -30,9 +31,11 @@ import org.javacord.api.util.logging.ExceptionLogger;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.logging.Level;
 
 /**
  * @author Lagggpixel
@@ -89,10 +92,12 @@ public class Ticket {
   private Ticket(ServerTextChannel channel) {
     this.serverTextChannel = channel;
     String name = this.serverTextChannel.getName();
-    String type = name.split(" - ")[0];
-    String username = name.split(" - ")[1];
-    this.ticketType = TicketType.valueOf(type);
-    this.creator = DiscordModule.discordHandler.server.getMembersByName(username).stream().toList().get(0);
+    Main.log(Level.INFO, "Ticket name: " + name);
+    Main.log(Level.INFO, "Ticket components: " + Arrays.toString(name.split("-")));
+    String type = name.split("-")[0];
+    String username = name.split("-")[1];
+    this.ticketType = TicketType.getTicketType(type);
+    this.creator = DiscordHandler.getInstance().server.getMembersByName(username).stream().toList().get(0);
 
     this.additionalTicketMembers = new HashSet<>();
     // todo - add additional ticket members
@@ -106,7 +111,7 @@ public class Ticket {
     return ticket;
   }
 
-  public static Ticket createTicket(User creator, TicketType ticketType, EmbedBuilder embedBuilder) {
+  public static @NotNull Ticket createTicket(User creator, TicketType ticketType, EmbedBuilder embedBuilder) {
     Ticket ticket = new Ticket(creator, ticketType);
     ticket.sendCloseMessage();
     ticket.serverTextChannel.sendMessage(embedBuilder).thenAccept(Message::pin).join();
@@ -116,12 +121,13 @@ public class Ticket {
     return ticket;
   }
 
-  public static void registerTicket(RegularServerChannel channel) {
+  public static void registerTicket(@NotNull RegularServerChannel channel) {
     Optional<ServerTextChannel> optionalServerTextChannel = channel.asServerTextChannel();
     if (optionalServerTextChannel.isEmpty()) {
       return;
     }
     ServerTextChannel serverTextChannel = optionalServerTextChannel.get();
+    Main.log(Level.INFO, "Registering ticket: " + serverTextChannel.getName());
     Ticket ticket = new Ticket(serverTextChannel);
     TicketHandler.addTicket(ticket);
   }
@@ -142,7 +148,7 @@ public class Ticket {
   }
 
   private String buildTicketName() {
-    return ticketType.getId() + " - " + creator.getDisplayName(DiscordModule.discordHandler.server);
+    return ticketType.getId() + "-" + creator.getDisplayName(DiscordModule.discordHandler.server);
   }
 
   private void sendCloseMessage() {

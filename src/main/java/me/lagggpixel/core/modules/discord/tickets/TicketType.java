@@ -45,6 +45,15 @@ public enum TicketType {
     return catagory.get();
   }
 
+  public static TicketType getTicketType(String id) {
+    for (TicketType ticketType : TicketType.values()) {
+      if (ticketType.getId().equalsIgnoreCase(id)) {
+        return ticketType;
+      }
+    }
+    return null;
+  }
+
   TicketType(String id, long catagoryId) {
     this.id = id;
     this.catagoryId = catagoryId;

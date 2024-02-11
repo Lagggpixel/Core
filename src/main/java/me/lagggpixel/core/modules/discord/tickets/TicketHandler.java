@@ -10,7 +10,6 @@
 
 package me.lagggpixel.core.modules.discord.tickets;
 
-
 import com.google.gson.JsonParser;
 import me.lagggpixel.core.Main;
 import me.lagggpixel.core.modules.discord.handlers.DiscordHandler;
@@ -57,14 +56,14 @@ public class TicketHandler {
 
   public TicketHandler() {
     initTickets();
-    initTicketListeners();
 
     new BukkitRunnable() {
       @Override
       public void run() {
+        initTicketListeners();
         editCreationMessage();
       }
-    }.runTaskTimerAsynchronously(Main.getInstance(), 0L, 20L * 60 * 5);
+    }.runTaskLater(Main.getInstance(), 0);
   }
 
   public Set<Ticket> getTickets() {
@@ -97,8 +96,8 @@ public class TicketHandler {
                   Main.log(Level.WARNING, "Ticket creation message not found");
                   return;
                 }
-                message.edit(createCreationMessageEmbed()).join();
-              });
+                message.edit(createCreationMessageEmbed()); // no .join() it will crash it .join() is added
+              }).join();
         });
   }
 
@@ -151,14 +150,17 @@ public class TicketHandler {
 
   private void initTicketListeners() {
     DiscordHandler.getInstance().getDiscordApi().addMessageComponentCreateListener(e -> {
+      Main.log(Level.INFO, "TicketHandler:153, interaction recieved");
       MessageComponentInteraction messageComponentInteraction = e.getMessageComponentInteraction();
       Optional<ButtonInteraction> optionalButtonInteraction = messageComponentInteraction.asButtonInteraction();
       if (optionalButtonInteraction.isEmpty()) {
+        Main.log(Level.WARNING, "Button interaction not found, TicketHandler:162");
         return;
       }
       ButtonInteraction buttonInteraction = optionalButtonInteraction.get();
       String customId = buttonInteraction.getCustomId();
       if (messageComponentInteraction.getChannel().isEmpty()) {
+        Main.log(Level.WARNING, "Channel not found, TicketHandler:168");
         return;
       }
       User user = buttonInteraction.getUser();
@@ -180,13 +182,15 @@ public class TicketHandler {
               messageComponentInteraction.createImmediateResponder()
                   .setContent("You can't close this ticket, only the ticket creator can close it!")
                   .setFlags(MessageFlag.EPHEMERAL)
-                  .respond();
+                  .respond()
+                  .join();
               return;
             }
             messageComponentInteraction.createImmediateResponder()
                 .setContent("Ticket closing...")
                 .setFlags(MessageFlag.EPHEMERAL)
-                .respond();
+                .respond()
+                .join();
             ticket.close();
             return;
           }
@@ -223,7 +227,7 @@ public class TicketHandler {
             "    **X** A detailed description of the bug \n" +
             "Our staff team will get back to you as soon as possible."
     );
-    return Ticket.createTicket(user, TicketType.BUG_REPORT);
+    return Ticket.createTicket(user, TicketType.BUG_REPORT, embedBuilder);
   }
 
   private @NotNull Ticket handleDiscordTicketCreate(@NotNull User user) {
@@ -236,7 +240,7 @@ public class TicketHandler {
             "    **X** A detailed description of your issue/request\n" +
             "Our staff team will get back to you as soon as possible."
     );
-    return Ticket.createTicket(user, TicketType.DISCORD_SUPPORT);
+    return Ticket.createTicket(user, TicketType.DISCORD_SUPPORT, embedBuilder);
   }
 
   private @NotNull Ticket handleAppealTicketCreate(@NotNull User user) {
@@ -251,7 +255,7 @@ public class TicketHandler {
             "    **X** Why do you think we should revoke your punishment \n" +
             "Our staff team will get back to you as soon as possible."
     );
-    return Ticket.createTicket(user, TicketType.BUG_REPORT);
+    return Ticket.createTicket(user, TicketType.APPEAL, embedBuilder);
   }
 
   private @NotNull Ticket handleApplicationTicketCreate(@NotNull User user) {
@@ -266,15 +270,11 @@ public class TicketHandler {
             " **X** Your timezone \n" +
             "Our staff team will get back to you as soon as possible."
     );
-    return Ticket.createTicket(user, TicketType.BUG_REPORT);
+    return Ticket.createTicket(user, TicketType.APPLICATION, embedBuilder);
   }
 
   private void handleTicketCreation(User user, @NotNull String ticketType, @NotNull MessageComponentCreateEvent e) {
-    e.getMessageComponentInteraction().createImmediateResponder()
-        .setContent("Creating ticket ...")
-        .setFlags(MessageFlag.EPHEMERAL)
-        .respond().join();
-    Ticket ticket;
+    Ticket ticket = null;
     switch (ticketType) {
       case "minecraftTicketCreate":
         if (getUserTicket(user, TicketType.MINECRAFT_SUPPORT) != null) {
@@ -311,13 +311,20 @@ public class TicketHandler {
         }
         ticket = handleApplicationTicketCreate(user);
         break;
-      default:
-        return;
     }
-    e.getMessageComponentInteraction().createFollowupMessageBuilder()
+    if (ticket == null) {
+      Main.log(Level.INFO, "Failed to create ticket");
+      e.getMessageComponentInteraction().createImmediateResponder()
+          .setContent("Failed to create ticket")
+          .setFlags(MessageFlag.EPHEMERAL)
+          .respond().join();
+      return;
+    }
+    Main.log(Level.INFO, "Ticket created: " + ticket.getServerTextChannel().getName());
+    e.getMessageComponentInteraction().createImmediateResponder()
         .setContent("Your ticket has been created: <#" + ticket.getServerTextChannel().getId() + ">")
         .setFlags(MessageFlag.EPHEMERAL)
-        .send().join();
+        .respond().join();
   }
 
   private void sendAlreadyHasTicketCreated(User user, TicketType ticketType, @NotNull MessageComponentCreateEvent e) {
