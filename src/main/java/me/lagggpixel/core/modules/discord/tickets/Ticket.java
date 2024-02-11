@@ -16,6 +16,7 @@ import me.lagggpixel.core.modules.discord.handlers.DiscordHandler;
 import org.javacord.api.entity.channel.RegularServerChannel;
 import org.javacord.api.entity.channel.ServerTextChannel;
 import org.javacord.api.entity.channel.ServerTextChannelBuilder;
+import org.javacord.api.entity.message.Message;
 import org.javacord.api.entity.message.MessageBuilder;
 import org.javacord.api.entity.message.component.ActionRow;
 import org.javacord.api.entity.message.component.Button;
@@ -101,6 +102,16 @@ public class Ticket {
     Ticket ticket = new Ticket(creator, ticketType);
     ticket.sendCloseMessage();
     TicketHandler.addTicket(ticket);
+    TicketHandler.editCreationMessage();
+    return ticket;
+  }
+
+  public static Ticket createTicket(User creator, TicketType ticketType, EmbedBuilder embedBuilder) {
+    Ticket ticket = new Ticket(creator, ticketType);
+    ticket.serverTextChannel.sendMessage(embedBuilder).thenAccept(Message::pin);
+    ticket.sendCloseMessage();
+    TicketHandler.addTicket(ticket);
+    TicketHandler.editCreationMessage();
     return ticket;
   }
 
@@ -152,11 +163,10 @@ public class Ticket {
               .setAuthor("Ticket closed", "", "https://cdn.discordapp.com/embed/avatars/0.png")
               .setTitle("Enjoy your day!")
               .setDescription("Thanks for using our ticket system! If you got any other questions feel free to contact us again :)")));
-
       TicketHandler.logTicketAction(new TicketAction(user, this, TicketAction.Action.CLOSE));
-      TicketHandler.removeTicket(this);
-      TicketHandler.editCreationMessage();
-      serverTextChannel.delete("Ticket deleted, reason: ticket closed by creator.");
     }).exceptionally(ExceptionLogger.get());
+    TicketHandler.removeTicket(this);
+    TicketHandler.editCreationMessage();
+    serverTextChannel.delete().join();
   }
 }
