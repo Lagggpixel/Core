@@ -108,8 +108,9 @@ public class Ticket {
 
   public static Ticket createTicket(User creator, TicketType ticketType, EmbedBuilder embedBuilder) {
     Ticket ticket = new Ticket(creator, ticketType);
-    ticket.serverTextChannel.sendMessage(embedBuilder).thenAccept(Message::pin);
     ticket.sendCloseMessage();
+    ticket.serverTextChannel.sendMessage(embedBuilder).thenAccept(Message::pin).join();
+    ticket.serverTextChannel.sendMessage("<@" + creator.getId() + ">").thenAccept(Message::delete).join();
     TicketHandler.addTicket(ticket);
     TicketHandler.editCreationMessage();
     return ticket;
@@ -153,7 +154,7 @@ public class Ticket {
         .setEmbed(builder)
         .addComponents(ActionRow.of(
             Button.secondary("closeTicket", "\uD83D\uDD12 Close Ticket")))
-        .send(serverTextChannel);
+        .send(serverTextChannel).join();
   }
 
   public void close() {

@@ -24,18 +24,17 @@ import org.apache.http.util.EntityUtils;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.javacord.api.entity.channel.RegularServerChannel;
 import org.javacord.api.entity.channel.ServerTextChannel;
-import org.javacord.api.entity.channel.TextChannel;
 import org.javacord.api.entity.message.Message;
 import org.javacord.api.entity.message.MessageBuilder;
 import org.javacord.api.entity.message.MessageFlag;
+import org.javacord.api.entity.message.component.ActionRow;
 import org.javacord.api.entity.message.component.Button;
-import org.javacord.api.entity.message.component.*;
+import org.javacord.api.entity.message.component.ButtonStyle;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.javacord.api.entity.user.User;
 import org.javacord.api.event.interaction.MessageComponentCreateEvent;
 import org.javacord.api.interaction.ButtonInteraction;
 import org.javacord.api.interaction.MessageComponentInteraction;
-import org.javacord.api.interaction.ModalInteraction;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -124,7 +123,7 @@ public class TicketHandler {
     builder.setDescription("Need help? **Create ticket now!**\n" +
         "\n" +
         "**Currently opened tickets:** `" + tickets.size() + "`");
-    builder.setThumbnail("https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQhjz07Tkt9fMph6TDf7c6jbwlGe3HEW0lUjthe1OqU_X_VKqDY");
+    builder.setThumbnail("https://p7.hiclipart.com/preview/58/204/62/minecraft-mod-grass-block-computer-software-video-game-block.jpg");
     return builder;
   }
 
@@ -162,9 +161,7 @@ public class TicketHandler {
       if (messageComponentInteraction.getChannel().isEmpty()) {
         return;
       }
-      TextChannel channel = messageComponentInteraction.getChannel().get();
       User user = buttonInteraction.getUser();
-
       switch (customId) {
         case "minecraftTicketCreate":
         case "bugReportTicketCreate":
@@ -199,147 +196,133 @@ public class TicketHandler {
       }
 
     });
-    DiscordHandler.getInstance().getDiscordApi().addModalSubmitListener(e -> {
-      ModalInteraction modalInteraction = e.getModalInteraction();
-      String customId = modalInteraction.getCustomId();
-
-      switch (customId) {
-        case "minecraftTicketCreateModal":
-          handleMinecraftTicketCreate(modalInteraction);
-          break;
-        case "bugReportTicketCreateModal":
-          handleBugReportTicketCreate(modalInteraction);
-          break;
-        case "discordTicketCreateModal":
-          handleDiscordTicketCreate(modalInteraction);
-          break;
-        case "appealTicketCreateModal":
-          handleAppealTicketCreate(modalInteraction);
-          break;
-        case "applicationTicketCreateModal":
-          handleApplicationTicketCreate(modalInteraction);
-          break;
-        default:
-          return;
-      }
-    });
   }
 
-  private void handleMinecraftTicketCreate(@NotNull ModalInteraction modalInteraction) {
-    User user = modalInteraction.getUser();
+  private @NotNull Ticket handleMinecraftTicketCreate(@NotNull User user, MessageComponentInteraction e) {
     EmbedBuilder embedBuilder = new EmbedBuilder();
     embedBuilder.setColor(Color.GREEN);
-    embedBuilder.addField("**In Game Name**", modalInteraction.getTextInputValueByCustomId("ign").get(), false);
-    embedBuilder.addField("**How can we help you**", modalInteraction.getTextInputValueByCustomId("message").get(), false);
-    Ticket.createTicket(user, TicketType.MINECRAFT_SUPPORT, embedBuilder);
+    embedBuilder.setAuthor("Infinite Minecrafters Minecraft Support");
+    embedBuilder.setDescription(
+        "Hey <@" + user.getId() + ">,\n" +
+            "Please provide us: \n" +
+            "    **X** Your in game name(with prefix if you are on bedrock) \n" +
+            "    **X** A detailed description of your issue/request \n" +
+            "Our staff team will get back to you as soon as possible."
+    );
+    return Ticket.createTicket(user, TicketType.MINECRAFT_SUPPORT, embedBuilder);
   }
 
-  private void handleBugReportTicketCreate(@NotNull ModalInteraction modalInteraction) {
-    User user = modalInteraction.getUser();
+  private @NotNull Ticket handleBugReportTicketCreate(@NotNull User user) {
     EmbedBuilder embedBuilder = new EmbedBuilder();
     embedBuilder.setColor(Color.GREEN);
-    embedBuilder.addField("**In Game Name**", modalInteraction.getTextInputValueByCustomId("ign").get(), false);
-    embedBuilder.addField("**Bug Description**", modalInteraction.getTextInputValueByCustomId("message").get(), false);
-    Ticket.createTicket(user, TicketType.BUG_REPORT, embedBuilder);
+    embedBuilder.setAuthor("Infinite Minecrafters Bug Report");
+    embedBuilder.setDescription(
+        "Hey <@" + user.getId() + ">,\n" +
+            "Please provide us: \n" +
+            "    **X** Your in game name(with prefix if you are on bedrock) \n" +
+            "    **X** A detailed description of the bug \n" +
+            "Our staff team will get back to you as soon as possible."
+    );
+    return Ticket.createTicket(user, TicketType.BUG_REPORT);
   }
 
-  private void handleDiscordTicketCreate(@NotNull ModalInteraction modalInteraction) {
-    User user = modalInteraction.getUser();
+  private @NotNull Ticket handleDiscordTicketCreate(@NotNull User user) {
     EmbedBuilder embedBuilder = new EmbedBuilder();
     embedBuilder.setColor(Color.GREEN);
-    embedBuilder.addField("**How can we help you**", modalInteraction.getTextInputValueByCustomId("message").get(), false);
-    Ticket.createTicket(user, TicketType.DISCORD_SUPPORT, embedBuilder);
+    embedBuilder.setAuthor("Infinite Minecrafters Minecraft Support");
+    embedBuilder.setDescription(
+        "Hey <@" + user.getId() + ">,\n" +
+            "Please provide us: \n" +
+            "    **X** A detailed description of your issue/request\n" +
+            "Our staff team will get back to you as soon as possible."
+    );
+    return Ticket.createTicket(user, TicketType.DISCORD_SUPPORT);
   }
 
-  private void handleAppealTicketCreate(@NotNull ModalInteraction modalInteraction) {
-    User user = modalInteraction.getUser();
+  private @NotNull Ticket handleAppealTicketCreate(@NotNull User user) {
     EmbedBuilder embedBuilder = new EmbedBuilder();
     embedBuilder.setColor(Color.GREEN);
-    embedBuilder.addField("**In Game Name**", modalInteraction.getTextInputValueByCustomId("ign").get(), false);
-    embedBuilder.addField("**Punishment Type**", modalInteraction.getTextInputValueByCustomId("appealTicketCreateModalPunishType").get(), false);
-    embedBuilder.addField("**Was the punishment false**", modalInteraction.getTextInputValueByCustomId("appealTicketCreatePunishJustified").get(), false);
-    Ticket.createTicket(user, TicketType.BUG_REPORT, embedBuilder);
+    embedBuilder.setAuthor("Infinite Minecrafters Minecraft Support");
+    embedBuilder.setDescription(
+        "Hey <@" + user.getId() + ">,\n" +
+            "Please provide us: \n" +
+            "    **X** Your in game name(with prefix if you are on bedrock) \n" +
+            "    **X** Type of punishment(kick, mute, ban) \n" +
+            "    **X** Why do you think we should revoke your punishment \n" +
+            "Our staff team will get back to you as soon as possible."
+    );
+    return Ticket.createTicket(user, TicketType.BUG_REPORT);
   }
 
-  private void handleApplicationTicketCreate(ModalInteraction modalInteraction) {
-    User user = modalInteraction.getUser();
+  private @NotNull Ticket handleApplicationTicketCreate(@NotNull User user) {
     EmbedBuilder embedBuilder = new EmbedBuilder();
     embedBuilder.setColor(Color.GREEN);
-    embedBuilder.addField("**In Game Name**", modalInteraction.getTextInputValueByCustomId("ign").get(), false);
-    embedBuilder.addField("**Timezone**", modalInteraction.getTextInputValueByCustomId("timezone").get(), false);
-    embedBuilder.addField("**Age**", modalInteraction.getTextInputValueByCustomId("age").get(), false);
-    Ticket.createTicket(user, TicketType.BUG_REPORT, embedBuilder);
+    embedBuilder.setAuthor("Infinite Minecrafters Application");
+    embedBuilder.setDescription(
+        "Hey <@" + user.getId() + ">,\n" +
+            "Please provide us: \n" +
+            "    **X** Your in game name(with prefix if you are on bedrock) \n" +
+            "    **X** Your age \n" +
+            " **X** Your timezone \n" +
+            "Our staff team will get back to you as soon as possible."
+    );
+    return Ticket.createTicket(user, TicketType.BUG_REPORT);
   }
 
-  private void handleTicketCreation(User user, @NotNull String ticketType, MessageComponentCreateEvent e) {
+  private void handleTicketCreation(User user, @NotNull String ticketType, @NotNull MessageComponentCreateEvent e) {
+    e.getMessageComponentInteraction().createImmediateResponder()
+        .setContent("Creating ticket ...")
+        .setFlags(MessageFlag.EPHEMERAL)
+        .respond().join();
+    Ticket ticket;
     switch (ticketType) {
       case "minecraftTicketCreate":
         if (getUserTicket(user, TicketType.MINECRAFT_SUPPORT) != null) {
           sendAlreadyHasTicketCreated(user, TicketType.MINECRAFT_SUPPORT, e);
           return;
         }
-        e.getInteraction().respondWithModal("minecraftTicketCreateModal", "Minecraft Support",
-            ActionRow.of(
-                TextInput.create(TextInputStyle.SHORT, "ign", "Your in game name"),
-                TextInput.create(TextInputStyle.PARAGRAPH, "message", "How can we help you")
-            ));
+        ticket = handleMinecraftTicketCreate(user, e.getMessageComponentInteraction());
         break;
       case "bugReportTicketCreate":
         if (getUserTicket(user, TicketType.BUG_REPORT) != null) {
           sendAlreadyHasTicketCreated(user, TicketType.BUG_REPORT, e);
           return;
         }
-        e.getInteraction().respondWithModal("bugReportTicketCreateModal", "Bug Report",
-            ActionRow.of(
-                TextInput.create(TextInputStyle.SHORT, "ign", "Your in game name"),
-                TextInput.create(TextInputStyle.PARAGRAPH, "message", "Please give a description of the bug")
-            ));
+        ticket = handleBugReportTicketCreate(user);
         break;
       case "discordTicketCreate":
         if (getUserTicket(user, TicketType.DISCORD_SUPPORT) != null) {
           sendAlreadyHasTicketCreated(user, TicketType.DISCORD_SUPPORT, e);
           return;
         }
-        e.getInteraction().respondWithModal("discordTicketCreateModal", "Discord Support",
-            ActionRow.of(
-                TextInput.create(TextInputStyle.PARAGRAPH, "message", "How can we help you")
-            ));
+        ticket = handleDiscordTicketCreate(user);
         break;
       case "appealTicketCreate":
         if (getUserTicket(user, TicketType.APPEAL) != null) {
           sendAlreadyHasTicketCreated(user, TicketType.APPEAL, e);
           return;
         }
-        e.getInteraction().respondWithModal("appealTicketCreateModal", "Appeal",
-            ActionRow.of(
-                TextInput.create(TextInputStyle.PARAGRAPH, "ign", "What is your in game name"),
-                SelectMenu.createStringMenu("appealTicketCreateModalPunishType", "Appeal type",
-                    List.of(SelectMenuOption.create("Kick", "kick"),
-                        SelectMenuOption.create("Mute", "mute"),
-                        SelectMenuOption.create("Ban", "ban"))),
-                SelectMenu.createStringMenu("appealTicketCreatePunishJustified", "Was the punishment false",
-                    List.of(SelectMenuOption.create("Yes", "true"),
-                        SelectMenuOption.create("No", "false")))
-            ));
+        ticket = handleAppealTicketCreate(user);
         break;
       case "applicationTicketCreate":
         if (getUserTicket(user, TicketType.APPLICATION) != null) {
           sendAlreadyHasTicketCreated(user, TicketType.APPLICATION, e);
           return;
         }
-        e.getInteraction().respondWithModal("applicationTicketCreateModal", "Application",
-            ActionRow.of(
-                TextInput.create(TextInputStyle.SHORT, "ign", "What is your in game name"),
-                TextInput.create(TextInputStyle.SHORT, "timezone", "Timezone(e.g. UTC)"),
-                TextInput.create(TextInputStyle.SHORT, "age", "What is your age")
-            ));
+        ticket = handleApplicationTicketCreate(user);
         break;
+      default:
+        return;
     }
+    e.getMessageComponentInteraction().createFollowupMessageBuilder()
+        .setContent("Your ticket has been created: <#" + ticket.getServerTextChannel().getId() + ">")
+        .setFlags(MessageFlag.EPHEMERAL)
+        .send().join();
   }
 
   private void sendAlreadyHasTicketCreated(User user, TicketType ticketType, @NotNull MessageComponentCreateEvent e) {
     e.getMessageComponentInteraction().createImmediateResponder()
-        .setContent("You already have a ticket open: <#" + getUserTicket(user, ticketType).getServerTextChannel().getId() + ">")
+        .setContent("You already have a ticket open: <#" + Objects.requireNonNull(getUserTicket(user, ticketType)).getServerTextChannel().getId() + ">")
         .setFlags(MessageFlag.EPHEMERAL).respond();
   }
 
@@ -356,7 +339,6 @@ public class TicketHandler {
     EmbedBuilder builder = new EmbedBuilder();
     builder.setColor(ticketAction.getAction().getColor());
     builder.setTitle(ticketAction.getAction().getTitle());
-    //in case he left the server
     if (ticketAction.getCreator() == null) {
       builder.addField("Created By", "User Left The Server", true);
     } else {
@@ -424,7 +406,7 @@ public class TicketHandler {
 
       HttpResponse response = client.execute(post);
       String result = EntityUtils.toString(response.getEntity());
-      return "https://paste.md-5.net/" + new JsonParser().parse(result).getAsJsonObject().get("key").getAsString();
+      return "https://paste.md-5.net/" + JsonParser.parseString(result).getAsJsonObject().get("key").getAsString();
     } catch (IOException e) {
       ExceptionUtils.handleException(e);
     }
