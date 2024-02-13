@@ -80,6 +80,9 @@ public class DiscordModule implements IModule {
 
   @Override
   public void onDisable() {
+    if (discordHandler.getYamlConfiguration().contains("stopMessage")) {
+      discordHandler.MESSAGING_CHANNEL.sendMessage(discordHandler.getYamlConfiguration().getString("stopMessage")).join();
+    }
     serverStatusHandler.setServerPlayersVcChannelOffline();
     DiscordModule.discordHandler.sendEmbed(DiscordModule.discordHandler.LOGGING_CHANNEL, new EmbedBuilder().setTitle("**Core Plugin Disabled**"));
   }

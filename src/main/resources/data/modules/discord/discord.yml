@@ -11,3 +11,7 @@ playerCountChannelId: ""
 ticketCreationChannelId: ""
 ticketCreationMessageId: ""
 ticketLogChannelId: ""
+
+# Server start stop messages
+startMessage: ""
+stopMessage: ""

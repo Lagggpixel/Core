@@ -30,6 +30,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.javacord.api.DiscordApi;
 import org.javacord.api.DiscordApiBuilder;
 import org.javacord.api.entity.channel.ServerTextChannel;
@@ -135,6 +136,15 @@ public class DiscordHandler {
 
     new SlashCommandRegistry();
     new TicketHandler();
+
+    if (yamlConfiguration.contains("startMessage")) {
+      new BukkitRunnable() {
+        @Override
+        public void run() {
+          MESSAGING_CHANNEL.sendMessage(yamlConfiguration.getString("startMessage")).join();
+        }
+      }.runTaskLater(Main.getInstance(), 0L);
+    }
   }
 
   public Optional<User> getMemberById(String id) {
