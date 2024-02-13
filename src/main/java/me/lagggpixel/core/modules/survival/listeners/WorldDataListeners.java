@@ -18,8 +18,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.event.player.PlayerTeleportEvent;
 
 /**
  * @author Lagggpixel
@@ -39,17 +39,16 @@ public class WorldDataListeners implements Listener {
   }
 
   @EventHandler
-  public void onPlayerWorldChange(PlayerTeleportEvent event) {
+  public void onPlayerWorldChange(PlayerMoveEvent event) {
     Player player = event.getPlayer();
 
-    if (event.getFrom().getWorld() == event.getTo().getWorld()) {
-      return;
-    }
+    Location location = event.getTo();
 
     User user = Main.getUser(player.getUniqueId());
-    setUserLastLocation(user, event.getFrom());
+    setUserLastLocation(user, location);
   }
 
+  // Removes the player's world location for the world the player died in
   @EventHandler
   public void onPlayerDeath(PlayerDeathEvent event) {
     Player player = event.getPlayer();
