@@ -21,6 +21,7 @@ import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -90,9 +91,14 @@ public class WorldTpCommand implements ICommandClass {
     User user = Main.getUser(player.getUniqueId());
     if (user.getWorldData().containsKey(world.getName())) {
       player.teleport(user.getWorldData().get(world.getName()).getLocation());
+      new BukkitRunnable() {
+        @Override
+        public void run() {
+          player.teleport(user.getWorldData().get(world.getName()).getLocation());
+        }
+      }.runTaskLater(Main.getInstance(), 10L);
       return true;
-    }
-    else {
+    } else {
       player.teleport(world.getSpawnLocation());
       return true;
     }
@@ -101,7 +107,7 @@ public class WorldTpCommand implements ICommandClass {
   @Override
   public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
 
-    if (args.length== 0 || args.length == 1) {
+    if (args.length == 0 || args.length == 1) {
       return Bukkit.getOnlinePlayers().stream().map(Player::getName).toList();
     }
     if (args.length == 2) {
