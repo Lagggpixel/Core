@@ -10,24 +10,15 @@
 
 package me.lagggpixel.core.data.user;
 
-import com.google.gson.Gson;
-import com.google.gson.TypeAdapter;
-import com.google.gson.TypeAdapterFactory;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-import com.google.gson.reflect.TypeToken;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import me.lagggpixel.core.serializers.LocationSerializer;
 import org.bukkit.Location;
-import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
-
-import java.io.IOException;
 
 /**
  * @author Lagggpixel
@@ -42,7 +33,7 @@ public final class UserWorldData {
   private final @NotNull String name;
   @SerializedName("Location")
   @Expose
-  @JsonAdapter(LocationTypeAdapterFactory.class)
+  @JsonAdapter(LocationSerializer.LocationTypeAdapterFactory.class)
   private @NotNull Location location;
 
   public UserWorldData(@NotNull String name,
@@ -64,31 +55,4 @@ public final class UserWorldData {
   public void modifyLocation(Location location) {
     this.location = location;
   }
-
-  public static class LocationTypeAdapter extends TypeAdapter<Location> {
-
-    @Override
-    public void write(JsonWriter out, Location value) throws IOException {
-      out.value(LocationSerializer.serializeLocation(value));
-    }
-
-    @Override
-    public Location read(JsonReader in) throws IOException {
-      String locationString = in.nextString();
-      return LocationSerializer.deserializeLocation(locationString);
-    }
-  }
-
-  public static class LocationTypeAdapterFactory implements TypeAdapterFactory {
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
-      if (type.getRawType() == ItemStack[].class) {
-        return (TypeAdapter<T>) new UserWorldData.LocationTypeAdapter();
-      }
-      return null;
-    }
-  }
-
 }

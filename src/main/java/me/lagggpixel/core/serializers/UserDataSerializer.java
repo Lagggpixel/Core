@@ -14,7 +14,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import me.lagggpixel.core.Main;
 import me.lagggpixel.core.data.user.User;
-import me.lagggpixel.core.modules.home.data.Home;
 import me.lagggpixel.core.modules.staff.data.InstantPlayerData;
 import me.lagggpixel.core.utils.ExceptionUtils;
 import org.jetbrains.annotations.NotNull;
@@ -37,7 +36,7 @@ public class UserDataSerializer {
   private final static Gson gson = new GsonBuilder()
       .setPrettyPrinting()
       .excludeFieldsWithoutExposeAnnotation()
-      .registerTypeAdapterFactory(new Home.LocationTypeAdapterFactory())
+      .registerTypeAdapterFactory(new LocationSerializer.LocationTypeAdapterFactory())
       .registerTypeAdapterFactory(new InstantPlayerData.ItemStackArrayTypeAdapterFactory())
       .create();
 

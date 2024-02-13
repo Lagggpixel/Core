@@ -10,8 +10,16 @@
 
 package me.lagggpixel.core.serializers;
 
+import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
+import com.google.gson.TypeAdapterFactory;
+import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+
+import java.io.IOException;
 
 /**
  * @author Lagggpixel
@@ -74,5 +82,31 @@ public class LocationSerializer {
     }
 
     return l;
+  }
+
+  public static class LocationTypeAdapter extends TypeAdapter<Location> {
+
+    @Override
+    public void write(JsonWriter out, Location value) throws IOException {
+      out.value(LocationSerializer.serializeLocation(value));
+    }
+
+    @Override
+    public Location read(JsonReader in) throws IOException {
+      String locationString = in.nextString();
+      return LocationSerializer.deserializeLocation(locationString);
+    }
+  }
+
+  public static class LocationTypeAdapterFactory implements TypeAdapterFactory {
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+      if (type.getRawType() == Location.class) {
+        return (TypeAdapter<T>) new LocationSerializer.LocationTypeAdapter();
+      }
+      return null;
+    }
   }
 }
