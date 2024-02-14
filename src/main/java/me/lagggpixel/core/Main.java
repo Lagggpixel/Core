@@ -24,6 +24,7 @@ import me.lagggpixel.core.modules.bazaar.menu.DefaultConfigurableMenuItem;
 import me.lagggpixel.core.modules.bazaar.menu.configurations.*;
 import me.lagggpixel.core.modules.chat.ChatModule;
 import me.lagggpixel.core.modules.discord.DiscordModule;
+import me.lagggpixel.core.modules.discord.handlers.DiscordHandler;
 import me.lagggpixel.core.modules.economy.EconomyModule;
 import me.lagggpixel.core.modules.guilds.GuildModule;
 import me.lagggpixel.core.modules.home.HomeModule;
@@ -184,7 +185,7 @@ public final class Main extends JavaPlugin {
       }
     });
 
-    DiscordModule.discordHandler.sendEmbed(DiscordModule.discordHandler.LOGGING_CHANNEL, startupLogEmbed);
+    DiscordHandler.getInstance().sendEmbed(DiscordHandler.getInstance().LOGGING_CHANNEL, startupLogEmbed);
   }
 
   @Override

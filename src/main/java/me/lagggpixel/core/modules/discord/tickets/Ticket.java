@@ -12,7 +12,6 @@ package me.lagggpixel.core.modules.discord.tickets;
 
 import lombok.Getter;
 import me.lagggpixel.core.Main;
-import me.lagggpixel.core.modules.discord.DiscordModule;
 import me.lagggpixel.core.modules.discord.handlers.DiscordHandler;
 import org.javacord.api.entity.channel.RegularServerChannel;
 import org.javacord.api.entity.channel.ServerTextChannel;
@@ -77,11 +76,11 @@ public class Ticket {
     this.ticketType = ticketType;
     this.additionalTicketMembers = new HashSet<>();
 
-    ServerTextChannelBuilder builder = new ServerTextChannelBuilder(DiscordModule.discordHandler.server)
+    ServerTextChannelBuilder builder = new ServerTextChannelBuilder(DiscordHandler.getInstance().server)
         .setName(buildTicketName())
         .setCategory(this.ticketType.getCatagory())
-        .setTopic("Ticket created by " + creator.getDisplayName(DiscordModule.discordHandler.server) + " | " + ticketType.getId())
-        .addPermissionOverwrite(DiscordModule.discordHandler.server.getEveryoneRole(), everyonePermission)
+        .setTopic("Ticket created by " + creator.getDisplayName(DiscordHandler.getInstance().server) + " | " + ticketType.getId())
+        .addPermissionOverwrite(DiscordHandler.getInstance().server.getEveryoneRole(), everyonePermission)
         .addPermissionOverwrite(creator, userPermission);
 
     // todo - add staff and admin permissions
@@ -149,7 +148,7 @@ public class Ticket {
   }
 
   private String buildTicketName() {
-    return ticketType.getId() + "-" + creator.getDisplayName(DiscordModule.discordHandler.server);
+    return ticketType.getId() + "-" + creator.getDisplayName(DiscordHandler.getInstance().server);
   }
 
   private void sendCloseMessage() {

@@ -11,7 +11,7 @@
 package me.lagggpixel.core.modules.discord.slashCommands;
 
 import me.lagggpixel.core.interfaces.BotSlashCommand;
-import me.lagggpixel.core.modules.discord.DiscordModule;
+import me.lagggpixel.core.modules.discord.handlers.DiscordHandler;
 import me.lagggpixel.core.modules.discord.handlers.SlashCommandRegistry;
 import org.javacord.api.entity.permission.PermissionType;
 import org.javacord.api.interaction.SlashCommand;
@@ -54,7 +54,7 @@ public class CoreBotSlashCommand implements BotSlashCommand {
       options.forEach(slashCommandbuilder::addOption);
     }
 
-    slashCommand = slashCommandbuilder.createGlobal(DiscordModule.discordHandler.getDiscordApi()).join();
+    slashCommand = slashCommandbuilder.createGlobal(DiscordHandler.getInstance().getDiscordApi()).join();
     global = true;
     SlashCommandRegistry.getInstance().register(this);
   }
@@ -67,7 +67,7 @@ public class CoreBotSlashCommand implements BotSlashCommand {
     }
     slashCommandbuilder.setDefaultEnabledForPermissions(PermissionType.ADMINISTRATOR);
 
-    slashCommand = slashCommandbuilder.createGlobal(DiscordModule.discordHandler.getDiscordApi()).join();
+    slashCommand = slashCommandbuilder.createGlobal(DiscordHandler.getInstance().getDiscordApi()).join();
     global = true;
     SlashCommandRegistry.getInstance().register(this);
   }

@@ -33,9 +33,10 @@ import java.util.logging.Level;
 @Getter
 public class DiscordModule implements IModule {
 
-  NMSHandler nmsHandler;
-  public static DiscordHandler discordHandler;
-  private ServerStatusHandler serverStatusHandler;
+  private NMSHandler nmsHandler;
+  private static DiscordHandler discordHandler;
+  @Getter
+  private static ServerStatusHandler serverStatusHandler;
 
   @NotNull
   @Override
@@ -51,7 +52,7 @@ public class DiscordModule implements IModule {
   @Override
   public void onEnable() {
     nmsHandler = new NMSHandler();
-    discordHandler = new DiscordHandler(nmsHandler);
+    discordHandler = new DiscordHandler();
     serverStatusHandler = new ServerStatusHandler();
     // Log4j Appender implementation
     Main.getInstance().setLog4jLogger(LogManager.getRootLogger());
@@ -94,7 +95,7 @@ public class DiscordModule implements IModule {
 
   @Override
   public void registerListeners() {
-    new Listeners(discordHandler);
+    new Listeners();
     new LoggingListeners();
   }
 }

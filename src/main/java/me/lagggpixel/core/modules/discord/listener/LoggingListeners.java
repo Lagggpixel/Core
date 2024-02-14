@@ -13,6 +13,8 @@ package me.lagggpixel.core.modules.discord.listener;
 import me.lagggpixel.core.Main;
 import me.lagggpixel.core.modules.discord.handlers.DiscordHandler;
 import me.lagggpixel.core.modules.economy.events.BalanceTopUpdateEvent;
+import me.lagggpixel.core.modules.guilds.events.GuildCreateEvent;
+import me.lagggpixel.core.modules.guilds.events.GuildDisbandEvent;
 import me.lagggpixel.core.modules.skills.events.SkillLevelUpEvent;
 import me.lagggpixel.core.utils.ChatUtils;
 import org.bukkit.Bukkit;
@@ -86,4 +88,17 @@ public class LoggingListeners implements Listener {
     DiscordHandler.getInstance().sendEmbed(loggingChannel, embedBuilder);
   }
 
+  @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
+  public void GuildCreateEvent(@NotNull GuildCreateEvent event) {
+    DiscordHandler.getInstance()
+        .sendEmbed(DiscordHandler.getInstance().LOGGING_CHANNEL,
+            DiscordHandler.getInstance().createGuildCreatedEmbed(event));
+  }
+
+  @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
+  public void GuildCreateEvent(@NotNull GuildDisbandEvent event) {
+    DiscordHandler.getInstance()
+        .sendEmbed(DiscordHandler.getInstance().LOGGING_CHANNEL,
+            DiscordHandler.getInstance().createGuildDisbandEmbed(event));
+  }
 }

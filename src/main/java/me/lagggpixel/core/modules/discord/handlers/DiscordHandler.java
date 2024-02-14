@@ -21,9 +21,8 @@ import me.lagggpixel.core.utils.ChatUtils;
 import me.lagggpixel.core.utils.ExceptionUtils;
 import me.lagggpixel.core.utils.FileUtil;
 import me.lagggpixel.core.utils.HookUtils;
-import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
+import net.kyori.adventure.text.Component;
 import org.apache.commons.lang3.StringUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -44,14 +43,13 @@ import java.awt.*;
 import java.io.File;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.logging.Level;
 import java.util.regex.Pattern;
 
 /**
  * @author Lagggpixel
  * @since January 22, 2024
  */
-@SuppressWarnings({"DataFlowIssue", "FieldCanBeLocal"})
+@SuppressWarnings({"OptionalUsedAsFieldOrParameterType", "unused"})
 public class DiscordHandler {
 
   private File configFile;
@@ -61,27 +59,24 @@ public class DiscordHandler {
   @Getter
   private static DiscordHandler instance;
   @NotNull
-  private final NMSHandler nmsHandler;
+  public final ServerTextChannel CONSOLE_CHANNEL;
   @NotNull
-  public ServerTextChannel CONSOLE_CHANNEL = null;
+  public final ServerTextChannel MESSAGING_CHANNEL;
   @NotNull
-  public ServerTextChannel MESSAGING_CHANNEL = null;
+  public final ServerTextChannel LOGGING_CHANNEL;
   @NotNull
-  public ServerTextChannel LOGGING_CHANNEL = null;
-  @NotNull
-  public Server server = null;
+  public final Server server;
 
   @Getter
   private final DiscordApi discordApi;
 
   public Optional<ServerTextChannel> TICKET_LOG_CHANNEL;
 
-  public DiscordHandler(@NotNull NMSHandler nmsHandler) {
+  public DiscordHandler() {
     if (instance != null) {
       throw new RuntimeException("DiscordHandler is already initialized! DiscordHandler is a singleton!");
     }
     instance = this;
-    this.nmsHandler = nmsHandler;
     configFile = new File(Main.getInstance().getDataFolder() + "/data/modules/discord", "discord.yml");
     if (!configFile.exists()) {
       FileUtil.copyToDefault("data/modules/discord/discord.yml");
@@ -90,8 +85,7 @@ public class DiscordHandler {
     yamlConfiguration = YamlConfiguration.loadConfiguration(configFile);
     String token = yamlConfiguration.getString("token");
     if (StringUtils.isBlank(token)) {
-      Main.log(Level.SEVERE, "Discord token is not set, disabling Core!");
-      Main.getInstance().onDisable();
+      throw new RuntimeException("Discord Token is not set! The plugin will not work correctly!");
     }
     discordApi = new DiscordApiBuilder()
         .setToken(token)
@@ -100,9 +94,7 @@ public class DiscordHandler {
 
     Optional<Server> optionalServer = discordApi.getServerById(yamlConfiguration.getString("serverId"));
     if (optionalServer.isEmpty()) {
-      Main.log(Level.SEVERE, "Discord server is not set correctly, disabling Core!");
-      Main.getInstance().onDisable();
-      return;
+      throw new RuntimeException("Discord server is not set correctly! The plugin will not work correctly!");
     }
     this.server = optionalServer.get();
 
@@ -110,25 +102,19 @@ public class DiscordHandler {
 
     optionalServerTextChannel = discordApi.getServerTextChannelById(yamlConfiguration.getString("messageChannelId"));
     if (optionalServerTextChannel.isEmpty()) {
-      Main.log(Level.SEVERE, "Discord message channel is not set correctly, disabling Core!");
-      Main.getInstance().onDisable();
-      return;
+      throw new RuntimeException("Discord message channel is not set correctly! The plugin will not work correctly!");
     }
     MESSAGING_CHANNEL = optionalServerTextChannel.get();
 
     optionalServerTextChannel = discordApi.getServerTextChannelById(yamlConfiguration.getString("consoleChannelId"));
     if (optionalServerTextChannel.isEmpty()) {
-      Main.log(Level.SEVERE, "Discord console channel is not set correctly, disabling Core!");
-      Main.getInstance().onDisable();
-      return;
+      throw new RuntimeException("Discord console channel is not set correctly! The plugin will not work correctly!");
     }
     CONSOLE_CHANNEL = optionalServerTextChannel.get();
 
     optionalServerTextChannel = discordApi.getServerTextChannelById(yamlConfiguration.getString("loggingChannelId"));
     if (optionalServerTextChannel.isEmpty()) {
-      Main.log(Level.SEVERE, "Discord logging channel is not set correctly, disabling Core!");
-      Main.getInstance().onDisable();
-      return;
+      throw new RuntimeException("Discord logging channel is not set correctly! The plugin will not work correctly!");
     }
     LOGGING_CHANNEL = optionalServerTextChannel.get();
 
@@ -178,16 +164,14 @@ public class DiscordHandler {
   }
   // </editor-fold>
 
-  // <editor-fold defaultstate="collapsed" desc="Chat embed handling">
-  public @NotNull EmbedBuilder createChatEmbed(@NotNull AsyncChatEvent event) {
-
+  // <editor-fold defaultstate="collapsed" desc="Chat handling">
+  public void handleAsyncChatEvent(@NotNull AsyncChatEvent event) {
     Player player = event.getPlayer();
-
-    return new EmbedBuilder()
-        .setAuthor(player.getName(), null, getAvatarUrl(player))
-        .setDescription("**" + PlainTextComponentSerializer.plainText().serialize(event.message()) + "**")
-        .setTimestamp(java.time.Instant.now())
-        .setColor(Color.YELLOW);
+    Component message =event.message();
+    String playerDisplayName = ChatUtils.componentToString(player.displayName());
+    String messageString = ChatUtils.componentToString(message);
+    String compiledMessage = playerDisplayName + ": " + messageString;
+    MESSAGING_CHANNEL.sendMessage(compiledMessage).join();
   }
   // </editor-fold>
 
@@ -229,60 +213,14 @@ public class DiscordHandler {
   // </editor-fold>
 
   // <editor-fold defaultstate="collapsed" desc="Avatar URL">
-  @Deprecated
-  public String getAvatarUrlDeprecated(String username, UUID uuid) {
-    String avatarUrl = constructAvatarUrlDeprecated(username, uuid, "");
-    avatarUrl = replacePlaceholdersToDiscord(avatarUrl);
-    return avatarUrl;
-  }
-
   public String getAvatarUrl(@NotNull OfflinePlayer player) {
     UUID uuid = player.getUniqueId();
     return "https://mc-heads.net/avatar/" + uuid + "/100/noHelm";
   }
 
-  @Deprecated
-  public String getAvatarUrlDeprecated(@NotNull OfflinePlayer player) {
-    if (player.isOnline() && player.getPlayer() != null) {
-      return getAvatarUrl(player.getPlayer());
-    } else {
-      String avatarUrl = constructAvatarUrlDeprecated(player.getName(), player.getUniqueId(), "");
-      avatarUrl = replacePlaceholdersToDiscord(avatarUrl, player);
-      return avatarUrl;
-    }
-  }
-
   public String getAvatarUrl(@NotNull Player player) {
     UUID uuid = player.getUniqueId();
     return "https://mc-heads.net/avatar/" + uuid + "/100/noHelm";
-  }
-
-  @Deprecated
-  public String getAvatarUrlDeprecated(@NotNull Player player) {
-    String avatarUrl = constructAvatarUrlDeprecated(player.getName(), player.getUniqueId(), nmsHandler.getTexture(player));
-    avatarUrl = replacePlaceholdersToDiscord(avatarUrl, player);
-    return avatarUrl;
-  }
-
-  @Deprecated
-  private @NotNull String constructAvatarUrlDeprecated(String username, UUID uuid, String texture) {
-    OfflinePlayer player = null;
-    if (StringUtils.isBlank(username) && uuid != null) {
-      player = Bukkit.getOfflinePlayer(uuid);
-    }
-    if (StringUtils.isBlank(texture) && player != null && player.isOnline()) {
-      texture = nmsHandler.getTexture(player.getPlayer());
-    }
-
-    String avatarUrl = "https://crafatar.com/avatars/{uuid-nodashes}.png?size={size}&overlay#{texture}";
-
-
-    avatarUrl = avatarUrl
-        .replace("{texture}", texture != null ? texture : "")
-        .replace("{uuid-nodashes}", uuid.toString().replace("-", ""))
-        .replace("{size}", "128");
-
-    return avatarUrl;
   }
   // </editor-fold>
 

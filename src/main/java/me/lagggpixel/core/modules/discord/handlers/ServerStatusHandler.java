@@ -11,7 +11,10 @@
 package me.lagggpixel.core.modules.discord.handlers;
 
 import me.lagggpixel.core.Main;
+import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.javacord.api.entity.channel.ServerTextChannel;
+import org.javacord.api.entity.channel.ServerTextChannelUpdater;
 import org.javacord.api.entity.channel.ServerVoiceChannel;
 import org.javacord.api.entity.channel.ServerVoiceChannelUpdater;
 
@@ -43,6 +46,7 @@ public class ServerStatusHandler {
       @Override
       public void run() {
         updateServerPlayersVcChannel();
+        updateServerMessageChannel();
       }
     }.runTaskTimerAsynchronously(Main.getInstance(), 0, 20L * 30);
   }
@@ -78,5 +82,23 @@ public class ServerStatusHandler {
       return;
     }
     serverVoiceChannelUpdater.setName("Server is offline").update();
+  }
+
+  public void updateServerMessageChannel() {
+    ServerTextChannel channel = DiscordHandler.getInstance().MESSAGING_CHANNEL;
+    ServerTextChannelUpdater updater = channel.createUpdater();
+
+    String serverTopic;
+    serverTopic = "Online Players : " + Bukkit.getOnlinePlayers().size() + " | Unique Joins: " + Main.getUserData().size();
+
+    updater.setTopic(serverTopic);
+
+    updater.update();
+  }
+
+  public void setServerMessageChannelOffline() {
+    ServerTextChannel channel = DiscordHandler.getInstance().MESSAGING_CHANNEL;
+    ServerTextChannelUpdater updater = channel.createUpdater();
+    updater.setTopic("Server is offline | Unique Joins: " + Main.getUserData().size()).update();
   }
 }

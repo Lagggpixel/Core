@@ -10,7 +10,6 @@
 
 package me.lagggpixel.core.modules.discord.handlers;
 
-import me.lagggpixel.core.modules.discord.DiscordModule;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.core.LogEvent;
 import org.javacord.api.entity.message.Message;
@@ -42,7 +41,7 @@ public class ConsoleHandler {
       currentContent = currentContent + "\n" + formatLoggingMessage(logEvent);
       return;
     }
-    DiscordModule.discordHandler.CONSOLE_CHANNEL.sendMessage(currentContent)
+    DiscordHandler.getInstance().CONSOLE_CHANNEL.sendMessage(currentContent)
         .thenAccept(Message::removeEmbed);
     lastMessageMillis = System.currentTimeMillis();
     currentContent = "";
