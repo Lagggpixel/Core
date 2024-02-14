@@ -13,7 +13,7 @@ package me.lagggpixel.core.modules.survival.handlers;
 import me.lagggpixel.core.Main;
 import me.lagggpixel.core.builders.ItemBuilder;
 import me.lagggpixel.core.enums.Lang;
-import me.lagggpixel.core.modules.survival.data.survivalItem.SurvivalItemInventoryHolder;
+import me.lagggpixel.core.modules.survival.data.inventoryHolder.SurvivalItemInventoryHolder;
 import me.lagggpixel.core.utils.ChatUtils;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;

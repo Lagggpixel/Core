@@ -8,7 +8,7 @@
  * explicit permission from the lead developer of Infinite Minecrafter's.
  */
 
-package me.lagggpixel.core.modules.survival.data;
+package me.lagggpixel.core.modules.survival.data.inventoryHolder;
 
 import me.lagggpixel.core.builders.ItemBuilder;
 import me.lagggpixel.core.data.CoreInventoryHolder;

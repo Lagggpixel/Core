@@ -11,8 +11,10 @@
 package me.lagggpixel.core.modules.survival.listeners;
 
 import me.lagggpixel.core.Main;
-import me.lagggpixel.core.modules.survival.data.SurvivalCoreInventoryHolder;
-import me.lagggpixel.core.modules.survival.data.survivalItem.SurvivalItemInventoryHolder;
+import me.lagggpixel.core.modules.survival.data.inventoryHolder.SkillInventoryHolder;
+import me.lagggpixel.core.modules.survival.data.inventoryHolder.SkillsInventoryHolder;
+import me.lagggpixel.core.modules.survival.data.inventoryHolder.SurvivalCoreInventoryHolder;
+import me.lagggpixel.core.modules.survival.data.inventoryHolder.SurvivalItemInventoryHolder;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -38,6 +40,12 @@ public class InventoryClickListener implements Listener {
       event.setCancelled(true);
       if (survivalCoreInventoryHolder instanceof SurvivalItemInventoryHolder inventoryHolder) {
         inventoryHolder.handleInventoryClick(event);
+      }
+      else if (survivalCoreInventoryHolder instanceof SkillInventoryHolder skillInventoryHolder) {
+        skillInventoryHolder.handleInventoryClick(event);
+      }
+      else if (survivalCoreInventoryHolder instanceof SkillsInventoryHolder skillsInventoryHolder) {
+        skillsInventoryHolder.handleInventoryClick(event);
       }
     }
   }

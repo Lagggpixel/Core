@@ -8,12 +8,11 @@
  * explicit permission from the lead developer of Infinite Minecrafter's.
  */
 
-package me.lagggpixel.core.modules.survival.data.survivalItem;
+package me.lagggpixel.core.modules.survival.data.inventoryHolder;
 
 import lombok.Getter;
 import me.lagggpixel.core.builders.ItemBuilder;
 import me.lagggpixel.core.enums.Lang;
-import me.lagggpixel.core.modules.survival.data.SurvivalCoreInventoryHolder;
 import me.lagggpixel.core.utils.ChatUtils;
 import org.bukkit.Material;
 import org.bukkit.Sound;

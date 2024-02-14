@@ -8,12 +8,12 @@
  * explicit permission from the lead developer of Infinite Minecrafter's.
  */
 
-package me.lagggpixel.core.modules.survival.data.survivalItem;
+package me.lagggpixel.core.modules.survival.data.inventoryHolder;
 
 import me.lagggpixel.core.Main;
 import me.lagggpixel.core.builders.ItemBuilder;
 import me.lagggpixel.core.data.user.User;
-import me.lagggpixel.core.modules.survival.data.SurvivalCoreInventoryHolder;
+import me.lagggpixel.core.modules.skills.enums.SkillType;
 import me.lagggpixel.core.utils.ChatUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -47,69 +47,50 @@ public class SkillsInventoryHolder extends SurvivalCoreInventoryHolder {
     );
 
     inventory.setItem(20,
-        new ItemBuilder(Material.GOLDEN_HOE)
+        new ItemBuilder(SkillType.FARMING.getMaterial())
             .setDisplayName("&aFarming " + user.getSkills().getFarming().getLevel())
-            .setLore(List.of(
-                ChatUtils.stringToComponentCC("&7Harvest crops and shear sheep to"),
-                ChatUtils.stringToComponentCC("&7earn Farming XP."),
-                ChatUtils.stringToComponentCC(" "),
-                ChatUtils.stringToComponentCC("&eClick to view!")
-            ))
+            .setLore(SkillType.FARMING.getSkillDescription())
+            .setTag("farming")
             .toItemStack()
     );
 
     inventory.setItem(21,
-        new ItemBuilder(Material.STONE_PICKAXE)
+        new ItemBuilder(SkillType.MINING.getMaterial())
             .setDisplayName("&aMining " + user.getSkills().getMining().getLevel())
-            .setLore(List.of(
-                ChatUtils.stringToTextComponentCC("&7Dive into deep caves and find"),
-                ChatUtils.stringToTextComponentCC("&7rare ores and valuable materials"),
-                ChatUtils.stringToTextComponentCC("&7to earn mining XP!"),
-                ChatUtils.stringToTextComponentCC(" "),
-                ChatUtils.stringToTextComponentCC("&eClick to view!")
-            ))
+            .setLore(SkillType.MINING.getSkillDescription())
+            .setTag("mining")
             .toItemStack()
     );
 
 
     inventory.setItem(22,
-        new ItemBuilder(Material.STONE_SWORD)
+        new ItemBuilder(SkillType.COMBAT.getMaterial())
             .setDisplayName("&aCombat " + user.getSkills().getCombat().getLevel())
-            .setLore(List.of(
-                ChatUtils.stringToTextComponentCC("&7Fight mobs and special bosses to"),
-                ChatUtils.stringToTextComponentCC("&7earn Combat XP!"),
-                ChatUtils.stringToTextComponentCC(" "),
-                ChatUtils.stringToTextComponentCC("&eClick to view!")))
+            .setLore(SkillType.COMBAT.getSkillDescription())
+            .setTag("combat")
             .toItemStack()
     );
 
 
     inventory.setItem(23,
-        new ItemBuilder(Material.JUNGLE_SAPLING)
+        new ItemBuilder(SkillType.WOODCUTTING.getMaterial())
             .setDisplayName("&aWoodcutting " + user.getSkills().getWoodcutting().getLevel())
-            .setLore(List.of(
-                ChatUtils.stringToTextComponentCC("&7Cut trees and forage for other"),
-                ChatUtils.stringToTextComponentCC("&7plants to earn Foraging XP!"),
-                ChatUtils.stringToTextComponentCC(" "),
-                ChatUtils.stringToTextComponentCC("&eClick to view!")
-            ))
+            .setLore(SkillType.WOODCUTTING.getSkillDescription())
+            .setTag("woodcutting")
             .toItemStack()
     );
 
     inventory.setItem(24,
-        new ItemBuilder(Material.FISHING_ROD)
+        new ItemBuilder(SkillType.FISHING.getMaterial())
             .setDisplayName("&aFishing " + user.getSkills().getFishing().getLevel())
-            .setLore(List.of(
-                ChatUtils.stringToTextComponentCC("&7Visit your local pond to fish"),
-                ChatUtils.stringToTextComponentCC("&7and earn fishing XP!"),
-                ChatUtils.stringToTextComponentCC(" "),
-                ChatUtils.stringToTextComponentCC("&eClick to view!")))
+            .setLore(SkillType.FISHING.getSkillDescription())
+            .setTag("fishing")
             .toItemStack()
     );
 
 
-    buildBackButton();
-    buildCloseButton();
+    this.buildBackButton();
+    this.buildCloseButton();
 
     this.fillEmptySlots();
   }
@@ -130,9 +111,25 @@ public class SkillsInventoryHolder extends SurvivalCoreInventoryHolder {
     if (tag == null) {
       return;
     }
-    if (tag.equalsIgnoreCase("back")) {
-      new SurvivalItemInventoryHolder(player).openInventory(player);
-      return;
+    SkillType skill;
+    switch (tag) {
+      case "close":
+        break;
+      case "back":
+        new SurvivalItemInventoryHolder(player).openInventory(player);
+        break;
+      case "farming":
+        skill = SkillType.FARMING;
+      case "mining":
+        skill = SkillType.MINING;
+      case "combat":
+        skill = SkillType.COMBAT;
+      case "fishing":
+        skill = SkillType.FISHING;
+      case "woodcutting":
+        skill = SkillType.WOODCUTTING;
+        new SkillInventoryHolder(player, skill).openInventory(player);
+        break;
     }
   }
 }
