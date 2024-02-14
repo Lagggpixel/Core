@@ -352,7 +352,7 @@ public class TicketHandler {
     } else {
       builder.addField("Created By", ticketAction.getCreator().getMentionTag(), true);
     }
-    builder.addField("Ticket Type", ticketAction.getTicket().getTicketType().name().toLowerCase().replace("_", " "), true);
+    builder.addField("Ticket Type", StringUtils.capitalize(ticketAction.getTicket().getTicketType().name().toLowerCase().replace("_", " ")), true);
     if (ticketAction.getAction() == TicketAction.Action.RESOLVE) {
       assert ticketAction.getResolver() != null;
       builder.addField("Resolved By", ticketAction.getResolver().getName(), true);
