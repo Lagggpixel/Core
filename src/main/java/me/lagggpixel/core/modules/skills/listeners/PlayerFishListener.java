@@ -47,50 +47,50 @@ public class PlayerFishListener implements Listener {
 
     Item item = (Item) entity;
 
-    if (skillsModule.getSkillHandler().isFishFarming(item.getType())) {
+    if (skillsModule.getSkillHandler().isFishFarming(item.getItemStack().getType())) {
       handleFarmingFishing(user, item);
     }
 
-    if (skillsModule.getSkillHandler().isFishMining(item.getType())) {
+    if (skillsModule.getSkillHandler().isFishMining(item.getItemStack().getType())) {
       handleMiningFishing(user, item);
     }
 
-    if (skillsModule.getSkillHandler().isFishCombat(item.getType())) {
+    if (skillsModule.getSkillHandler().isFishCombat(item.getItemStack().getType())) {
       handleCombatFishing(user, item);
     }
 
-    if (skillsModule.getSkillHandler().isFishWoodcutting(item.getType())) {
+    if (skillsModule.getSkillHandler().isFishWoodcutting(item.getItemStack().getType())) {
       handleWoodcuttingFishing(user, item);
     }
 
-    if (skillsModule.getSkillHandler().isFishFishing(item.getType())) {
+    if (skillsModule.getSkillHandler().isFishFishing(item.getItemStack().getType())) {
       handleFishingFishing(user, item);
     }
   }
 
 
   private void handleFarmingFishing(User user, Item item) {
-    double exp = skillsModule.getSkillHandler().getFarmingFish().get(item.getType());
+    double exp = skillsModule.getSkillHandler().getFarmingFish().get(item.getItemStack().getType());
     user.getSkills().getFarming().addExp(exp, SkillExpGainCause.FISH);
   }
 
   private void handleMiningFishing(User user, Item item) {
-    double exp = skillsModule.getSkillHandler().getMiningFish().get(item.getType());
+    double exp = skillsModule.getSkillHandler().getMiningFish().get(item.getItemStack().getType());
     user.getSkills().getMining().addExp(exp, SkillExpGainCause.FISH);
   }
 
   private void handleCombatFishing(User user, Item item) {
-    double exp = skillsModule.getSkillHandler().getCombatFish().get(item.getType());
+    double exp = skillsModule.getSkillHandler().getCombatFish().get(item.getItemStack().getType());
     user.getSkills().getCombat().addExp(exp, SkillExpGainCause.FISH);
   }
 
   private void handleWoodcuttingFishing(User user, Item item) {
-    double exp = skillsModule.getSkillHandler().getWoodcuttingFish().get(item.getType());
+    double exp = skillsModule.getSkillHandler().getWoodcuttingFish().get(item.getItemStack().getType());
     user.getSkills().getWoodcutting().addExp(exp, SkillExpGainCause.FISH);
   }
 
   private void handleFishingFishing(User user, Item item) {
-    double exp = skillsModule.getSkillHandler().getFishingFish().get(item.getType());
+    double exp = skillsModule.getSkillHandler().getFishingFish().get(item.getItemStack().getType());
     user.getSkills().getFishing().addExp(exp, SkillExpGainCause.FISH);
   }
 

@@ -50,7 +50,7 @@ public class SkillHandler {
   @Getter
   private final Map<EntityType, Double> farmingBreedMobs = new HashMap<>();
   @Getter
-  private final Map<EntityType, Double> farmingFish = new HashMap<>();
+  private final Map<Material, Double> farmingFish = new HashMap<>();
 
   @Getter
   private final Map<Material, Double> miningBlocks = new HashMap<>();
@@ -59,7 +59,7 @@ public class SkillHandler {
   @Getter
   private final Map<EntityType, Double> miningBreedMobs = new HashMap<>();
   @Getter
-  private final Map<EntityType, Double> miningFish = new HashMap<>();
+  private final Map<Material, Double> miningFish = new HashMap<>();
 
   @Getter
   private final Map<Material, Double> combatBlocks = new HashMap<>();
@@ -68,7 +68,7 @@ public class SkillHandler {
   @Getter
   private final Map<EntityType, Double> combatBreedMobs = new HashMap<>();
   @Getter
-  private final Map<EntityType, Double> combatFish = new HashMap<>();
+  private final Map<Material, Double> combatFish = new HashMap<>();
 
   @Getter
   private final Map<Material,Double> woodcuttingBlocks = new HashMap<>();
@@ -77,7 +77,7 @@ public class SkillHandler {
   @Getter
   private final Map<EntityType, Double> woodcuttingBreedMobs = new HashMap<>();
   @Getter
-  private final Map<EntityType, Double> woodcuttingFish = new HashMap<>();
+  private final Map<Material, Double> woodcuttingFish = new HashMap<>();
 
   @Getter
   private final Map<Material, Double> fishingBlocks = new HashMap<>();
@@ -86,7 +86,7 @@ public class SkillHandler {
   @Getter
   private final Map<EntityType, Double> fishingBreedMobs = new HashMap<>();
   @Getter
-  private final Map<EntityType, Double> fishingFish = new HashMap<>();
+  private final Map<Material, Double> fishingFish = new HashMap<>();
 
   public SkillHandler(@NotNull SkillsModule skillsModule) {
     this.skillsModule = skillsModule;
@@ -122,7 +122,7 @@ public class SkillHandler {
       if (farmingFishSection != null) {
         farmingFishSection.getKeys(false).forEach((k) -> {
           double exp = farmingFishSection.getDouble(k);
-          checkFishToAppend(k, exp, farmingFish);
+          checkMaterialToAppend(k, exp, farmingFish);
         });
       }
     }
@@ -158,7 +158,7 @@ public class SkillHandler {
       if (miningFishSection != null) {
         miningFishSection.getKeys(false).forEach((k) -> {
           double exp = miningFishSection.getDouble(k);
-          checkFishToAppend(k, exp, miningFish);
+          checkMaterialToAppend(k, exp, miningFish);
         });
       }
     }
@@ -194,7 +194,7 @@ public class SkillHandler {
       if (combatFishSection != null) {
         combatFishSection.getKeys(false).forEach((k) -> {
           double exp = combatFishSection.getDouble(k);
-          checkFishToAppend(k, exp, combatFish);
+          checkMaterialToAppend(k, exp, combatFish);
         });
       }
     }
@@ -230,7 +230,7 @@ public class SkillHandler {
       if (woodcuttingFishSection != null) {
         woodcuttingFishSection.getKeys(false).forEach((k) -> {
           double exp = woodcuttingFishSection.getDouble(k);
-          checkFishToAppend(k, exp, woodcuttingFish);
+          checkMaterialToAppend(k, exp, woodcuttingFish);
         });
       }
     }
@@ -267,7 +267,7 @@ public class SkillHandler {
       if (fishingFishSection != null) {
         fishingFishSection.getKeys(false).forEach((k) -> {
           double exp = fishingFishSection.getDouble(k);
-          checkFishToAppend(k, exp, fishingFish);
+          checkMaterialToAppend(k, exp, fishingFish);
         });
       }
     }
@@ -303,21 +303,6 @@ public class SkillHandler {
     list.put(material, exp);
   }
 
-  private void checkFishToAppend(String input, double exp, Map<EntityType, Double> list) {
-    EntityType entityType;
-    try {
-      entityType = EntityType.valueOf(input);
-    } catch (IllegalArgumentException exception) {
-      Main.log(Level.WARNING, "skill_exp.yml is miss configured. The material " + input + " was not found.");
-      return;
-    }
-    if (list.containsKey(entityType)) {
-      Main.log(Level.WARNING, "skill_exp.yml is miss configured. The material" + input + " was found twice in one skill.");
-      return;
-    }
-    list.put(entityType, exp);
-  }
-
   private void checkMobToAppend(String input, double exp, Map<EntityType, Double> list) {
     EntityType entityType;
     try {
@@ -345,8 +330,8 @@ public class SkillHandler {
     return farmingBreedMobs.containsKey(entity.getType());
   }
 
-  public boolean isFishFarming(@NotNull EntityType entityType) {
-    return farmingFish.containsKey(entityType);
+  public boolean isFishFarming(@NotNull Material material) {
+    return farmingFish.containsKey(material);
   }
 
   public boolean isBlockMining(@NotNull Block block) {
@@ -361,8 +346,8 @@ public class SkillHandler {
     return miningBreedMobs.containsKey(entity.getType());
   }
 
-  public boolean isFishMining(@NotNull EntityType entityType) {
-    return miningFish.containsKey(entityType);
+  public boolean isFishMining(@NotNull Material material) {
+    return miningFish.containsKey(material);
   }
 
   public boolean isBlockCombat(@NotNull Block block) {
@@ -377,8 +362,8 @@ public class SkillHandler {
     return combatBreedMobs.containsKey(entity.getType());
   }
 
-  public boolean isFishCombat(@NotNull EntityType entityType) {
-    return combatFish.containsKey(entityType);
+  public boolean isFishCombat(@NotNull Material material) {
+    return combatFish.containsKey(material);
   }
 
   public boolean isBlockWoodcutting(@NotNull Block block) {
@@ -393,8 +378,8 @@ public class SkillHandler {
     return woodcuttingBreedMobs.containsKey(entity.getType());
   }
 
-  public boolean isFishWoodcutting(@NotNull EntityType entityType) {
-    return woodcuttingFish.containsKey(entityType);
+  public boolean isFishWoodcutting(@NotNull Material material) {
+    return woodcuttingFish.containsKey(material);
   }
 
   public boolean isBlockFishing(@NotNull Block block) {
@@ -408,7 +393,7 @@ public class SkillHandler {
   public boolean isMobBreedFishing(@NotNull Entity entity) {
     return fishingBreedMobs.containsKey(entity.getType());
   }
-  public boolean isFishFishing(@NotNull EntityType entityType) {
-    return fishingFish.containsKey(entityType);
+  public boolean isFishFishing(@NotNull Material material) {
+    return fishingFish.containsKey(material);
   }
 }
