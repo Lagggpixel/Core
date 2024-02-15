@@ -45,22 +45,25 @@ public class EntityBreedListener implements Listener {
     User user = Main.getUser(player.getUniqueId());
     EntityType entityType = event.getFather().getType();
 
-    if (skillsModule.getSkillHandler().isMobFarming(livingEntity)) {
+    if (skillsModule.getSkillHandler().isMobBreedFarming(livingEntity)) {
       handleFarmingBreedMob(user, entityType);
     }
 
-    if (skillsModule.getSkillHandler().isMobMining(livingEntity)) {
+    if (skillsModule.getSkillHandler().isMobBreedMining(livingEntity)) {
       handleMiningBreedMob(user, entityType);
     }
 
-    if (skillsModule.getSkillHandler().isMobCombat(livingEntity)) {
+    if (skillsModule.getSkillHandler().isMobBreedCombat(livingEntity)) {
       handleCombatBreedMob(user, entityType);
     }
 
-    if (skillsModule.getSkillHandler().isMobWoodcutting(livingEntity)) {
+    if (skillsModule.getSkillHandler().isMobBreedWoodcutting(livingEntity)) {
       handleWoodcuttingBreedMob(user, entityType);
     }
 
+    if (skillsModule.getSkillHandler().isMobBreedFishing(livingEntity)) {
+      handleFishingBreedMob(user, entityType);
+    }
   }
 
   private void handleFarmingBreedMob(User user, EntityType entityType) {
@@ -81,5 +84,10 @@ public class EntityBreedListener implements Listener {
   private void handleWoodcuttingBreedMob(User user, EntityType entityType) {
     double exp = skillsModule.getSkillHandler().getWoodcuttingBreedMobs().get(entityType);
     user.getSkills().getWoodcutting().addExp(exp, SkillExpGainCause.MOB_BREED);
+  }
+
+  private void handleFishingBreedMob(User user, EntityType entityType) {
+    double exp = skillsModule.getSkillHandler().getFishingBreedMobs().get(entityType);
+    user.getSkills().getFishing().addExp(exp, SkillExpGainCause.MOB_BREED);
   }
 }

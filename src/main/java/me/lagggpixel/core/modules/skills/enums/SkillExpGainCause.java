@@ -18,5 +18,6 @@ public enum SkillExpGainCause {
   BLOCK_BREAK,
   MOB_KILL,
   MOB_BREED,
+  FISH,
   ADMIN_GIVE;
 }

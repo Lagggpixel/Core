@@ -41,7 +41,7 @@ public class NaturalBlocksChangedListeners implements Listener {
   @EventHandler(ignoreCancelled = true)
   public void BlockPlaceEvent(BlockPlaceEvent event) {
     Player player = event.getPlayer();
-    if (player.getGameMode() == GameMode.SPECTATOR) {
+    if (player.getGameMode() == GameMode.CREATIVE) {
       skillsModule.getSkillHandler().getNonNaturalBlocks().remove(event.getBlock().getLocation());
       return;
     }
