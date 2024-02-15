@@ -32,6 +32,7 @@ import java.util.List;
 public class SurvivalItemInventoryHolder extends SurvivalCoreInventoryHolder {
   public SurvivalItemInventoryHolder(Player player) {
     super(player, Lang.SURVIVAL_ITEM_INVENTORY_TITLE.toComponent(), 54);
+    initializeInventoryItems();
   }
 
   @Override

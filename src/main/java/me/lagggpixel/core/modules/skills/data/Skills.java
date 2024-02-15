@@ -92,4 +92,28 @@ public class Skills {
 
     return (float) totalSkillLevel / totalSkillCount;
   }
+
+  public Skill getSkill(SkillType skillType) {
+    if (skillType == SkillType.COMBAT) {
+      return combat;
+    }
+
+    if (skillType == SkillType.MINING) {
+      return mining;
+    }
+
+    if (skillType == SkillType.FARMING) {
+      return farming;
+    }
+
+    if (skillType == SkillType.FISHING) {
+      return fishing;
+    }
+
+    if (skillType == SkillType.WOODCUTTING) {
+      return woodcutting;
+    }
+
+    return null;
+  }
 }

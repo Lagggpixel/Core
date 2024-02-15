@@ -16,7 +16,6 @@ import me.lagggpixel.core.modules.skills.SkillsModule;
 import me.lagggpixel.core.modules.skills.enums.SkillExpGainCause;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 
@@ -29,10 +28,11 @@ public class BlockBreakListener implements Listener {
   private final SkillsModule skillsModule;
 
   public BlockBreakListener(SkillsModule skillsModule) {
+    Main.getPluginManager().registerEvents(this, Main.getInstance());
     this.skillsModule = skillsModule;
   }
 
-  @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+  @EventHandler(ignoreCancelled = true)
   public void BlockBreakEvent(BlockBreakEvent event) {
     Block block = event.getBlock();
 

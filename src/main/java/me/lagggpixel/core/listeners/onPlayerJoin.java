@@ -43,10 +43,8 @@ public class onPlayerJoin implements Listener {
     user.setPlayerName(player.getName());
     user.setAfk(false);
 
-    if (user.getGetQueuedMessage() != null) {
-      for (Component component : user.getGetQueuedMessage()) {
-        user.sendMessage(component);
-      }
+    for (Component component : user.getGetQueuedMessage()) {
+      user.sendMessage(component);
     }
 
     handleVanishPlayers(event);

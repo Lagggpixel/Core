@@ -30,6 +30,7 @@ public class SkillLevelUpListener implements Listener {
   private final SkillsModule module;
 
   public SkillLevelUpListener(SkillsModule module) {
+    Main.getPluginManager().registerEvents(this, Main.getInstance());
     this.module = module;
   }
 

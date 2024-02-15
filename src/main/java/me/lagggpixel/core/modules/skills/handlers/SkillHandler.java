@@ -119,8 +119,7 @@ public class SkillHandler {
       }
     }
     //</editor-fold>
-
-    YamlConfiguration skillLevelUpConfiguration = YamlConfiguration.loadConfiguration(skillsModule.getSkill_exp());
+    YamlConfiguration skillLevelUpConfiguration = YamlConfiguration.loadConfiguration(skillsModule.getSkill_level_up());
     skillLevelUpConfiguration.getKeys(false).forEach((k) -> {
       try {
         int level = Integer.parseInt(k);

@@ -10,6 +10,7 @@
 
 package me.lagggpixel.core.modules.skills.listeners;
 
+import me.lagggpixel.core.Main;
 import me.lagggpixel.core.enums.Lang;
 import me.lagggpixel.core.modules.skills.SkillsModule;
 import me.lagggpixel.core.modules.skills.events.SkillExpGainEvent;
@@ -31,6 +32,7 @@ public class SkillExpGainListener implements Listener {
   private final SkillsModule module;
 
   public SkillExpGainListener(SkillsModule module) {
+    Main.getPluginManager().registerEvents(this, Main.getInstance());
     this.module = module;
   }
 
@@ -42,7 +44,11 @@ public class SkillExpGainListener implements Listener {
       return;
     }
 
-    Component component = Lang.SKILL_EXP_GAIN.toComponent(Map.of("%skill%", event.getSkillType().getName(), "%exp%", String.valueOf(event.getExp_gained())));
+    int level = Main.getUser(player).getSkills().getSkill(event.getSkillType()).getLevel();
+
+    Component component = Lang.SKILL_EXP_GAIN.toComponent(Map.of(
+        "%skill%", event.getSkillType().getName(),
+        "%exp%", String.valueOf(event.getExp_gained())));
 
     player.sendActionBar(component);
   }

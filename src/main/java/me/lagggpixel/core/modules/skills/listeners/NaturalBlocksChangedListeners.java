@@ -10,11 +10,13 @@
 
 package me.lagggpixel.core.modules.skills.listeners;
 
+import me.lagggpixel.core.Main;
 import me.lagggpixel.core.modules.skills.SkillsModule;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockGrowEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -29,17 +31,25 @@ public class NaturalBlocksChangedListeners implements Listener {
   private final SkillsModule skillsModule;
 
   public NaturalBlocksChangedListeners(SkillsModule skillsModule) {
+    Main.getPluginManager().registerEvents(this, Main.getInstance());
+
     this.skillsModule = skillsModule;
   }
 
   // A block is not "natural" after a player places a block there
-  @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+  // A block will be considered natural if a creative player places it
+  @EventHandler(ignoreCancelled = true)
   public void BlockPlaceEvent(BlockPlaceEvent event) {
+    Player player = event.getPlayer();
+    if (player.getGameMode() == GameMode.SPECTATOR) {
+      skillsModule.getSkillHandler().getNonNaturalBlocks().remove(event.getBlock().getLocation());
+      return;
+    }
     skillsModule.getSkillHandler().getNonNaturalBlocks().add(event.getBlock().getLocation());
   }
 
   // A block is "natural" after tnt/creeper/tnt-mine-cart explodes it
-  @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+  @EventHandler(ignoreCancelled = true)
   public void EntityExplodeEvent(EntityExplodeEvent event) {
     for (Block block : event.blockList()) {
       Location location = block.getLocation();
@@ -48,7 +58,7 @@ public class NaturalBlocksChangedListeners implements Listener {
   }
 
   // A block is "natural" after a crop grows there
-  @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+  @EventHandler(ignoreCancelled = true)
   public void BlockGrowEvent(BlockGrowEvent event) {
     skillsModule.getSkillHandler().getNonNaturalBlocks().remove(event.getBlock().getLocation());
   }

@@ -10,9 +10,7 @@
 
 package me.lagggpixel.core.modules.survival.data.inventoryHolder;
 
-import me.lagggpixel.core.Main;
 import me.lagggpixel.core.builders.ItemBuilder;
-import me.lagggpixel.core.data.user.User;
 import me.lagggpixel.core.modules.skills.data.Skill;
 import me.lagggpixel.core.modules.skills.enums.SkillType;
 import me.lagggpixel.core.modules.skills.handlers.SkillHandler;
@@ -32,10 +30,11 @@ import java.util.List;
  */
 public class SkillInventoryHolder extends SurvivalCoreInventoryHolder {
 
-  private final List<Integer> skillItems = List.of(9, 18, 27, 28, 29, 20, 11, 2, 3, 4, 13, 22, 31, 32, 33, 24, 15, 6, 7, 8, 17, 26, 35, 45, 53);
+  private final List<Integer> skillItems = List.of(9, 18, 27, 28, 29, 20, 11, 2, 3, 4, 13, 22, 31, 32, 33, 24, 15, 6, 7, 8, 17, 26, 35, 44, 53);
 
-  protected User user;
   protected SkillType skillType;
+
+  private final @NotNull Skill skill;
 
   private int page;
 
@@ -43,23 +42,26 @@ public class SkillInventoryHolder extends SurvivalCoreInventoryHolder {
     super(player,
         ChatUtils.stringToComponentCC("&aSkill: " + skillType.getName()),
         54);
-    this.user = Main.getUser(player.getUniqueId());
     this.skillType = skillType;
+    this.skill = user.getSkills().getSkill(skillType);
+
+    initializeInventoryItems();
   }
 
   protected SkillInventoryHolder(Player player, @NotNull SkillType skillType, int page) {
     super(player,
         ChatUtils.stringToComponentCC("&aSkill: " + skillType.getName()),
         54);
-    this.user = Main.getUser(player.getUniqueId());
     this.skillType = skillType;
 
     this.page = page;
+    this.skill = user.getSkills().getSkill(skillType);
+
+    initializeInventoryItems();
   }
 
   @Override
   public void initializeInventoryItems() {
-    Skill skill = user.getSkills().getSkills().get(skillType);
     int level = skill.getLevel();
     int exp = Math.toIntExact(Math.round(skill.getLevelExp()));
     int currentLevelCounter;
@@ -73,9 +75,9 @@ public class SkillInventoryHolder extends SurvivalCoreInventoryHolder {
     }
 
     if (page == 2) {
-      currentLevelCounter = 1;
-    } else {
       currentLevelCounter = 26;
+    } else {
+      currentLevelCounter = 1;
     }
 
     for (Integer slot : skillItems) {
@@ -98,8 +100,8 @@ public class SkillInventoryHolder extends SurvivalCoreInventoryHolder {
             .setDisplayName("&a" + skillType.getName() + " " + currentLevelCounter)
             .setLore(skillType.getSkillDescription())
             .toItemStack());
-        currentLevelCounter++;
       }
+      currentLevelCounter++;
     }
 
     inventory.setItem(0,

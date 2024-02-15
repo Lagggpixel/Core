@@ -10,9 +10,7 @@
 
 package me.lagggpixel.core.modules.survival.data.inventoryHolder;
 
-import me.lagggpixel.core.Main;
 import me.lagggpixel.core.builders.ItemBuilder;
-import me.lagggpixel.core.data.user.User;
 import me.lagggpixel.core.modules.skills.enums.SkillType;
 import me.lagggpixel.core.utils.ChatUtils;
 import org.bukkit.Material;
@@ -30,11 +28,11 @@ import java.util.List;
 public class SkillsInventoryHolder extends SurvivalCoreInventoryHolder {
   protected SkillsInventoryHolder(Player player) {
     super(player, "Your Skills", 54);
+    initializeInventoryItems();
   }
 
   @Override
   public void initializeInventoryItems() {
-    User user = Main.getUser(player);
 
     inventory.setItem(13,
         new ItemBuilder(Material.DIAMOND_SWORD)
@@ -111,7 +109,6 @@ public class SkillsInventoryHolder extends SurvivalCoreInventoryHolder {
     if (tag == null) {
       return;
     }
-    SkillType skill;
     switch (tag) {
       case "close":
         break;
@@ -119,16 +116,19 @@ public class SkillsInventoryHolder extends SurvivalCoreInventoryHolder {
         new SurvivalItemInventoryHolder(player).openInventory(player);
         break;
       case "farming":
-        skill = SkillType.FARMING;
+        new SkillInventoryHolder(player, SkillType.FARMING).openInventory(player);
+        break;
       case "mining":
-        skill = SkillType.MINING;
+        new SkillInventoryHolder(player, SkillType.MINING).openInventory(player);
+        break;
       case "combat":
-        skill = SkillType.COMBAT;
+        new SkillInventoryHolder(player, SkillType.COMBAT).openInventory(player);
+        break;
       case "fishing":
-        skill = SkillType.FISHING;
+        new SkillInventoryHolder(player, SkillType.FISHING).openInventory(player);
+        break;
       case "woodcutting":
-        skill = SkillType.WOODCUTTING;
-        new SkillInventoryHolder(player, skill).openInventory(player);
+        new SkillInventoryHolder(player, SkillType.WOODCUTTING).openInventory(player);
         break;
     }
   }

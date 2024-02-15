@@ -231,7 +231,7 @@ public enum Lang {
               &8+&6%coins% &7Coins
           &3---------------------------------------------------------------------------
           """),
-  SKILL_EXP_GAIN("skill.exp_gain", "&8+&3%exp% %skill% experience"),
+  SKILL_EXP_GAIN("skill.exp_gain", "&3+%exp% %skill% Experience"),
 
   // Skip-night IModule
   SN_WORLD_NO_OVERWORLD("skipnight.world_not_overworld", "&cYou must be in the overworld to start a vote!"),
@@ -323,7 +323,7 @@ public enum Lang {
     if (placeholders != null) {
       placeholders.forEach((k, v) -> var1[0] = var1[0].replace(k, v));
     }
-    return ChatUtils.stringToComponentCC(LANG.getString(this.path, def));
+    return ChatUtils.stringToComponentCC(var1[0]);
   }
 
   public @NotNull Component toComponentWithPrefix() {
@@ -353,7 +353,7 @@ public enum Lang {
     if (placeholders != null) {
       placeholders.forEach((k, v) -> var1[0] = var1[0].replace(k, v));
     }
-    return ChatUtils.stringToTextComponentCC(LANG.getString(this.path, def));
+    return ChatUtils.stringToTextComponentCC(var1[0]);
   }
 
   public @NotNull TextComponent toTextComponentWithPrefix() {

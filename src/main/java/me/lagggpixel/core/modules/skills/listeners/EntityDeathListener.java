@@ -17,7 +17,6 @@ import me.lagggpixel.core.modules.skills.enums.SkillExpGainCause;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 
@@ -30,10 +29,12 @@ public class EntityDeathListener implements Listener {
   private final SkillsModule skillsModule;
 
   public EntityDeathListener(SkillsModule skillsModule) {
+    Main.getPluginManager().registerEvents(this, Main.getInstance());
+
     this.skillsModule = skillsModule;
   }
 
-  @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+  @EventHandler(ignoreCancelled = true)
   public void EntityDeathEvent(EntityDeathEvent event) {
     Player player = event.getEntity().getKiller();
     if (player == null) {
