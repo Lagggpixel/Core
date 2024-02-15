@@ -57,6 +57,10 @@ public class EntityBreedListener implements Listener {
       handleCombatBreedMob(user, entityType);
     }
 
+    if (skillsModule.getSkillHandler().isMobWoodcutting(livingEntity)) {
+      handleWoodcuttingBreedMob(user, entityType);
+    }
+
   }
 
   private void handleFarmingBreedMob(User user, EntityType entityType) {
@@ -72,5 +76,10 @@ public class EntityBreedListener implements Listener {
   private void handleCombatBreedMob(User user, EntityType entityType) {
     double exp = skillsModule.getSkillHandler().getCombatBreedMobs().get(entityType);
     user.getSkills().getCombat().addExp(exp, SkillExpGainCause.MOB_BREED);
+  }
+
+  private void handleWoodcuttingBreedMob(User user, EntityType entityType) {
+    double exp = skillsModule.getSkillHandler().getWoodcuttingBreedMobs().get(entityType);
+    user.getSkills().getWoodcutting().addExp(exp, SkillExpGainCause.MOB_BREED);
   }
 }

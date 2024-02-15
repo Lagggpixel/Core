@@ -52,6 +52,10 @@ public class BlockBreakListener implements Listener {
     if (skillsModule.getSkillHandler().isBlockCombat(block)) {
       handleCombatBlockBreak(user, block);
     }
+
+    if (skillsModule.getSkillHandler().isBlockWoodcutting(block)) {
+      handleWoodcuttingBlockBreak(user, block);
+    }
   }
 
   private void handleFarmingBlockBreak(User user, Block block) {
@@ -67,5 +71,10 @@ public class BlockBreakListener implements Listener {
   private void handleCombatBlockBreak(User user, Block block) {
     double exp = skillsModule.getSkillHandler().getCombatBlocks().get(block.getType());
     user.getSkills().getCombat().addExp(exp, SkillExpGainCause.BLOCK_BREAK);
+  }
+
+  private void handleWoodcuttingBlockBreak(User user, Block block) {
+    double exp = skillsModule.getSkillHandler().getWoodcuttingBlocks().get(block.getType());
+    user.getSkills().getWoodcutting().addExp(exp, SkillExpGainCause.BLOCK_BREAK);
   }
 }

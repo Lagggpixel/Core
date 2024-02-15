@@ -53,6 +53,10 @@ public class EntityDeathListener implements Listener {
     if (skillsModule.getSkillHandler().isMobCombat(entity)) {
       handleCombatMobKill(user, entity);
     }
+
+    if (skillsModule.getSkillHandler().isMobWoodcutting(entity)) {
+      handleWoodcuttingMobKill(user, entity);
+    }
   }
 
   private void handleFarmingMobKill(User user, Entity entity) {
@@ -68,5 +72,10 @@ public class EntityDeathListener implements Listener {
   private void handleCombatMobKill(User user, Entity entity) {
     double exp = skillsModule.getSkillHandler().getCombatEntities().get(entity.getType());
     user.getSkills().getCombat().addExp(exp, SkillExpGainCause.MOB_KILL);
+  }
+
+  private void handleWoodcuttingMobKill(User user, Entity entity) {
+    double exp = skillsModule.getSkillHandler().getWoodcuttingEntities().get(entity.getType());
+    user.getSkills().getWoodcutting().addExp(exp, SkillExpGainCause.MOB_KILL);
   }
 }

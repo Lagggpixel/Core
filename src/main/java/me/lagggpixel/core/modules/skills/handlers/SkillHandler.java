@@ -64,6 +64,13 @@ public class SkillHandler {
   @Getter
   private final Map<EntityType, Double> combatBreedMobs = new HashMap<>();
 
+  @Getter
+  private final Map<Material,Double> woodcuttingBlocks = new HashMap<>();
+  @Getter
+  private final Map<EntityType, Double> woodcuttingEntities = new HashMap<>();
+  @Getter
+  private final Map<EntityType, Double> woodcuttingBreedMobs = new HashMap<>();
+
 
   public SkillHandler(@NotNull SkillsModule skillsModule) {
     this.skillsModule = skillsModule;
@@ -152,6 +159,34 @@ public class SkillHandler {
       }
     }
     //</editor-fold>
+    //<editor-fold desc="Load Woodcutting">
+    ConfigurationSection woodcuttingSection = skillExpConfiguration.getConfigurationSection("woodcutting");
+    if (woodcuttingSection != null) {
+      ConfigurationSection woodcuttingBlocksSection = woodcuttingSection.getConfigurationSection("blocks");
+      if (woodcuttingBlocksSection != null) {
+        woodcuttingBlocksSection.getKeys(false).forEach((k) -> {
+          double exp = woodcuttingBlocksSection.getDouble(k);
+          checkMaterialToAppend(k, exp, woodcuttingBlocks);
+        });
+      }
+
+      ConfigurationSection woodcuttingMobsSection = woodcuttingSection.getConfigurationSection("mobs");
+      if (woodcuttingMobsSection != null) {
+        woodcuttingMobsSection.getKeys(false).forEach((k) -> {
+          double exp = woodcuttingMobsSection.getDouble(k);
+          checkMobToAppend(k, exp, woodcuttingEntities);
+        });
+      }
+
+      ConfigurationSection woodcuttingBreedMobsSection = woodcuttingSection.getConfigurationSection("breed");
+      if (woodcuttingBreedMobsSection != null) {
+        woodcuttingBreedMobsSection.getKeys(false).forEach((k) -> {
+          double exp = woodcuttingBreedMobsSection.getDouble(k);
+          checkMobToAppend(k, exp, woodcuttingBreedMobs);
+        });
+      }
+    }
+    //</editor-fold>
     YamlConfiguration skillLevelUpConfiguration = YamlConfiguration.loadConfiguration(skillsModule.getSkill_level_up());
     skillLevelUpConfiguration.getKeys(false).forEach((k) -> {
       try {
@@ -232,5 +267,17 @@ public class SkillHandler {
 
   public boolean isMobBreedCombat(@NotNull Entity entity) {
     return combatBreedMobs.containsKey(entity.getType());
+  }
+
+  public boolean isBlockWoodcutting(@NotNull Block block) {
+    return woodcuttingBlocks.containsKey(block.getType());
+  }
+
+  public boolean isMobWoodcutting(@NotNull Entity entity) {
+    return woodcuttingEntities.containsKey(entity.getType());
+  }
+
+  public boolean isMobBreedWoodcutting(@NotNull Entity entity) {
+    return woodcuttingBreedMobs.containsKey(entity.getType());
   }
 }
