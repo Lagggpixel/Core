@@ -17,5 +17,6 @@ package me.lagggpixel.core.modules.skills.enums;
 public enum SkillExpGainCause {
   BLOCK_BREAK,
   MOB_KILL,
+  MOB_BREED,
   ADMIN_GIVE;
 }

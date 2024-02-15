@@ -79,6 +79,7 @@ public class SkillsModule implements IModule {
   public void registerListeners() {
     new BlockBreakListener(this);
     new NaturalBlocksChangedListeners(this);
+    new EntityBreedListener(this);
     new EntityDeathListener(this);
     new SkillExpGainListener(this);
     new SkillLevelUpListener(this);

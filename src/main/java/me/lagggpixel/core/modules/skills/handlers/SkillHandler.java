@@ -48,13 +48,22 @@ public class SkillHandler {
   @Getter
   private final Map<EntityType, Double> farmingEntities = new HashMap<>();
   @Getter
+  private final Map<EntityType, Double> farmingBreedMobs = new HashMap<>();
+
+  @Getter
   private final Map<Material, Double> miningBlocks = new HashMap<>();
   @Getter
   private final Map<EntityType, Double> miningEntities = new HashMap<>();
   @Getter
+  private final Map<EntityType, Double> miningBreedMobs = new HashMap<>();
+
+  @Getter
   private final Map<Material, Double> combatBlocks = new HashMap<>();
   @Getter
   private final Map<EntityType, Double> combatEntities = new HashMap<>();
+  @Getter
+  private final Map<EntityType, Double> combatBreedMobs = new HashMap<>();
+
 
   public SkillHandler(@NotNull SkillsModule skillsModule) {
     this.skillsModule = skillsModule;
@@ -77,6 +86,14 @@ public class SkillHandler {
           checkMobToAppend(k, exp, farmingEntities);
         });
       }
+
+      ConfigurationSection farmingBreedMobsSection = farmingSection.getConfigurationSection("breed");
+      if (farmingBreedMobsSection != null) {
+        farmingBreedMobsSection.getKeys(false).forEach((k) -> {
+          double exp = farmingBreedMobsSection.getDouble(k);
+          checkMobToAppend(k, exp, farmingBreedMobs);
+        });
+      }
     }
     //</editor-fold>
     //<editor-fold desc="Load Mining">
@@ -97,6 +114,14 @@ public class SkillHandler {
           checkMobToAppend(k, exp, miningEntities);
         });
       }
+
+      ConfigurationSection miningBreedMobsSection = miningSection.getConfigurationSection("breed");
+      if (miningBreedMobsSection != null) {
+        miningBreedMobsSection.getKeys(false).forEach((k) -> {
+          double exp = miningBreedMobsSection.getDouble(k);
+          checkMobToAppend(k, exp, miningBreedMobs);
+        });
+      }
     }
     //</editor-fold>
     //<editor-fold desc="Load Combat">
@@ -115,6 +140,14 @@ public class SkillHandler {
         combatMobsSection.getKeys(false).forEach((k) -> {
           double exp = combatMobsSection.getDouble(k);
           checkMobToAppend(k, exp, combatEntities);
+        });
+      }
+
+      ConfigurationSection combatBreedMobsSection = combatSection.getConfigurationSection("breed");
+      if (combatBreedMobsSection != null) {
+        combatBreedMobsSection.getKeys(false).forEach((k) -> {
+          double exp = combatBreedMobsSection.getDouble(k);
+          checkMobToAppend(k, exp, combatBreedMobs);
         });
       }
     }
@@ -173,6 +206,10 @@ public class SkillHandler {
     return farmingEntities.containsKey(entity.getType());
   }
 
+  public boolean isMobBreedFarming(@NotNull Entity entity) {
+    return farmingBreedMobs.containsKey(entity.getType());
+  }
+
   public boolean isBlockMining(@NotNull Block block) {
     return miningBlocks.containsKey(block.getType());
   }
@@ -181,11 +218,19 @@ public class SkillHandler {
     return miningEntities.containsKey(entity.getType());
   }
 
+  public boolean isMobBreedMining(@NotNull Entity entity) {
+    return miningBreedMobs.containsKey(entity.getType());
+  }
+
   public boolean isBlockCombat(@NotNull Block block) {
     return combatBlocks.containsKey(block.getType());
   }
 
   public boolean isMobCombat(@NotNull Entity entity) {
     return combatEntities.containsKey(entity.getType());
+  }
+
+  public boolean isMobBreedCombat(@NotNull Entity entity) {
+    return combatBreedMobs.containsKey(entity.getType());
   }
 }
