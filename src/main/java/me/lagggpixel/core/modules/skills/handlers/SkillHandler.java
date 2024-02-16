@@ -174,7 +174,7 @@ public class SkillHandler {
         });
       }
 
-      ConfigurationSection combatMobsSection = combatSection.getConfigurationSection("combat");
+      ConfigurationSection combatMobsSection = combatSection.getConfigurationSection("mobs");
       if (combatMobsSection != null) {
         combatMobsSection.getKeys(false).forEach((k) -> {
           double exp = combatMobsSection.getDouble(k);
