@@ -13,13 +13,10 @@ package me.lagggpixel.core.modules.guilds.data.loadsave;
 import lombok.Getter;
 import me.lagggpixel.core.Main;
 import me.lagggpixel.core.modules.guilds.GuildModule;
-import me.lagggpixel.core.modules.guilds.data.Claim;
 import me.lagggpixel.core.modules.guilds.data.Guild;
 import me.lagggpixel.core.serializers.LocationSerializer;
 import me.lagggpixel.core.utils.ExceptionUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -125,23 +122,6 @@ public class GuildLoadSave {
           }
         }
       }).runTaskLater(Main.getInstance(), 20L);
-      if (config.contains("claims")) {
-        for (String c : Objects.requireNonNull(config.getConfigurationSection("claims")).getKeys(false)) {
-          int x1 = config.getInt("claims." + c + ".x1");
-          int x2 = config.getInt("claims." + c + ".x2");
-          int z1 = config.getInt("claims." + c + ".z1");
-          int z2 = config.getInt("claims." + c + ".z2");
-          int value = config.getInt("claims." + c + ".value");
-          boolean claimExplosions = config.getBoolean("claims." + c + ".claim_explosions", false);
-          World world = Bukkit.getWorld(Objects.requireNonNull(config.getString("claims." + c + ".world")));
-          Claim claim = new Claim(c, guild, x1, x2, z1, z2, world, value);
-          claim.setClaimExplosions(claimExplosions);
-          if (!claim.isGlitched()) {
-            GuildModule.getInstance().getClaimManager().getClaims().add(claim);
-            guild.getClaims().add(claim);
-          }
-        }
-      }
       if (GuildModule.getInstance().getGuildHandler().getGuildByName(name) == null && GuildModule.getInstance().getGuildHandler().getGuildFromPlayerUUID(guild.getLeader()) == null) {
         GuildModule.getInstance().getGuildHandler().getGuilds().add(guild);
       }

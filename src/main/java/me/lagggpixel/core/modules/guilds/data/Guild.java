@@ -48,35 +48,45 @@ public class Guild {
   @Getter
   private YamlConfiguration config = getConfiguration();
 
+  @Setter
   private String name;
-  private HashSet<Claim> claims;
+  @Setter
   private Location home;
   @Getter
   private GuildModule main = GuildModule.getInstance();
+  @Setter
   @Getter
   private UUID leader;
+  @Setter
   @Getter
   private ArrayList<UUID> officers;
+  @Setter
   @Getter
   private ArrayList<UUID> members;
+  @Setter
   @Getter
   private ArrayList<UUID> invitedPlayers;
+  @Setter
   @Getter
   private double balance;
+  @Setter
   @Getter
   private HashSet<Guild> allies;
+  @Setter
   @Getter
   private HashSet<Guild> requestedAllies;
+  @Setter
   @Getter
   private List<UUID> allyChat;
+  @Setter
   @Getter
   private List<UUID> factionChat;
+  @Setter
   @Getter
   private boolean deleted = false;
   
   public Guild(String name, UUID leader) {
     this.name = name;
-    this.claims = new HashSet<>();
     this.leader = leader;
     this.allyChat = new ArrayList<>();
     this.factionChat = new ArrayList<>();
@@ -87,47 +97,7 @@ public class Guild {
     this.members = new ArrayList<>();
     this.balance = 0;
   }
-  
-  public void setLeader(UUID leader) {
-    this.leader = leader;
-  }
-  
-  public void setOfficers(ArrayList<UUID> officers) {
-    this.officers = officers;
-  }
-  
-  public void setMembers(ArrayList<UUID> members) {
-    this.members = members;
-  }
-  
-  public void setBalance(double balance) {
-    this.balance = balance;
-  }
-  
-  public void setAllies(HashSet<Guild> allies) {
-    this.allies = allies;
-  }
-  
-  public void setRequestedAllies(HashSet<Guild> requestedAllies) {
-    this.requestedAllies = requestedAllies;
-  }
-  
-  public void setAllyChat(List<UUID> allyChat) {
-    this.allyChat = allyChat;
-  }
-  
-  public void setFactionChat(List<UUID> factionChat) {
-    this.factionChat = factionChat;
-  }
-  
-  public void setDeleted(boolean deleted) {
-    this.deleted = deleted;
-  }
-  
-  public void setInvitedPlayers(ArrayList<UUID> invitedPlayers) {
-    this.invitedPlayers = invitedPlayers;
-  }
-  
+
   public ArrayList<Player> getOnlinePlayers() {
     ArrayList<Player> onlinePlayers = new ArrayList<>();
     
@@ -184,13 +154,9 @@ public class Guild {
   public void delete() {
     main.getGuildHandler().getGuilds().remove(this);
     this.deleted = true;
-    for (Claim claim : getClaims()) {
-      main.getClaimManager().getClaims().remove(claim);
-    }
     for (Guild ally : getAllies()) {
       ally.getAllies().remove(this);
     }
-    getClaims().clear();
   }
   
   public void sendMessage(String message) {
@@ -211,71 +177,6 @@ public class Guild {
   
   public boolean isOfficer(UUID player) {
     return getOfficers().contains(player);
-  }
-  
-  /**
-   * Sets the name of the object.
-   *
-   * @param name the new name to set
-   */
-  public void setName(String name) {
-    this.name = name;
-  }
-  
-  /**
-   * Sets the claims for the object.
-   *
-   * @param claims the set of claims to be set
-   */
-  public void setClaims(HashSet<Claim> claims) {
-    this.claims = claims;
-  }
-  
-  /**
-   * Sets the home location.
-   *
-   * @param  home the new home location
-   */
-  public void setHome(Location home) {
-    this.home = home;
-  }
-  
-  /**
-   * Checks if the given location is near the border of a claim.
-   *
-   * @param  l  the location to check
-   * @return    true if the location is near a claim border, false otherwise
-   */
-  public boolean isNearBorder(Location l) {
-    for (Claim claim : getClaims()) {
-      if (claim.getWorld() == l.getWorld()) {
-        if (claim.isInside((new Location(l.getWorld(), l.getX(), l.getY(), l.getZ())).add(0.0D, 0.0D, 1.0D), false)) {
-          return true;
-        }
-        if (claim.isInside((new Location(l.getWorld(), l.getX(), l.getY(), l.getZ())).add(1.0D, 0.0D, 0.0D), false)) {
-          return true;
-        }
-        if (claim.isInside((new Location(l.getWorld(), l.getX(), l.getY(), l.getZ())).add(0.0D, 0.0D, -1.0D), true)) {
-          return true;
-        }
-        if (claim.isInside((new Location(l.getWorld(), l.getX(), l.getY(), l.getZ())).add(-1.0D, 0.0D, 0.0D), true)) {
-          return true;
-        }
-        if (claim.isInside((new Location(l.getWorld(), l.getX(), l.getY(), l.getZ())).add(-1.0D, 0.0D, 1.0D), false)) {
-          return true;
-        }
-        if (claim.isInside((new Location(l.getWorld(), l.getX(), l.getY(), l.getZ())).add(-1.0D, 0.0D, -1.0D), false)) {
-          return true;
-        }
-        if (claim.isInside((new Location(l.getWorld(), l.getX(), l.getY(), l.getZ())).add(1.0D, 0.0D, 1.0D), false)) {
-          return true;
-        }
-        if (claim.isInside((new Location(l.getWorld(), l.getX(), l.getY(), l.getZ())).add(1.0D, 0.0D, -1.0D), false)) {
-          return true;
-        }
-      }
-    }
-    return false;
   }
 
   public void save() throws IOException {
@@ -321,15 +222,6 @@ public class Guild {
     this.config.set("allies", als);
     this.config.set("invited_players", invs);
     this.config.set("balance", this.balance);
-    for (Claim claim : getClaims()) {
-      this.config.set("claims." + claim.getId() + ".x1", claim.getX1());
-      this.config.set("claims." + claim.getId() + ".x2", claim.getX2());
-      this.config.set("claims." + claim.getId() + ".z1", claim.getZ1());
-      this.config.set("claims." + claim.getId() + ".z2", claim.getZ2());
-      this.config.set("claims." + claim.getId() + ".world", claim.getWorld().getName());
-      this.config.set("claims." + claim.getId() + ".value", claim.getValue());
-      this.config.set("claims." + claim.getId() + ".claim_explosions", claim.isClaimExplosions());
-    }
     if (getHome() != null) {
       this.config.set("home", LocationSerializer.serializeLocation(getHome()));
     }

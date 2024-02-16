@@ -39,7 +39,6 @@ public class GuildCommand implements ICommandClass {
     this.subCommands = new HashMap<>();
 
     subCommands.put("acknowledge", new GuildAcknowledgeCommand(guildModule));
-    subCommands.put("claim", new GuildClaimCommand(guildModule));
     subCommands.put("create", new GuildCreateCommand(guildModule));
     subCommands.put("deposit", new GuildDepositCommand(guildModule));
     subCommands.put("disband", new GuildDisbandCommand(guildModule));
