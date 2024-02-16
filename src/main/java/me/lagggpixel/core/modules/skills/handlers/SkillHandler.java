@@ -13,6 +13,7 @@ package me.lagggpixel.core.modules.skills.handlers;
 import lombok.Getter;
 import me.lagggpixel.core.Main;
 import me.lagggpixel.core.modules.skills.SkillsModule;
+import me.lagggpixel.core.utils.ExceptionUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -22,6 +23,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -272,6 +274,7 @@ public class SkillHandler {
       }
     }
     //</editor-fold>
+
     YamlConfiguration skillLevelUpConfiguration = YamlConfiguration.loadConfiguration(skillsModule.getSkill_level_up());
     skillLevelUpConfiguration.getKeys(false).forEach((k) -> {
       try {
@@ -286,6 +289,24 @@ public class SkillHandler {
       } catch (NumberFormatException ignored) {
       }
     });
+
+    YamlConfiguration nonNaturalBlocksConfiguration = YamlConfiguration.loadConfiguration(skillsModule.getNon_natural_blocks());
+    nonNaturalBlocksConfiguration.getKeys(false).forEach((k) -> {
+      Location location  = nonNaturalBlocksConfiguration.getLocation(k);
+      nonNaturalBlocks.add(location);
+    });
+  }
+
+  public void saveNonNaturalBlocks() {
+    YamlConfiguration config = new YamlConfiguration();
+    for (Location location : nonNaturalBlocks) {
+      config.set(location.toString(), location);
+    }
+    try {
+      config.save(skillsModule.getNon_natural_blocks());
+    } catch (IOException e) {
+      ExceptionUtils.handleException(e);
+    }
   }
 
   private void checkMaterialToAppend(String input, double exp, Map<Material, Double> list) {

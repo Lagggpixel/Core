@@ -37,6 +37,9 @@ public class SkillsModule implements IModule {
   private File skill_level_up;
 
   @Getter
+  private File non_natural_blocks;
+
+  @Getter
   private SkillHandler skillHandler;
 
   @NotNull
@@ -55,19 +58,20 @@ public class SkillsModule implements IModule {
     dataFolder = new File(Main.getInstance().getDataFolder(), "data/modules/skills");
     skill_exp = new File(dataFolder, "skill_exp.yml");
     skill_level_up = new File(dataFolder, "skill_level_up.yml");
+    non_natural_blocks = new File(dataFolder, "non_natural_blocks.yml");
 
     initConfig();
 
     this.skillHandler = new SkillHandler(this);
 
-    if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+    if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
       new SkillsExpansion().register();
     }
   }
 
   @Override
   public void onDisable() {
-
+    skillHandler.saveNonNaturalBlocks();
   }
 
   @Override
@@ -95,6 +99,11 @@ public class SkillsModule implements IModule {
       String resourcePath = "data/modules/skills/skill_level_up.yml";
       FileUtil.copyToDefault(resourcePath);
     }
+
+    if (!non_natural_blocks.exists()) {
+      String resourcePath = "data/modules/skills/non_natural_blocks.yml";
+      FileUtil.copyToDefault(resourcePath);
+    }
   }
-  
+
 }
