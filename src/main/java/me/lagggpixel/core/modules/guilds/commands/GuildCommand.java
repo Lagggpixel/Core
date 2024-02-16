@@ -47,7 +47,6 @@ public class GuildCommand implements ICommandClass {
     subCommands.put("join", new GuildJoinCommand(guildModule));
     subCommands.put("kick", new GuildKickCommand(guildModule));
     subCommands.put("leave", new GuildLeaveCommand(guildModule));
-    subCommands.put("map", new GuildMapCommand(guildModule));
     subCommands.put("sethome", new GuildSetHomeCommand(guildModule));
     subCommands.put("who", new GuildWhoCommand(guildModule));
     subCommands.put("withdraw", new GuildWithdrawCommand(guildModule));
