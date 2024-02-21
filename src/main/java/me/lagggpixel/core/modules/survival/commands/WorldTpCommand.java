@@ -21,7 +21,6 @@ import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -91,12 +90,6 @@ public class WorldTpCommand implements ICommandClass {
     User user = Main.getUser(player.getUniqueId());
     if (user.getWorldData().containsKey(world.getName())) {
       player.teleport(user.getWorldData().get(world.getName()).getLocation());
-      new BukkitRunnable() {
-        @Override
-        public void run() {
-          player.teleport(user.getWorldData().get(world.getName()).getLocation());
-        }
-      }.runTaskLater(Main.getInstance(), 10L);
       return true;
     } else {
       player.teleport(world.getSpawnLocation());

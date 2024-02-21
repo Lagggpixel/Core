@@ -12,6 +12,7 @@ package me.lagggpixel.core.listeners;
 
 import me.lagggpixel.core.Main;
 import me.lagggpixel.core.data.user.User;
+import me.lagggpixel.core.modules.spawn.SpawnModule;
 import me.lagggpixel.core.modules.staff.handlers.VanishHandler;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
@@ -38,6 +39,10 @@ public class onPlayerJoin implements Listener {
   public void PlayerJoinEvent(@NotNull PlayerJoinEvent event) {
     Player player = event.getPlayer();
     UUID uuid = player.getUniqueId();
+
+    if (!Main.getUserData().containsKey(uuid)) {
+      event.getPlayer().teleport(SpawnModule.getInstance().getSpawnManager().getSpawnLocation());
+    }
 
     User user = Main.getUser(uuid);
     user.setPlayerName(player.getName());

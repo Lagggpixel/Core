@@ -24,10 +24,7 @@ import org.bukkit.entity.EntityType;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Level;
 
 /**
@@ -300,7 +297,7 @@ public class SkillHandler {
   public void saveNonNaturalBlocks() {
     YamlConfiguration config = new YamlConfiguration();
     for (Location location : nonNaturalBlocks) {
-      config.set(location.toString(), location);
+      config.set(String.valueOf(UUID.randomUUID()), location);
     }
     try {
       config.save(skillsModule.getNon_natural_blocks());

@@ -59,7 +59,7 @@ public class Skill {
   }
 
   public void addExp(double expGained, SkillExpGainCause cause) {
-    this.totalExp += totalExp + expGained;
+    this.totalExp = totalExp + expGained;
     SkillExpGainEvent skillExpGainEvent = new SkillExpGainEvent(playerUuid, this.skillType, expGained, cause);
     Bukkit.getServer().getPluginManager().callEvent(skillExpGainEvent);
     updateSkillLevel();
