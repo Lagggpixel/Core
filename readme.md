@@ -76,9 +76,7 @@ Data for users are stored at `Main.getInstance.getDataFolder + "data/users"`
 
   
 **Discord Module**
-- Add tickets module
-- Convert to using javacord
-- Change to store token in jda
+- None
 
 **Economy Module**
 - None
@@ -86,6 +84,7 @@ Data for users are stored at `Main.getInstance.getDataFolder + "data/users"`
 
 **Guild Module**
 - Add claim blocks
+- Revert claims
 
 
 **Home Module**
