@@ -203,7 +203,7 @@ public class Merchant implements Listener {
       npc.addTrait(skinTrait);
     }
     
-    npc.data().set(NPC.NAMEPLATE_VISIBLE_METADATA, false);
+    npc.data().set(NPC.Metadata.NAMEPLATE_VISIBLE, false);
     
     if (look) {
       LookClose lookClose = npc.getOrAddTrait(LookClose.class);

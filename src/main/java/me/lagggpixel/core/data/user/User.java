@@ -73,7 +73,6 @@ public class User {
   @Expose
   private @NotNull Map<String, Home> homes = new HashMap<>();
   // Merchant
-  @Getter
   private List<ItemStack> merchantSold = new ArrayList<>();
   private @Nullable String currentMerchant = null;
   // Skills

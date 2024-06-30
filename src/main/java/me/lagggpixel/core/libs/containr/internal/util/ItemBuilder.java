@@ -84,7 +84,6 @@ public final class ItemBuilder {
     List<String> lore = origin.getItemMeta().getLore() != null ? origin.getItemMeta().getLore() : new ArrayList<>();
     ItemBuilder builder = new ItemBuilder()
         .withType(origin.getType())
-        .withData(origin.getData().getData())
         .withAmount(origin.getAmount())
         .withName(origin.getItemMeta().getDisplayName())
         .withLore()
@@ -175,7 +174,7 @@ public final class ItemBuilder {
   }
 
   public ItemBuilder enchanted() {
-    return withEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+    return withEnchantment(Enchantment.PROTECTION, 1);
   }
 
   public ItemBuilder appendLore(String... lines) {
@@ -198,8 +197,7 @@ public final class ItemBuilder {
           ItemFlag.HIDE_ATTRIBUTES,
           ItemFlag.HIDE_UNBREAKABLE,
           ItemFlag.HIDE_DESTROYS,
-          ItemFlag.HIDE_PLACED_ON,
-          ItemFlag.HIDE_POTION_EFFECTS);
+          ItemFlag.HIDE_PLACED_ON);
       if (customModelData != -1) {
         meta.setCustomModelData(customModelData);
       }

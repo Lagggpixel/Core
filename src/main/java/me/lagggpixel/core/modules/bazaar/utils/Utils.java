@@ -36,7 +36,7 @@ public class Utils {
   public static ItemStack getGlowedItem(ItemStack item) {
     ItemStack glowedItem = item.clone();
 
-    glowedItem.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
+    glowedItem.addUnsafeEnchantment(Enchantment.UNBREAKING, 1);
 
     ItemMeta itemMeta = glowedItem.getItemMeta();
     itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);

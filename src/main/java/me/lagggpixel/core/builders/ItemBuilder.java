@@ -169,14 +169,14 @@ public class ItemBuilder {
   }
 
   public ItemBuilder addEnchantmentGlint() {
-    meta.addEnchant(Enchantment.LUCK, 1, false);
+    meta.addEnchant(Enchantment.LUCK_OF_THE_SEA, 1, false);
     meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
     item.setItemMeta(meta);
     return this;
   }
 
   public ItemBuilder removeEnchantmentGlint() {
-    meta.removeEnchant(Enchantment.LUCK);
+    meta.removeEnchant(Enchantment.LUCK_OF_THE_SEA);
     item.setItemMeta(meta);
     return this;
   }
